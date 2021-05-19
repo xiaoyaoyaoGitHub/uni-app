@@ -1,0 +1,170 @@
+{
+	"easycom": {
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue",
+		"^jnpf-(.*)": "@/components/jnpf/jnpf-$1/index.vue"
+	},
+	"pages": [{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "JNPF快速开发平台",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						// "type":"transparent",/* 头部渐隐 */
+						"coverage": "132px"
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/login/index",
+			"style": {
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#3281ff",
+				"app-plus": {
+					"titleNView": false,
+					"bounce": "none" // 取消iOS回弹,避免和下拉刷新冲突 (小程序无法取消)
+				}
+			}
+		},
+		{
+			"path": "pages/index/workFlow",
+			"style": {
+				"navigationBarTitleText": "协同"
+			}
+		},
+		{
+			"path": "pages/index/apply",
+			"style": {
+				"navigationBarTitleText": "办公"
+			}
+		},
+		{
+			"path": "pages/index/contacts",
+			"style": {
+				"navigationBarTitleText": "通讯"
+			}
+		},
+		{
+			"path": "pages/index/my",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"navigationBarBackgroundColor": "#ffffff",
+				"disableScroll": true
+			}
+		},
+		{
+			"path": "pages/form/index"
+		}
+	],
+	"subPackages": [{
+			"root": "pages/message",
+			"pages": []
+		},
+		{
+			"root": "pages/workFlow",
+			"pages": [{
+					"path": "flowBefore/index",
+					"style": {
+						"navigationBarTitleText": ""
+					}
+				},
+				{
+					"path": "flowLaunch/index",
+					"style": {
+						"navigationBarTitleText": "我发起的"
+					}
+				},
+				{
+					"path": "flowTodo/index",
+					"style": {
+						"navigationBarTitleText": "待办事宜"
+					}
+				}
+			]
+		},
+		{
+			"root": "pages/apply",
+			"pages": []
+		},
+		{
+			"root": "pages/contacts",
+			"pages": []
+		},
+		{
+			"root": "pages/my",
+			"pages": [{
+				"path": "settings/index",
+				"style": {
+					"navigationBarTitleText": "设置"
+				}
+			}]
+		}
+	],
+	"preloadRule": {
+		// "pages/index/message": {
+		// 	"network": "all",
+		// 	"packages": ["pages/message"]
+		// },
+		"pages/index/workFlow": {
+			"network": "all",
+			"packages": ["pages/workFlow"]
+		},
+		// "pages/index/apply": {
+		// 	"network": "all",
+		// 	"packages": ["pages/apply"]
+		// },
+		// "pages/index/contacts": {
+		// 	"network": "all",
+		// 	"packages": ["pages/contacts"]
+		// },
+		"pages/index/my": {
+			"network": "all",
+			"packages": ["pages/my"]
+		}
+	},
+	"tabBar": {
+		"color": "#666666",
+		"selectedColor": "#3281ff",
+		"backgroundColor": "#ffffff",
+		"list": [{
+				"pagePath": "pages/index/index",
+				"text": "消息",
+				"iconPath": "static/image/tabbar/home.png",
+				"selectedIconPath": "static/image/tabbar/homeHL.png"
+			},
+			{
+				"pagePath": "pages/index/workFlow",
+				"text": "协同",
+				"iconPath": "static/image/tabbar/workbench.png",
+				"selectedIconPath": "static/image/tabbar/workbenchHL.png"
+			},
+			{
+				"pagePath": "pages/index/apply",
+				"text": "办公",
+				"iconPath": "static/image/tabbar/folder.png",
+				"selectedIconPath": "static/image/tabbar/folderHL.png"
+			},
+			{
+				"pagePath": "pages/index/contacts",
+				"text": "通讯",
+				"iconPath": "static/image/tabbar/smallbell.png",
+				"selectedIconPath": "static/image/tabbar/smallbellHL.png"
+			},
+			{
+				"pagePath": "pages/index/my",
+				"text": "我的",
+				"iconPath": "static/image/tabbar/user.png",
+				"selectedIconPath": "static/image/tabbar/userHL.png"
+			}
+		]
+	},
+	"globalStyle": {
+		"navigationBarTitleText": "JNPF快速开发平台",
+		"navigationBarBackgroundColor": "#3281FF",
+		"backgroundColor": "#F8F8F8",
+		"usingComponents": {
+			"ly-tree-node": "/components/ly-tree/ly-tree-node"
+		}
+	}
+}
