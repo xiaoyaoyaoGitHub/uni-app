@@ -130,32 +130,32 @@
 		"list": [{
 				"pagePath": "pages/index/index",
 				"text": "消息",
-				"iconPath": "static/image/tabbar/home.png",
-				"selectedIconPath": "static/image/tabbar/homeHL.png"
+				"iconPath": "static/image/tabbar/message.png",
+				"selectedIconPath": "static/image/tabbar/messageHL.png"
 			},
 			{
 				"pagePath": "pages/index/workFlow",
 				"text": "协同",
-				"iconPath": "static/image/tabbar/workbench.png",
-				"selectedIconPath": "static/image/tabbar/workbenchHL.png"
+				"iconPath": "static/image/tabbar/workFlow.png",
+				"selectedIconPath": "static/image/tabbar/workFlowHL.png"
 			},
 			{
 				"pagePath": "pages/index/apply",
 				"text": "办公",
-				"iconPath": "static/image/tabbar/folder.png",
-				"selectedIconPath": "static/image/tabbar/folderHL.png"
+				"iconPath": "static/image/tabbar/apply.png",
+				"selectedIconPath": "static/image/tabbar/applyHL.png"
 			},
 			{
 				"pagePath": "pages/index/contacts",
 				"text": "通讯",
-				"iconPath": "static/image/tabbar/smallbell.png",
-				"selectedIconPath": "static/image/tabbar/smallbellHL.png"
+				"iconPath": "static/image/tabbar/contacts.png",
+				"selectedIconPath": "static/image/tabbar/contactsHL.png"
 			},
 			{
 				"pagePath": "pages/index/my",
 				"text": "我的",
-				"iconPath": "static/image/tabbar/user.png",
-				"selectedIconPath": "static/image/tabbar/userHL.png"
+				"iconPath": "static/image/tabbar/my.png",
+				"selectedIconPath": "static/image/tabbar/myHL.png"
 			}
 		]
 	},
