@@ -4,6 +4,9 @@ import getters from './getters'
 
 Vue.use(Vuex)
 
+/* 简化import引入 require.context(directory, useSubdirectories, regExp)directory: 要查找的文件路径
+useSubdirectories: 是否查找子目录
+regExp: 要匹配文件的正则*/
 const modulesFiles = require.context('./modules', true, /\.js$/)
 
 // you do not need `import app from './modules/app'`

@@ -1,3 +1,4 @@
+/* process.env.NODE_ENV设置生产环境模式 */
 const baseURL = process.env.NODE_ENV === "production" ?
 	"http://192.168.0.18:7004" : "http://192.168.0.18:7004" // 接口前缀
 const define = {

@@ -56,6 +56,7 @@
 		},
 		onShow() {},
 		methods: {
+			/* 上拉 */
 			upCallback(page) {
 				let query = {
 					currentPage: page.num,
@@ -75,6 +76,7 @@
 					this.mescroll.endErr();
 				})
 			},
+			/* 点击删除按钮 */
 			click(index, index1) {
 				const item = this.list[index]
 				if ([1, 2, 5].includes(item.status)) {
@@ -87,6 +89,7 @@
 					this.list.splice(index, 1)
 				})
 			},
+			/* 滑动删除列表 */
 			open(index) {
 				this.list[index].show = true;
 				this.list.map((val, idx) => {
@@ -101,6 +104,7 @@
 					this.mescroll.resetUpScroll();
 				}, 300)
 			},
+			/* 列表点击处理 */
 			goDetail(item) {
 				let opType = '-1'
 				if ([1, 2, 5].includes(item.status)) opType = 0
