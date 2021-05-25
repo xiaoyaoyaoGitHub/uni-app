@@ -79,7 +79,7 @@
 				</u-form-item>
 				<!-- 日期选择 -->
 				<u-form-item label="日期选择" prop="date">
-					<jnpf-date-time type="datetime" v-model="dataForm.date"></jnpf-date-time>
+					<jnpf-date-time type="date" v-model="dataForm.date"></jnpf-date-time>
 				</u-form-item>
 			</view>
 			<view class="jnpf-card">

@@ -5,7 +5,7 @@
 			<u-form-item label="流程标题" prop="flowTitle" required>
 				<u-input v-model="dataForm.flowTitle" placeholder="流程标题"></u-input>
 			</u-form-item>
-			<u-form-item label="流程编码" prop="billNo">
+			<u-form-item label="流程编码" prop="billNo" v-if="judgeShow('billNo')">
 				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent">

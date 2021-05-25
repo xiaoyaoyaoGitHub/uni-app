@@ -56,6 +56,7 @@
 							@click="delGoods(i)">删除
 						</view>
 					</view>
+					
 					<u-form-item label="商品名称" prop="dataForm.goodsList[i].goodsId">
 						<jnpf-tree-select v-model="dataForm.goodsList[i].goodsId" placeholder="请选择商品名称"
 							:options="goodsOptions" @change="onGoodsChange($event,i)" :props="props">
@@ -100,6 +101,7 @@
 					<u-icon name="plus" color="#2979ff"></u-icon>商品添购
 				</view>
 			</view>
+			
 			<view class="jnpf-table">
 				<view class="jnpf-table-item" v-for="(item,i) in dataForm.collectionPlanList" :key="i">
 					<view class="jnpf-table-item-title u-flex u-row-between">

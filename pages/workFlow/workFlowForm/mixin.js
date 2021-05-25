@@ -29,6 +29,7 @@ export default {
 		this.userInfo = uni.getStorageSync('userInfo') || {}
 	},
 	methods: {
+		/* 初始化处理 */
 		init(data) {
 			this.dataForm.id = data.id || ''
 			this.setting = data
@@ -62,6 +63,7 @@ export default {
 				this.paymentMethodOptions = res
 			})
 		},
+		/* 提交 */
 		submit(eventType) {
 			this.$refs.dataForm.validate((valid) => {
 				if (valid) {
@@ -79,6 +81,7 @@ export default {
 				}
 			})
 		},
+		/* 可见 */
 		judgeShow(id) {
 			if (this.setting.opType == 4) return true
 			if (!this.setting.formOperates || !this.setting.formOperates.length) return true
@@ -87,6 +90,7 @@ export default {
 			let item = arr[0]
 			return item.read
 		},
+		/* 可写 */
 		judgeWrite(id) {
 			if (this.setting.readonly) return true
 			if (!this.setting.formOperates || !this.setting.formOperates.length) return false

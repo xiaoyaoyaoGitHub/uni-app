@@ -20,7 +20,6 @@ const defaultOpt = {
 // }
 
 function request(config) {
-	console.log(config)
 	config.options = Object.assign(defaultOpt, config.options)
 	const token = uni.getStorageSync('token') || ''
 	let header = {

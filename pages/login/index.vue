@@ -36,7 +36,7 @@
 			return {
 				loading: false,
 				formData: {
-					account: "111001",
+					account: "101002",
 					password: "0000"
 				},
 				loginbanner: resources.banner.loginbanner,
