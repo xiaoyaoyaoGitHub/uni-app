@@ -80,6 +80,18 @@
 					"style": {
 						"navigationBarTitleText": "待办事宜"
 					}
+				},
+				{
+					"path": "flowDone/index",
+					"style": {
+						"navigationBarTitleText": "已办事宜"
+					}
+				},
+				{
+					"path": "flowCopy/index",
+					"style": {
+						"navigationBarTitleText": "抄送我的"
+					}
 				}
 			]
 		},

@@ -1,11 +1,12 @@
 import request from '@/utils/request'
 
 // 获取待我审核
-export function FlowBeforeList(category, data) {
+export function FlowBeforeList(category, data, options) {
 	return request({
 		url: `/api/workflow/Engine/FlowBefore/List/${category}`,
 		method: 'get',
-		data
+		data,
+		options
 	})
 }
 // 获取待我审批信息

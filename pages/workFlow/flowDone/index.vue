@@ -1,5 +1,5 @@
 <template>
-	<view class="flowTodo-v">
+	<view class="flowDone-v">
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :sticky="true"
 			:down="downOption" :up="upOption">
 			<view class="search-box sticky">
@@ -26,7 +26,7 @@
 		data() {
 			return {
 				keyword: '',
-				opType: 1,
+				opType: 2,
 				list: [],
 				downOption: {
 					use: true,
@@ -77,7 +77,7 @@
 		background-color: #f0f2f6;
 	}
 
-	.flowTodo-v {
+	.flowDone-v {
 		.sticky {
 			z-index: 990;
 			position: sticky;

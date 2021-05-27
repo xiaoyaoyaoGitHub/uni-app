@@ -170,3 +170,30 @@
 	z-index: 10000;
 	background: #fff;
 }
+.flow-list{
+	&.flowBefore .item{
+		margin-bottom: 20rpx;
+	}
+	.item{
+		background-color: #fff;
+		padding: 0 32rpx;
+		.item-cell{
+			height: 70rpx;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			font-size: 24rpx;
+			.time{
+				color: #9a9a9a;
+			}
+		}
+		.item-title{
+			height: 90rpx;
+			width: 100%;
+			font-size: 30rpx;
+			.title{
+				display: block;
+			}
+		}
+	}
+}

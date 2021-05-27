@@ -7,13 +7,19 @@
 					bg-color="#f0f2f6" shape="square">
 				</u-search>
 			</view>
-			<view>
+			<view class="flow-list">
 				<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in list" :key="item.id"
-					@click="click" @open="open" :options="options" @content-click="goDetail(item)" class="u-m-b-20">
+					@click="handleClick" @open="open" :options="options" @content-click="goDetail(item)"
+					class="u-m-b-20">
 					<view class="item">
-						<view class="title-wrap">
-							<text class="title u-line-2">{{ item.fullName }}</text>
-
+						<view class="item-cell item-title u-border-bottom">
+							<text class="title u-line-1">{{item.fullName}}</text>
+						</view>
+						<view class="item-cell">
+							<text class="time">{{item.creatorTime | date('yyyy-mm-dd hh:MM')}}</text>
+							<text :class="'status '+getFlowStatus(item.status).statusCss">
+								{{getFlowStatus(item.status).text}}
+							</text>
 						</view>
 					</view>
 				</u-swipe-action>
@@ -56,14 +62,15 @@
 		},
 		onShow() {},
 		methods: {
-			/* 上拉 */
 			upCallback(page) {
 				let query = {
 					currentPage: page.num,
 					pageSize: page.size,
-					keyword: this.keyword,
+					keyword: this.keyword
 				}
-				FlowLaunchList(query).then(res => {
+				FlowLaunchList(query, {
+					load: page.num == 1
+				}).then(res => {
 					this.mescroll.endSuccess(res.data.list.length);
 					if (page.num == 1) this.list = [];
 					const list = res.data.list.map(o => ({
@@ -72,12 +79,10 @@
 					}));
 					this.list = this.list.concat(list);
 				}).catch(() => {
-					//联网失败, 结束加载
 					this.mescroll.endErr();
 				})
 			},
-			/* 点击删除按钮 */
-			click(index, index1) {
+			handleClick(index, index1) {
 				const item = this.list[index]
 				if ([1, 2, 5].includes(item.status)) {
 					this.$u.toast("流程正在审核,请勿删除")
@@ -89,7 +94,6 @@
 					this.list.splice(index, 1)
 				})
 			},
-			/* 滑动删除列表 */
 			open(index) {
 				this.list[index].show = true;
 				this.list.map((val, idx) => {
@@ -100,11 +104,10 @@
 				// 节流,避免输入过快多次请求
 				this.searchTimer && clearTimeout(this.searchTimer)
 				this.searchTimer = setTimeout(() => {
-					this.goods = []; // 先清空列表,显示加载进度
+					this.list = [];
 					this.mescroll.resetUpScroll();
 				}, 300)
 			},
-			/* 列表点击处理 */
 			goDetail(item) {
 				let opType = '-1'
 				if ([1, 2, 5].includes(item.status)) opType = 0
@@ -121,6 +124,54 @@
 				uni.navigateTo({
 					url: '/pages/workFlow/flowBefore/index?config=' + encodeURIComponent(JSON.stringify(config))
 				})
+			},
+			getFlowStatus(val) {
+				let status
+				switch (val) {
+					case 0:
+						status = {
+							text: '等待提交',
+							statusCss: 'u-type-info'
+						}
+						break;
+					case 1:
+						status = {
+							text: '等待审核',
+							statusCss: 'u-type-primary'
+						}
+						break;
+					case 2:
+						status = {
+							text: '审核通过',
+							statusCss: 'u-type-success'
+						}
+						break;
+					case 3:
+						status = {
+							text: '审核驳回',
+							statusCss: 'u-type-error'
+						}
+						break;
+					case 4:
+						status = {
+							text: '审核撤回',
+							statusCss: 'u-type-error'
+						}
+						break;
+					case 5:
+						status = {
+							text: '审核终止',
+							statusCss: 'u-type-info'
+						}
+						break;
+					default:
+						status = {
+							text: '等待提交',
+							statusCss: 'u-type-info'
+						}
+						break;
+				}
+				return status
 			}
 		}
 	}
