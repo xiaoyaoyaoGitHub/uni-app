@@ -13,6 +13,18 @@
 			<contractApprovalSheet ref="form" @eventReciver="eventReciver" v-if="config.enCode==='contractApprovalSheet'"/>
 			<payDistribution ref="form" @eventReciver="eventReciver" v-if="config.enCode==='payDistribution'"/>
 			<crmOrder ref="form" @eventReciver="eventReciver" v-if="config.enCode==='crmOrder'" />
+			<debitBill ref="form" @eventReciver="eventReciver" v-if="config.enCode==='debitBill'" />
+			<documentApproval ref="form" @eventReciver="eventReciver" v-if="config.enCode==='documentApproval'" />
+			<documentSigning ref="form" @eventReciver="eventReciver" v-if="config.enCode==='documentSigning'" />
+			<expenseExpenditure ref="form" @eventReciver="eventReciver" v-if="config.enCode==='expenseExpenditure'" />
+			<finishedProduct ref="form" @eventReciver="eventReciver" v-if="config.enCode==='finishedProduct'" />
+			<incomeRecognition ref="form" @eventReciver="eventReciver" v-if="config.enCode==='incomeRecognition'" />
+			<leaveApply ref="form" @eventReciver="eventReciver" v-if="config.enCode==='leaveApply'"/>
+			<letterService ref="form" @eventReciver="eventReciver" v-if="config.enCode==='letterService'"/>
+			<materialRequisition ref="form" @eventReciver="eventReciver" v-if="config.enCode==='materialRequisition'"/>
+			<monthlyReport ref="form" @eventReciver="eventReciver" v-if="config.enCode==='monthlyReport'"/>
+			<officeSupplies ref="form" @eventReciver="eventReciver" v-if="config.enCode==='officeSupplies'"/>
+			<outboundOrder ref="form" @eventReciver="eventReciver" v-if="config.enCode==='outboundOrder'"/>
 		</template>
 		<template v-else>
 			<dynamicForm ref="form" @eventReciver="eventReciver" />
@@ -34,6 +46,18 @@
 	import contractApprovalSheet from '@/pages/workFlow/workFlowForm/contractApprovalSheet'
 	import payDistribution from '@/pages/workFlow/workFlowForm/payDistribution'
 	import crmOrder from '@/pages/workFlow/workFlowForm/crmOrder'
+	import debitBill from '@/pages/workFlow/workFlowForm/debitBill'
+	import documentApproval from '@/pages/workFlow/workFlowForm/documentApproval'
+	import documentSigning from '@/pages/workFlow/workFlowForm/documentSigning'
+	import expenseExpenditure from '@/pages/workFlow/workFlowForm/expenseExpenditure'
+	import finishedProduct from '@/pages/workFlow/workFlowForm/finishedProduct'
+	import incomeRecognition from '@/pages/workFlow/workFlowForm/incomeRecognition'
+	import leaveApply from '@/pages/workFlow/workFlowForm/leaveApply'
+	import letterService from '@/pages/workFlow/workFlowForm/letterService'
+	import materialRequisition from '@/pages/workFlow/workFlowForm/materialRequisition'
+	import monthlyReport from '@/pages/workFlow/workFlowForm/monthlyReport'
+	import officeSupplies from '@/pages/workFlow/workFlowForm/officeSupplies'
+	import outboundOrder from '@/pages/workFlow/workFlowForm/outboundOrder'
 	export default {
 		components: {
 			crmOrder,
@@ -48,7 +72,19 @@
 			batchTable,
 			conBilling,
 			contractApproval,
-			contractApprovalSheet
+			contractApprovalSheet,
+			debitBill,
+			documentApproval,
+			documentSigning,
+			expenseExpenditure,
+			finishedProduct,
+			incomeRecognition,
+			leaveApply,
+			letterService,
+			materialRequisition,
+			monthlyReport,
+			officeSupplies,
+			outboundOrder
 		},
 		props: {
 			config: {

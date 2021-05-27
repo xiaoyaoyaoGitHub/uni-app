@@ -1,0 +1,111 @@
+<template>
+	<view class="jnpf-wrap jnpf-wrap-workflow">
+		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
+			label-width="150" label-align="left">
+			<u-form-item label="流程标题" prop="flowTitle" required>
+				<u-input v-model="dataForm.flowTitle" placeholder="流程标题"></u-input>
+			</u-form-item>
+			<u-form-item label="流程编码" prop="billNo" v-if="judgeShow('billNo')" required>
+				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
+			</u-form-item>
+			<u-form-item label="紧急程度" prop="flowUrgent" required>
+				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
+				</jnpf-select>
+			</u-form-item>
+			
+			<view class="jnpf-card">
+				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
+					<u-input v-model="dataForm.applyUser" placeholder="输入申请人员"></u-input>
+				</u-form-item>
+				<u-form-item label="所属部门" prop="applyPost" v-if="judgeShow('applyPost')">
+					<u-input v-model="dataForm.applyPost" placeholder="输入所属部门"></u-input>
+				</u-form-item>
+				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')">
+					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="输入申请日期"></jnpf-date-time>
+				</u-form-item>
+				<u-form-item label="领用仓库" prop="useStock" v-if="judgeShow('useStock')">
+					<jnpf-date-time type="date" v-model="dataForm.useStock" placeholder="输入领用仓库"></jnpf-date-time>
+				</u-form-item>
+				<u-form-item label="用品分类" prop="classification" v-if="judgeShow('classification')">
+					<u-input v-model="dataForm.classification" placeholder="输入用品分类"></u-input>
+				</u-form-item>
+				<u-form-item label="用品名称" prop="articlesName" v-if="judgeShow('articlesName')">
+					<u-input v-model="dataForm.articlesName" placeholder="输入用品名称"></u-input>
+				</u-form-item>
+				<u-form-item label="用品数量" prop="articlesNum" v-if="judgeShow('articlesNum')">
+					<u-input v-model="dataForm.articlesNum" placeholder="输入用品数量" type="number"></u-input>
+				</u-form-item>
+				<u-form-item label="用品编号" prop="articlesId" v-if="judgeShow('articlesId')">
+					<u-input v-model="dataForm.articlesId" placeholder="输入用品编号" type="number"></u-input>
+				</u-form-item>
+				<u-form-item label="申请原因" prop="applyReasons" v-if="judgeShow('applyReasons')">
+					<u-input v-model="dataForm.applyReasons" placeholder="输入申请原因" type="text"></u-input>
+				</u-form-item>
+			</view>
+		</u-form>
+	</view>
+</template>
+
+<script>
+	import comMixin from '../mixin'
+	export default {
+		name: 'OfficeSuppliesNo',
+		mixins: [comMixin],
+		data() {
+			return {
+				billEnCode: 'WF_OfficeSuppliesNo',
+				dataForm: {
+					flowTitle: '',
+					billNo:'',
+					flowUrgent:1,
+					articlesNum:'',
+					articlesName:'',
+					applyUser:'',
+					applyPost:'',
+					position:'',
+					applyDate:'',
+					classification:'',
+					useStock:'',
+					applyReasons:'',
+					articlesId:''
+				},
+				rules: {
+					flowTitle: [{
+						required: true,
+						message: '流程标题不能为空',
+						trigger: 'blur'
+					}],
+					flowUrgent: [{
+						required: true,
+						message: '紧急程度不能为空',
+						trigger: 'change',
+						type: 'number'
+					}],
+					billNo: [{
+						required: true,
+						message: '流程编码不能为空',
+						trigger: 'blur',
+					}]
+				},
+				
+			}
+		},
+		methods: {
+			selfInit(data) {
+				this.dataForm.applyDate = new Date().getTime()
+				this.dataForm.flowTitle = this.userInfo.userName + "的领用办公用品申请"
+				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
+				this.dataForm.applyPost = this.userInfo.departmentName
+				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
+					let list = this.userInfo.positionIds.map(o => o.name)
+					this.dataForm.position = list.join(',')
+				}
+			},
+			
+		}
+	}
+</script>
+
+<style>
+
+</style>

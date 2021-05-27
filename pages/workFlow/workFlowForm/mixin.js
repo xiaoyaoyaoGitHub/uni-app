@@ -21,7 +21,8 @@ export default {
 			fileList: [],
 			setting: {},
 			userInfo: {},
-			eventType: ''
+			eventType: '',
+			paymentMethodOptions:[]
 		}
 	},
 	mounted() {
@@ -56,6 +57,7 @@ export default {
 				}
 			})
 		},
+		
 		getPaymentMethodOptions() {
 			this.$store.dispatch('base/getDictionaryData', {
 				sort: 'WFSettlementMethod'
