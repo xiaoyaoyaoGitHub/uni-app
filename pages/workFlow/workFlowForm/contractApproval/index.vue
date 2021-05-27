@@ -15,42 +15,42 @@
 			
 			<view class="jnpf-card">
 				<u-form-item label="甲方单位" prop="firstPartyUnit" v-if="judgeShow('firstPartyUnit')">
-					<u-input v-model="dataForm.firstPartyUnit" placeholder="输入甲方单位"></u-input>
+					<u-input v-model="dataForm.firstPartyUnit" placeholder="请输入甲方单位"></u-input>
 				</u-form-item>
 				
 				<u-form-item label="甲方负责人" prop="firstPartyPerson" v-if="judgeShow('firstPartyPerson')">
-					<u-input v-model="dataForm.firstPartyPerson" placeholder="输入甲方负责人"></u-input>
+					<u-input v-model="dataForm.firstPartyPerson" placeholder="请输入甲方负责人"></u-input>
 				</u-form-item>
 				<u-form-item label="甲方联系方式" prop="firstPartyContact" v-if="judgeShow('firstPartyContact')">
-					<u-input v-model="dataForm.firstPartyContact" placeholder="输入甲方联系方式"></u-input>
+					<u-input v-model="dataForm.firstPartyContact" placeholder="请输入甲方联系方式"></u-input>
 				</u-form-item>
 				<u-form-item label="乙方单位" prop="secondPartyUnit" v-if="judgeShow('secondPartyUnit')">
-					<u-input v-model="dataForm.secondPartyUnit" placeholder="输入乙方单位"></u-input>
+					<u-input v-model="dataForm.secondPartyUnit" placeholder="请输入乙方单位"></u-input>
 				</u-form-item>
 				<u-form-item label="乙方负责人" prop="secondPartyPerson" v-if="judgeShow('secondPartyPerson')">
-					<u-input v-model="dataForm.secondPartyPerson" placeholder="输入乙方负责人"></u-input>
+					<u-input v-model="dataForm.secondPartyPerson" placeholder="请输入乙方负责人"></u-input>
 				</u-form-item>
 				
 				<u-form-item label="乙方联系方式" prop="secondPartyContact" v-if="judgeShow('secondPartyContact')">
-					<u-input v-model="dataForm.secondPartyContact" placeholder="输入乙方联系方式"></u-input>
+					<u-input v-model="dataForm.secondPartyContact" placeholder="请输入乙方联系方式"></u-input>
 				</u-form-item>
 				<u-form-item label="合同名称" prop="contractName" v-if="judgeShow('contractName')" required>
-					<u-input v-model="dataForm.contractName" placeholder="输入合同名称"></u-input>
+					<u-input v-model="dataForm.contractName" placeholder="请输入合同名称"></u-input>
 				</u-form-item>
 				<u-form-item label="合同分类" prop="contractClass" v-if="judgeShow('contractClass')">
-					<u-input v-model="dataForm.contractClass" placeholder="输入合同分类"></u-input>
+					<u-input v-model="dataForm.contractClass" placeholder="请输入合同分类"></u-input>
 				</u-form-item>
 				<u-form-item label="合同类型" prop="contractType" v-if="judgeShow('contractType')">
-					<u-input v-model="dataForm.contractType" placeholder="输入合同类型"></u-input>
+					<u-input v-model="dataForm.contractType" placeholder="请输入合同类型"></u-input>
 				</u-form-item>
 				<u-form-item label="合同编号" prop="contractId" v-if="judgeShow('contractId')" required>
-					<u-input v-model="dataForm.contractId" placeholder="输入合同编号"></u-input>
+					<u-input v-model="dataForm.contractId" placeholder="请输入合同编号"></u-input>
 				</u-form-item>
 				<u-form-item label="业务人员" prop="businessPerson" v-if="judgeShow('businessPerson')">
-					<u-input v-model="dataForm.businessPerson" placeholder="输入业务人员"></u-input>
+					<u-input v-model="dataForm.businessPerson" placeholder="请输入业务人员"></u-input>
 				</u-form-item>
 				<u-form-item label="签约时间" prop="signingDate" v-if="judgeShow('signingDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.signingDate" placeholder="输入签约时间"></jnpf-date-time>
+					<jnpf-date-time type="datetime" v-model="dataForm.signingDate" placeholder="请输入签约时间"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="开始时间" prop="startDate" v-if="judgeShow('startDate')" required>
 					<jnpf-date-time type="datetime" v-model="dataForm.startDate" placeholder="开始时间"></jnpf-date-time>
@@ -59,16 +59,16 @@
 					<jnpf-date-time type="datetime" v-model="dataForm.endDate" placeholder="结束时间"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="填写人员" prop="inputPerson" v-if="judgeShow('inputPerson')">
-					<u-input v-model="dataForm.inputPerson" placeholder="输入填写人员"></u-input>
+					<u-input v-model="dataForm.inputPerson" placeholder="请输入填写人员"></u-input>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
 					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
 				</u-form-item>
 				<u-form-item label="主要内容" prop="primaryCoverage" v-if="judgeShow('primaryCoverage')">
-					<u-input v-model="dataForm.primaryCoverage" placeholder="输入主要内容" type="textarea"></u-input>
+					<u-input v-model="dataForm.primaryCoverage" placeholder="请输入主要内容" type="textarea"></u-input>
 				</u-form-item>
 				<u-form-item label="备注" prop="description" v-if="judgeShow('description')">
-					<u-input v-model="dataForm.description" placeholder="输入备注" type="textarea"></u-input>
+					<u-input v-model="dataForm.description" placeholder="请输入备注" type="textarea"></u-input>
 				</u-form-item>
 			</view>
 		</u-form>

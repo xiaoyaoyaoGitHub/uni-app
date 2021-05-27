@@ -15,25 +15,25 @@
 
 			<view class="jnpf-card">
 				<u-form-item label="客户名称" prop="customerName" v-if="judgeShow('customerName')">
-					<u-input v-model="dataForm.customerName" placeholder="输入客户名称"></u-input>
+					<u-input v-model="dataForm.customerName" placeholder="请输入客户名称"></u-input>
 				</u-form-item>
 				<u-form-item label="仓库" prop="warehouse" v-if="judgeShow('warehouse')">
-					<u-input v-model="dataForm.warehouse" placeholder="输入仓库" type="number"></u-input>
+					<u-input v-model="dataForm.warehouse" placeholder="请输入仓库" type="number"></u-input>
 				</u-form-item>
 				<u-form-item label="出库人" prop="outStorage" v-if="judgeShow('outStorage')">
-					<u-input v-model="dataForm.outStorage" placeholder="输入出库人"></u-input>
+					<u-input v-model="dataForm.outStorage" placeholder="请输入出库人"></u-input>
 				</u-form-item>
 				<u-form-item label="业务人员" prop="businessPeople" v-if="judgeShow('businessPeople')">
-					<u-input v-model="dataForm.businessPeople" placeholder="输入业务人员"></u-input>
+					<u-input v-model="dataForm.businessPeople" placeholder="请输入业务人员"></u-input>
 				</u-form-item>
 				<u-form-item label="业务类型" prop="businessType" v-if="judgeShow('businessType')">
-					<u-input v-model="dataForm.businessType" placeholder="输入业务类型"></u-input>
+					<u-input v-model="dataForm.businessType" placeholder="请输入业务类型"></u-input>
 				</u-form-item>
 				<u-form-item label="出库日期" prop="outboundDate" v-if="judgeShow('outboundDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.outboundDate" placeholder="输入出库日期"></jnpf-date-time>
+					<jnpf-date-time type="date" v-model="dataForm.outboundDate" placeholder="请输入出库日期"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="备注" prop="description">
-					<u-input v-model="dataForm.description" placeholder="输入备注" type="textarea"></u-input>
+					<u-input v-model="dataForm.description" placeholder="请输入备注" type="textarea"></u-input>
 				</u-form-item>
 			</view>
 

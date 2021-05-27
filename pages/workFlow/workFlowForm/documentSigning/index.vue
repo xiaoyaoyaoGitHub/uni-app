@@ -15,34 +15,34 @@
 
 			<view class="jnpf-card">
 				<u-form-item label="文件名称" prop="fileName" v-if="judgeShow('fileName')" required>
-					<u-input v-model="dataForm.fileName" placeholder="输入文件名称"></u-input>
+					<u-input v-model="dataForm.fileName" placeholder="请输入文件名称"></u-input>
 				</u-form-item>
 				<u-form-item label="文件编号" prop="fillNum" v-if="judgeShow('fillNum')" required>
-					<u-input v-model="dataForm.fillNum" placeholder="输入文件编号"></u-input>
+					<u-input v-model="dataForm.fillNum" placeholder="请输入文件编号"></u-input>
 				</u-form-item>
 				<u-form-item label="拟稿人" prop="draftedPerson" v-if="judgeShow('draftedPerson')">
-					<u-input v-model="dataForm.draftedPerson" placeholder="输入拟稿人" disabled></u-input>
+					<u-input v-model="dataForm.draftedPerson" placeholder="请输入拟稿人" disabled></u-input>
 				</u-form-item>
 				<u-form-item label="签阅人" prop="reader" v-if="judgeShow('reader')">
-					<u-input v-model="dataForm.reader" placeholder="输入签阅人"></u-input>
+					<u-input v-model="dataForm.reader" placeholder="请输入签阅人"></u-input>
 				</u-form-item>
 				<u-form-item label="文件拟办" prop="fillPreparation" v-if="judgeShow('fillPreparation')">
-					<u-input v-model="dataForm.fillPreparation" placeholder="输入文件拟办"></u-input>
+					<u-input v-model="dataForm.fillPreparation" placeholder="请输入文件拟办"></u-input>
 				</u-form-item>
 				<u-form-item label="签阅时间" prop="checkDate" v-if="judgeShow('checkDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.checkDate" placeholder="输入签阅时间"></jnpf-date-time>
+					<jnpf-date-time type="datetime" v-model="dataForm.checkDate" placeholder="请输入签阅时间"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="发稿日期" prop="publicationDate" v-if="judgeShow('publicationDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.publicationDate" placeholder="输入发稿日期"></jnpf-date-time>
+					<jnpf-date-time type="date" v-model="dataForm.publicationDate" placeholder="请输入发稿日期"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
 					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
 				</u-form-item>
 				<u-form-item label="文件内容" prop="documentContent" v-if="judgeShow('documentContent')">
-					<u-input v-model="dataForm.documentContent" placeholder="输入文件内容" type="textarea"></u-input>
+					<u-input v-model="dataForm.documentContent" placeholder="请输入文件内容" type="textarea"></u-input>
 				</u-form-item>
 				<u-form-item label="建议栏" prop="adviceColumn" v-if="judgeShow('adviceColumn')">
-					<u-input v-model="dataForm.adviceColumn" placeholder="输入建议" type="textarea"></u-input>
+					<u-input v-model="dataForm.adviceColumn" placeholder="请输入建议" type="textarea"></u-input>
 				</u-form-item>
 			</view>
 		</u-form>

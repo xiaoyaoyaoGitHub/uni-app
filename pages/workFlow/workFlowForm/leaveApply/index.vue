@@ -15,35 +15,35 @@
 			
 			<view class="jnpf-card">
 				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
-					<u-input v-model="dataForm.applyUser" placeholder="输入申请人员"></u-input>
+					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员"></u-input>
 				</u-form-item>
 				<u-form-item label="申请部门" prop="applyPost" v-if="judgeShow('applyPost')">
-					<u-input v-model="dataForm.applyPost" placeholder="输入申请部门"></u-input>
+					<u-input v-model="dataForm.applyPost" placeholder="请输入申请部门"></u-input>
 				</u-form-item>
 				<u-form-item label="申请职位" prop="position" v-if="judgeShow('position')">
-					<u-input v-model="dataForm.position" placeholder="输入申请职位"></u-input>
+					<u-input v-model="dataForm.position" placeholder="请输入申请职位"></u-input>
 				</u-form-item>
 				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')">
-					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="输入申请日期"></jnpf-date-time>
+					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="请假类别" prop="leaveType" v-if="judgeShow('leaveType')" required>
 					<jnpf-select v-model="dataForm.leaveType" placeholder="请选择下拉框组" :options="leaveTypeList"></jnpf-select>
 				</u-form-item>
 				<u-form-item label="请假原因" prop="leaveReason" v-if="judgeShow('leaveReason')" required>
-					<u-input v-model="dataForm.leaveReason" placeholder="输入请假原因" type="textarea"></u-input>
+					<u-input v-model="dataForm.leaveReason" placeholder="请输入请假原因" type="textarea"></u-input>
 				</u-form-item>
 				<u-form-item label="起始时间" prop="leaveStartTime" v-if="judgeShow('leaveStartTime')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.leaveStartTime" placeholder="输入起始时间"></jnpf-date-time>
+					<jnpf-date-time type="datetime" v-model="dataForm.leaveStartTime" placeholder="请输入起始时间"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="结束时间" prop="leaveEndTime" v-if="judgeShow('leaveEndTime')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.leaveEndTime" placeholder="输入结束时间"></jnpf-date-time>
+					<jnpf-date-time type="datetime" v-model="dataForm.leaveEndTime" placeholder="请输入结束时间"></jnpf-date-time>
 				</u-form-item>
 				
 				<u-form-item label="请假天数" prop="leaveDayCount" v-if="judgeShow('leaveDayCount')" required>
-					<u-input v-model="dataForm.leaveDayCount" placeholder="输入请假天数"></u-input>
+					<u-input v-model="dataForm.leaveDayCount" placeholder="请输入请假天数"></u-input>
 				</u-form-item>
 				<u-form-item label="请假小时" prop="leaveHour" v-if="judgeShow('leaveHour')" required>
-					<u-input v-model="dataForm.leaveHour" placeholder="输入请假小时" type="number"></u-input>
+					<u-input v-model="dataForm.leaveHour" placeholder="请输入请假小时" type="number"></u-input>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
 					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>

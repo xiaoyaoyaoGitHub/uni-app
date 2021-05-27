@@ -15,42 +15,42 @@
 			
 			<view class="jnpf-card">
 				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
-					<u-input v-model="dataForm.applyUser" placeholder="输入申请人员"></u-input>
+					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员"></u-input>
 				</u-form-item>
 				<u-form-item label="申请部门" prop="position" v-if="judgeShow('position')">
-					<u-input v-model="dataForm.position" placeholder="输入申请部门"></u-input>
+					<u-input v-model="dataForm.position" placeholder="请输入申请部门"></u-input>
 				</u-form-item>
 				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')">
-					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="输入申请日期"></jnpf-date-time>
+					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"></jnpf-date-time>
 				</u-form-item>
 				
 				<u-form-item label="合同编号" prop="contractNum" v-if="judgeShow('contractNum')">
-					<u-input v-model="dataForm.contractNum" placeholder="输入合同编号"></u-input>
+					<u-input v-model="dataForm.contractNum" placeholder="请输入合同编号"></u-input>
 				</u-form-item>
 				<u-form-item label="非合同支出" prop="nonContract" v-if="judgeShow('nonContract')">
-					<u-input v-model="dataForm.nonContract" placeholder="输入非合同支出"></u-input>
+					<u-input v-model="dataForm.nonContract" placeholder="请输入非合同支出"></u-input>
 				</u-form-item>
 				<u-form-item label="开户银行" prop="accountOpeningBank" v-if="judgeShow('accountOpeningBank')">
-					<u-input v-model="dataForm.accountOpeningBank" placeholder="输入开户银行"></u-input>
+					<u-input v-model="dataForm.accountOpeningBank" placeholder="请输入开户银行"></u-input>
 				</u-form-item>
 				<u-form-item label="开户账号" prop="bankAccount" v-if="judgeShow('bankAccount')">
-					<u-input v-model="dataForm.bankAccount" placeholder="输入开户账号"></u-input>
+					<u-input v-model="dataForm.bankAccount" placeholder="请输入开户账号"></u-input>
 				</u-form-item>
 				
 				<u-form-item label="开户姓名" prop="openAccount" v-if="judgeShow('openAccount')">
-					<u-input v-model="dataForm.openAccount" placeholder="输入开户姓名"></u-input>
+					<u-input v-model="dataForm.openAccount" placeholder="请输入开户姓名"></u-input>
 				</u-form-item>
 				<u-form-item label="合计费用" prop="total" v-if="judgeShow('total')">
-					<u-input v-model="dataForm.total" placeholder="输入合计费用"></u-input>
+					<u-input v-model="dataForm.total" placeholder="请输入合计费用"></u-input>
 				</u-form-item>
 				<u-form-item label="支付方式" prop="paymentMethod" v-if="judgeShow('paymentMethod')" required>
 					<jnpf-select v-model="dataForm.paymentMethod" placeholder="请选择支付方式" :options="paymentMethodOptions"></jnpf-select>
 				</u-form-item>
 				<u-form-item label="支付金额" prop="amountPayment" v-if="judgeShow('amountPayment')">
-					<u-input v-model="dataForm.amountPayment" placeholder="输入支付金额"></u-input>
+					<u-input v-model="dataForm.amountPayment" placeholder="请输入支付金额"></u-input>
 				</u-form-item>
 				<u-form-item label="备注" prop="description" v-if="judgeShow('description')">
-					<u-input v-model="dataForm.description" placeholder="输入备注" type="textarea"></u-input>
+					<u-input v-model="dataForm.description" placeholder="请输入备注" type="textarea"></u-input>
 				</u-form-item>
 			</view>
 		</u-form>

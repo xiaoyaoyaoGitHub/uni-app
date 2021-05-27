@@ -25,6 +25,8 @@
 			<monthlyReport ref="form" @eventReciver="eventReciver" v-if="config.enCode==='monthlyReport'"/>
 			<officeSupplies ref="form" @eventReciver="eventReciver" v-if="config.enCode==='officeSupplies'"/>
 			<outboundOrder ref="form" @eventReciver="eventReciver" v-if="config.enCode==='outboundOrder'"/>
+			<outgoingApply ref="form" @eventReciver="eventReciver" v-if="config.enCode==='outgoingApply'"/>
+			<paymentApply ref="form" @eventReciver="eventReciver" v-if="config.enCode==='paymentApply'"/>
 		</template>
 		<template v-else>
 			<dynamicForm ref="form" @eventReciver="eventReciver" />
@@ -58,6 +60,8 @@
 	import monthlyReport from '@/pages/workFlow/workFlowForm/monthlyReport'
 	import officeSupplies from '@/pages/workFlow/workFlowForm/officeSupplies'
 	import outboundOrder from '@/pages/workFlow/workFlowForm/outboundOrder'
+	import outgoingApply from '@/pages/workFlow/workFlowForm/outgoingApply'
+	import paymentApply from '@/pages/workFlow/workFlowForm/paymentApply'
 	export default {
 		components: {
 			crmOrder,
@@ -84,7 +88,9 @@
 			materialRequisition,
 			monthlyReport,
 			officeSupplies,
-			outboundOrder
+			outboundOrder,
+			outgoingApply,
+			paymentApply
 		},
 		props: {
 			config: {

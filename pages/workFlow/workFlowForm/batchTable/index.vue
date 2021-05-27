@@ -15,31 +15,31 @@
 			
 			<view class="jnpf-card">
 				<u-form-item label="文件标题" prop="fileTitle" v-if="judgeShow('fileTitle')">
-					<u-input v-model="dataForm.fileTitle" placeholder="输入文件标题"></u-input>
+					<u-input v-model="dataForm.fileTitle" placeholder="请输入文件标题"></u-input>
 				</u-form-item>
 				<u-form-item label="主办单位" prop="draftedPerson" v-if="judgeShow('draftedPerson')">
-					<u-input v-model="dataForm.draftedPerson" placeholder="输入主办单位"></u-input>
+					<u-input v-model="dataForm.draftedPerson" placeholder="请输入主办单位"></u-input>
 				</u-form-item>
 				<u-form-item label="文件编号" prop="fillNum" v-if="judgeShow('fillNum')">
-					<u-input v-model="dataForm.fillNum" placeholder="输入文件编号"></u-input>
+					<u-input v-model="dataForm.fillNum" placeholder="请输入文件编号"></u-input>
 				</u-form-item>
 				<u-form-item label="发往单位" prop="sendUnit" v-if="judgeShow('sendUnit')">
-					<u-input v-model="dataForm.sendUnit" placeholder="输入发往单位"></u-input>
+					<u-input v-model="dataForm.sendUnit" placeholder="请输入发往单位"></u-input>
 				</u-form-item>
 				<u-form-item label="打字" prop="typing" v-if="judgeShow('typing')">
-					<u-input v-model="dataForm.typing" placeholder="输入打字"></u-input>
+					<u-input v-model="dataForm.typing" placeholder="请输入打字"></u-input>
 				</u-form-item>
 				<u-form-item label="发文日期" prop="writingDate" v-if="judgeShow('writingDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.writingDate" placeholder="输入发文日期"></jnpf-date-time>
+					<jnpf-date-time type="date" v-model="dataForm.writingDate" placeholder="请输入发文日期"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="份数" prop="shareNum" v-if="judgeShow('shareNum')">
-					<u-input v-model="dataForm.shareNum" placeholder="输入份数"></u-input>
+					<u-input v-model="dataForm.shareNum" placeholder="请输入份数"></u-input>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
 					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
 				</u-form-item>
 				<u-form-item label="备注" prop="description" v-if="judgeShow('description')">
-					<u-input v-model="dataForm.description" placeholder="输入备注" type="textarea"></u-input>
+					<u-input v-model="dataForm.description" placeholder="请输入备注" type="textarea"></u-input>
 				</u-form-item>
 			</view>
 		</u-form>

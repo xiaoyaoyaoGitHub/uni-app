@@ -23,23 +23,23 @@
 				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')">
 					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"></jnpf-date-time>
 				</u-form-item>
-				<u-form-item label="领用仓库" prop="useStock" v-if="judgeShow('useStock')">
-					<jnpf-date-time type="date" v-model="dataForm.useStock" placeholder="请输入领用仓库"></jnpf-date-time>
+				<u-form-item label="外出总计" prop="outgoingTotle" v-if="judgeShow('outgoingTotle')">
+					<u-input v-model="dataForm.outgoingTotle" placeholder="请输入外出总计"></u-input>
 				</u-form-item>
-				<u-form-item label="用品分类" prop="classification" v-if="judgeShow('classification')">
-					<u-input v-model="dataForm.classification" placeholder="请输入用品分类"></u-input>
+				<u-form-item label="开始时间" prop="startTime" v-if="judgeShow('startTime')" required>
+					<jnpf-date-time type="datetime" v-model="dataForm.startTime" placeholder="请输入开始时间"></jnpf-date-time>
 				</u-form-item>
-				<u-form-item label="用品名称" prop="articlesName" v-if="judgeShow('articlesName')">
-					<u-input v-model="dataForm.articlesName" placeholder="请输入用品名称"></u-input>
+				<u-form-item label="结束时间" prop="endTime" v-if="judgeShow('endTime')" required>
+					<jnpf-date-time type="datetime" v-model="dataForm.endTime" placeholder="请输入结束时间"></jnpf-date-time>
 				</u-form-item>
-				<u-form-item label="用品数量" prop="articlesNum" v-if="judgeShow('articlesNum')">
-					<u-input v-model="dataForm.articlesNum" placeholder="请输入用品数量" type="number"></u-input>
+				<u-form-item label="目的地" prop="destination" v-if="judgeShow('destination')">
+					<u-input v-model="dataForm.destination" placeholder="请输入目的地"></u-input>
 				</u-form-item>
-				<u-form-item label="用品编号" prop="articlesId" v-if="judgeShow('articlesId')">
-					<u-input v-model="dataForm.articlesId" placeholder="请输入用品编号" type="number"></u-input>
+				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
+					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
 				</u-form-item>
-				<u-form-item label="申请原因" prop="applyReasons" v-if="judgeShow('applyReasons')">
-					<u-input v-model="dataForm.applyReasons" placeholder="请输入申请原因" type="text"></u-input>
+				<u-form-item label="外出事由" prop="outgoingCause" v-if="judgeShow('outgoingCause')">
+					<u-input v-model="dataForm.outgoingCause" placeholder="请输入外出事由" type="textarea"></u-input>
 				</u-form-item>
 			</view>
 		</u-form>
@@ -49,25 +49,25 @@
 <script>
 	import comMixin from '../mixin'
 	export default {
-		name: 'OfficeSuppliesNo',
+		name: 'OutgoingApplyNo',
 		mixins: [comMixin],
 		data() {
 			return {
-				billEnCode: 'WF_OfficeSuppliesNo',
+				billEnCode: 'WF_OutgoingApplyNo',
 				dataForm: {
 					flowTitle: '',
 					billNo:'',
 					flowUrgent:1,
-					articlesNum:'',
-					articlesName:'',
+					destination:'',
+					endTime:'',
 					applyUser:'',
 					applyPost:'',
 					position:'',
 					applyDate:'',
-					classification:'',
-					useStock:'',
-					applyReasons:'',
-					articlesId:''
+					startTime:'',
+					outgoingTotle:'',
+					outgoingCause:'',
+					fileList:[]
 				},
 				rules: {
 					flowTitle: [{
@@ -85,9 +85,18 @@
 						required: true,
 						message: '流程编码不能为空',
 						trigger: 'blur',
+					}],
+					startTime:[{
+						required: true,
+						message: '开始时间不能为空',
+						trigger: 'blur',
+					}],
+					endTime:[{
+						required: true,
+						message: '结束时间不能为空',
+						trigger: 'blur',
 					}]
 				},
-				
 			}
 		},
 		methods: {

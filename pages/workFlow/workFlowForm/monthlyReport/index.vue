@@ -15,31 +15,31 @@
 			
 			<view class="jnpf-card">
 				<u-form-item label="创建人员" prop="applyUser" v-if="judgeShow('applyUser')">
-					<u-input v-model="dataForm.applyUser" placeholder="输入创建人员"></u-input>
+					<u-input v-model="dataForm.applyUser" placeholder="请输入创建人员"></u-input>
 				</u-form-item>
 				<u-form-item label="所属部门" prop="applyPost" v-if="judgeShow('applyPost')">
-					<u-input v-model="dataForm.applyPost" placeholder="输入所属部门"></u-input>
+					<u-input v-model="dataForm.applyPost" placeholder="请输入所属部门"></u-input>
 				</u-form-item>
 				<u-form-item label="所属职务" prop="position" v-if="judgeShow('position')">
-					<u-input v-model="dataForm.position" placeholder="输入所属职务"></u-input>
+					<u-input v-model="dataForm.position" placeholder="请输入所属职务"></u-input>
 				</u-form-item>
 				<u-form-item label="创建日期" prop="applyDate" v-if="judgeShow('applyDate')">
-					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="输入创建日期"></jnpf-date-time>
+					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入创建日期"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="完成时间" prop="planEndTime" v-if="judgeShow('planEndTime')">
-					<jnpf-date-time type="datetime" v-model="dataForm.planEndTime" placeholder="输入完成时间"></jnpf-date-time>
+					<jnpf-date-time type="datetime" v-model="dataForm.planEndTime" placeholder="请输入完成时间"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="总体评价" prop="overalEvaluat" v-if="judgeShow('overalEvaluat')">
-					<u-input v-model="dataForm.overalEvaluat" placeholder="输入总体评价"></u-input>
+					<u-input v-model="dataForm.overalEvaluat" placeholder="请输入总体评价"></u-input>
 				</u-form-item>
 				<u-form-item label="工作事项" prop="npworkMatter" v-if="judgeShow('npworkMatter')">
-					<u-input v-model="dataForm.npworkMatter" placeholder="输入工作事项"></u-input>
+					<u-input v-model="dataForm.npworkMatter" placeholder="请输入工作事项"></u-input>
 				</u-form-item>
 				<u-form-item label="次月时间" prop="npfinishTime" v-if="judgeShow('npfinishTime')">
-					<jnpf-date-time type="date" v-model="dataForm.npfinishTime" placeholder="输入次月时间"></jnpf-date-time>
+					<jnpf-date-time type="date" v-model="dataForm.npfinishTime" placeholder="请输入次月时间"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="次月目标" prop="nfinishMethod" v-if="judgeShow('nfinishMethod')">
-					<u-input v-model="dataForm.nfinishMethod" placeholder="输入份数" type="number"></u-input>
+					<u-input v-model="dataForm.nfinishMethod" placeholder="请输入份数" type="number"></u-input>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
 					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>

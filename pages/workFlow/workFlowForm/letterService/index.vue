@@ -15,25 +15,25 @@
 			
 			<view class="jnpf-card">
 				<u-form-item label="主办单位" prop="hostUnit" v-if="judgeShow('hostUnit')">
-					<u-input v-model="dataForm.hostUnit" placeholder="输入主办单位"></u-input>
+					<u-input v-model="dataForm.hostUnit" placeholder="请输入主办单位"></u-input>
 				</u-form-item>
 				<u-form-item label="发文标题" prop="title" v-if="judgeShow('title')">
-					<u-input v-model="dataForm.title" placeholder="输入发文标题"></u-input>
+					<u-input v-model="dataForm.title" placeholder="请输入发文标题"></u-input>
 				</u-form-item>
 				<u-form-item label="发文字号" prop="issuedNum" v-if="judgeShow('issuedNum')">
-					<u-input v-model="dataForm.issuedNum" placeholder="输入发文字号"></u-input>
+					<u-input v-model="dataForm.issuedNum" placeholder="请输入发文字号"></u-input>
 				</u-form-item>
 				<u-form-item label="发文日期" prop="writingDate" v-if="judgeShow('writingDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.writingDate" placeholder="输入发文日期"></jnpf-date-time>
+					<jnpf-date-time type="date" v-model="dataForm.writingDate" placeholder="请输入发文日期"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="份数" prop="shareNum" v-if="judgeShow('shareNum')">
-					<u-input v-model="dataForm.shareNum" placeholder="输入份数" type="number"></u-input>
+					<u-input v-model="dataForm.shareNum" placeholder="请输入份数" type="number"></u-input>
 				</u-form-item>
 				<u-form-item label="主送" prop="mainDelivery" v-if="judgeShow('mainDelivery')">
-					<u-input v-model="dataForm.mainDelivery" placeholder="输入主送"></u-input>
+					<u-input v-model="dataForm.mainDelivery" placeholder="请输入主送"></u-input>
 				</u-form-item>
 				<u-form-item label="抄送" prop="copy" v-if="judgeShow('copy')">
-					<u-input v-model="dataForm.copy" placeholder="输入抄送" type="number"></u-input>
+					<u-input v-model="dataForm.copy" placeholder="请输入抄送" type="number"></u-input>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
 					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>

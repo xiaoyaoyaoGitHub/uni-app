@@ -15,16 +15,16 @@
 
 			<view class="jnpf-card">
 				<u-form-item label="领料人员" prop="leadPeople" v-if="judgeShow('leadPeople')">
-					<u-input v-model="dataForm.leadPeople" placeholder="输入领料人员"></u-input>
+					<u-input v-model="dataForm.leadPeople" placeholder="请输入领料人员"></u-input>
 				</u-form-item>
 				<u-form-item label="领料部门" prop="leadDepartment" v-if="judgeShow('leadDepartment')">
-					<u-input v-model="dataForm.leadDepartment" placeholder="输入领料部门"></u-input>
+					<u-input v-model="dataForm.leadDepartment" placeholder="请输入领料部门"></u-input>
 				</u-form-item>
 				<u-form-item label="领料日期" prop="leadDate" v-if="judgeShow('leadDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.leadDate" placeholder="输入领料日期"></jnpf-date-time>
+					<jnpf-date-time type="date" v-model="dataForm.leadDate" placeholder="请输入领料日期"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="仓库" prop="warehouse" v-if="judgeShow('warehouse')">
-					<u-input v-model="dataForm.warehouse" placeholder="输入仓库" type="number"></u-input>
+					<u-input v-model="dataForm.warehouse" placeholder="请输入仓库" type="number"></u-input>
 				</u-form-item>
 			</view>
 

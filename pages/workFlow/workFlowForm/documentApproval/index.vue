@@ -15,28 +15,28 @@
 
 			<view class="jnpf-card">
 				<u-form-item label="文件名称" prop="fileName" v-if="judgeShow('fileName')" required>
-					<u-input v-model="dataForm.fileName" placeholder="输入文件名称"></u-input>
+					<u-input v-model="dataForm.fileName" placeholder="请输入文件名称"></u-input>
 				</u-form-item>
 				<u-form-item label="拟稿人" prop="draftedPerson" v-if="judgeShow('draftedPerson')">
-					<u-input v-model="dataForm.draftedPerson" placeholder="输入拟稿人" disabled></u-input>
+					<u-input v-model="dataForm.draftedPerson" placeholder="请输入拟稿人" disabled></u-input>
 				</u-form-item>
 				<u-form-item label="发文单位" prop="serviceUnit" v-if="judgeShow('serviceUnit')">
-					<u-input v-model="dataForm.serviceUnit" placeholder="输入发文单位"></u-input>
+					<u-input v-model="dataForm.serviceUnit" placeholder="请输入发文单位"></u-input>
 				</u-form-item>
 				<u-form-item label="文件拟办" prop="fillPreparation" v-if="judgeShow('fillPreparation')">
-					<u-input v-model="dataForm.fillPreparation" placeholder="输入文件拟办"></u-input>
+					<u-input v-model="dataForm.fillPreparation" placeholder="请输入文件拟办"></u-input>
 				</u-form-item>
 				<u-form-item label="文件编号" prop="fillNum" v-if="judgeShow('fillNum')" required>
-					<u-input v-model="dataForm.fillNum" placeholder="输入文件编号"></u-input>
+					<u-input v-model="dataForm.fillNum" placeholder="请输入文件编号"></u-input>
 				</u-form-item>
 				<u-form-item label="收文日期" prop="receiptDate" v-if="judgeShow('receiptDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.receiptDate" placeholder="输入收文日期"></jnpf-date-time>
+					<jnpf-date-time type="date" v-model="dataForm.receiptDate" placeholder="请输入收文日期"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
 					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
 				</u-form-item>
 				<u-form-item label="修改意见" prop="modifyOpinion" v-if="judgeShow('modifyOpinion')">
-					<u-input v-model="dataForm.modifyOpinion" placeholder="输入修改意见" type="textarea"></u-input>
+					<u-input v-model="dataForm.modifyOpinion" placeholder="请输入修改意见" type="textarea"></u-input>
 				</u-form-item>
 			</view>
 		</u-form>
