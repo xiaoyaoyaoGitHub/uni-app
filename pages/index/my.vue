@@ -14,15 +14,33 @@
 		</view>
 		<view class="u-m-t-20">
 			<u-cell-group>
-				<u-cell-item icon="star" title="企业组织" @click="openPage()"></u-cell-item>
-				<u-cell-item icon="photo" title="账号安全" @click="openPage()"></u-cell-item>
-				<u-cell-item icon="coupon" title="联系我们" @click="openPage()"></u-cell-item>
-				<u-cell-item icon="heart" title="应用介绍" @click="openPage()"></u-cell-item>
+				<u-cell-item title="企业组织" @click="openPage()">
+					<text class="icon-ym icon-ym-zuzhi u-m-r-16 u-font-36 u-type-primary" slot="icon" />
+				</u-cell-item>
 			</u-cell-group>
 		</view>
 		<view class="u-m-t-20">
 			<u-cell-group>
-				<u-cell-item icon="setting" title="设置" @click="openPage('/pages/my/settings/index')"></u-cell-item>
+				<u-cell-item title="联系我们" @click="openPage()">
+					<text class="icon-ym icon-ym-lianxi u-m-r-16 u-font-36 u-type-primary" slot="icon" />
+				</u-cell-item>
+				<u-cell-item title="应用介绍" @click="openPage()">
+					<text class="icon-ym icon-ym-yingyong u-m-r-16 u-font-36 u-type-success" slot="icon" />
+				</u-cell-item>
+			</u-cell-group>
+		</view>
+		<view class="u-m-t-20">
+			<u-cell-group>
+				<u-cell-item title="账号安全" @click="openPage()">
+					<text class="icon-ym icon-ym-zhanghao u-m-r-16 u-font-36 u-type-warning" slot="icon" />
+				</u-cell-item>
+			</u-cell-group>
+		</view>
+		<view class="u-m-t-20">
+			<u-cell-group>
+				<u-cell-item title="设置" @click="openPage('/pages/my/settings/index')">
+					<text class="icon-ym icon-ym-shezhi u-m-r-16 u-font-36 u-type-primary" slot="icon" />
+				</u-cell-item>
 			</u-cell-group>
 		</view>
 	</view>

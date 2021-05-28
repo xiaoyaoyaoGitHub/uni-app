@@ -64,11 +64,13 @@
 			this.getDictionaryData()
 		},
 		onShow() {
-			// this.getDictionaryData()
 			this.enable = true
 		},
 		onHide() {
 			this.enable = false
+		},
+		onPullDownRefresh() {
+			this.getDictionaryData()
 		},
 		methods: {
 			getDictionaryData() {
@@ -90,6 +92,7 @@
 						this.$set(this.flowEngineList[i], 'count', count)
 					}
 					this.flowEngineList = this.flowEngineList.filter(o => o.children.length)
+					uni.stopPullDownRefresh();
 				})
 			},
 			handelClick(item) {

@@ -30,7 +30,8 @@
 		{
 			"path": "pages/index/workFlow",
 			"style": {
-				"navigationBarTitleText": "协同"
+				"navigationBarTitleText": "协同",
+				"enablePullDownRefresh": true
 			}
 		},
 		{
