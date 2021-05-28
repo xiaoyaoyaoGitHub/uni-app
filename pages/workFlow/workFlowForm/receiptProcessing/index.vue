@@ -12,33 +12,23 @@
 				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
 				</jnpf-select>
 			</u-form-item>
-			
+
 			<view class="jnpf-card">
-				<u-form-item label="主办单位" prop="hostUnit" v-if="judgeShow('hostUnit')">
-					<u-input v-model="dataForm.hostUnit" placeholder="请输入主办单位"></u-input>
+				<u-form-item label="文件标题" prop="fileTitle" v-if="judgeShow('fileTitle')">
+					<u-input v-model="dataForm.fileTitle" placeholder="请输入文件标题"></u-input>
 				</u-form-item>
-				<u-form-item label="发文标题" prop="title" v-if="judgeShow('title')">
-					<u-input v-model="dataForm.title" placeholder="请输入发文标题"></u-input>
+				<u-form-item label="来文单位" prop="communicationUnit" v-if="judgeShow('communicationUnit')">
+					<u-input v-model="dataForm.communicationUnit" placeholder="请输入来文单位" disabled></u-input>
 				</u-form-item>
-				<u-form-item label="发文字号" prop="issuedNum" v-if="judgeShow('issuedNum')">
-					<u-input v-model="dataForm.issuedNum" placeholder="请输入发文字号"></u-input>
+				<u-form-item label="来文字号" prop="letterNum" v-if="judgeShow('letterNum')">
+					<u-input v-model="dataForm.letterNum" placeholder="请输入来文字号"></u-input>
 				</u-form-item>
-				<u-form-item label="发文日期" prop="writingDate" v-if="judgeShow('writingDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.writingDate" placeholder="请输入发文日期"></jnpf-date-time>
-				</u-form-item>
-				<u-form-item label="份数" prop="shareNum" v-if="judgeShow('shareNum')">
-					<u-input v-model="dataForm.shareNum" placeholder="请输入份数" type="number"></u-input>
-				</u-form-item>
-				<u-form-item label="主送" prop="mainDelivery" v-if="judgeShow('mainDelivery')">
-					<u-input v-model="dataForm.mainDelivery" placeholder="请输入主送"></u-input>
-				</u-form-item>
-				<u-form-item label="抄送" prop="copy" v-if="judgeShow('copy')">
-					<u-input v-model="dataForm.copy" placeholder="请输入抄送" type="number"></u-input>
+				<u-form-item label="收文日期" prop="receiptDate" v-if="judgeShow('receiptDate')" required>
+					<jnpf-date-time type="date" v-model="dataForm.receiptDate" placeholder="请输入收文日期"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
 					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
 				</u-form-item>
-				
 			</view>
 		</u-form>
 	</view>
@@ -47,23 +37,20 @@
 <script>
 	import comMixin from '../mixin'
 	export default {
-		name: 'LetterService',
+		name: 'ReceiptProcessing',
 		mixins: [comMixin],
 		data() {
 			return {
-				billEnCode: 'WF_LetterServiceNo',
+				billEnCode: 'WF_ReceiptProcessingNo',
 				dataForm: {
 					flowTitle: '',
-					billNo:'',
-					flowUrgent:1,
-					hostUnit:'',
-					copy:'',
-					title:'',
-					mainDelivery:'',
-					shareNum:'',
-					writingDate:'',
-					fileList:[],
-					issuedNum:''
+					billNo: '',
+					flowUrgent: 1,
+					communicationUnit: '',
+					letterNum: '',
+					fileTitle: '',
+					receiptDate:'',
+					fileList:[]
 				},
 				rules: {
 					flowTitle: [{
@@ -80,21 +67,21 @@
 					billNo: [{
 						required: true,
 						message: '流程编码不能为空',
-						trigger: 'blur',
+						trigger: 'change',
 					}],
-					writingDate:[{
+					receiptDate: [{
 						required: true,
-						message: '发文日期不能为空',
-						trigger: 'blur',
+						message: '收文日期不能为空',
+						trigger: 'change',
+						type: 'number'
 					}],
 				},
-				
 			}
 		},
 		methods: {
 			selfInit(data) {
 				this.dataForm.applyDate = new Date().getTime()
-				this.dataForm.flowTitle = this.userInfo.userName + "的发文单"
+				this.dataForm.flowTitle = this.userInfo.userName + "的收文处理表"
 				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
 				this.dataForm.applyPost = this.userInfo.departmentName
 				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
@@ -102,7 +89,6 @@
 					this.dataForm.position = list.join(',')
 				}
 			},
-			
 		}
 	}
 </script>

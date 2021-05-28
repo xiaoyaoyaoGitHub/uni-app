@@ -14,14 +14,17 @@
 			</u-form-item>
 			
 			<view class="jnpf-card">
-				<u-form-item label="主办单位" prop="hostUnit" v-if="judgeShow('hostUnit')">
-					<u-input v-model="dataForm.hostUnit" placeholder="请输入主办单位"></u-input>
+				<u-form-item label="文件标题" prop="fileTitle" v-if="judgeShow('fileTitle')">
+					<u-input v-model="dataForm.fileTitle" placeholder="请输入文件标题"></u-input>
 				</u-form-item>
-				<u-form-item label="发文标题" prop="title" v-if="judgeShow('title')">
-					<u-input v-model="dataForm.title" placeholder="请输入发文标题"></u-input>
+				<u-form-item label="主办单位" prop="draftedPerson" v-if="judgeShow('draftedPerson')">
+					<u-input v-model="dataForm.draftedPerson" placeholder="请输入主办单位"></u-input>
 				</u-form-item>
-				<u-form-item label="发文字号" prop="issuedNum" v-if="judgeShow('issuedNum')">
-					<u-input v-model="dataForm.issuedNum" placeholder="请输入发文字号"></u-input>
+				<u-form-item label="发往单位" prop="sendUnit" v-if="judgeShow('sendUnit')">
+					<u-input v-model="dataForm.sendUnit" placeholder="请输入发往单位"></u-input>
+				</u-form-item>
+				<u-form-item label="发文编号" prop="writingNum" v-if="judgeShow('writingNum')">
+					<u-input v-model="dataForm.writingNum" placeholder="请输入发文编号"></u-input>
 				</u-form-item>
 				<u-form-item label="发文日期" prop="writingDate" v-if="judgeShow('writingDate')" required>
 					<jnpf-date-time type="date" v-model="dataForm.writingDate" placeholder="请输入发文日期"></jnpf-date-time>
@@ -29,16 +32,12 @@
 				<u-form-item label="份数" prop="shareNum" v-if="judgeShow('shareNum')">
 					<u-input v-model="dataForm.shareNum" placeholder="请输入份数" type="number"></u-input>
 				</u-form-item>
-				<u-form-item label="主送" prop="mainDelivery" v-if="judgeShow('mainDelivery')">
-					<u-input v-model="dataForm.mainDelivery" placeholder="请输入主送"></u-input>
-				</u-form-item>
-				<u-form-item label="抄送" prop="copy" v-if="judgeShow('copy')">
-					<u-input v-model="dataForm.copy" placeholder="请输入抄送" type="number"></u-input>
-				</u-form-item>
 				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
 					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
 				</u-form-item>
-				
+				<u-form-item label="备注" prop="description" v-if="judgeShow('description')">
+					<u-input v-model="dataForm.description" placeholder="请输入备注"></u-input>
+				</u-form-item>
 			</view>
 		</u-form>
 	</view>
@@ -47,23 +46,21 @@
 <script>
 	import comMixin from '../mixin'
 	export default {
-		name: 'LetterService',
+		name: 'PostBatchTab',
 		mixins: [comMixin],
 		data() {
 			return {
-				billEnCode: 'WF_LetterServiceNo',
+				billEnCode: 'WF_PostBatchTabNo',
 				dataForm: {
 					flowTitle: '',
 					billNo:'',
 					flowUrgent:1,
-					hostUnit:'',
-					copy:'',
-					title:'',
-					mainDelivery:'',
+					fileTitle:'',
+					description:'',
 					shareNum:'',
 					writingDate:'',
 					fileList:[],
-					issuedNum:''
+					sendUnit:''
 				},
 				rules: {
 					flowTitle: [{

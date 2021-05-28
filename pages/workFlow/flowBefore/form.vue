@@ -27,6 +27,14 @@
 			<outboundOrder ref="form" @eventReciver="eventReciver" v-if="config.enCode==='outboundOrder'"/>
 			<outgoingApply ref="form" @eventReciver="eventReciver" v-if="config.enCode==='outgoingApply'"/>
 			<paymentApply ref="form" @eventReciver="eventReciver" v-if="config.enCode==='paymentApply'"/>
+			<postBatchTab ref="form" @eventReciver="eventReciver" v-if="config.enCode==='postBatchTab'"/>
+			<procurementMaterial ref="form" @eventReciver="eventReciver" v-if="config.enCode==='procurementMaterial'"/>
+			<purchaseList ref="form" @eventReciver="eventReciver" v-if="config.enCode==='purchaseList'"/>
+			<quotationApproval ref="form" @eventReciver="eventReciver" v-if="config.enCode==='quotationApproval'"/>
+			<receiptProcessing ref="form" @eventReciver="eventReciver" v-if="config.enCode==='receiptProcessing'"/>
+			<receiptSign ref="form" @eventReciver="eventReciver" v-if="config.enCode==='receiptSign'"/>
+			<rewardPunishment ref="form" @eventReciver="eventReciver" v-if="config.enCode==='rewardPunishment'"/>
+			<salesOrder ref="form" @eventReciver="eventReciver" v-if="config.enCode==='salesOrder'"/>
 		</template>
 		<template v-else>
 			<dynamicForm ref="form" @eventReciver="eventReciver" />
@@ -62,6 +70,14 @@
 	import outboundOrder from '@/pages/workFlow/workFlowForm/outboundOrder'
 	import outgoingApply from '@/pages/workFlow/workFlowForm/outgoingApply'
 	import paymentApply from '@/pages/workFlow/workFlowForm/paymentApply'
+	import postBatchTab from '@/pages/workFlow/workFlowForm/postBatchTab'
+	import procurementMaterial from '@/pages/workFlow/workFlowForm/procurementMaterial'
+	import purchaseList from '@/pages/workFlow/workFlowForm/purchaseList'
+	import quotationApproval from '@/pages/workFlow/workFlowForm/quotationApproval'
+	import receiptProcessing from '@/pages/workFlow/workFlowForm/receiptProcessing'
+	import receiptSign from '@/pages/workFlow/workFlowForm/receiptSign'
+	import rewardPunishment from '@/pages/workFlow/workFlowForm/rewardPunishment'
+	import salesOrder from '@/pages/workFlow/workFlowForm/salesOrder'
 	export default {
 		components: {
 			crmOrder,
@@ -90,7 +106,15 @@
 			officeSupplies,
 			outboundOrder,
 			outgoingApply,
-			paymentApply
+			paymentApply,
+			postBatchTab,
+			procurementMaterial,
+			purchaseList,
+			quotationApproval,
+			receiptProcessing,
+			receiptSign,
+			rewardPunishment,
+			salesOrder
 		},
 		props: {
 			config: {

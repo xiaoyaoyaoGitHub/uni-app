@@ -12,33 +12,26 @@
 				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
 				</jnpf-select>
 			</u-form-item>
-			
+
 			<view class="jnpf-card">
-				<u-form-item label="主办单位" prop="hostUnit" v-if="judgeShow('hostUnit')">
-					<u-input v-model="dataForm.hostUnit" placeholder="请输入主办单位"></u-input>
+				<u-form-item label="收文标题" prop="receiptTitle" v-if="judgeShow('receiptTitle')">
+					<u-input v-model="dataForm.receiptTitle" placeholder="请输入收文标题"></u-input>
 				</u-form-item>
-				<u-form-item label="发文标题" prop="title" v-if="judgeShow('title')">
-					<u-input v-model="dataForm.title" placeholder="请输入发文标题"></u-input>
+				<u-form-item label="收文部门" prop="department" v-if="judgeShow('department')">
+					<u-input v-model="dataForm.department" placeholder="请输入收文部门" disabled></u-input>
 				</u-form-item>
-				<u-form-item label="发文字号" prop="issuedNum" v-if="judgeShow('issuedNum')">
-					<u-input v-model="dataForm.issuedNum" placeholder="请输入发文字号"></u-input>
+				<u-form-item label="收文人" prop="collector" v-if="judgeShow('collector')">
+					<u-input v-model="dataForm.collector" placeholder="请输入收文人"></u-input>
 				</u-form-item>
-				<u-form-item label="发文日期" prop="writingDate" v-if="judgeShow('writingDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.writingDate" placeholder="请输入发文日期"></jnpf-date-time>
+				<u-form-item label="收文日期" prop="receiptDate" v-if="judgeShow('receiptDate')" required>
+					<jnpf-date-time type="date" v-model="dataForm.receiptDate" placeholder="请输入收文日期"></jnpf-date-time>
 				</u-form-item>
-				<u-form-item label="份数" prop="shareNum" v-if="judgeShow('shareNum')">
-					<u-input v-model="dataForm.shareNum" placeholder="请输入份数" type="number"></u-input>
-				</u-form-item>
-				<u-form-item label="主送" prop="mainDelivery" v-if="judgeShow('mainDelivery')">
-					<u-input v-model="dataForm.mainDelivery" placeholder="请输入主送"></u-input>
-				</u-form-item>
-				<u-form-item label="抄送" prop="copy" v-if="judgeShow('copy')">
-					<u-input v-model="dataForm.copy" placeholder="请输入抄送" type="number"></u-input>
+				<u-form-item label="收文简述" prop="receiptPaper" v-if="judgeShow('receiptPaper')">
+					<u-input v-model="dataForm.receiptPaper" placeholder="请输入收文简述" type="textarea"></u-input>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
 					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
 				</u-form-item>
-				
 			</view>
 		</u-form>
 	</view>
@@ -47,23 +40,21 @@
 <script>
 	import comMixin from '../mixin'
 	export default {
-		name: 'LetterService',
+		name: 'ReceiptSign',
 		mixins: [comMixin],
 		data() {
 			return {
-				billEnCode: 'WF_LetterServiceNo',
+				billEnCode: 'WF_ReceiptSignNo',
 				dataForm: {
 					flowTitle: '',
-					billNo:'',
-					flowUrgent:1,
-					hostUnit:'',
-					copy:'',
-					title:'',
-					mainDelivery:'',
-					shareNum:'',
-					writingDate:'',
+					billNo: '',
+					flowUrgent: 1,
+					department: '',
+					collector: '',
+					receiptTitle: '',
+					receiptDate:'',
 					fileList:[],
-					issuedNum:''
+					receiptPaper:''
 				},
 				rules: {
 					flowTitle: [{
@@ -80,21 +71,21 @@
 					billNo: [{
 						required: true,
 						message: '流程编码不能为空',
-						trigger: 'blur',
+						trigger: 'change',
 					}],
-					writingDate:[{
+					receiptDate: [{
 						required: true,
-						message: '发文日期不能为空',
-						trigger: 'blur',
+						message: '收文日期不能为空',
+						trigger: 'change',
+						type: 'number'
 					}],
 				},
-				
 			}
 		},
 		methods: {
 			selfInit(data) {
 				this.dataForm.applyDate = new Date().getTime()
-				this.dataForm.flowTitle = this.userInfo.userName + "的发文单"
+				this.dataForm.flowTitle = this.userInfo.userName + "的收文签呈单"
 				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
 				this.dataForm.applyPost = this.userInfo.departmentName
 				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
@@ -102,7 +93,6 @@
 					this.dataForm.position = list.join(',')
 				}
 			},
-			
 		}
 	}
 </script>
