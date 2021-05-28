@@ -24,26 +24,14 @@
 				<swiper-item class="swiper-item">
 					<scroll-view class="scroll-v" scroll-y>
 						<view class="nodeList-v">
-							<!-- <u-steps :list="flowTaskNodeList" :current="stepIndex" direction="column"
-								active-color="#19be6b"></u-steps> -->
-							<uni-steps :options="flowTaskNodeList" active-color="#2979ff" :active="stepIndex"
-								direction="column" />
+							<steps :options="flowTaskNodeList" />
 						</view>
 					</scroll-view>
 				</swiper-item>
 				<swiper-item class="swiper-item">
 					<scroll-view class="scroll-v" scroll-y>
 						<view class="record-v">
-							<u-time-line>
-								<u-time-line-item v-for="(item,i) in recordList" :key="i">
-									<template v-slot:content>
-										<view>
-											<view class="record-title">发起人员：{{item.userName}}</view>
-											<view class="record-time">发起时间：{{item.handleTime|date}}</view>
-										</view>
-									</template>
-								</u-time-line-item>
-							</u-time-line>
+							<records :options="recordList" :endTime="endTime" />
 						</view>
 					</scroll-view>
 				</swiper-item>
@@ -109,10 +97,14 @@
 	import resources from '@/libs/resources.js'
 	import treeSelect from '@/components/jnpf/jnpf-tree-select/tree-select';
 	import childForm from './form.vue'
+	import steps from '../components/steps.vue'
+	import records from '../components/records.vue'
 	export default {
 		components: {
 			treeSelect,
-			childForm
+			childForm,
+			steps,
+			records
 		},
 		data() {
 			return {
@@ -123,6 +115,7 @@
 				flowTaskNodeList: [],
 				recordList: [],
 				properties: {},
+				endTime: 0,
 				tabIndex: 0,
 				tabBars: [{
 					name: '表单信息'
@@ -184,8 +177,20 @@
 					}
 					setTimeout(() => {
 						this.$nextTick(() => {
-							this.$refs.child && this.$refs.child.$refs.form && this.$refs.child
-								.$refs.form.init(data)
+							if (!this.$refs.child || !this.$refs.child.$refs.form || !this.$refs
+								.child.$refs.form.init) {
+								uni.showToast({
+									title: '暂无此流程表单',
+									icon: 'none',
+									complete() {
+										setTimeout(() => {
+											uni.navigateBack()
+										}, 1500)
+									}
+								})
+								return
+							}
+							this.$refs.child.$refs.form.init(data)
 						})
 					}, 100)
 				})
@@ -195,19 +200,10 @@
 					taskNodeId: data.taskNodeId
 				}).then(res => {
 					this.flowTaskInfo = res.data.flowTaskInfo
-					this.flowTaskNodeList = res.data.flowTaskNodeList.map(o => ({
-						...o,
-						name: o.nodeName,
-						title: o.nodeName
-					}))
-					for (let i = 0; i < this.flowTaskNodeList.length; i++) {
-						if (this.flowTaskNodeList[i].type == '1') {
-							this.stepIndex = i
-							break
-						}
-					}
+					this.flowTaskNodeList = res.data.flowTaskNodeList
 					this.recordList = res.data.flowTaskOperatorRecordList
 					this.properties = res.data.approversProperties || {}
+					this.endTime = this.flowTaskInfo.completion == 100 ? this.flowTaskInfo.endTime : 0
 					const flowTemplateJson = this.flowTaskInfo.flowTemplateJson ? JSON.parse(this.flowTaskInfo
 						.flowTemplateJson) : null
 					this.endTime = this.flowTaskInfo.completion == 100 ? this.flowTaskInfo.endTime : 0
@@ -249,8 +245,20 @@
 					}
 					setTimeout(() => {
 						this.$nextTick(() => {
-							this.$refs.child && this.$refs.child.$refs.form && this.$refs.child
-								.$refs.form.init(data)
+							if (!this.$refs.child || !this.$refs.child.$refs.form || !this.$refs
+								.child.$refs.form.init) {
+								uni.showToast({
+									title: '暂无此流程表单',
+									icon: 'none',
+									complete() {
+										setTimeout(() => {
+											uni.navigateBack()
+										}, 1500)
+									}
+								})
+								return
+							}
+							this.$refs.child.$refs.form.init(data)
 						})
 					}, 100)
 				})
@@ -399,7 +407,7 @@
 
 	.nodeList-v,
 	.record-v {
-		padding: 10rpx 30rpx;
+		padding: 32rpx 32rpx 10rpx;
 		background-color: #fff;
 	}
 </style>

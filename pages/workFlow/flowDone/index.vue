@@ -13,6 +13,7 @@
 </template>
 
 <script>
+	import resources from '@/libs/resources.js'
 	import {
 		FlowBeforeList
 	} from '@/api/workFlow/flowBefore'
@@ -37,6 +38,13 @@
 						num: 0,
 						size: 20,
 						time: null
+					},
+					empty: {
+						use: true,
+						icon: resources.message.nodata,
+						tip: "暂无数据",
+						fixed: true,
+						top: "300rpx",
 					},
 					textNoMore: '没有更多数据',
 				},
