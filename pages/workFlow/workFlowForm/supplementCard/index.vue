@@ -12,19 +12,25 @@
 				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
 				</jnpf-select>
 			</u-form-item>
-			
+
 			<view class="jnpf-card">
-				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
-					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员"></u-input>
+				<u-form-item label="员工姓名" prop="fullName" v-if="judgeShow('fullName')">
+					<u-input v-model="dataForm.fullName" placeholder="请输入员工姓名"></u-input>
 				</u-form-item>
-				<u-form-item label="所属部门" prop="applyDept" v-if="judgeShow('applyDept')">
-					<u-input v-model="dataForm.applyDept" placeholder="请输入所属部门"></u-input>
+				<u-form-item label="所在部门" prop="department" v-if="judgeShow('department')">
+					<u-input v-model="dataForm.department" placeholder="请输入所在部门"></u-input>
+				</u-form-item>
+				<u-form-item label="所在职务" prop="position" v-if="judgeShow('position')">
+					<u-input v-model="dataForm.position" placeholder="请输入所在职务"></u-input>
 				</u-form-item>
 				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')">
 					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"></jnpf-date-time>
 				</u-form-item>
-				<u-form-item label="外出总计" prop="outgoingTotle" v-if="judgeShow('outgoingTotle')">
-					<u-input v-model="dataForm.outgoingTotle" placeholder="请输入外出总计"></u-input>
+				<u-form-item label="证明人" prop="witness" v-if="judgeShow('witness')">
+					<u-input v-model="dataForm.witness" placeholder="请输入证明人"></u-input>
+				</u-form-item>
+				<u-form-item label="补卡次数" prop="supplementNum" v-if="judgeShow('supplementNum')">
+					<u-input v-model="dataForm.supplementNum" placeholder="请输入补卡次数" type="number"></u-input>
 				</u-form-item>
 				<u-form-item label="开始时间" prop="startTime" v-if="judgeShow('startTime')" required>
 					<jnpf-date-time type="datetime" v-model="dataForm.startTime" placeholder="请输入开始时间"></jnpf-date-time>
@@ -32,14 +38,8 @@
 				<u-form-item label="结束时间" prop="endTime" v-if="judgeShow('endTime')" required>
 					<jnpf-date-time type="datetime" v-model="dataForm.endTime" placeholder="请输入结束时间"></jnpf-date-time>
 				</u-form-item>
-				<u-form-item label="目的地" prop="destination" v-if="judgeShow('destination')">
-					<u-input v-model="dataForm.destination" placeholder="请输入目的地"></u-input>
-				</u-form-item>
-				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
-					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
-				</u-form-item>
-				<u-form-item label="外出事由" prop="outgoingCause" v-if="judgeShow('outgoingCause')">
-					<u-input v-model="dataForm.outgoingCause" placeholder="请输入外出事由" type="textarea"></u-input>
+				<u-form-item label="备注" prop="description" v-if="judgeShow('description')">
+					<u-input v-model="dataForm.description" placeholder="请输入备注" type="textarea"></u-input>
 				</u-form-item>
 			</view>
 		</u-form>
@@ -49,25 +49,22 @@
 <script>
 	import comMixin from '../mixin'
 	export default {
-		name: 'OutgoingApplyNo',
+		name: 'SupplementCard',
 		mixins: [comMixin],
 		data() {
 			return {
-				billEnCode: 'WF_OutgoingApplyNo',
+				billEnCode: 'WF_SupplementCardNo',
 				dataForm: {
 					flowTitle: '',
-					billNo:'',
-					flowUrgent:1,
-					destination:'',
-					endTime:'',
-					applyUser:'',
-					applyDept:'',
-					position:'',
-					applyDate:'',
-					startTime:'',
-					outgoingTotle:'',
-					outgoingCause:'',
-					fileList:[]
+					billNo: '',
+					flowUrgent: 1,
+					endTime: '',
+					fullName: '',
+					department: '',
+					position: '',
+					applyDate: '',
+					startTime: '',
+					description: '',
 				},
 				rules: {
 					flowTitle: [{
@@ -86,31 +83,39 @@
 						message: '流程编码不能为空',
 						trigger: 'blur',
 					}],
-					startTime:[{
+					startTime: [{
 						required: true,
 						message: '开始时间不能为空',
 						trigger: 'blur',
+						type:'number'
 					}],
-					endTime:[{
+					endTime: [{
 						required: true,
 						message: '结束时间不能为空',
 						trigger: 'blur',
-					}]
-				},
+						type:'number'
+					}],
+					description: [{
+						required: true,
+						message: '备注不能为空',
+						trigger: 'blur'
+					}],
+					
+				}
 			}
 		},
 		methods: {
 			selfInit(data) {
 				this.dataForm.applyDate = new Date().getTime()
-				this.dataForm.flowTitle = this.userInfo.userName + "的领用办公用品申请"
-				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
-				this.dataForm.applyDept = this.userInfo.departmentName
+				this.dataForm.flowTitle = this.userInfo.userName + "的补打卡申请"
+				this.dataForm.fullName = this.userInfo.userName + '/' + this.userInfo.userAccount
+				this.dataForm.department = this.userInfo.departmentName
 				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
 					let list = this.userInfo.positionIds.map(o => o.name)
 					this.dataForm.position = list.join(',')
 				}
 			},
-			
+
 		}
 	}
 </script>

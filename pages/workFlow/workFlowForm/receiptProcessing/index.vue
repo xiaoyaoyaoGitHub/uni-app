@@ -6,7 +6,7 @@
 				<u-input v-model="dataForm.flowTitle" placeholder="流程标题"></u-input>
 			</u-form-item>
 			<u-form-item label="流程编码" prop="billNo" v-if="judgeShow('billNo')" required>
-				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
+				<u-input v-model="dataForm.billNo" placeholder="流程编码" ></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" required>
 				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
@@ -18,7 +18,7 @@
 					<u-input v-model="dataForm.fileTitle" placeholder="请输入文件标题"></u-input>
 				</u-form-item>
 				<u-form-item label="来文单位" prop="communicationUnit" v-if="judgeShow('communicationUnit')">
-					<u-input v-model="dataForm.communicationUnit" placeholder="请输入来文单位" disabled></u-input>
+					<u-input v-model="dataForm.communicationUnit" placeholder="请输入来文单位" ></u-input>
 				</u-form-item>
 				<u-form-item label="来文字号" prop="letterNum" v-if="judgeShow('letterNum')">
 					<u-input v-model="dataForm.letterNum" placeholder="请输入来文字号"></u-input>
@@ -83,7 +83,7 @@
 				this.dataForm.applyDate = new Date().getTime()
 				this.dataForm.flowTitle = this.userInfo.userName + "的收文处理表"
 				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
-				this.dataForm.applyPost = this.userInfo.departmentName
+				this.dataForm.applyDept = this.userInfo.departmentName
 				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
 					let list = this.userInfo.positionIds.map(o => o.name)
 					this.dataForm.position = list.join(',')

@@ -14,24 +14,39 @@
 			</u-form-item>
 
 			<view class="jnpf-card">
-				<u-form-item label="领料人员" prop="leadPeople" v-if="judgeShow('leadPeople')">
-					<u-input v-model="dataForm.leadPeople" placeholder="请输入领料人员"></u-input>
+				<u-form-item label="供应商名称" prop="supplierName" v-if="judgeShow('supplierName')">
+					<u-input v-model="dataForm.supplierName" placeholder="请输入供应商名称"></u-input>
 				</u-form-item>
-				<u-form-item label="领料部门" prop="leadDepartment" v-if="judgeShow('leadDepartment')">
-					<u-input v-model="dataForm.leadDepartment" placeholder="请输入领料部门"></u-input>
+				<u-form-item label="联系电话" prop="contactPhone" v-if="judgeShow('contactPhone')" required>
+					<u-input v-model="dataForm.contactPhone" placeholder="请输入联系电话"></u-input>
 				</u-form-item>
-				<u-form-item label="领料日期" prop="leadDate" v-if="judgeShow('leadDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.leadDate" placeholder="请输入领料日期"></jnpf-date-time>
+				<u-form-item label="入库类别" prop="warehousCategory" v-if="judgeShow('warehousCategory')">
+					<u-input v-model="dataForm.warehousCategory" placeholder="请输入入库类别"></u-input>
 				</u-form-item>
 				<u-form-item label="仓库" prop="warehouse" v-if="judgeShow('warehouse')">
-					<u-input v-model="dataForm.warehouse" placeholder="请输入仓库" type="number"></u-input>
+					<u-input v-model="dataForm.warehouse" placeholder="请输入仓库"></u-input>
+				</u-form-item>
+				<u-form-item label="入库人" prop="warehousesPeople" v-if="judgeShow('warehousesPeople')">
+					<u-input v-model="dataForm.warehousesPeople" placeholder="请输入入库人"></u-input>
+				</u-form-item>
+				<u-form-item label="送货单号" prop="deliveryNo" v-if="judgeShow('deliveryNo')">
+					<u-input v-model="dataForm.deliveryNo" placeholder="请输入送货单号"></u-input>
+				</u-form-item>
+				<u-form-item label="入库单号" prop="warehouseNo" v-if="judgeShow('warehouseNo')">
+					<u-input v-model="dataForm.warehouseNo" placeholder="请输入入库单号" type="number"></u-input>
+				</u-form-item>
+				<u-form-item label="入库日期" prop="warehousDate" v-if="judgeShow('warehousDate')" required>
+					<jnpf-date-time type="date" v-model="dataForm.warehousDate" placeholder="请输入入库日期"></jnpf-date-time>
+				</u-form-item>
+				<u-form-item label="备注" prop="description" v-if="judgeShow('description')">
+					<u-input v-model="dataForm.description" placeholder="请输入备注" type="textarea"></u-input>
 				</u-form-item>
 			</view>
 
 			<view class="jnpf-table">
 				<view class="jnpf-table-item" v-for="(item,i) in dataForm.entryList" :key="i">
 					<view class="jnpf-table-item-title u-flex u-row-between">
-						<text class="jnpf-table-item-title-num">商品添购({{i+1}})</text>
+						<text class="jnpf-table-item-title-num">入库明细({{i+1}})</text>
 						<view class="jnpf-table-item-title-action" v-if="dataForm.entryList.length>1"
 							@click="delItem(i)">删除
 						</view>
@@ -39,26 +54,22 @@
 					<u-form-item label="商品名称" prop="dataForm.entryList[i].tradeName">
 						<u-input v-model="dataForm.entryList[i].tradeName" placeholder="请输入商品名称"></u-input>
 					</u-form-item>
-					<u-form-item label="规格类型" prop="dataForm.entryList[i].specifications">
+					<u-form-item label="规格型号" prop="dataForm.entryList[i].specifications">
 						<u-input v-model="dataForm.entryList[i].specifications" placeholder="规格类型"></u-input>
 					</u-form-item>
 					<u-form-item label="单位" prop="dataForm.entryList[i].unit">
 						<u-input v-model="dataForm.entryList[i].unit" placeholder="单位" ></u-input>
 					</u-form-item>
-					<u-form-item label="需数量" prop="dataForm.entryList[i].needQty">
-						<u-number-box v-model="dataForm.entryList[i].needQty" :min="0" :max="100" :step="1" :input-width="120"
-							:positive-integer="false" :input-height="60"></u-number-box>
-					</u-form-item>
-					<u-form-item label="配数量" prop="dataForm.entryList[i].matchQty">
-						<u-number-box v-model="dataForm.entryList[i].matchQty" :min="0" :max="100" :step="1" :input-width="120"
-							:positive-integer="false" :input-height="60"  @change="count(dataForm.entryList[i])"></u-number-box>
+					<u-form-item label="数量" prop="dataForm.entryList[i].qty">
+						<u-input v-model="dataForm.entryList[i].qty" placeholder="数量" type="number"
+							@input="count(dataForm.entryList[i])"></u-input>
 					</u-form-item>
 					<u-form-item label="单价" prop="dataForm.entryList[i].price">
 						<u-input v-model="dataForm.entryList[i].price" placeholder="单价" type="number"
 							@input="count(dataForm.entryList[i])"></u-input>
 					</u-form-item>
 					<u-form-item label="金额" prop="dataForm.entryList[i].amount">
-						<u-input v-model="dataForm.entryList[i].amount" placeholder="金额" ></u-input>
+						<u-input v-model="dataForm.entryList[i].amount" placeholder="金额"></u-input>
 					</u-form-item>
 					<u-form-item label="备注" prop="dataForm.entryList[i].description">
 						<u-input v-model="dataForm.entryList[i].description" placeholder="备注"></u-input>
@@ -75,25 +86,26 @@
 <script>
 	import comMixin from '../mixin'
 	export default {
-		name: 'MaterialRequisitionNo',
+		name: 'WarehouseReceipt',
 		mixins: [comMixin],
 		data() {
 			return {
-				billEnCode: 'WF_MaterialRequisitionNo',
+				billEnCode: 'WF_WarehouseReceiptNo',
 				dataForm: {
 					flowTitle: '',
-					billNo:'',
-					flowUrgent:1,
-					leadPeople:'',
-					warehouse:'',
-					leadDate:'',
-					leadDepartment:'',
+					billNo: '',
+					flowUrgent: 1,
+					supplierName: '',
+					contactPhone: '',
+					position: '',
+					warehousCategory: '',
+					description: '',
+					warehousDate:'',
 					entryList: [{
 						tradeName: '',
 						specifications: '',
 						unit: '',
-						matchQty: 0,
-						needQty: 0,
+						qty: '',
 						price: '',
 						amount: '',
 						description:''
@@ -116,23 +128,18 @@
 						message: '流程编码不能为空',
 						trigger: 'blur',
 					}],
-					leadDate:[{
-						required: true,
-						message: '领料日期不能为空',
-						trigger: 'blur',
+					contactPhone: [{
+						pattern: /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/,
+						message: '手机号码不正确',
+						type: 'string',
+						trigger: ['change', 'blur'],
 					}],
 				},
 			}
 		},
 		methods: {
 			selfInit(data) {
-				this.dataForm.applyDate = new Date().getTime()
-				this.dataForm.flowTitle = this.userInfo.userName + "的发货申请"
-				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
-				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
-					let list = this.userInfo.positionIds.map(o => o.name)
-					this.dataForm.position = list.join(',')
-				}
+				this.dataForm.flowTitle = this.userInfo.userName + "的入库申请"
 			},
 			/* 添加子表 */
 			addItem() {
@@ -140,8 +147,7 @@
 					tradeName: '',
 					specifications: '',
 					unit: '',
-					matchQty: 0,
-					needQty: 0,
+					qty: '',
 					price: '',
 					amount: '',
 					description:''
@@ -156,7 +162,7 @@
 			/* 计算价格 */
 			count(row) {
 				//金额 = 数量*单价
-				row.amount = this.jnpf.toDecimal(parseFloat(row.price) * parseFloat(row.matchQty))
+				row.amount = this.jnpf.toDecimal(parseFloat(row.price) * parseFloat(row.qty))
 				//折扣价 = (单价*折扣)
 				var discountPrice = row.price * (row.discount / 100);
 				//实际单价 = 折扣价 * (1 + (税率 / 100))

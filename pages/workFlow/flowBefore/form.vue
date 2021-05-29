@@ -35,6 +35,15 @@
 			<receiptSign ref="form" @eventReciver="eventReciver" v-if="config.enCode==='receiptSign'"/>
 			<rewardPunishment ref="form" @eventReciver="eventReciver" v-if="config.enCode==='rewardPunishment'"/>
 			<salesOrder ref="form" @eventReciver="eventReciver" v-if="config.enCode==='salesOrder'"/>
+			<salesSupport ref="form" @eventReciver="eventReciver" v-if="config.enCode==='salesSupport'"/>
+			<staffOvertime ref="form" @eventReciver="eventReciver" v-if="config.enCode==='staffOvertime'"/>
+			<supplementCard ref="form" @eventReciver="eventReciver" v-if="config.enCode==='supplementCard'"/>
+			<travelApply ref="form" @eventReciver="eventReciver" v-if="config.enCode==='travelApply'"/>
+			<travelReimbursement ref="form" @eventReciver="eventReciver" v-if="config.enCode==='travelReimbursement'"/>
+			<vehicleApply ref="form" @eventReciver="eventReciver" v-if="config.enCode==='vehicleApply'"/>
+			<violationHandling ref="form" @eventReciver="eventReciver" v-if="config.enCode==='violationHandling'"/>
+			<warehouseReceipt ref="form" @eventReciver="eventReciver" v-if="config.enCode==='warehouseReceipt'"/>
+			<workContactSheet ref="form" @eventReciver="eventReciver" v-if="config.enCode==='workContactSheet'"/>
 		</template>
 		<template v-else>
 			<dynamicForm ref="form" @eventReciver="eventReciver" />
@@ -78,6 +87,15 @@
 	import receiptSign from '@/pages/workFlow/workFlowForm/receiptSign'
 	import rewardPunishment from '@/pages/workFlow/workFlowForm/rewardPunishment'
 	import salesOrder from '@/pages/workFlow/workFlowForm/salesOrder'
+	import salesSupport from '@/pages/workFlow/workFlowForm/salesSupport'
+	import staffOvertime from '@/pages/workFlow/workFlowForm/staffOvertime'
+	import supplementCard from '@/pages/workFlow/workFlowForm/supplementCard'
+	import travelApply from '@/pages/workFlow/workFlowForm/travelApply'
+	import travelReimbursement from '@/pages/workFlow/workFlowForm/travelReimbursement'
+	import vehicleApply from '@/pages/workFlow/workFlowForm/vehicleApply'
+	import violationHandling from '@/pages/workFlow/workFlowForm/violationHandling'
+	import warehouseReceipt from '@/pages/workFlow/workFlowForm/warehouseReceipt'
+	import workContactSheet from '@/pages/workFlow/workFlowForm/workContactSheet'
 	export default {
 		components: {
 			crmOrder,
@@ -114,7 +132,16 @@
 			receiptProcessing,
 			receiptSign,
 			rewardPunishment,
-			salesOrder
+			salesOrder,
+			salesSupport,
+			staffOvertime,
+			supplementCard,
+			travelApply,
+			travelReimbursement,
+			vehicleApply,
+			violationHandling,
+			warehouseReceipt,
+			workContactSheet
 		},
 		props: {
 			config: {

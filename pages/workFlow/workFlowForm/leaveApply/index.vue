@@ -6,7 +6,7 @@
 				<u-input v-model="dataForm.flowTitle" placeholder="流程标题"></u-input>
 			</u-form-item>
 			<u-form-item label="流程编码" prop="billNo" v-if="judgeShow('billNo')" required>
-				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
+				<u-input v-model="dataForm.billNo" placeholder="流程编码" ></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" required>
 				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
@@ -17,8 +17,8 @@
 				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
 					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员"></u-input>
 				</u-form-item>
-				<u-form-item label="申请部门" prop="applyPost" v-if="judgeShow('applyPost')">
-					<u-input v-model="dataForm.applyPost" placeholder="请输入申请部门"></u-input>
+				<u-form-item label="申请部门" prop="applyDept" v-if="judgeShow('applyDept')">
+					<u-input v-model="dataForm.applyDept" placeholder="请输入申请部门"></u-input>
 				</u-form-item>
 				<u-form-item label="申请职位" prop="position" v-if="judgeShow('position')">
 					<u-input v-model="dataForm.position" placeholder="请输入申请职位"></u-input>
@@ -68,7 +68,7 @@
 					flowUrgent:1,
 					applyUser:'',
 					leaveHour:'',
-					applyPost:'',
+					applyDept:'',
 					leaveStartTime:'',
 					leaveEndTime:'',
 					leaveDayCount:'',
@@ -170,7 +170,7 @@
 				this.dataForm.applyDate = new Date().getTime()
 				this.dataForm.flowTitle = this.userInfo.userName + "的请假申请表"
 				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
-				this.dataForm.applyPost = this.userInfo.departmentName
+				this.dataForm.applyDept = this.userInfo.departmentName
 				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
 					let list = this.userInfo.positionIds.map(o => o.name)
 					this.dataForm.position = list.join(',')

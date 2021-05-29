@@ -6,20 +6,20 @@
 				<u-input v-model="dataForm.flowTitle" placeholder="流程标题"></u-input>
 			</u-form-item>
 			<u-form-item label="流程编码" prop="billNo" v-if="judgeShow('billNo')">
-				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
+				<u-input v-model="dataForm.billNo" placeholder="流程编码" ></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent">
 				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
 				</jnpf-select>
 			</u-form-item>
 			<u-form-item label="申请人员" prop="applyUser">
-				<u-input v-model="dataForm.applyUser" placeholder="申请人员" disabled></u-input>
+				<u-input v-model="dataForm.applyUser" placeholder="申请人员" ></u-input>
 			</u-form-item>
 			<u-form-item label="所属职务" prop="position">
-				<u-input v-model="dataForm.position" placeholder="所属职务" disabled></u-input>
+				<u-input v-model="dataForm.position" placeholder="所属职务" ></u-input>
 			</u-form-item>
 			<u-form-item label="申请日期" prop="applyDate">
-				<jnpf-date-time type="date" placeholder="申请日期" v-model="dataForm.applyDate" disabled></jnpf-date-time>
+				<jnpf-date-time type="date" placeholder="申请日期" v-model="dataForm.applyDate" ></jnpf-date-time>
 			</u-form-item>
 			<view class="jnpf-card">
 				<u-form-item label="宴请人数" prop="banquetNum">

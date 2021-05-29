@@ -6,7 +6,7 @@
 				<u-input v-model="dataForm.flowTitle" placeholder="流程标题"></u-input>
 			</u-form-item>
 			<u-form-item label="流程编码" prop="billNo" v-if="judgeShow('billNo')" required>
-				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
+				<u-input v-model="dataForm.billNo" placeholder="流程编码" ></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" required>
 				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
@@ -44,7 +44,7 @@
 						<u-input v-model="dataForm.entryList[i].specifications" placeholder="请输入规格类型"></u-input>
 					</u-form-item>
 					<u-form-item label="单位" prop="dataForm.entryList[i].unit">
-						<u-input v-model="dataForm.entryList[i].unit" placeholder="请输入单位" disabled></u-input>
+						<u-input v-model="dataForm.entryList[i].unit" placeholder="请输入单位" ></u-input>
 					</u-form-item>
 					<u-form-item label="数量" prop="dataForm.entryList[i].qty">
 						<u-input v-model="dataForm.entryList[i].qty" placeholder="请输入数量" type="number"
@@ -55,7 +55,7 @@
 							@input="count(dataForm.entryList[i])"></u-input>
 					</u-form-item>
 					<u-form-item label="金额" prop="dataForm.entryList[i].amount">
-						<u-input v-model="dataForm.entryList[i].amount" placeholder="请输入金额" disabled></u-input>
+						<u-input v-model="dataForm.entryList[i].amount" placeholder="请输入金额" ></u-input>
 					</u-form-item>
 					<u-form-item label="收款摘要" prop="dataForm.entryList[i].description">
 						<u-input v-model="dataForm.entryList[i].description" placeholder="请输入收款摘要" type="textarea"></u-input>

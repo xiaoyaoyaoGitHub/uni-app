@@ -6,7 +6,7 @@
 				<u-input v-model="dataForm.flowTitle" placeholder="流程标题"></u-input>
 			</u-form-item>
 			<u-form-item label="流程编码" prop="billNo" v-if="judgeShow('billNo')" required>
-				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
+				<u-input v-model="dataForm.billNo" placeholder="流程编码" ></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" required>
 				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
@@ -21,7 +21,7 @@
 					<u-input v-model="dataForm.issuingUnit" placeholder="发放单位"></u-input>
 				</u-form-item>
 				<u-form-item label="员工部门" prop="position" v-if="judgeShow('position')">
-					<u-input v-model="dataForm.position" placeholder="员工部门" disabled></u-input>
+					<u-input v-model="dataForm.position" placeholder="员工部门" ></u-input>
 				</u-form-item>
 				<u-form-item label="员工职位" prop="month" v-if="judgeShow('month')">
 					<u-input v-model="dataForm.month" placeholder="员工职位"></u-input>

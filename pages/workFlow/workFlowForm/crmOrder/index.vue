@@ -3,7 +3,7 @@
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<u-form-item label="订单编码" prop="orderCode">
-				<u-input v-model="dataForm.orderCode" placeholder="订单编码" disabled></u-input>
+				<u-input v-model="dataForm.orderCode" placeholder="订单编码" ></u-input>
 			</u-form-item>
 			<u-form-item label="客户名称" prop="customerId" required>
 				<jnpf-tree-select v-model="dataForm.customerId" placeholder="请选择客户名称" :options="customerOptions"
@@ -63,10 +63,10 @@
 						</jnpf-tree-select>
 					</u-form-item>
 					<u-form-item label="规格型号" prop="dataForm.goodsList[i].specifications">
-						<u-input v-model="dataForm.goodsList[i].specifications" placeholder="规格型号" disabled></u-input>
+						<u-input v-model="dataForm.goodsList[i].specifications" placeholder="规格型号" ></u-input>
 					</u-form-item>
 					<u-form-item label="单位" prop="dataForm.goodsList[i].unit">
-						<u-input v-model="dataForm.goodsList[i].unit" placeholder="单位" disabled></u-input>
+						<u-input v-model="dataForm.goodsList[i].unit" placeholder="单位" ></u-input>
 					</u-form-item>
 					<u-form-item label="数量" prop="dataForm.goodsList[i].qty">
 						<u-input v-model="dataForm.goodsList[i].qty" placeholder="数量" type="number"
@@ -77,7 +77,7 @@
 							@input="count(dataForm.goodsList[i])"></u-input>
 					</u-form-item>
 					<u-form-item label="金额" prop="dataForm.goodsList[i].amount">
-						<u-input v-model="dataForm.goodsList[i].amount" placeholder="金额" disabled></u-input>
+						<u-input v-model="dataForm.goodsList[i].amount" placeholder="金额" ></u-input>
 					</u-form-item>
 					<u-form-item label="折扣%" prop="dataForm.goodsList[i].discount">
 						<u-input v-model="dataForm.goodsList[i].discount" placeholder="折扣" type="number"
@@ -88,10 +88,10 @@
 							@input="count(dataForm.goodsList[i])"></u-input>
 					</u-form-item>
 					<u-form-item label="实际单价" prop="dataForm.goodsList[i].actualPrice">
-						<u-input v-model="dataForm.goodsList[i].actualPrice" placeholder="实际单价" disabled></u-input>
+						<u-input v-model="dataForm.goodsList[i].actualPrice" placeholder="实际单价" ></u-input>
 					</u-form-item>
 					<u-form-item label="实际金额" prop="dataForm.goodsList[i].actualAmount">
-						<u-input v-model="dataForm.goodsList[i].actualAmount" placeholder="实际金额" disabled></u-input>
+						<u-input v-model="dataForm.goodsList[i].actualAmount" placeholder="实际金额" ></u-input>
 					</u-form-item>
 					<u-form-item label="备注" prop="dataForm.goodsList[i].description">
 						<u-input v-model="dataForm.goodsList[i].description" placeholder="备注" type="textarea"></u-input>

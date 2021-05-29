@@ -6,7 +6,7 @@
 				<u-input v-model="dataForm.flowTitle" placeholder="流程标题"></u-input>
 			</u-form-item>
 			<u-form-item label="流程编码" prop="billNo" v-if="judgeShow('billNo')" required>
-				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
+				<u-input v-model="dataForm.billNo" placeholder="流程编码" ></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" required>
 				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
@@ -18,10 +18,10 @@
 					<u-input v-model="dataForm.position" placeholder="请输入所属部门"></u-input>
 				</u-form-item>
 				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期" disabled></jnpf-date-time>
+					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期" ></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="员工姓名" prop="staffName" v-if="judgeShow('staffName')">
-					<u-input v-model="dataForm.staffName" placeholder="请输入员工姓名" disabled></u-input>
+					<u-input v-model="dataForm.staffName" placeholder="请输入员工姓名" ></u-input>
 				</u-form-item>
 				<u-form-item label="员工职务" prop="staffPost" v-if="judgeShow('staffPost')">
 					<u-input v-model="dataForm.staffPost" placeholder="请输入员工职务"></u-input>

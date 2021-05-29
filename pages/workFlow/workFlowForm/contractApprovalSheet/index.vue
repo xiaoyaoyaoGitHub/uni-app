@@ -6,7 +6,7 @@
 				<u-input v-model="dataForm.flowTitle" placeholder="流程标题"></u-input>
 			</u-form-item>
 			<u-form-item label="流程编码" prop="billNo" v-if="judgeShow('billNo')" required>
-				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
+				<u-input v-model="dataForm.billNo" placeholder="流程编码" ></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" required>
 				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
@@ -15,10 +15,10 @@
 
 			<view class="jnpf-card">
 				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
-					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员" disabled></u-input>
+					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员" ></u-input>
 				</u-form-item>
 				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.applyDate" placeholder="请输入申请日期" disabled></jnpf-date-time>
+					<jnpf-date-time type="datetime" v-model="dataForm.applyDate" placeholder="请输入申请日期" ></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="合同名称" prop="contractName" v-if="judgeShow('contractName')" required>
 					<u-input v-model="dataForm.contractName" placeholder="请输入合同名称"></u-input>

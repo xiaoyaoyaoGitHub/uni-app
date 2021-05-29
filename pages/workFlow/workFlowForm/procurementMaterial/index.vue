@@ -6,7 +6,7 @@
 				<u-input v-model="dataForm.flowTitle" placeholder="流程标题"></u-input>
 			</u-form-item>
 			<u-form-item label="流程编码" prop="billNo" v-if="judgeShow('billNo')" required>
-				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
+				<u-input v-model="dataForm.billNo" placeholder="流程编码" ></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" required>
 				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
@@ -17,8 +17,8 @@
 				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
 					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员"></u-input>
 				</u-form-item>
-				<u-form-item label="所属部门" prop="applyPost" v-if="judgeShow('applyPost')">
-					<u-input v-model="dataForm.applyPost" placeholder="请输入所属部门"></u-input>
+				<u-form-item label="所属部门" prop="applyDept" v-if="judgeShow('applyDept')">
+					<u-input v-model="dataForm.applyDept" placeholder="请输入所属部门"></u-input>
 				</u-form-item>
 				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')">
 					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"></jnpf-date-time>
@@ -63,7 +63,7 @@
 						<u-input v-model="dataForm.entryList[i].specifications" placeholder="请输入规格类型"></u-input>
 					</u-form-item>
 					<u-form-item label="单位" prop="dataForm.entryList[i].unit">
-						<u-input v-model="dataForm.entryList[i].unit" placeholder="请输入单位" disabled></u-input>
+						<u-input v-model="dataForm.entryList[i].unit" placeholder="请输入单位" ></u-input>
 					</u-form-item>
 					<u-form-item label="数量" prop="dataForm.entryList[i].qty">
 						<u-input v-model="dataForm.entryList[i].qty" placeholder="请输入数量" type="number"
@@ -74,7 +74,7 @@
 							@input="count(dataForm.entryList[i])"></u-input>
 					</u-form-item>
 					<u-form-item label="金额" prop="dataForm.entryList[i].amount">
-						<u-input v-model="dataForm.entryList[i].amount" placeholder="请输入金额" disabled></u-input>
+						<u-input v-model="dataForm.entryList[i].amount" placeholder="请输入金额" ></u-input>
 					</u-form-item>
 					<u-form-item label="收款摘要" prop="dataForm.entryList[i].description">
 						<u-input v-model="dataForm.entryList[i].description" placeholder="请输入收款摘要" type="textarea"></u-input>
@@ -108,7 +108,7 @@
 					paymentMoney:'',
 					paymentMethod:'',
 					applyDate:'',
-					applyPost:'',
+					applyDept:'',
 					applyUser:'',
 					entryList: [{
 						tradeName: '',
@@ -150,7 +150,7 @@
 				this.dataForm.applyDate = new Date().getTime()
 				this.dataForm.flowTitle = this.userInfo.userName + "的采购原材料"
 				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
-				this.dataForm.applyPost = this.userInfo.departmentName
+				this.dataForm.applyDept = this.userInfo.departmentName
 				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
 					let list = this.userInfo.positionIds.map(o => o.name)
 					this.dataForm.position = list.join(',')

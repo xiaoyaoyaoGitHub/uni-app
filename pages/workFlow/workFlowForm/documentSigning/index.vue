@@ -6,7 +6,7 @@
 				<u-input v-model="dataForm.flowTitle" placeholder="流程标题"></u-input>
 			</u-form-item>
 			<u-form-item label="流程编码" prop="billNo" v-if="judgeShow('billNo')" required>
-				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
+				<u-input v-model="dataForm.billNo" placeholder="流程编码" ></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" required>
 				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
@@ -21,7 +21,7 @@
 					<u-input v-model="dataForm.fillNum" placeholder="请输入文件编号"></u-input>
 				</u-form-item>
 				<u-form-item label="拟稿人" prop="draftedPerson" v-if="judgeShow('draftedPerson')">
-					<u-input v-model="dataForm.draftedPerson" placeholder="请输入拟稿人" disabled></u-input>
+					<u-input v-model="dataForm.draftedPerson" placeholder="请输入拟稿人" ></u-input>
 				</u-form-item>
 				<u-form-item label="签阅人" prop="reader" v-if="judgeShow('reader')">
 					<u-input v-model="dataForm.reader" placeholder="请输入签阅人"></u-input>
