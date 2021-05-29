@@ -17,8 +17,8 @@
 				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
 					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员"></u-input>
 				</u-form-item>
-				<u-form-item label="申请部门" prop="position" v-if="judgeShow('position')">
-					<u-input v-model="dataForm.position" placeholder="请输入申请部门"></u-input>
+				<u-form-item label="申请部门" prop="department" v-if="judgeShow('department')">
+					<u-input v-model="dataForm.department" placeholder="请输入申请部门"></u-input>
 				</u-form-item>
 				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')">
 					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"></jnpf-date-time>
@@ -70,7 +70,7 @@
 					billNo:'',
 					flowUrgent:1,
 					applyUser:'',
-					position:'',
+					department:'',
 					contractNum:'',
 					accountOpeningBank:'',
 					applyDate:'',
@@ -111,10 +111,7 @@
 				this.dataForm.applyDate = new Date().getTime()
 				this.dataForm.flowTitle = this.userInfo.userName + "的费用支出申请"
 				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
-				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
-					let list = this.userInfo.positionIds.map(o => o.name)
-					this.dataForm.position = list.join(',')
-				}
+				this.dataForm.department = this.userInfo.departmentName
 			},
 			beforeInit() {
 				this.getPaymentMethodOptions()

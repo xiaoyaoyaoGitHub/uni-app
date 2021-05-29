@@ -3,10 +3,10 @@
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<u-form-item label="流程标题" prop="flowTitle" required>
-				<u-input v-model="dataForm.flowTitle" placeholder="流程标题"></u-input>
+				<u-input v-model="dataForm.flowTitle" placeholder="请输入流程标题"></u-input>
 			</u-form-item>
 			<u-form-item label="流程编码" prop="billNo" v-if="judgeShow('billNo')" required>
-				<u-input v-model="dataForm.billNo" placeholder="流程编码" ></u-input>
+				<u-input v-model="dataForm.billNo" placeholder="请输入流程编码" ></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" required>
 				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
@@ -15,7 +15,7 @@
 
 			<view class="jnpf-card">
 				<u-form-item label="入库人" prop="warehouseName" v-if="judgeShow('warehouseName')">
-					<u-input v-model="dataForm.warehouseName" placeholder="入库人"></u-input>
+					<u-input v-model="dataForm.warehouseName" placeholder="请输入入库人"></u-input>
 				</u-form-item>
 				<u-form-item label="仓库" prop="warehouse" v-if="judgeShow('warehouse')">
 					<u-input v-model="dataForm.warehouse" placeholder="请输入选仓库"></u-input>
@@ -24,7 +24,7 @@
 					<jnpf-date-time type="datetime" v-model="dataForm.reservoirDate" placeholder="请选择入库时间"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="备注" prop="description" v-if="judgeShow('description')">
-					<u-input v-model="dataForm.description" placeholder="备注" type="textarea"></u-input>
+					<u-input v-model="dataForm.description" placeholder="请输入备注" type="textarea"></u-input>
 				</u-form-item>
 			</view>
 			
@@ -32,7 +32,7 @@
 			<view class="jnpf-table">
 				<view class="jnpf-table-item" v-for="(item,i) in dataForm.entryList" :key="i">
 					<view class="jnpf-table-item-title u-flex u-row-between">
-						<text class="jnpf-table-item-title-num">商品添购({{i+1}})</text>
+						<text class="jnpf-table-item-title-num">入库明细({{i+1}})</text>
 						<view class="jnpf-table-item-title-action" v-if="dataForm.entryList.length>1"
 							@click="delItem(i)">删除
 						</view>
@@ -55,10 +55,10 @@
 							@input="count(dataForm.entryList[i])"></u-input>
 					</u-form-item>
 					<u-form-item label="金额" prop="dataForm.entryList[i].amount">
-						<u-input v-model="dataForm.entryList[i].amount" placeholder="请输入金额" ></u-input>
+						<u-input v-model="dataForm.entryList[i].amount" placeholder="请输入金额" disabled></u-input>
 					</u-form-item>
-					<u-form-item label="收款摘要" prop="dataForm.entryList[i].description">
-						<u-input v-model="dataForm.entryList[i].description" placeholder="请输入收款摘要" type="textarea"></u-input>
+					<u-form-item label="备注" prop="dataForm.entryList[i].description">
+						<u-input v-model="dataForm.entryList[i].description" placeholder="请输入备注" type="textarea"></u-input>
 					</u-form-item>
 				</view>
 				<view class="jnpf-table-addBtn" @click="addItem">
@@ -72,7 +72,7 @@
 <script>
 	import comMixin from '../mixin'
 	export default {
-		name: 'FinishedProductNo',
+		name: 'FinishedProduct',
 		mixins: [comMixin],
 		data() {
 			return {
@@ -123,13 +123,7 @@
 		},
 		methods: {
 			selfInit(data) {
-				this.dataForm.applyDate = new Date().getTime()
 				this.dataForm.flowTitle = this.userInfo.userName + "的成品入库单"
-				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
-				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
-					let list = this.userInfo.positionIds.map(o => o.name)
-					this.dataForm.position = list.join(',')
-				}
 			},
 			/* 添加子表 */
 			addItem() {

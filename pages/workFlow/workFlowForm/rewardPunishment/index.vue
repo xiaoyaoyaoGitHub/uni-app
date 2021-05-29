@@ -14,14 +14,14 @@
 			</u-form-item>
 
 			<view class="jnpf-card">
-				<u-form-item label="填表日期" prop="applyDate" v-if="judgeShow('applyDate')">
-					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入填表日期"></jnpf-date-time>
+				<u-form-item label="填表日期" prop="fillFromDate" v-if="judgeShow('fillFromDate')">
+					<jnpf-date-time type="date" v-model="dataForm.fillFromDate" placeholder="请输入填表日期"></jnpf-date-time>
 				</u-form-item>
-				<u-form-item label="员工姓名" prop="applyUser" v-if="judgeShow('applyUser')">
-					<u-input v-model="dataForm.applyUser" placeholder="请输入员工姓名"></u-input>
+				<u-form-item label="员工姓名" prop="fullName" v-if="judgeShow('fullName')">
+					<u-input v-model="dataForm.fullName" placeholder="请输入员工姓名"></u-input>
 				</u-form-item>
-				<u-form-item label="员工部门" prop="applyDept" v-if="judgeShow('applyDept')">
-					<u-input v-model="dataForm.applyDept" placeholder="请输入员工部门" ></u-input>
+				<u-form-item label="员工部门" prop="department" v-if="judgeShow('department')">
+					<u-input v-model="dataForm.department" placeholder="请输入员工部门" ></u-input>
 				</u-form-item>
 				<u-form-item label="员工职务" prop="position" v-if="judgeShow('position')">
 					<u-input v-model="dataForm.position" placeholder="请输入员工职务"></u-input>
@@ -51,9 +51,9 @@
 					billNo: '',
 					flowUrgent: 1,
 					position:'',
-					applyDept:'',
-					applyUser:'',
-					applyDate:'',
+					department:'',
+					fullName:'',
+					fillFromDate:'',
 					reason:'',
 					rewardPun:''
 				},
@@ -90,10 +90,10 @@
 		},
 		methods: {
 			selfInit(data) {
-				this.dataForm.applyDate = new Date().getTime()
+				this.dataForm.fillFromDate = new Date().getTime()
 				this.dataForm.flowTitle = this.userInfo.userName + "的行政赏罚单"
-				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
-				this.dataForm.applyDept = this.userInfo.departmentName
+				this.dataForm.fullName = this.userInfo.userName + '/' + this.userInfo.userAccount
+				this.dataForm.department = this.userInfo.departmentName
 				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
 					let list = this.userInfo.positionIds.map(o => o.name)
 					this.dataForm.position = list.join(',')

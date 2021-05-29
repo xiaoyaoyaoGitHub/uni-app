@@ -17,8 +17,8 @@
 				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
 					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员"></u-input>
 				</u-form-item>
-				<u-form-item label="申请部门" prop="applyDept" v-if="judgeShow('applyDept')">
-					<u-input v-model="dataForm.applyDept" placeholder="请输入申请部门"></u-input>
+				<u-form-item label="申请部门" prop="departmental" v-if="judgeShow('departmental')">
+					<u-input v-model="dataForm.departmental" placeholder="请输入申请部门"></u-input>
 				</u-form-item>
 				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')">
 					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"></jnpf-date-time>
@@ -32,8 +32,8 @@
 				<u-form-item label="项目类别" prop="projectCategory" v-if="judgeShow('projectCategory')">
 					<u-input v-model="dataForm.projectCategory" placeholder="请输入项目类别"></u-input>
 				</u-form-item>
-				<u-form-item label="项目负责人" prop="articlesNum" v-if="judgeShow('articlesNum')">
-					<u-input v-model="dataForm.articlesNum" placeholder="请输入项目负责人"></u-input>
+				<u-form-item label="项目负责人" prop="projectLeader" v-if="judgeShow('projectLeader')">
+					<u-input v-model="dataForm.projectLeader" placeholder="请输入项目负责人"></u-input>
 				</u-form-item>
 			</view>
 			<view class="jnpf-card">
@@ -43,8 +43,8 @@
 				<u-form-item label="收款人账号" prop="beneficiaryAccount" v-if="judgeShow('beneficiaryAccount')">
 					<u-input v-model="dataForm.beneficiaryAccount" placeholder="请输入收款人账号" type="number"></u-input>
 				</u-form-item>
-				<u-form-item label="结算方式" prop="beneficiaryAccount" v-if="judgeShow('beneficiaryAccount')" required>
-					<jnpf-select v-model="dataForm.beneficiaryAccount" placeholder="请选择结算方式"
+				<u-form-item label="结算方式" prop="settlementMethod" v-if="judgeShow('settlementMethod')" required>
+					<jnpf-select v-model="dataForm.settlementMethod" placeholder="请选择结算方式"
 						:options="paymentMethodOptions"></jnpf-select>
 				</u-form-item>
 				<u-form-item label="付款类型" prop="paymentType" v-if="judgeShow('paymentType')" required>
@@ -74,16 +74,18 @@
 					flowTitle: '',
 					billNo: '',
 					flowUrgent: 1,
-					articlesNum: '',
+					projectLeader: '',
 					projectCategory: '',
 					applyUser: '',
-					applyDept: '',
+					departmental: '',
 					position: '',
 					applyDate: '',
 					purposeName: '',
 					paymentUnit: '',
 					beneficiaryAccount: '',
-					openingBank: ''
+					openingBank: '',
+					paymentType:'',
+					settlementMethod:''
 				},
 				rules: {
 					flowTitle: [{
@@ -100,6 +102,16 @@
 					billNo: [{
 						required: true,
 						message: '流程编码不能为空',
+						trigger: 'blur',
+					}],
+					beneficiaryAccount: [{
+						required: true,
+						message: '结算方式不能为空',
+						trigger: 'blur',
+					}],
+					paymentType: [{
+						required: true,
+						message: '付款类型不能为空',
 						trigger: 'blur',
 					}]
 				},
@@ -131,7 +143,7 @@
 				this.dataForm.applyDate = new Date().getTime()
 				this.dataForm.flowTitle = this.userInfo.userName + "的付款申请"
 				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
-				this.dataForm.applyDept = this.userInfo.departmentName
+				this.dataForm.departmental = this.userInfo.departmentName
 				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
 					let list = this.userInfo.positionIds.map(o => o.name)
 					this.dataForm.position = list.join(',')

@@ -14,10 +14,10 @@
 			</u-form-item>
 
 			<view class="jnpf-card">
-				<u-form-item label="所属部门" prop="position" v-if="judgeShow('position')" required>
-					<u-input v-model="dataForm.position" placeholder="请输入所属部门"></u-input>
+				<u-form-item label="所属部门" prop="departmental" v-if="judgeShow('departmental')">
+					<u-input v-model="dataForm.departmental" placeholder="请输入所属部门"></u-input>
 				</u-form-item>
-				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')" required>
+				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')">
 					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期" ></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="员工姓名" prop="staffName" v-if="judgeShow('staffName')">
@@ -26,7 +26,7 @@
 				<u-form-item label="员工职务" prop="staffPost" v-if="judgeShow('staffPost')">
 					<u-input v-model="dataForm.staffPost" placeholder="请输入员工职务"></u-input>
 				</u-form-item>
-				<u-form-item label="员工编码" prop="staffId" v-if="judgeShow('staffId')">
+				<u-form-item label="员工编码" prop="staffId" v-if="judgeShow('staffId')" required>
 					<u-input v-model="dataForm.staffId" placeholder="请输入员工编码"></u-input>
 				</u-form-item>
 			</view>
@@ -37,7 +37,7 @@
 				<u-form-item label="转账账户" prop="transferAccount" v-if="judgeShow('transferAccount')">
 					<u-input v-model="dataForm.transferAccount" placeholder="请输入转账账户"></u-input>
 				</u-form-item>
-				<u-form-item label="支付方式" prop="paymentMethod" v-if="judgeShow('paymentMethod')">
+				<u-form-item label="支付方式" prop="paymentMethod" v-if="judgeShow('paymentMethod')" required>
 					<jnpf-select v-model="dataForm.paymentMethod" placeholder="请选择支付方式" :options="paymentMethodOptions"></jnpf-select>
 				</u-form-item>
 				<u-form-item label="借支金额" prop="amountDebit" v-if="judgeShow('amountDebit')">
@@ -46,7 +46,7 @@
 				<u-form-item label="还款票据" prop="repaymentBill" v-if="judgeShow('repaymentBill')">
 					<u-input v-model="dataForm.repaymentBill" placeholder="请输入还款票据"></u-input>
 				</u-form-item>
-				<u-form-item label="还款日期" prop="teachingDate" v-if="judgeShow('teachingDate')" required>
+				<u-form-item label="还款日期" prop="teachingDate" v-if="judgeShow('teachingDate')">
 					<jnpf-date-time type="date" v-model="dataForm.teachingDate" placeholder="还款日期"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="借款原因" prop="reason" v-if="judgeShow('reason')">
@@ -60,7 +60,7 @@
 <script>
 	import comMixin from '../mixin'
 	export default {
-		name: 'DebitBillNo',
+		name: 'DebitBill',
 		mixins: [comMixin],
 		data() {
 			return {
@@ -73,7 +73,7 @@
 					staffPost: '',
 					transferAccount: '',
 					repaymentBill: '',
-					position: '',
+					departmental: '',
 					staffId: '',
 					loanMode: '',
 					reason: '',
@@ -99,21 +99,14 @@
 						message: '流程编码不能为空',
 						trigger: 'change',
 					}],
-					applyDate: [{
-						required: true,
-						message: '申请时间不能为空',
-						trigger: 'change',
-						type: 'number'
-					}],
-					teachingDate: [{
-						required: true,
-						message: '还款日期不能为空',
-						trigger: 'change',
-						type: 'number'
-					}],
 					staffId: [{
 						required: true,
 						message: '员工编码不能为空',
+						trigger: 'change',
+					}],
+					paymentMethod: [{
+						required: true,
+						message: '支付方式不能为空',
 						trigger: 'change',
 					}]
 				}
@@ -122,13 +115,17 @@
 		methods: {
 			selfInit(data) {
 				this.dataForm.applyDate = new Date().getTime()
-				this.dataForm.flowTitle = this.userInfo.userName + "的合同申请"
-				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
+				this.dataForm.flowTitle = this.userInfo.userName + "的借支申请"
+				this.dataForm.staffName = this.userInfo.userName + '/' + this.userInfo.userAccount
+				this.dataForm.departmental = this.userInfo.departmentName
 				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
 					let list = this.userInfo.positionIds.map(o => o.name)
-					this.dataForm.position = list.join(',')
+					this.dataForm.staffPost = list.join(',')
 				}
 			},
+			beforeInit(){
+				this.getPaymentMethodOptions()
+			}
 		}
 	}
 </script>
