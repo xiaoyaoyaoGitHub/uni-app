@@ -84,7 +84,7 @@ export function login(data) {
 		url: '/api/oauth/Login',
 		method: 'post',
 		data,
-		header:{
+		header: {
 			'Content-Type': 'application/x-www-form-urlencoded',
 		}
 	})
@@ -122,5 +122,13 @@ export function getBillNumber(enCode) {
 		options: {
 			load: false
 		}
+	})
+}
+
+// 获取下载文件链接
+export function getDownloadUrl(type, fileId) {
+	return request({
+		url: `/api/file/Download/${type}/${fileId}`,
+		method: 'GET'
 	})
 }

@@ -94,6 +94,14 @@
 						"navigationBarTitleText": "抄送我的"
 					}
 				},
+				// #ifdef MP
+				{
+					"path": "filePreview/index",
+					"style": {
+						"navigationBarTitleText": ""
+					}
+				},
+				// #endif
 				{
 					"path": "operate/index",
 					"style": {

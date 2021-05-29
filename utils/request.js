@@ -23,8 +23,8 @@ function request(config) {
 	config.options = Object.assign(defaultOpt, config.options)
 	const token = uni.getStorageSync('token') || ''
 	let header = {
-		"content-type": "application/json;charset=UTF-8",
-		
+		"Content-Type": "application/json;charset=UTF-8",
+		...config.header
 	}
 	if (token) header['Authorization'] = token
 	let url = config.url.indexOf('http') > -1 ? config.url : host + config.url
@@ -43,7 +43,7 @@ function request(config) {
 			url: url,
 			data: config.data || null,
 			method: config.method || 'GET',
-			header:  config.header || header,
+			header: header,
 			timeout: define.timeout,
 			success: res => {
 				uni.hideLoading()
