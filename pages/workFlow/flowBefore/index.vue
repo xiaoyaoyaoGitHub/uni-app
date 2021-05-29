@@ -45,16 +45,18 @@
 			</template>
 			<template v-if="config.opType == 0">
 				<template v-if="config.status == 1">
-					<u-button class="buttom-btn" type="error">撤回</u-button>
+					<u-button class="buttom-btn" type="error" @click="operate('revoke','撤回')">撤回</u-button>
 					<u-button class="buttom-btn" type="primary" @click="handlePress()">催办</u-button>
 				</template>
 				<u-button class="buttom-btn" @click="jnpf.goBack()" v-else>返回</u-button>
 			</template>
 			<template v-if="config.opType == 1">
-				<u-button class="buttom-btn" type="error" v-if="properties.hasRejectBtn">
+				<u-button class="buttom-btn" type="error" v-if="properties.hasRejectBtn"
+					@click="eventLancher('reject')">
 					{{properties.rejectBtnText||'拒绝'}}
 				</u-button>
-				<u-button class="buttom-btn" type="primary" v-if="properties.hasAuditBtn">
+				<u-button class="buttom-btn" type="primary" v-if="properties.hasAuditBtn"
+					@click="eventLancher('audit')">
 					{{properties.auditBtnText||'通过'}}
 				</u-button>
 				<u-button class="buttom-btn" type="warning" @click="openUserBox('transfer')"
@@ -62,7 +64,8 @@
 					{{properties.transferBtnText||'转办'}}
 				</u-button>
 			</template>
-			<u-button class="buttom-btn" type="error" v-if="config.opType == 2 && properties.hasRevokeBtn">
+			<u-button class="buttom-btn" type="error" v-if="config.opType == 2 && properties.hasRevokeBtn"
+				@click="operate('recall',properties.revokeBtnText)">
 				{{properties.revokeBtnText||'撤回'}}
 			</u-button>
 			<u-button class="buttom-btn" @click="jnpf.goBack()" v-if="config.opType == 3">返回</u-button>
@@ -137,6 +140,12 @@
 			if (!config) return this.jnpf.goBack()
 			this.config = config
 			this.init()
+			this.eventHub.$on('operate', data => {
+				this[data.eventType + 'Handle'](data)
+			})
+		},
+		onUnload() {
+			this.eventHub.$off('operate')
 		},
 		methods: {
 			tabChange(index) {
@@ -182,7 +191,7 @@
 								uni.showToast({
 									title: '暂无此流程表单',
 									icon: 'none',
-									complete() {
+									complete: () => {
 										setTimeout(() => {
 											uni.navigateBack()
 										}, 1500)
@@ -250,7 +259,7 @@
 								uni.showToast({
 									title: '暂无此流程表单',
 									icon: 'none',
-									complete() {
+									complete: () => {
 										setTimeout(() => {
 											uni.navigateBack()
 										}, 1500)
@@ -268,14 +277,16 @@
 					.$refs.form.submit(eventType)
 			},
 			eventReciver(formData, eventType) {
-				// console.log(formData, eventType);
 				this.formData = formData
 				this.eventType = eventType
 				if (eventType === 'save' || eventType === 'submit') {
 					return this.submitOrSave(eventType)
 				}
-				if (eventType === 'audit' || eventType === 'reject') {
-
+				if (eventType === 'audit') {
+					return this.operate('audit', this.properties.auditBtnText)
+				}
+				if (eventType === 'reject') {
+					return this.operate('reject', this.properties.rejectBtnText)
 				}
 			},
 			submitOrSave(eventType) {
@@ -307,10 +318,11 @@
 				formMethod(this.config.enCode, this.formData).then(res => {
 					uni.showToast({
 						title: res.msg,
-						complete() {
+						complete: () => {
 							setTimeout(() => {
-								uni.navigateBack()
+								if (this.formData.id) this.eventHub.$emit('refresh')
 								this.btnLoading = false
+								uni.navigateBack()
 							}, 1500)
 						}
 					})
@@ -335,18 +347,70 @@
 				this.userSelectShow = true
 				this.eventType = eventType
 			},
+			operate(eventType, title) {
+				let config = {
+					eventType,
+					title: '确认' + title.replace(/\s+/g, "")
+				}
+				if (eventType === 'audit' || eventType === 'reject') {
+					config = {
+						...config,
+						hasSign: this.properties.hasSign,
+						hasFreeApprover: this.properties.hasFreeApprover,
+						isCustomCopy: this.properties.isCustomCopy
+					}
+				}
+				uni.navigateTo({
+					url: '/pages/workFlow/operate/index?config=' + encodeURIComponent(JSON.stringify(config))
+				})
+			},
 			handleTransfer(freeApproverUserId) {
 				Transfer(this.config.taskId, {
 					freeApproverUserId
 				}).then(res => {
-					uni.showToast({
-						title: res.msg,
-						complete() {
-							setTimeout(() => {
-								uni.navigateBack()
-							}, 1500)
-						}
-					})
+					this.toastAndBack(res.msg, true)
+				})
+			},
+			revokeHandle(data) {
+				Revoke(this.config.id, {
+					handleOpinion: data.handleOpinion
+				}).then(res => {
+					this.toastAndBack(res.msg, true)
+				})
+			},
+			recallHandle(data) {
+				Recall(this.config.taskId, {
+					handleOpinion: data.handleOpinion
+				}).then(res => {
+					this.toastAndBack(res.msg, true)
+				})
+			},
+			auditHandle(data) {
+				this.handleApproval(data)
+			},
+			rejectHandle(data) {
+				this.handleApproval(data)
+			},
+			handleApproval(data) {
+				const query = {
+					...data,
+					formData: this.formData,
+					enCode: this.config.enCode
+				}
+				const approvalMethod = data.eventType === 'audit' ? Audit : Reject
+				approvalMethod(this.config.taskId, query).then(res => {
+					this.toastAndBack(res.msg, true)
+				})
+			},
+			toastAndBack(title, refresh) {
+				uni.showToast({
+					title: title,
+					complete: () => {
+						setTimeout(() => {
+							if (refresh) this.eventHub.$emit('refresh')
+							uni.navigateBack()
+						}, 1500)
+					}
 				})
 			}
 		}

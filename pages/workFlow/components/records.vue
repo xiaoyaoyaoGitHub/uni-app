@@ -23,7 +23,7 @@
 						<view class="record-cell">审核节点：{{item.nodeName}}</view>
 						<view class="record-cell">审核时间：{{item.handleTime|date('yyyy-mm-dd hh:MM')}}</view>
 						<view class="record-cell">审核状态：
-							<text:class="item.handleStatus==1?'u-type-success':'u-type-error'">
+							<text :class="item.handleStatus==1?'u-type-success':'u-type-error'">
 								{{item.handleStatus == 1?'审核通过':'审核拒绝'}}</text>
 						</view>
 						<view class="record-cell" v-if="item.handleOpinion">审核意见：{{item.handleOpinion}}</view>

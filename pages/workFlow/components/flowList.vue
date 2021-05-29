@@ -6,7 +6,10 @@
 			</view>
 			<view class="item-cell">
 				<text class="time">{{item.creatorTime | date('yyyy-mm-dd hh:MM')}}</text>
-				<text :class="'status '+getFlowStatus(item.status).statusCss">
+				<text :class="'status '+getFlowDoneStatus(item.status).statusCss" v-if="opType==2">
+					{{getFlowDoneStatus(item.status).text}}
+				</text>
+				<text :class="'status '+getFlowStatus(item.status).statusCss" v-else>
 					{{getFlowStatus(item.status).text}}
 				</text>
 			</view>
@@ -45,6 +48,24 @@
 				uni.navigateTo({
 					url: '/pages/workFlow/flowBefore/index?config=' + encodeURIComponent(JSON.stringify(config))
 				})
+			},
+			getFlowDoneStatus(val) {
+				let status
+				switch (val) {
+					case 1:
+						status = {
+							text: '同意',
+							statusCss: 'u-type-success'
+						}
+						break;
+					default:
+						status = {
+							text: '拒绝',
+							statusCss: 'u-type-error'
+						}
+						break;
+				}
+				return status
 			},
 			getFlowStatus(val) {
 				let status

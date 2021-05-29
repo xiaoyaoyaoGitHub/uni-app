@@ -93,6 +93,12 @@
 					"style": {
 						"navigationBarTitleText": "抄送我的"
 					}
+				},
+				{
+					"path": "operate/index",
+					"style": {
+						"navigationBarTitleText": ""
+					}
 				}
 			]
 		},

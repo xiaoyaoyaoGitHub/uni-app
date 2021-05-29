@@ -68,7 +68,15 @@
 				}]
 			}
 		},
-		onShow() {},
+		onLoad() {
+			this.eventHub.$on('refresh', () => {
+				this.list = [];
+				this.mescroll.resetUpScroll();
+			})
+		},
+		onUnload() {
+			this.eventHub.$off('refresh')
+		},
 		methods: {
 			upCallback(page) {
 				let query = {
