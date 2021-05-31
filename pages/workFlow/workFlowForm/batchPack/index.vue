@@ -24,7 +24,7 @@
 					<u-input v-model="dataForm.compactor" placeholder="请输入编制人员"></u-input>
 				</u-form-item>
 				<u-form-item label="编制日期" prop="compactorDate" v-if="judgeShow('compactorDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.compactorDate" placeholder="编制日期"></jnpf-date-time>
+					<jnpf-date-time type="date" v-model="dataForm.compactorDate" placeholder="请输入编制日期"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="产品规格" prop="standard" v-if="judgeShow('standard')">
 					<u-input v-model="dataForm.standard" placeholder="请输入产品规格"></u-input>
@@ -35,14 +35,8 @@
 				<u-form-item label="批产数量" prop="productionQuty" v-if="judgeShow('productionQuty')">
 					<u-input v-model="dataForm.productionQuty" placeholder="请输入批产数量"></u-input>
 				</u-form-item>
-				<u-form-item label="单位" prop="company" v-if="judgeShow('company')">
-					<u-input v-model="dataForm.company" placeholder="单位"></u-input>
-				</u-form-item>
-				<u-form-item label="批产数量" prop="productionQuty" v-if="judgeShow('productionQuty')">
-					<u-input v-model="dataForm.productionQuty" placeholder="请输入批产数量"></u-input>
-				</u-form-item>
 				<u-form-item label="操作日期" prop="operationDate" v-if="judgeShow('operationDate')">
-					<jnpf-date-time type="date" v-model="dataForm.operationDate" placeholder="操作日期"></jnpf-date-time>
+					<jnpf-date-time type="date" v-model="dataForm.operationDate" placeholder="请输入操作日期"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="工艺规程" prop="regulations" v-if="judgeShow('regulations')">
 					<u-input v-model="dataForm.regulations" placeholder="请输入工艺规程"></u-input>
@@ -62,7 +56,7 @@
 <script>
 	import comMixin from '../mixin'
 	export default {
-		name: 'BatchPackNo',
+		name: 'BatchPack',
 		mixins: [comMixin],
 		data() {
 			return {
@@ -79,7 +73,6 @@
 					compactor:'',
 					standard:'',
 					warehousNo:'',
-					company:'',
 					regulations:'',
 					packing:'',
 					description:''
@@ -112,13 +105,7 @@
 		},
 		methods: {
 			selfInit(data) {
-				this.dataForm.applyDate = new Date().getTime()
-				this.dataForm.flowTitle = this.userInfo.userName + "的用品入库申请"
-				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
-				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
-					let list = this.userInfo.positionIds.map(o => o.name)
-					this.dataForm.position = list.join(',')
-				}
+				this.dataForm.flowTitle = this.userInfo.userName + "的批包装指令"
 			}
 		}
 	}

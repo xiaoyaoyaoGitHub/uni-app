@@ -62,7 +62,7 @@
 <script>
 	import comMixin from '../mixin'
 	export default {
-		name: 'ConBillingNo',
+		name: 'ConBilling',
 		mixins: [comMixin],
 		data() {
 			return {
@@ -113,13 +113,7 @@
 		},
 		methods: {
 			selfInit(data) {
-				this.dataForm.applyDate = new Date().getTime()
-				this.dataForm.flowTitle = this.userInfo.userName + "的行文呈批申请"
-				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
-				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
-					let list = this.userInfo.positionIds.map(o => o.name)
-					this.dataForm.position = list.join(',')
-				}
+				this.dataForm.flowTitle = this.userInfo.userName + "的合同开票申请"
 			}
 		}
 	}

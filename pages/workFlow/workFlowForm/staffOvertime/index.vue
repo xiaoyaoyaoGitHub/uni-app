@@ -35,8 +35,8 @@
 				<u-form-item label="记入类别" prop="category" v-if="judgeShow('category')" required>
 					<jnpf-select v-model="dataForm.category" placeholder="请选择下拉框组" :options="categoryList"></jnpf-select>
 				</u-form-item>
-				<u-form-item label="加班事由" prop="psaleSupInfo" v-if="judgeShow('psaleSupInfo')">
-					<u-input v-model="dataForm.psaleSupInfo" placeholder="请输入加班事由" type="textarea"></u-input>
+				<u-form-item label="加班事由" prop="cause" v-if="judgeShow('cause')">
+					<u-input v-model="dataForm.cause" placeholder="请输入加班事由" type="textarea"></u-input>
 				</u-form-item>
 			</view>
 		</u-form>
@@ -61,7 +61,7 @@
 					position: '',
 					applyDate: '',
 					startTime: '',
-					psaleSupInfo: '',
+					cause: '',
 					category: '',
 					totleTime:''
 				},

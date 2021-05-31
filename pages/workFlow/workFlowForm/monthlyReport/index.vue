@@ -20,8 +20,8 @@
 				<u-form-item label="所属部门" prop="applyDept" v-if="judgeShow('applyDept')">
 					<u-input v-model="dataForm.applyDept" placeholder="请输入所属部门"></u-input>
 				</u-form-item>
-				<u-form-item label="所属职务" prop="position" v-if="judgeShow('position')">
-					<u-input v-model="dataForm.position" placeholder="请输入所属职务"></u-input>
+				<u-form-item label="所属职务" prop="applyPost" v-if="judgeShow('applyPost')">
+					<u-input v-model="dataForm.applyPost" placeholder="请输入所属职务"></u-input>
 				</u-form-item>
 				<u-form-item label="创建日期" prop="applyDate" v-if="judgeShow('applyDate')">
 					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入创建日期"></jnpf-date-time>
@@ -52,7 +52,7 @@
 <script>
 	import comMixin from '../mixin'
 	export default {
-		name: 'MonthlyReportNo',
+		name: 'MonthlyReport',
 		mixins: [comMixin],
 		data() {
 			return {
@@ -66,7 +66,7 @@
 					npworkMatter:'',
 					applyUser:'',
 					applyDept:'',
-					position:'',
+					applyPost:'',
 					applyDate:'',
 					fileList:[],
 					overalEvaluat:'',
@@ -101,7 +101,7 @@
 				this.dataForm.applyDept = this.userInfo.departmentName
 				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
 					let list = this.userInfo.positionIds.map(o => o.name)
-					this.dataForm.position = list.join(',')
+					this.dataForm.applyPost = list.join(',')
 				}
 			},
 			

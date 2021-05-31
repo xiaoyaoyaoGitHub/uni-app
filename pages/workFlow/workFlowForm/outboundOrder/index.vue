@@ -45,8 +45,8 @@
 							@click="delItem(i)">删除
 						</view>
 					</view>
-					<u-form-item label="商品名称" prop="dataForm.entryList[i].tradeName">
-						<u-input v-model="dataForm.entryList[i].tradeName" placeholder="请输入商品名称"></u-input>
+					<u-form-item label="商品名称" prop="dataForm.entryList[i].goodsName">
+						<u-input v-model="dataForm.entryList[i].goodsName" placeholder="请输入商品名称"></u-input>
 					</u-form-item>
 					<u-form-item label="规格类型" prop="dataForm.entryList[i].specifications">
 						<u-input v-model="dataForm.entryList[i].specifications" placeholder="规格类型"></u-input>
@@ -80,7 +80,7 @@
 <script>
 	import comMixin from '../mixin'
 	export default {
-		name: 'OutboundOrderNo',
+		name: 'OutboundOrder',
 		mixins: [comMixin],
 		data() {
 			return {
@@ -94,7 +94,7 @@
 					outboundDate:'',
 					outStorage:'',
 					entryList: [{
-						tradeName: '',
+						goodsName: '',
 						specifications: '',
 						unit: '',
 						qty: 0,
@@ -124,6 +124,7 @@
 						required: true,
 						message: '出库日期不能为空',
 						trigger: 'blur',
+						type:'number'
 					}],
 				},
 			}
@@ -141,7 +142,7 @@
 			/* 添加子表 */
 			addItem() {
 				const item = {
-					tradeName: '',
+					goodsName: '',
 					specifications: '',
 					unit: '',
 					qty: 0,

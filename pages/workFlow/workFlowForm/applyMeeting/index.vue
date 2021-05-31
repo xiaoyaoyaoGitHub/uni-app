@@ -79,7 +79,7 @@
 <script>
 	import comMixin from '../mixin'
 	export default {
-		name: 'ApplyMeetingNo',
+		name: 'ApplyMeeting',
 		mixins: [comMixin],
 		data() {
 			return {
@@ -148,7 +148,7 @@
 		},
 		methods: {
 			selfInit(data) {
-				this.dataForm.applyDate = new Date().getTime()
+				
 				this.dataForm.flowTitle = this.userInfo.userName + "的会议申请"
 				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
 				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {

@@ -17,8 +17,8 @@
 				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
 					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员"></u-input>
 				</u-form-item>
-				<u-form-item label="申请部门" prop="applyDept" v-if="judgeShow('applyDept')">
-					<u-input v-model="dataForm.applyDept" placeholder="请输入申请部门"></u-input>
+				<u-form-item label="申请部门" prop="departmental" v-if="judgeShow('departmental')">
+					<u-input v-model="dataForm.departmental" placeholder="请输入申请部门"></u-input>
 				</u-form-item>
 				<u-form-item label="供应商名称" prop="vendorName" v-if="judgeShow('vendorName')">
 					<u-input v-model="dataForm.vendorName" placeholder="请输入供应商名称"></u-input>
@@ -55,13 +55,13 @@
 			<view class="jnpf-table">
 				<view class="jnpf-table-item" v-for="(item,i) in dataForm.entryList" :key="i">
 					<view class="jnpf-table-item-title u-flex u-row-between">
-						<text class="jnpf-table-item-title-num">商品添购({{i+1}})</text>
+						<text class="jnpf-table-item-title-num">采购详情({{i+1}})</text>
 						<view class="jnpf-table-item-title-action" v-if="dataForm.entryList.length>1"
 							@click="delItem(i)">删除
 						</view>
 					</view>
-					<u-form-item label="商品名称" prop="dataForm.entryList[i].tradeName">
-						<u-input v-model="dataForm.entryList[i].tradeName" placeholder="请输入商品名称"></u-input>
+					<u-form-item label="商品名称" prop="dataForm.entryList[i].goodsName">
+						<u-input v-model="dataForm.entryList[i].goodsName" placeholder="请输入商品名称"></u-input>
 					</u-form-item>
 					<u-form-item label="规格类型" prop="dataForm.entryList[i].specifications">
 						<u-input v-model="dataForm.entryList[i].specifications" placeholder="请输入规格类型"></u-input>
@@ -80,8 +80,8 @@
 					<u-form-item label="金额" prop="dataForm.entryList[i].amount">
 						<u-input v-model="dataForm.entryList[i].amount" placeholder="请输入金额" ></u-input>
 					</u-form-item>
-					<u-form-item label="收款摘要" prop="dataForm.entryList[i].description">
-						<u-input v-model="dataForm.entryList[i].description" placeholder="请输入收款摘要" type="textarea"></u-input>
+					<u-form-item label="备注" prop="dataForm.entryList[i].description">
+						<u-input v-model="dataForm.entryList[i].description" placeholder="请输入备注" type="textarea"></u-input>
 					</u-form-item>
 				</view>
 				<view class="jnpf-table-addBtn" @click="addItem">
@@ -112,11 +112,11 @@
 					telephone:'',
 					paymentMethod:'',
 					purchaseDate:'',
-					applyDept:'',
+					departmental:'',
 					applyUser:'',
 					paymentMoney:'',
 					entryList: [{
-						tradeName: '',
+						goodsName: '',
 						specifications: '',
 						unit: '',
 						qty: '',
@@ -151,6 +151,7 @@
 						required: true,
 						message: '采购日期不能为空',
 						trigger: 'blur',
+						type: 'number'
 					}],
 					telephone: [{
 						pattern: /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/,
@@ -166,7 +167,7 @@
 				this.dataForm.applyDate = new Date().getTime()
 				this.dataForm.flowTitle = this.userInfo.userName + "的日常物品采购清单"
 				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
-				this.dataForm.applyDept = this.userInfo.departmentName
+				this.dataForm.departmental = this.userInfo.departmentName
 				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
 					let list = this.userInfo.positionIds.map(o => o.name)
 					this.dataForm.position = list.join(',')
@@ -175,7 +176,7 @@
 			/* 添加子表 */
 			addItem() {
 				const item = {
-					tradeName: '',
+					goodsName: '',
 					specifications: '',
 					unit: '',
 					qty: '',

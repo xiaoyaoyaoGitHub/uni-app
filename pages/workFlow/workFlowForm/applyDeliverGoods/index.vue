@@ -20,7 +20,7 @@
 				<u-form-item label="联系人员" prop="contacts" v-if="judgeShow('contacts')">
 					<u-input v-model="dataForm.contacts" placeholder="联系人员"></u-input>
 				</u-form-item>
-				<u-form-item label="联系电话" prop="contactPhone" v-if="judgeShow('contactPhone')">
+				<u-form-item label="联系电话" prop="contactPhone" v-if="judgeShow('contactPhone')" required>
 					<u-input v-model="dataForm.contactPhone" placeholder="联系电话" type="number"></u-input>
 				</u-form-item>
 				<u-form-item label="客户地址" prop="customerAddres" v-if="judgeShow('customerAddres')">
@@ -40,14 +40,14 @@
 			<u-form-item label="发货类型" prop="deliveryType" v-if="judgeShow('deliveryType')">
 				<u-input v-model="dataForm.deliveryType" placeholder="发货类型"></u-input>
 			</u-form-item>
-			<u-form-item label="货运单号" prop="ransportNum" v-if="judgeShow('ransportNum')">
-				<u-input v-model="dataForm.ransportNum" placeholder="货运单号"></u-input>
+			<u-form-item label="货运单号" prop="rransportNum" v-if="judgeShow('rransportNum')">
+				<u-input v-model="dataForm.rransportNum" placeholder="货运单号"></u-input>
 			</u-form-item>
 			<u-form-item label="货运费用" prop="freightCharges" v-if="judgeShow('freightCharges')">
 				<u-input v-model="dataForm.freightCharges" placeholder="货运费用" type="number"></u-input>
 			</u-form-item>
-			<u-form-item label="保险金额" prop="invoiceValue" v-if="judgeShow('invoiceValue')">
-				<u-input v-model="dataForm.invoiceValue" placeholder="保险金额" type="number"></u-input>
+			<u-form-item label="保险金额" prop="cargoInsurance" v-if="judgeShow('cargoInsurance')">
+				<u-input v-model="dataForm.cargoInsurance" placeholder="保险金额" type="number"></u-input>
 			</u-form-item>
 			<u-form-item label="发货金额" prop="invoiceValue" v-if="judgeShow('invoiceValue')">
 				<u-input v-model="dataForm.invoiceValue" placeholder="发货金额" type="number"></u-input>
@@ -64,8 +64,8 @@
 							@click="delItem(i)">删除
 						</view>
 					</view>
-					<u-form-item label="商品名称" prop="dataForm.entryList[i].tradeName">
-						<u-input v-model="dataForm.entryList[i].tradeName" placeholder="请输入商品名称"></u-input>
+					<u-form-item label="商品名称" prop="dataForm.entryList[i].goodsName">
+						<u-input v-model="dataForm.entryList[i].goodsName" placeholder="请输入商品名称"></u-input>
 					</u-form-item>
 					<u-form-item label="规格类型" prop="dataForm.entryList[i].specifications">
 						<u-input v-model="dataForm.entryList[i].specifications" placeholder="规格类型"></u-input>
@@ -96,7 +96,7 @@
 <script>
 	import comMixin from '../mixin'
 	export default {
-		name: 'ApplyDeliverGoodsNo',
+		name: 'ApplyDeliverGoods',
 		mixins: [comMixin],
 		data() {
 			return {
@@ -108,6 +108,7 @@
 					invoiceDate: '',
 					customerAddres: '',
 					freightCharges: '',
+					rransportNum:'',
 					invoiceValue: '',
 					cargoInsurance: '',
 					customerName: '',
@@ -119,7 +120,7 @@
 					goodsBelonged: '',
 					contacts: '',
 					entryList: [{
-						tradeName: '',
+						goodsName: '',
 						specifications: '',
 						unit: '',
 						qty: '',
@@ -151,6 +152,7 @@
 					}],
 
 					contactPhone: [{
+						required: true,
 						pattern: /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/,
 						message: '手机号码不正确',
 						type: 'string',
@@ -172,7 +174,7 @@
 			/* 添加子表 */
 			addItem() {
 				const item = {
-					tradeName: '',
+					goodsName: '',
 					specifications: '',
 					unit: '',
 					qty: '',

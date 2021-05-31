@@ -24,7 +24,7 @@
 					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="领用仓库" prop="useStock" v-if="judgeShow('useStock')">
-					<jnpf-date-time type="date" v-model="dataForm.useStock" placeholder="请输入领用仓库"></jnpf-date-time>
+					<u-input v-model="dataForm.useStock" placeholder="请输入领用仓库"></u-input>
 				</u-form-item>
 				<u-form-item label="用品分类" prop="classification" v-if="judgeShow('classification')">
 					<u-input v-model="dataForm.classification" placeholder="请输入用品分类"></u-input>
@@ -49,7 +49,7 @@
 <script>
 	import comMixin from '../mixin'
 	export default {
-		name: 'OfficeSuppliesNo',
+		name: 'OfficeSupplies',
 		mixins: [comMixin],
 		data() {
 			return {
@@ -101,7 +101,6 @@
 					this.dataForm.position = list.join(',')
 				}
 			},
-			
 		}
 	}
 </script>

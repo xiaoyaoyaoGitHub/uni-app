@@ -63,8 +63,8 @@
 							@click="delItem(i)">删除
 						</view>
 					</view>
-					<u-form-item label="商品名称" prop="dataForm.entryList[i].tradeName">
-						<u-input v-model="dataForm.entryList[i].tradeName" placeholder="请输入商品名称"></u-input>
+					<u-form-item label="商品名称" prop="dataForm.entryList[i].goodsName">
+						<u-input v-model="dataForm.entryList[i].goodsName" placeholder="请输入商品名称"></u-input>
 					</u-form-item>
 					<u-form-item label="规格类型" prop="dataForm.entryList[i].specifications">
 						<u-input v-model="dataForm.entryList[i].specifications" placeholder="请输入规格类型"></u-input>
@@ -119,7 +119,7 @@
 					contacts:'',
 					customerName:'',
 					entryList: [{
-						tradeName: '',
+						goodsName: '',
 						specifications: '',
 						unit: '',
 						qty: '',
@@ -154,6 +154,7 @@
 						required: true,
 						message: '开单日期不能为空',
 						trigger: 'blur',
+						type: 'number'
 					}],
 					contactPhone: [{
 						pattern: /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/,
@@ -182,19 +183,12 @@
 		},
 		methods: {
 			selfInit(data) {
-				this.dataForm.applyDate = new Date().getTime()
-				this.dataForm.flowTitle = this.userInfo.userName + "的销售订单"
-				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
-				this.dataForm.applyDept = this.userInfo.departmentName
-				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
-					let list = this.userInfo.positionIds.map(o => o.name)
-					this.dataForm.position = list.join(',')
-				}
+				this.dataForm.flowTitle = this.userInfo.userName + "的销售订单";
 			},
 			/* 添加子表 */
 			addItem() {
 				const item = {
-					tradeName: '',
+					goodsName: '',
 					specifications: '',
 					unit: '',
 					qty: '',

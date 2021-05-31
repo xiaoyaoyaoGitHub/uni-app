@@ -17,8 +17,8 @@
 				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
 					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员"></u-input>
 				</u-form-item>
-				<u-form-item label="所属部门" prop="applyDept" v-if="judgeShow('applyDept')">
-					<u-input v-model="dataForm.applyDept" placeholder="请输入所属部门"></u-input>
+				<u-form-item label="所属部门" prop="departmental" v-if="judgeShow('departmental')">
+					<u-input v-model="dataForm.departmental" placeholder="请输入所属部门"></u-input>
 				</u-form-item>
 				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')">
 					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"></jnpf-date-time>
@@ -37,13 +37,13 @@
 						:options="paymentMethodOptions"></jnpf-select>
 				</u-form-item>
 				<u-form-item label="付款金额" prop="paymentMoney" v-if="judgeShow('paymentMoney')">
-					<u-input v-model="dataForm.paymentMoney" placeholder="输入付款金额"></u-input>
+					<u-input v-model="dataForm.paymentMoney" placeholder="请输入付款金额"></u-input>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
 					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
 				</u-form-item>
-				<u-form-item label="备注" prop="description" v-if="judgeShow('description')">
-					<u-input v-model="dataForm.description" placeholder="备注" type="textarea"></u-input>
+				<u-form-item label="用途原因" prop="reason" v-if="judgeShow('reason')">
+					<u-input v-model="dataForm.reason" placeholder="请输入用途原因" type="textarea"></u-input>
 				</u-form-item>
 			</view>
 			
@@ -51,13 +51,13 @@
 			<view class="jnpf-table">
 				<view class="jnpf-table-item" v-for="(item,i) in dataForm.entryList" :key="i">
 					<view class="jnpf-table-item-title u-flex u-row-between">
-						<text class="jnpf-table-item-title-num">商品添购({{i+1}})</text>
+						<text class="jnpf-table-item-title-num">采购明细({{i+1}})</text>
 						<view class="jnpf-table-item-title-action" v-if="dataForm.entryList.length>1"
 							@click="delItem(i)">删除
 						</view>
 					</view>
-					<u-form-item label="商品名称" prop="dataForm.entryList[i].tradeName">
-						<u-input v-model="dataForm.entryList[i].tradeName" placeholder="请输入商品名称"></u-input>
+					<u-form-item label="商品名称" prop="dataForm.entryList[i].goodsName">
+						<u-input v-model="dataForm.entryList[i].goodsName" placeholder="请输入商品名称"></u-input>
 					</u-form-item>
 					<u-form-item label="规格类型" prop="dataForm.entryList[i].specifications">
 						<u-input v-model="dataForm.entryList[i].specifications" placeholder="请输入规格类型"></u-input>
@@ -76,8 +76,8 @@
 					<u-form-item label="金额" prop="dataForm.entryList[i].amount">
 						<u-input v-model="dataForm.entryList[i].amount" placeholder="请输入金额" ></u-input>
 					</u-form-item>
-					<u-form-item label="收款摘要" prop="dataForm.entryList[i].description">
-						<u-input v-model="dataForm.entryList[i].description" placeholder="请输入收款摘要" type="textarea"></u-input>
+					<u-form-item label="备注" prop="dataForm.entryList[i].description">
+						<u-input v-model="dataForm.entryList[i].description" placeholder="请输入备注" type="textarea"></u-input>
 					</u-form-item>
 				</view>
 				<view class="jnpf-table-addBtn" @click="addItem">
@@ -102,16 +102,16 @@
 					flowUrgent: 1,
 					deliveryAddress: '',
 					purchaseUnit: '',
-					description: '',
+					reason: '',
 					fileList:[],
 					deliveryMode: '',
 					paymentMoney:'',
 					paymentMethod:'',
 					applyDate:'',
-					applyDept:'',
+					departmental:'',
 					applyUser:'',
 					entryList: [{
-						tradeName: '',
+						goodsName: '',
 						specifications: '',
 						unit: '',
 						qty: '',
@@ -150,7 +150,7 @@
 				this.dataForm.applyDate = new Date().getTime()
 				this.dataForm.flowTitle = this.userInfo.userName + "的采购原材料"
 				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
-				this.dataForm.applyDept = this.userInfo.departmentName
+				this.dataForm.departmental = this.userInfo.departmentName
 				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
 					let list = this.userInfo.positionIds.map(o => o.name)
 					this.dataForm.position = list.join(',')
@@ -159,7 +159,7 @@
 			/* 添加子表 */
 			addItem() {
 				const item = {
-					tradeName: '',
+					goodsName: '',
 					specifications: '',
 					unit: '',
 					qty: '',

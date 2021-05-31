@@ -20,8 +20,8 @@
 				<u-form-item label="申请部门" prop="applyDept" v-if="judgeShow('applyDept')">
 					<u-input v-model="dataForm.applyDept" placeholder="请输入申请部门"></u-input>
 				</u-form-item>
-				<u-form-item label="申请职位" prop="position" v-if="judgeShow('position')">
-					<u-input v-model="dataForm.position" placeholder="请输入申请职位"></u-input>
+				<u-form-item label="申请职位" prop="applyPost" v-if="judgeShow('applyPost')">
+					<u-input v-model="dataForm.applyPost" placeholder="请输入申请职位"></u-input>
 				</u-form-item>
 				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')">
 					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"></jnpf-date-time>
@@ -76,7 +76,7 @@
 					applyDate:'',
 					leaveType:'',
 					fileList:[],
-					position:''
+					applyPost:''
 				},
 				rules: {
 					flowTitle: [{
@@ -104,6 +104,7 @@
 						required: true,
 						message: '起始时间不能为空',
 						trigger: 'blur',
+						type:'number'
 					}],
 					leaveDayCount:[{
 						required: true,
@@ -114,11 +115,13 @@
 						required: true,
 						message: '结束时间不能为空',
 						trigger: 'blur',
+						type:'number'
 					}],
 					leaveType:[{
 						required: true,
 						message: '请假原因不能为空',
 						trigger: 'blur',
+						
 					}],
 				},
 				leaveTypeList: [{
@@ -173,7 +176,7 @@
 				this.dataForm.applyDept = this.userInfo.departmentName
 				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
 					let list = this.userInfo.positionIds.map(o => o.name)
-					this.dataForm.position = list.join(',')
+					this.dataForm.applyPost = list.join(',')
 				}
 			},
 			

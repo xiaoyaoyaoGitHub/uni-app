@@ -15,31 +15,31 @@
 			
 			<view class="jnpf-card">
 				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
-					<u-input v-model="dataForm.applyUser" placeholder="申请人员"></u-input>
+					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员"></u-input>
 				</u-form-item>
 				<u-form-item label="所属部门" prop="department" v-if="judgeShow('department')">
-					<jnpf-org-select type="department" v-model="dataForm.department" placeholder="所属部门"></jnpf-org-select>
+					<u-input v-model="dataForm.department" placeholder="请输入所属部门"></u-input>
 				</u-form-item>
 				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')">
-					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="申请日期"></jnpf-date-time>
+					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="用品库存" prop="articles" v-if="judgeShow('articles')">
-					<u-input v-model="dataForm.articles" placeholder="用品库存"></u-input>
+					<u-input v-model="dataForm.articles" placeholder="请输入用品库存"></u-input>
 				</u-form-item>
 				<u-form-item label="用品分类" prop="classification" v-if="judgeShow('classification')">
-					<u-input v-model="dataForm.classification" placeholder="用品分类"></u-input>
+					<u-input v-model="dataForm.classification" placeholder="请输入用品分类"></u-input>
 				</u-form-item>
-				<u-form-item label="用品编号" prop="archivalAttributes" v-if="judgeShow('archivalAttributes')">
-					<u-input v-model="dataForm.archivalAttributes" placeholder="用品编号"></u-input>
+				<u-form-item label="用品编号" prop="articlesId" v-if="judgeShow('articlesId')">
+					<u-input v-model="dataForm.articlesId" placeholder="请输入用品编号"></u-input>
 				</u-form-item>
 				<u-form-item label="单位" prop="company" v-if="judgeShow('company')">
-					<u-input v-model="dataForm.company" placeholder="单位"></u-input>
+					<u-input v-model="dataForm.company" placeholder="请输入单位"></u-input>
 				</u-form-item>
 				<u-form-item label="数量" prop="estimatePeople" v-if="judgeShow('estimatePeople')">
-					<u-input v-model="dataForm.estimatePeople" placeholder="数量"></u-input>
+					<u-input v-model="dataForm.estimatePeople" placeholder="请输入数量"></u-input>
 				</u-form-item>
-				<u-form-item label="申请原因" prop="applyReason" v-if="judgeShow('applyReason')">
-					<u-input v-model="dataForm.applyReason" placeholder="申请原因"></u-input>
+				<u-form-item label="申请原因" prop="applyReasons" v-if="judgeShow('applyReasons')">
+					<u-input v-model="dataForm.applyReasons" placeholder="请输入申请原因"></u-input>
 				</u-form-item>
 			</view>
 		</u-form>
@@ -49,7 +49,7 @@
 <script>
 	import comMixin from '../mixin'
 	export default {
-		name: 'articlesWarehousNo',
+		name: 'articlesWarehous',
 		mixins: [comMixin],
 		data() {
 			return {
@@ -57,13 +57,14 @@
 				dataForm: {
 					flowTitle: '',
 					billNo:'',
-					flowUrgent:'',
+					flowUrgent:1,
 					applyUser:'',
 					department:'',
 					applyDate:'',
 					estimatePeople:'',
-					applyReason:'',
-					company:''
+					applyReasons:'',
+					company:'',
+					articlesId:''
 				},
 				rules: {
 					flowTitle: [{
@@ -125,9 +126,11 @@
 		},
 		methods: {
 			selfInit(data) {
+				console.log(this.userInfo)
 				this.dataForm.applyDate = new Date().getTime()
 				this.dataForm.flowTitle = this.userInfo.userName + "的用品入库申请"
 				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
+				this.dataForm.department = this.userInfo.departmentName
 				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
 					let list = this.userInfo.positionIds.map(o => o.name)
 					this.dataForm.position = list.join(',')

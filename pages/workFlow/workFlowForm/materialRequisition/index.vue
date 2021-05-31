@@ -14,10 +14,10 @@
 			</u-form-item>
 
 			<view class="jnpf-card">
-				<u-form-item label="领料人员" prop="leadPeople" v-if="judgeShow('leadPeople')">
+				<u-form-item label="领料人员" prop="leadPeople" v-if="judgeShow('leadPeople')" required>
 					<u-input v-model="dataForm.leadPeople" placeholder="请输入领料人员"></u-input>
 				</u-form-item>
-				<u-form-item label="领料部门" prop="leadDepartment" v-if="judgeShow('leadDepartment')">
+				<u-form-item label="领料部门" prop="leadDepartment" v-if="judgeShow('leadDepartment')" required>
 					<u-input v-model="dataForm.leadDepartment" placeholder="请输入领料部门"></u-input>
 				</u-form-item>
 				<u-form-item label="领料日期" prop="leadDate" v-if="judgeShow('leadDate')" required>
@@ -36,8 +36,8 @@
 							@click="delItem(i)">删除
 						</view>
 					</view>
-					<u-form-item label="商品名称" prop="dataForm.entryList[i].tradeName">
-						<u-input v-model="dataForm.entryList[i].tradeName" placeholder="请输入商品名称"></u-input>
+					<u-form-item label="商品名称" prop="dataForm.entryList[i].goodsName">
+						<u-input v-model="dataForm.entryList[i].goodsName" placeholder="请输入商品名称"></u-input>
 					</u-form-item>
 					<u-form-item label="规格类型" prop="dataForm.entryList[i].specifications">
 						<u-input v-model="dataForm.entryList[i].specifications" placeholder="规格类型"></u-input>
@@ -75,7 +75,7 @@
 <script>
 	import comMixin from '../mixin'
 	export default {
-		name: 'MaterialRequisitionNo',
+		name: 'MaterialRequisition',
 		mixins: [comMixin],
 		data() {
 			return {
@@ -89,7 +89,7 @@
 					leadDate:'',
 					leadDepartment:'',
 					entryList: [{
-						tradeName: '',
+						goodsName: '',
 						specifications: '',
 						unit: '',
 						matchQty: 0,
@@ -120,24 +120,29 @@
 						required: true,
 						message: '领料日期不能为空',
 						trigger: 'blur',
+						type:'number'
+					}],
+					leadPeople:[{
+						required: true,
+						message: '领料人员不能为空',
+						trigger: 'blur',
+					}],
+					leadDepartment:[{
+						required: true,
+						message: '领料部门不能为空',
+						trigger: 'blur',
 					}],
 				},
 			}
 		},
 		methods: {
 			selfInit(data) {
-				this.dataForm.applyDate = new Date().getTime()
-				this.dataForm.flowTitle = this.userInfo.userName + "的发货申请"
-				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
-				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
-					let list = this.userInfo.positionIds.map(o => o.name)
-					this.dataForm.position = list.join(',')
-				}
+				this.dataForm.flowTitle = this.userInfo.userName + "的领料单"
 			},
 			/* 添加子表 */
 			addItem() {
 				const item = {
-					tradeName: '',
+					goodsName: '',
 					specifications: '',
 					unit: '',
 					matchQty: 0,

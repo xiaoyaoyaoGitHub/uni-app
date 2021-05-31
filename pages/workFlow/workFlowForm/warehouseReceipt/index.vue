@@ -38,9 +38,7 @@
 				<u-form-item label="入库日期" prop="warehousDate" v-if="judgeShow('warehousDate')" required>
 					<jnpf-date-time type="date" v-model="dataForm.warehousDate" placeholder="请输入入库日期"></jnpf-date-time>
 				</u-form-item>
-				<u-form-item label="备注" prop="description" v-if="judgeShow('description')">
-					<u-input v-model="dataForm.description" placeholder="请输入备注" type="textarea"></u-input>
-				</u-form-item>
+				
 			</view>
 
 			<view class="jnpf-table">
@@ -51,8 +49,8 @@
 							@click="delItem(i)">删除
 						</view>
 					</view>
-					<u-form-item label="商品名称" prop="dataForm.entryList[i].tradeName">
-						<u-input v-model="dataForm.entryList[i].tradeName" placeholder="请输入商品名称"></u-input>
+					<u-form-item label="商品名称" prop="dataForm.entryList[i].goodsName">
+						<u-input v-model="dataForm.entryList[i].goodsName" placeholder="请输入商品名称"></u-input>
 					</u-form-item>
 					<u-form-item label="规格型号" prop="dataForm.entryList[i].specifications">
 						<u-input v-model="dataForm.entryList[i].specifications" placeholder="规格类型"></u-input>
@@ -99,10 +97,9 @@
 					contactPhone: '',
 					position: '',
 					warehousCategory: '',
-					description: '',
 					warehousDate:'',
 					entryList: [{
-						tradeName: '',
+						goodsName: '',
 						specifications: '',
 						unit: '',
 						qty: '',
@@ -129,6 +126,7 @@
 						trigger: 'blur',
 					}],
 					contactPhone: [{
+						required: true,
 						pattern: /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/,
 						message: '手机号码不正确',
 						type: 'string',
@@ -144,7 +142,7 @@
 			/* 添加子表 */
 			addItem() {
 				const item = {
-					tradeName: '',
+					goodsName: '',
 					specifications: '',
 					unit: '',
 					qty: '',
