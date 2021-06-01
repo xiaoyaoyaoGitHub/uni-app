@@ -2,13 +2,13 @@
 	<view class="jnpf-wrap jnpf-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
-			<u-form-item label="流程标题" prop="flowTitle" required>
+			<u-form-item label="流程标题" prop="flowTitle" required v-if="judgeShow('flowTitle')">
 				<u-input v-model="dataForm.flowTitle" placeholder="流程标题"></u-input>
 			</u-form-item>
 			<u-form-item label="流程编码" prop="billNo" v-if="judgeShow('billNo')" required>
-				<u-input v-model="dataForm.billNo" placeholder="流程编码" ></u-input>
+				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
-			<u-form-item label="紧急程度" prop="flowUrgent" required>
+			<u-form-item label="紧急程度" prop="flowUrgent" required v-if="judgeShow('flowUrgent')">
 				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
 				</jnpf-select>
 			</u-form-item>
@@ -56,7 +56,7 @@
 				<u-input v-model="dataForm.description" placeholder="备注" type="textarea"></u-input>
 			</u-form-item>
 
-			<view class="jnpf-table">
+			<view class="jnpf-table" v-if="judgeShow('entryList')">
 				<view class="jnpf-table-item" v-for="(item,i) in dataForm.entryList" :key="i">
 					<view class="jnpf-table-item-title u-flex u-row-between">
 						<text class="jnpf-table-item-title-num">商品添购({{i+1}})</text>
@@ -71,7 +71,7 @@
 						<u-input v-model="dataForm.entryList[i].specifications" placeholder="规格类型"></u-input>
 					</u-form-item>
 					<u-form-item label="单位" prop="dataForm.entryList[i].unit">
-						<u-input v-model="dataForm.entryList[i].unit" placeholder="单位" ></u-input>
+						<u-input v-model="dataForm.entryList[i].unit" placeholder="单位"></u-input>
 					</u-form-item>
 					<u-form-item label="数量" prop="dataForm.entryList[i].qty">
 						<u-input v-model="dataForm.entryList[i].qty" placeholder="数量" type="number"
@@ -82,7 +82,7 @@
 							@input="count(dataForm.entryList[i])"></u-input>
 					</u-form-item>
 					<u-form-item label="金额" prop="dataForm.entryList[i].amount">
-						<u-input v-model="dataForm.entryList[i].amount" placeholder="金额" ></u-input>
+						<u-input v-model="dataForm.entryList[i].amount" placeholder="金额"></u-input>
 					</u-form-item>
 				</view>
 				<view class="jnpf-table-addBtn" @click="addItem">
@@ -108,7 +108,7 @@
 					invoiceDate: '',
 					customerAddres: '',
 					freightCharges: '',
-					rransportNum:'',
+					rransportNum: '',
 					invoiceValue: '',
 					cargoInsurance: '',
 					customerName: '',
@@ -204,7 +204,3 @@
 		}
 	}
 </script>
-
-<style>
-
-</style>

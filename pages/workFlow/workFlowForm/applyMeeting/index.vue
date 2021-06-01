@@ -2,23 +2,23 @@
 	<view class="jnpf-wrap jnpf-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
-			<u-form-item label="流程标题" prop="flowTitle" required>
+			<u-form-item label="流程标题" prop="flowTitle" required v-if="judgeShow('flowTitle')">
 				<u-input v-model="dataForm.flowTitle" placeholder="流程标题"></u-input>
 			</u-form-item>
 			<u-form-item label="流程编码" prop="billNo" v-if="judgeShow('billNo')" required>
-				<u-input v-model="dataForm.billNo" placeholder="流程编码" ></u-input>
+				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
-			<u-form-item label="紧急程度" prop="flowUrgent" required>
+			<u-form-item label="紧急程度" prop="flowUrgent" required v-if="judgeShow('flowUrgent')">
 				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
 				</jnpf-select>
 			</u-form-item>
-			
+
 			<view class="jnpf-card">
-				<u-form-item label="申请人员" prop="applyUser">
-					<u-input v-model="dataForm.applyUser" placeholder="申请人员" ></u-input>
+				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
+					<u-input v-model="dataForm.applyUser" placeholder="申请人员"></u-input>
 				</u-form-item>
-				<u-form-item label="所属职务" prop="position">
-					<u-input v-model="dataForm.position" placeholder="所属职务" ></u-input>
+				<u-form-item label="所属职务" prop="position" v-if="judgeShow('position')">
+					<u-input v-model="dataForm.position" placeholder="所属职务"></u-input>
 				</u-form-item>
 				<u-form-item label="会议名称" prop="conferenceName" v-if="judgeShow('conferenceName')" required>
 					<u-input v-model="dataForm.conferenceName" placeholder="会议名称"></u-input>
@@ -51,7 +51,7 @@
 					<u-input v-model="dataForm.applyMaterial" placeholder="申请材料"></u-input>
 				</u-form-item>
 			</view>
-			
+
 			<view class="jnpf-card">
 				<u-form-item label="预计金额" prop="estimatedAmount" v-if="judgeShow('estimatedAmount')">
 					<u-input v-model="dataForm.estimatedAmount" placeholder="预计金额"></u-input>
@@ -66,7 +66,7 @@
 					<jnpf-date-time type="datetime" v-model="dataForm.endDate" placeholder="结束时间"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
-					<jnpf-file :list="fileList"/>
+					<jnpf-file :list="fileList" />
 				</u-form-item>
 				<u-form-item label="会议描述" prop="describe" v-if="judgeShow('describe')">
 					<u-input v-model="dataForm.describe" placeholder="会议描述" type="textarea"></u-input>
@@ -86,27 +86,27 @@
 				billEnCode: 'WF_ApplyMeetingNo',
 				dataForm: {
 					flowTitle: '',
-					billNo:'',
-					flowUrgent:1,
+					billNo: '',
+					flowUrgent: 1,
 					applyDate: '',
-					applyUser:'',
-					position:'',
+					applyUser: '',
+					position: '',
 					startDate: '',
 					endDate: '',
-					estimatedAmount:0,
-					estimatePeople:'',
-					conferenceName:'',
-					fileJson:'',
-					describe:'',
-					otherAttendee:'',
-					applyMaterial:'',
-					attendees:'',
-					memo:'',
-					lookPeople:'',
-					administrator:'',
-					conferenceRoom:'',
-					conferenceType:'',
-					conferenceTheme:''
+					estimatedAmount: 0,
+					estimatePeople: '',
+					conferenceName: '',
+					fileJson: '',
+					describe: '',
+					otherAttendee: '',
+					applyMaterial: '',
+					attendees: '',
+					memo: '',
+					lookPeople: '',
+					administrator: '',
+					conferenceRoom: '',
+					conferenceType: '',
+					conferenceTheme: ''
 				},
 				rules: {
 					flowTitle: [{
@@ -129,13 +129,13 @@
 						required: true,
 						message: '开始时间不能为空',
 						trigger: 'change',
-						type:'number'
+						type: 'number'
 					}],
 					endDate: [{
 						required: true,
 						message: '结束时间不能为空',
 						trigger: 'change',
-						type:'number'
+						type: 'number'
 					}],
 					conferenceName: [{
 						required: true,
@@ -147,7 +147,6 @@
 		},
 		methods: {
 			selfInit(data) {
-				
 				this.dataForm.flowTitle = this.userInfo.userName + "的会议申请"
 				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
 				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
@@ -158,7 +157,3 @@
 		}
 	}
 </script>
-
-<style>
-
-</style>
