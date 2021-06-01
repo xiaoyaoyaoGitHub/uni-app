@@ -45,7 +45,7 @@
 					<u-input v-model="dataForm.description" type="textarea" placeholder="订单备注"></u-input>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileJson">
-					<jnpf-upload v-model="fileList" type="workFlow"></jnpf-upload>
+					<jnpf-upload v-model="fileJson" type="workFlow"></jnpf-upload>
 				</u-form-item>
 			</view>
 			<view class="jnpf-table">

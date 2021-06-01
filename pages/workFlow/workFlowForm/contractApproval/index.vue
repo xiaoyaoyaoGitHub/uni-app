@@ -61,8 +61,8 @@
 				<u-form-item label="填写人员" prop="inputPerson" v-if="judgeShow('inputPerson')">
 					<u-input v-model="dataForm.inputPerson" placeholder="请输入填写人员"></u-input>
 				</u-form-item>
-				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
-					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
+				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
+					<jnpf-file :list="fileList"/>
 				</u-form-item>
 				<u-form-item label="主要内容" prop="primaryCoverage" v-if="judgeShow('primaryCoverage')">
 					<u-input v-model="dataForm.primaryCoverage" placeholder="请输入主要内容" type="textarea"></u-input>
@@ -78,7 +78,7 @@
 <script>
 	import comMixin from '../mixin'
 	export default {
-		name: 'ContractApprovalNo',
+		name: 'ContractApproval',
 		mixins: [comMixin],
 		data() {
 			return {
@@ -94,7 +94,7 @@
 					signingDate:'',
 					secondPartyContact:'',
 					description:'',
-					fileList:[],
+					fileJson:'',
 					contractName:'',
 					contractClass:'',
 					contractType:'',

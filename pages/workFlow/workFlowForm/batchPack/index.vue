@@ -47,7 +47,6 @@
 				<u-form-item label="备注" prop="description" v-if="judgeShow('description')">
 					<u-input v-model="dataForm.description" placeholder="请输入备注" type="textarea"></u-input>
 				</u-form-item>
-				
 			</view>
 		</u-form>
 	</view>

@@ -35,8 +35,8 @@
 				<u-form-item label="抄送" prop="copy" v-if="judgeShow('copy')">
 					<u-input v-model="dataForm.copy" placeholder="请输入抄送" type="number"></u-input>
 				</u-form-item>
-				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
-					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
+				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
+					<jnpf-file :list="fileList"/>
 				</u-form-item>
 				
 			</view>
@@ -62,7 +62,7 @@
 					mainDelivery:'',
 					shareNum:'',
 					writingDate:'',
-					fileList:[],
+					fileJson:'',
 					issuedNum:''
 				},
 				rules: {
@@ -86,6 +86,7 @@
 						required: true,
 						message: '发文日期不能为空',
 						trigger: 'blur',
+						type: 'number'
 					}],
 				},
 				

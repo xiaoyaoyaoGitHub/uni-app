@@ -65,8 +65,8 @@
 				<u-form-item label="结束时间" prop="endDate" v-if="judgeShow('endDate')" required>
 					<jnpf-date-time type="datetime" v-model="dataForm.endDate" placeholder="结束时间"></jnpf-date-time>
 				</u-form-item>
-				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
-					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
+				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
+					<jnpf-file :list="fileList"/>
 				</u-form-item>
 				<u-form-item label="会议描述" prop="describe" v-if="judgeShow('describe')">
 					<u-input v-model="dataForm.describe" placeholder="会议描述" type="textarea"></u-input>
@@ -93,11 +93,10 @@
 					position:'',
 					startDate: '',
 					endDate: '',
-					fileJson:'',
 					estimatedAmount:0,
 					estimatePeople:'',
 					conferenceName:'',
-					fileList:[],
+					fileJson:'',
 					describe:'',
 					otherAttendee:'',
 					applyMaterial:'',

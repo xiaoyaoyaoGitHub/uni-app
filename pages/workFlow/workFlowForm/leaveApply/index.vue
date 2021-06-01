@@ -45,8 +45,8 @@
 				<u-form-item label="请假小时" prop="leaveHour" v-if="judgeShow('leaveHour')" required>
 					<u-input v-model="dataForm.leaveHour" placeholder="请输入请假小时" type="number"></u-input>
 				</u-form-item>
-				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
-					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
+				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
+					<jnpf-file :list="fileList"/>
 				</u-form-item>
 				
 			</view>
@@ -57,7 +57,7 @@
 <script>
 	import comMixin from '../mixin'
 	export default {
-		name: 'LeaveApplyNo',
+		name: 'LeaveApply',
 		mixins: [comMixin],
 		data() {
 			return {
@@ -75,7 +75,7 @@
 					leaveReason:'',
 					applyDate:'',
 					leaveType:'',
-					fileList:[],
+					fileJson:'',
 					applyPost:''
 				},
 				rules: {

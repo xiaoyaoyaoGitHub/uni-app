@@ -39,8 +39,8 @@
 				<u-form-item label="付款金额" prop="paymentMoney" v-if="judgeShow('paymentMoney')">
 					<u-input v-model="dataForm.paymentMoney" placeholder="请输入付款金额"></u-input>
 				</u-form-item>
-				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
-					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
+				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
+					<jnpf-file :list="fileList"/>
 				</u-form-item>
 				<u-form-item label="用途原因" prop="reason" v-if="judgeShow('reason')">
 					<u-input v-model="dataForm.reason" placeholder="请输入用途原因" type="textarea"></u-input>
@@ -103,7 +103,7 @@
 					deliveryAddress: '',
 					purchaseUnit: '',
 					reason: '',
-					fileList:[],
+					fileJson:'',
 					deliveryMode: '',
 					paymentMoney:'',
 					paymentMethod:'',

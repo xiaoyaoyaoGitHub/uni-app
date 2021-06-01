@@ -26,8 +26,8 @@
 				<u-form-item label="收文日期" prop="receiptDate" v-if="judgeShow('receiptDate')" required>
 					<jnpf-date-time type="date" v-model="dataForm.receiptDate" placeholder="请输入收文日期"></jnpf-date-time>
 				</u-form-item>
-				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
-					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
+				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
+					<jnpf-file :list="fileList"/>
 				</u-form-item>
 			</view>
 		</u-form>
@@ -50,7 +50,7 @@
 					letterNum: '',
 					fileTitle: '',
 					receiptDate:'',
-					fileList:[]
+					fileJson:''
 				},
 				rules: {
 					flowTitle: [{

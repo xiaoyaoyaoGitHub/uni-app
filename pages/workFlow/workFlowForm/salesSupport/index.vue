@@ -62,8 +62,8 @@
 				<u-form-item label="发起人总结" prop="conclusion" v-if="judgeShow('conclusion')">
 					<u-input v-model="dataForm.conclusion" placeholder="请输入发起人总结" type="textarea"></u-input>
 				</u-form-item>
-				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
-					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
+				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
+					<jnpf-file :list="fileList"/>
 				</u-form-item>
 			</view>
 		</u-form>
@@ -91,7 +91,7 @@
 					startDate:'',
 					customer:'',
 					consultResult:'',
-					fileList:[],
+					fileJson:'',
 					conclusion:'',
 					ievaluation:'',
 					salSupConclu:'',

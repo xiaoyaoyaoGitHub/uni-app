@@ -35,8 +35,8 @@
 				<u-form-item label="协调事项" prop="coordination" v-if="judgeShow('coordination')">
 					<u-input v-model="dataForm.coordination" placeholder="请输入协调事项" type="textarea"></u-input>
 				</u-form-item>
-				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
-					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
+				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
+					<jnpf-file :list="fileList"/>
 				</u-form-item>
 			</view>
 		</u-form>
@@ -59,7 +59,7 @@
 					serviceDepartment: '',
 					drawPeople: '',
 					toDate:'',
-					fileList:[],
+					fileJson:'',
 					recipients:''
 				},
 				rules: {

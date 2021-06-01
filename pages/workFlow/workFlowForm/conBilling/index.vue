@@ -48,8 +48,8 @@
 				<u-form-item label="发票地址" prop="invoAddress" v-if="judgeShow('invoAddress')">
 					<u-input v-model="dataForm.invoAddress" placeholder="请输入发票地址"></u-input>
 				</u-form-item>
-				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
-					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
+				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
+					<jnpf-file :list="fileList"/>
 				</u-form-item>
 				<u-form-item label="备注" prop="description" v-if="judgeShow('description')">
 					<u-input v-model="dataForm.description" placeholder="请输入备注" type="textarea"></u-input>
@@ -79,7 +79,7 @@
 					billDate:'',
 					billAmount:'',
 					description:'',
-					fileList:[],
+					fileJson:'',
 					taxId:'',
 					invoiceId:'',
 					payAmount:'',

@@ -29,8 +29,8 @@
 				<u-form-item label="收文简述" prop="receiptPaper" v-if="judgeShow('receiptPaper')">
 					<u-input v-model="dataForm.receiptPaper" placeholder="请输入收文简述" type="textarea"></u-input>
 				</u-form-item>
-				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
-					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
+				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
+					<jnpf-file :list="fileList"/>
 				</u-form-item>
 			</view>
 		</u-form>
@@ -53,7 +53,7 @@
 					collector: '',
 					receiptTitle: '',
 					receiptDate:'',
-					fileList:[],
+					fileJson:'',
 					receiptPaper:''
 				},
 				rules: {
@@ -84,14 +84,7 @@
 		},
 		methods: {
 			selfInit(data) {
-				this.dataForm.applyDate = new Date().getTime()
 				this.dataForm.flowTitle = this.userInfo.userName + "的收文签呈单"
-				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
-				this.dataForm.applyDept = this.userInfo.departmentName
-				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
-					let list = this.userInfo.positionIds.map(o => o.name)
-					this.dataForm.position = list.join(',')
-				}
 			},
 		}
 	}

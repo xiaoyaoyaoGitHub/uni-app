@@ -17,8 +17,8 @@
 				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
 					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员"></u-input>
 				</u-form-item>
-				<u-form-item label="所属部门" prop="applyDept" v-if="judgeShow('applyDept')">
-					<u-input v-model="dataForm.applyDept" placeholder="请输入所属部门"></u-input>
+				<u-form-item label="所属部门" prop="department" v-if="judgeShow('department')">
+					<u-input v-model="dataForm.department" placeholder="请输入所属部门"></u-input>
 				</u-form-item>
 				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')">
 					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"></jnpf-date-time>
@@ -61,7 +61,7 @@
 					articlesNum:'',
 					articlesName:'',
 					applyUser:'',
-					applyDept:'',
+					department:'',
 					position:'',
 					applyDate:'',
 					classification:'',
@@ -95,7 +95,7 @@
 				this.dataForm.applyDate = new Date().getTime()
 				this.dataForm.flowTitle = this.userInfo.userName + "的领用办公用品申请"
 				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
-				this.dataForm.applyDept = this.userInfo.departmentName
+				this.dataForm.department = this.userInfo.departmentName
 				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
 					let list = this.userInfo.positionIds.map(o => o.name)
 					this.dataForm.position = list.join(',')

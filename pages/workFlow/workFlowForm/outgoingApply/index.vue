@@ -35,8 +35,8 @@
 				<u-form-item label="目的地" prop="destination" v-if="judgeShow('destination')">
 					<u-input v-model="dataForm.destination" placeholder="请输入目的地"></u-input>
 				</u-form-item>
-				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
-					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
+				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
+					<jnpf-file :list="fileList"/>
 				</u-form-item>
 				<u-form-item label="外出事由" prop="outgoingCause" v-if="judgeShow('outgoingCause')">
 					<u-input v-model="dataForm.outgoingCause" placeholder="请输入外出事由" type="textarea"></u-input>
@@ -67,7 +67,7 @@
 					startTime:'',
 					outgoingTotle:'',
 					outgoingCause:'',
-					fileList:[]
+					fileJson:''
 				},
 				rules: {
 					flowTitle: [{

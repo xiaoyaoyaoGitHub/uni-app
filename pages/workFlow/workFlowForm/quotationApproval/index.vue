@@ -33,8 +33,8 @@
 					<jnpf-select v-model="dataForm.quotationType" placeholder="请选择报价类型"
 						:options="quotationTypeList"></jnpf-select>
 				</u-form-item>
-				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
-					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
+				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
+					<jnpf-file :list="fileList"/>
 				</u-form-item>
 				<u-form-item label="情况描述" prop="custSituation" v-if="judgeShow('custSituation')">
 					<u-input v-model="dataForm.custSituation" placeholder="请输入情况描述"></u-input>
@@ -63,7 +63,7 @@
 					standardFile: '',
 					custSituation: '',
 					writeDate:'',
-					fileList:[]
+					fileJson:''
 				},
 				rules: {
 					flowTitle: [{

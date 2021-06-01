@@ -72,14 +72,14 @@
 					<u-input v-model="dataForm.budgetaryApproval" placeholder="请输入预算批付"></u-input>
 				</u-form-item>
 
-				<u-form-item label="开始时间" prop="startDate" v-if="judgeShow('startDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.startDate" placeholder="开始时间"></jnpf-date-time>
+				<u-form-item label="开始时间" prop="startContractDate" v-if="judgeShow('startContractDate')" required>
+					<jnpf-date-time type="datetime" v-model="dataForm.startContractDate" placeholder="开始时间"></jnpf-date-time>
 				</u-form-item>
-				<u-form-item label="结束时间" prop="endDate" v-if="judgeShow('endDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.endDate" placeholder="结束时间"></jnpf-date-time>
+				<u-form-item label="结束时间" prop="endContractDate" v-if="judgeShow('endContractDate')" required>
+					<jnpf-date-time type="datetime" v-model="dataForm.endContractDate" placeholder="结束时间"></jnpf-date-time>
 				</u-form-item>
-				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
-					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
+				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
+					<jnpf-file :list="fileList"/>
 				</u-form-item>
 				<u-form-item label="内容简要" prop="contractContent" v-if="judgeShow('contractContent')">
 					<u-input v-model="dataForm.contractContent" placeholder="请输入内容简要" type="textarea"></u-input>
@@ -93,7 +93,7 @@
 <script>
 	import comMixin from '../mixin'
 	export default {
-		name: 'ContractApprovalSheetNo',
+		name: 'ContractApprovalSheet',
 		mixins: [comMixin],
 		data() {
 			return {
@@ -107,15 +107,15 @@
 					firstParty: '',
 					secondParty: '',
 					leadDepartment: '',
-					fileList: [],
+					fileJson: [],
 					contractName: '',
 					signArea: '',
 					contractType: '',
 					contractId: '',
 					contractContent: '',
 					contractPeriod: '',
-					startDate: '',
-					endDate: '',
+					startContractDate: '',
+					endContractDate: '',
 					totalExpenditure: '',
 					personCharge: '',
 					budgetaryApproval:'',
@@ -144,13 +144,13 @@
 						trigger: 'change',
 						type: 'number'
 					}],
-					startDate: [{
+					startContractDate: [{
 						required: true,
 						message: '开始时间不能为空',
 						trigger: 'change',
 						type: 'number'
 					}],
-					endDate: [{
+					endContractDate: [{
 						required: true,
 						message: '结束时间不能为空',
 						trigger: 'change',
@@ -169,11 +169,7 @@
 			selfInit(data) {
 				this.dataForm.applyDate = new Date().getTime()
 				this.dataForm.flowTitle = this.userInfo.userName + "的合同申请"
-				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
-				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
-					let list = this.userInfo.positionIds.map(o => o.name)
-					this.dataForm.position = list.join(',')
-				}
+				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount;
 			},
 			beforeInit() {
 				this.getPaymentMethodOptions()

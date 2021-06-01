@@ -14,7 +14,7 @@
 			</u-form-item>
 
 			<view class="jnpf-card">
-				<u-form-item label="文件名称" prop="fileName" v-if="judgeShow('fileName')" required>
+				<u-form-item label="文件名称" prop="fileName" v-if="judgeShow('fileName')">
 					<u-input v-model="dataForm.fileName" placeholder="请输入文件名称"></u-input>
 				</u-form-item>
 				<u-form-item label="拟稿人" prop="draftedPerson" v-if="judgeShow('draftedPerson')">
@@ -26,14 +26,14 @@
 				<u-form-item label="文件拟办" prop="fillPreparation" v-if="judgeShow('fillPreparation')">
 					<u-input v-model="dataForm.fillPreparation" placeholder="请输入文件拟办"></u-input>
 				</u-form-item>
-				<u-form-item label="文件编号" prop="fillNum" v-if="judgeShow('fillNum')" required>
+				<u-form-item label="文件编号" prop="fillNum" v-if="judgeShow('fillNum')">
 					<u-input v-model="dataForm.fillNum" placeholder="请输入文件编号"></u-input>
 				</u-form-item>
 				<u-form-item label="收文日期" prop="receiptDate" v-if="judgeShow('receiptDate')" required>
 					<jnpf-date-time type="date" v-model="dataForm.receiptDate" placeholder="请输入收文日期"></jnpf-date-time>
 				</u-form-item>
-				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
-					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
+				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
+					<jnpf-file :list="fileList"/>
 				</u-form-item>
 				<u-form-item label="修改意见" prop="modifyOpinion" v-if="judgeShow('modifyOpinion')">
 					<u-input v-model="dataForm.modifyOpinion" placeholder="请输入修改意见" type="textarea"></u-input>
@@ -46,7 +46,7 @@
 <script>
 	import comMixin from '../mixin'
 	export default {
-		name: 'DocumentApprovalNo',
+		name: 'DocumentApproval',
 		mixins: [comMixin],
 		data() {
 			return {
@@ -62,7 +62,7 @@
 					fillPreparation: '',
 					fillNum: '',
 					receiptDate:'',
-					fileList:[]
+					fileJson:''
 				},
 				rules: {
 					flowTitle: [{

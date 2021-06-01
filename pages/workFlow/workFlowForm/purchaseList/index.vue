@@ -43,8 +43,8 @@
 				<u-form-item label="支付总额" prop="paymentMoney" v-if="judgeShow('paymentMoney')">
 					<u-input v-model="dataForm.paymentMoney" placeholder="输入支付总额" type="number"></u-input>
 				</u-form-item>
-				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
-					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
+				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
+					<jnpf-file :list="fileList"/>
 				</u-form-item>
 				<u-form-item label="用途原因" prop="reason" v-if="judgeShow('reason')">
 					<u-input v-model="dataForm.reason" placeholder="用途原因" type="textarea"></u-input>
@@ -107,7 +107,7 @@
 					warehouse: '',
 					vendorName: '',
 					reason: '',
-					fileList:[],
+					fileJson:'',
 					buyer: '',
 					telephone:'',
 					paymentMethod:'',

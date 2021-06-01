@@ -41,8 +41,8 @@
 				<u-form-item label="次月目标" prop="nfinishMethod" v-if="judgeShow('nfinishMethod')">
 					<u-input v-model="dataForm.nfinishMethod" placeholder="请输入份数" type="number"></u-input>
 				</u-form-item>
-				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
-					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
+				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
+					<jnpf-file :list="fileList"/>
 				</u-form-item>
 			</view>
 		</u-form>
@@ -68,7 +68,7 @@
 					applyDept:'',
 					applyPost:'',
 					applyDate:'',
-					fileList:[],
+					fileJson:'',
 					overalEvaluat:'',
 					planEndTime:''
 				},

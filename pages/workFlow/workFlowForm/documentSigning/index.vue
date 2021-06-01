@@ -14,10 +14,10 @@
 			</u-form-item>
 
 			<view class="jnpf-card">
-				<u-form-item label="文件名称" prop="fileName" v-if="judgeShow('fileName')" required>
+				<u-form-item label="文件名称" prop="fileName" v-if="judgeShow('fileName')">
 					<u-input v-model="dataForm.fileName" placeholder="请输入文件名称"></u-input>
 				</u-form-item>
-				<u-form-item label="文件编号" prop="fillNum" v-if="judgeShow('fillNum')" required>
+				<u-form-item label="文件编号" prop="fillNum" v-if="judgeShow('fillNum')">
 					<u-input v-model="dataForm.fillNum" placeholder="请输入文件编号"></u-input>
 				</u-form-item>
 				<u-form-item label="拟稿人" prop="draftedPerson" v-if="judgeShow('draftedPerson')">
@@ -35,8 +35,8 @@
 				<u-form-item label="发稿日期" prop="publicationDate" v-if="judgeShow('publicationDate')" required>
 					<jnpf-date-time type="date" v-model="dataForm.publicationDate" placeholder="请输入发稿日期"></jnpf-date-time>
 				</u-form-item>
-				<u-form-item label="相关附件" prop="fileList" v-if="judgeShow('fileList')">
-					<jnpf-upload v-model="dataForm.fileList"></jnpf-upload>
+				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
+					<jnpf-file :list="fileList"/>
 				</u-form-item>
 				<u-form-item label="文件内容" prop="documentContent" v-if="judgeShow('documentContent')">
 					<u-input v-model="dataForm.documentContent" placeholder="请输入文件内容" type="textarea"></u-input>
@@ -52,7 +52,7 @@
 <script>
 	import comMixin from '../mixin'
 	export default {
-		name: 'DocumentSigningNo',
+		name: 'DocumentSigning',
 		mixins: [comMixin],
 		data() {
 			return {
@@ -68,7 +68,7 @@
 					fillPreparation: '',
 					fillNum: '',
 					checkDate:'',
-					fileList:[],
+					fileJson:'',
 					publicationDate:'',
 					adviceColumn:''
 				},
@@ -107,13 +107,7 @@
 		},
 		methods: {
 			selfInit(data) {
-				this.dataForm.applyDate = new Date().getTime()
 				this.dataForm.flowTitle = this.userInfo.userName + "的文件签阅申请"
-				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
-				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
-					let list = this.userInfo.positionIds.map(o => o.name)
-					this.dataForm.position = list.join(',')
-				}
 			},
 		}
 	}

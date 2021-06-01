@@ -63,7 +63,7 @@
 <script>
 	import comMixin from '../mixin'
 	export default {
-		name: 'IncomeRecognitionNo',
+		name: 'IncomeRecognition',
 		mixins: [comMixin],
 		data() {
 			return {

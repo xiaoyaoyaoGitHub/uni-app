@@ -60,7 +60,7 @@
 <script>
 	import comMixin from '../mixin'
 	export default {
-		name: 'ExpenseExpenditureNo',
+		name: 'ExpenseExpenditure',
 		mixins: [comMixin],
 		data() {
 			return {
