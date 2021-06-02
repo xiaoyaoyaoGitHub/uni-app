@@ -125,7 +125,33 @@
 				"style": {
 					"navigationBarTitleText": "设置"
 				}
-			}]
+			},{
+                    "path" : "contactUs/index",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "联系我们"
+                }
+                
+                }
+                ,{
+                    "path" : "abouts/index",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "应用介绍",
+                    "enablePullDownRefresh": false
+                }
+                
+                },
+				{
+				    "path" : "yinmaisoft/index",
+				    "style" :                                                                                    
+				{
+				    "navigationBarTitleText": "",
+				    "enablePullDownRefresh": false
+				}
+				
+				}
+            ]
 		}
 	],
 	"preloadRule": {

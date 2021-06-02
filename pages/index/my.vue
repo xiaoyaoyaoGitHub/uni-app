@@ -1,7 +1,7 @@
 <template>
 	<view class="my-v">
 		<view class="u-flex user-box u-p-l-32 u-p-r-22 u-p-b-30">
-			<view class="u-m-r-10">
+			<view class="u-m-r-10" @click="replaceAvatar">
 				<u-avatar :src="define.baseURL+userInfo.headIcon" size="140"></u-avatar>
 			</view>
 			<view class="u-flex-1">
@@ -12,6 +12,7 @@
 				<u-icon name="arrow-right" color="#969799" size="28"></u-icon>
 			</view>
 		</view>
+		
 		<view class="u-m-t-20">
 			<u-cell-group>
 				<u-cell-item title="企业组织" @click="openPage()">
@@ -21,10 +22,10 @@
 		</view>
 		<view class="u-m-t-20">
 			<u-cell-group>
-				<u-cell-item title="联系我们" @click="openPage()">
+				<u-cell-item title="联系我们" @click="openPage('/pages/my/contactUs/index')">
 					<text class="icon-ym icon-ym-lianxi u-m-r-16 u-font-36 u-type-primary" slot="icon" />
 				</u-cell-item>
-				<u-cell-item title="应用介绍" @click="openPage()">
+				<u-cell-item title="应用介绍" @click="openPage('/pages/my/abouts/index')">
 					<text class="icon-ym icon-ym-yingyong u-m-r-16 u-font-36 u-type-success" slot="icon" />
 				</u-cell-item>
 			</u-cell-group>
@@ -63,6 +64,9 @@
 					url: path
 				})
 			},
+			replaceAvatar(){
+				console.log('ok')
+			}
 		}
 	}
 </script>

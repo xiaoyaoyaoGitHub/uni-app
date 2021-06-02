@@ -1,4 +1,9 @@
 const resources = {
+	Global:{
+		SoftName: "JNPF", //软件名称
+		SoftFullName: "JNPF软件APP", //软件全称
+		SoftVersion: "3.1.2", //软件版本 
+	},
 	startup: {
 		main: "https://app.cdn.jnpfsoft.com/image/3.0/startup/startup-main.png",
 		bottomRight: "https://app.cdn.jnpfsoft.com/image/3.0/startup/startup-bottom-right.png",
