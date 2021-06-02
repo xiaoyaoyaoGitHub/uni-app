@@ -169,6 +169,16 @@
                 }
                 
                 }
+                ,{
+                    "path" : "personalData/index",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "个人信息",
+                    "enablePullDownRefresh": false
+					
+                }
+                
+                }
             ]
 		}
 	],

@@ -1,7 +1,7 @@
 <template>
 	<view class="my-v">
-		<view class="u-flex user-box u-p-l-32 u-p-r-22 u-p-b-30">
-			<view class="u-m-r-10" @click="replaceAvatar">
+		<view class="u-flex user-box u-p-l-32 u-p-r-22 u-p-b-30" @click="openPage('/pages/my/personalData/index')">
+			<view class="u-m-r-10">
 				<u-avatar :src="define.baseURL+userInfo.headIcon" size="140"></u-avatar>
 			</view>
 			<view class="u-flex-1">
@@ -64,9 +64,6 @@
 					url: path
 				})
 			},
-			replaceAvatar(){
-				console.log('ok')
-			}
 		}
 	}
 </script>
