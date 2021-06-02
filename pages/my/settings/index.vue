@@ -1,17 +1,24 @@
 <template>
 	<view class="settings-v">
 		<u-cell-group>
-			<u-cell-item title="退出登录"></u-cell-item>
+			<!-- #ifdef APP-PLUS -->
+			<u-cell-item title="用户协议" @click='openPage(agreement)'></u-cell-item>
+			<u-cell-item title="隐私政策" @click='openPage(policy)'></u-cell-item>
+			<!-- #endif -->
 		</u-cell-group>
 		<view class="logout-cell" hover-class="u-cell-hover" @click="logout">退出登录</view>
 	</view>
 </template>
 
 <script>
+	import request from '../../../libs/resources.js'
 	export default {
 		data() {
 			return {
-
+				// #ifdef APP-PLUS
+				agreement: resources.userAgreement,
+				policy: resources.privacyPolicy,
+				// #endif
 			};
 		},
 		methods: {
@@ -29,7 +36,12 @@
 						}
 					}
 				})
+			},
+			// #ifdef APP-PLUS
+			openPage(url) {
+				plus.runtime.openURL(url);
 			}
+			// #endif
 		}
 	}
 </script>
