@@ -32,7 +32,7 @@
 		</view>
 		<view class="u-m-t-20">
 			<u-cell-group>
-				<u-cell-item title="账号安全" @click="openPage()">
+				<u-cell-item title="账号安全" @click="openPage('/pages/my/accountSecurity/index')">
 					<text class="icon-ym icon-ym-zhanghao u-m-r-16 u-font-36 u-type-warning" slot="icon" />
 				</u-cell-item>
 			</u-cell-group>

@@ -151,6 +151,24 @@
 				}
 				
 				}
+                ,{
+                    "path" : "accountSecurity/index",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "账号安全",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "cancellation/index",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "注销账号",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
             ]
 		}
 	],
