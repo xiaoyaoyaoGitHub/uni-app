@@ -179,6 +179,15 @@
                 }
                 
                 }
+                ,{
+                    "path" : "business/index",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "企业组织",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
             ]
 		}
 	],

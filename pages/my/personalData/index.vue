@@ -11,7 +11,6 @@
 				<u-cell-item title="手机号" :arrow="false"><text>{{userInfo.mobilePhone}}</text></u-cell-item>
 				<u-cell-item title="邮箱" :arrow="false"><text>{{userInfo.email || '28381858@qq.com'}}</text></u-cell-item>
 			</u-cell-group>
-
 		</view>
 	</view>
 </template>

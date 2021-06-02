@@ -15,7 +15,7 @@
 		
 		<view class="u-m-t-20">
 			<u-cell-group>
-				<u-cell-item title="企业组织" @click="openPage()">
+				<u-cell-item title="企业组织" @click="openPage('/pages/my/business/index')">
 					<text class="icon-ym icon-ym-zuzhi u-m-r-16 u-font-36 u-type-primary" slot="icon" />
 				</u-cell-item>
 			</u-cell-group>
