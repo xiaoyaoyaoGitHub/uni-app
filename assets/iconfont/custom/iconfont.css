@@ -1,12 +1,9 @@
 @font-face {
 	font-family: 'ym-custom';
-	/* project id 2016749 */
-	src: url('//at.alicdn.com/t/font_2016749_22lty03tkun.eot');
-	src: url('//at.alicdn.com/t/font_2016749_22lty03tkun.eot?#iefix') format('embedded-opentype'),
-		url('//at.alicdn.com/t/font_2016749_22lty03tkun.woff2') format('woff2'),
-		url('//at.alicdn.com/t/font_2016749_22lty03tkun.woff') format('woff'),
-		url('https://at.alicdn.com/t/font_2016749_22lty03tkun.ttf') format('truetype'),
-		url('//at.alicdn.com/t/font_2016749_22lty03tkun.svg#ym-custom') format('svg');
+	/* Project id 2016749 */
+	src: url('https://at.alicdn.com/t/font_2016749_kum5osnby7n.woff2?t=1620963605001') format('woff2'),
+		url('https://at.alicdn.com/t/font_2016749_kum5osnby7n.woff?t=1620963605001') format('woff'),
+		url('https://at.alicdn.com/t/font_2016749_kum5osnby7n.ttf?t=1620963605001') format('truetype');
 }
 
 .ym-custom {

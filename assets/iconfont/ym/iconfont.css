@@ -1,9 +1,9 @@
 @font-face {
 	font-family: 'icon-ym';
 	/* Project id 2011706 */
-	src: url('//at.alicdn.com/t/font_2011706_r7iu5ctwwlg.woff2?t=1621557541744') format('woff2'),
-		url('//at.alicdn.com/t/font_2011706_r7iu5ctwwlg.woff?t=1621557541744') format('woff'),
-		url('https://at.alicdn.com/t/font_2011706_r7iu5ctwwlg.ttf?t=1621557541744') format('truetype');
+	src: url('https://at.alicdn.com/t/font_2011706_8ofkf5yhj2k.woff2?t=1622683293203') format('woff2'),
+		url('https://at.alicdn.com/t/font_2011706_8ofkf5yhj2k.woff?t=1622683293203') format('woff'),
+		url('https://at.alicdn.com/t/font_2011706_8ofkf5yhj2k.ttf?t=1622683293203') format('truetype');
 }
 
 .icon-ym {
@@ -14,8 +14,20 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.icon-ym-chaxun:before {
-	content: "\e61c";
+.icon-ym-flowDone-app:before {
+	content: "\e627";
+}
+
+.icon-ym-flowLaunch-app:before {
+	content: "\e628";
+}
+
+.icon-ym-flowTodo-app:before {
+	content: "\e629";
+}
+
+.icon-ym-flowCopy-app:before {
+	content: "\e62a";
 }
 
 .icon-ym-daiban1:before {

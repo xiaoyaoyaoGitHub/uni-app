@@ -3,19 +3,19 @@
 		<u-sticky :enable="enable">
 			<view class="tabs u-flex">
 				<navigator url="/pages/workFlow/flowLaunch/index" class="tabs-item u-flex-col u-col-center">
-					<text class="icon-ym icon-ym-generator-count u-font-40 tabs-icon launch" />
+					<text class="icon-ym icon-ym-flowLaunch-app u-font-40 tabs-icon launch" />
 					<text class="u-font-24">我发起的</text>
 				</navigator>
 				<navigator url="/pages/workFlow/flowTodo/index" class="tabs-item u-flex-col u-col-center">
-					<text class="icon-ym icon-ym-generator-count u-font-40 tabs-icon todo" />
+					<text class="icon-ym icon-ym-flowTodo-app u-font-40 tabs-icon todo" />
 					<text class="u-font-24">待办事宜</text>
 				</navigator>
 				<navigator url="/pages/workFlow/flowDone/index" class="tabs-item u-flex-col u-col-center">
-					<text class="icon-ym icon-ym-generator-count u-font-40 tabs-icon done" />
+					<text class="icon-ym icon-ym-flowDone-app u-font-40 tabs-icon done" />
 					<text class="u-font-24">已办事宜</text>
 				</navigator>
 				<navigator url="/pages/workFlow/flowCopy/index" class="tabs-item u-flex-col u-col-center">
-					<text class="icon-ym icon-ym-generator-count u-font-40 tabs-icon copy" />
+					<text class="icon-ym icon-ym-flowCopy-app u-font-40 tabs-icon copy" />
 					<text class="u-font-24">抄送我的</text>
 				</navigator>
 			</view>
