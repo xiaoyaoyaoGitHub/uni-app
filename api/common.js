@@ -89,6 +89,28 @@ export function login(data) {
 		}
 	})
 }
+
+//获取验证码
+export function clickSms(account){
+	return request({
+		url: 'https://app.jnpfsoft.com/api/Saas/Tenant/SmsCode/' + account,
+		method: 'GET',
+		header: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+		}
+	})
+}
+//验证码登录
+export function loginSms(data){
+	return request({
+		url: 'https://app.jnpfsoft.com/api/Saas/Tenant/LoginSms',
+		method: 'POST',
+		data,
+		header: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+		}
+	})
+}
 // 退出登录
 export function logout() {
 	return request({

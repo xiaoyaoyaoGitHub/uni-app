@@ -49,10 +49,11 @@
 </script>
 
 <style lang="scss">
+	$padding-l : 0 16rpx;
 	page {
 		// background-color: #f0f2f6;
 	}
-
+	
 	.cancellation-v {
 		.cancellation-hd {
 			width: 100%;
@@ -87,7 +88,6 @@
 					display: flex;
 					flex-direction: row;
 					align-items: center;
-
 					&::before {
 						content: "";
 						width: 12rpx;
@@ -98,9 +98,9 @@
 					}
 				}
 			}
-
+			
 			.btn {
-				padding: 0 16rpx;
+				padding: $padding-l;
 				width: 100%;
 				position: fixed;
 				bottom: 20rpx;
