@@ -69,6 +69,14 @@ export function getUserAll() {
 		}
 	})
 }
+// 获取用户列表(分页)
+export function getImUser(data, options) {
+	return request({
+		url: '/api/permission/Users/ImUser',
+		data,
+		options
+	})
+}
 // 获取接口数据
 export function previewDataInterface(id) {
 	return request({
@@ -91,7 +99,7 @@ export function login(data) {
 }
 
 //获取验证码
-export function clickSms(account){
+export function clickSms(account) {
 	return request({
 		url: 'https://app.jnpfsoft.com/api/Saas/Tenant/SmsCode/' + account,
 		method: 'GET',
@@ -101,7 +109,7 @@ export function clickSms(account){
 	})
 }
 //验证码登录
-export function loginSms(data){
+export function loginSms(data) {
 	return request({
 		url: 'https://app.jnpfsoft.com/api/Saas/Tenant/LoginSms',
 		method: 'POST',
