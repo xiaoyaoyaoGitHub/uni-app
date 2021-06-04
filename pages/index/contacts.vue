@@ -1,7 +1,7 @@
 <template>
 	<view class="contacts-v">
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :sticky="true"
-			:down="downOption" :up="upOption">
+			:down="downOption" :up="upOption" :bottombar="false">
 			<view class="search-box search-box_sticky">
 				<u-search placeholder="请输入关键词搜索" v-model="keyword" height="72" :show-action="false" @change="search"
 					bg-color="#f0f2f6" shape="square">
