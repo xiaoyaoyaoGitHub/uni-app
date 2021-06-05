@@ -14,10 +14,9 @@
 				</view>
 			</view>
 			<view class="btn">
-				<u-button type="primary" :custom-style="customStyle" @click="open">注销账号</u-button>
+				<u-button type="primary" @click="handleClick">注销账号</u-button>
 			</view>
 		</view>
-		<u-modal v-model="show" :content="content" :show-cancel-button='true' :width='500' @confirm="cancellation" @cancel="cancel"></u-modal>
 	</view>
 </template>
 
@@ -26,34 +25,28 @@
 	export default {
 		data() {
 			return {
-				accountSecurity: resources.banner.accountSecurity,
-				customStyle: {
-					height: '100rpx'
-				},
-				show: false,
-				content: '您的JNPF账号将被删除，您确定要注销JNPF账号么？'
+				accountSecurity: resources.banner.accountSecurity
 			}
 		},
 		methods: {
-			open(){
-				this.show = true;
+			handleClick() {
+				uni.showModal({
+					title: '提示',
+					content: '您的JNPF账号将被删除，您确定要注销JNPF账号么？',
+					success: res => {
+						if (res.confirm) {
+							console.log('确定')
+						}
+					}
+				})
 			},
-			cancellation() {
-				console.log('确定')
-			},
-			cancel(){
-				console.log('取消')
-			}
 		}
 	}
 </script>
 
 <style lang="scss">
 	$padding-l : 0 16rpx;
-	page {
-		// background-color: #f0f2f6;
-	}
-	
+
 	.cancellation-v {
 		.cancellation-hd {
 			width: 100%;
@@ -68,7 +61,7 @@
 		.content {
 			.content-text {
 				justify-content: center;
-				padding: 176rpx 0 0 204rpx;
+				padding: 176rpx 0 0 190rpx;
 			}
 
 			.content-title {
@@ -88,6 +81,7 @@
 					display: flex;
 					flex-direction: row;
 					align-items: center;
+
 					&::before {
 						content: "";
 						width: 12rpx;
@@ -98,7 +92,7 @@
 					}
 				}
 			}
-			
+
 			.btn {
 				padding: $padding-l;
 				width: 100%;
