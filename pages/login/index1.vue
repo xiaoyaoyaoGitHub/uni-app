@@ -1,5 +1,8 @@
 <template>
 	<view class="logo-v">
+		<view class="login-bg">
+			<image src="../../static/login-bg.png" mode="widthFix"></image>
+		</view>
 		<view class="logo-hd u-flex-col">
 			<view class="logoImg">
 				<image src="../../static/logo.png" mode="widthFix"></image>
@@ -228,6 +231,12 @@
 	page {}
 
 	.logo-v {
+		.login-bg{
+			image{
+				width: 100%;
+				height: 100%;
+			}
+		}
 		.copyright {
 			color: #AEAFB5;
 			width: 100%;
@@ -240,13 +249,12 @@
 		}
 		.logo-hd {
 			width: 100%;
-			padding-top: 172rpx;
-
+			position: absolute;
+			top: 180rpx;
 			.logoImg {
 				width: 160rpx;
 				height: 160rpx;
 				margin: 0 auto;
-
 				image {
 					width: 100%;
 					height: 100%;
