@@ -41,9 +41,11 @@
 						<u-button @click="defaultLogin" type="primary" :loading="loading">{{ loading ? "登录中...":"登录"}}
 						</u-button>
 					</view>
-
 				</view>
 			</view>
+		</view>
+		<view class="copyright">
+			<text class="txt">Copyright © 2021 引迈信息技术有限公司出品</text>
 		</view>
 		<u-verification-code seconds="60" ref="uCode" @change="codeChange"></u-verification-code>
 	</view>
@@ -226,6 +228,16 @@
 	page {}
 
 	.logo-v {
+		.copyright {
+			color: #AEAFB5;
+			width: 100%;
+			position: absolute;
+			bottom: 0;
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			padding-bottom: 20rpx;
+		}
 		.logo-hd {
 			width: 100%;
 			padding-top: 172rpx;
