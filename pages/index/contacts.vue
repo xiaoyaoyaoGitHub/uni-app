@@ -61,7 +61,7 @@
 				getImUser(query, {
 					load: page.num == 1
 				}).then(res => {
-					console.log(res.data.list)
+					
 					this.mescroll.endSuccess(res.data.list.length);
 					if (page.num == 1) this.list = [];
 					const list = res.data.list;

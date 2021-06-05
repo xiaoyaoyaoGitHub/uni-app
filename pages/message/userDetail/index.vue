@@ -60,7 +60,7 @@
 						})
 						break;
 					case '2':
-						console.log(index)
+						
 						break;
 				}
 			},
