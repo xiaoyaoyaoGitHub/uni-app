@@ -2,73 +2,91 @@
 	<view class="jnpf-wrap jnpf-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
-			<u-form-item label="流程标题" prop="flowTitle" required>
-				<u-input v-model="dataForm.flowTitle" placeholder="流程标题"></u-input>
+			<u-form-item label="流程标题" prop="flowTitle" v-if="judgeShow('flowTitle')" required>
+				<u-input v-model="dataForm.flowTitle" placeholder="流程标题" :disabled="judgeWrite('flowTitle')"></u-input>
 			</u-form-item>
 			<u-form-item label="流程编码" prop="billNo" v-if="judgeShow('billNo')" required>
-				<u-input v-model="dataForm.billNo" placeholder="流程编码" ></u-input>
+				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
-			<u-form-item label="紧急程度" prop="flowUrgent" required>
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
+			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')" required>
+				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+					:disabled="judgeWrite('flowUrgent')">
 				</jnpf-select>
 			</u-form-item>
-			
+
 			<view class="jnpf-card">
 				<u-form-item label="甲方单位" prop="firstPartyUnit" v-if="judgeShow('firstPartyUnit')">
-					<u-input v-model="dataForm.firstPartyUnit" placeholder="请输入甲方单位"></u-input>
+					<u-input v-model="dataForm.firstPartyUnit" placeholder="请输入甲方单位"
+						:disabled="judgeWrite('firstPartyUnit')"></u-input>
 				</u-form-item>
-				
+
 				<u-form-item label="甲方负责人" prop="firstPartyPerson" v-if="judgeShow('firstPartyPerson')">
-					<u-input v-model="dataForm.firstPartyPerson" placeholder="请输入甲方负责人"></u-input>
+					<u-input v-model="dataForm.firstPartyPerson" placeholder="请输入甲方负责人"
+						:disabled="judgeWrite('firstPartyPerson')"></u-input>
 				</u-form-item>
 				<u-form-item label="甲方联系方式" prop="firstPartyContact" v-if="judgeShow('firstPartyContact')">
-					<u-input v-model="dataForm.firstPartyContact" placeholder="请输入甲方联系方式"></u-input>
+					<u-input v-model="dataForm.firstPartyContact" placeholder="请输入甲方联系方式"
+						:disabled="judgeWrite('firstPartyContact')"></u-input>
 				</u-form-item>
 				<u-form-item label="乙方单位" prop="secondPartyUnit" v-if="judgeShow('secondPartyUnit')">
-					<u-input v-model="dataForm.secondPartyUnit" placeholder="请输入乙方单位"></u-input>
+					<u-input v-model="dataForm.secondPartyUnit" placeholder="请输入乙方单位"
+						:disabled="judgeWrite('secondPartyUnit')"></u-input>
 				</u-form-item>
 				<u-form-item label="乙方负责人" prop="secondPartyPerson" v-if="judgeShow('secondPartyPerson')">
-					<u-input v-model="dataForm.secondPartyPerson" placeholder="请输入乙方负责人"></u-input>
+					<u-input v-model="dataForm.secondPartyPerson" placeholder="请输入乙方负责人"
+						:disabled="judgeWrite('secondPartyPerson')"></u-input>
 				</u-form-item>
-				
+
 				<u-form-item label="乙方联系方式" prop="secondPartyContact" v-if="judgeShow('secondPartyContact')">
-					<u-input v-model="dataForm.secondPartyContact" placeholder="请输入乙方联系方式"></u-input>
+					<u-input v-model="dataForm.secondPartyContact" placeholder="请输入乙方联系方式"
+						:disabled="judgeWrite('secondPartyContact')"></u-input>
 				</u-form-item>
 				<u-form-item label="合同名称" prop="contractName" v-if="judgeShow('contractName')" required>
-					<u-input v-model="dataForm.contractName" placeholder="请输入合同名称"></u-input>
+					<u-input v-model="dataForm.contractName" placeholder="请输入合同名称"
+						:disabled="judgeWrite('contractName')"></u-input>
 				</u-form-item>
 				<u-form-item label="合同分类" prop="contractClass" v-if="judgeShow('contractClass')">
-					<u-input v-model="dataForm.contractClass" placeholder="请输入合同分类"></u-input>
+					<u-input v-model="dataForm.contractClass" placeholder="请输入合同分类"
+						:disabled="judgeWrite('contractClass')"></u-input>
 				</u-form-item>
 				<u-form-item label="合同类型" prop="contractType" v-if="judgeShow('contractType')">
-					<u-input v-model="dataForm.contractType" placeholder="请输入合同类型"></u-input>
+					<u-input v-model="dataForm.contractType" placeholder="请输入合同类型"
+						:disabled="judgeWrite('contractType')"></u-input>
 				</u-form-item>
 				<u-form-item label="合同编号" prop="contractId" v-if="judgeShow('contractId')" required>
-					<u-input v-model="dataForm.contractId" placeholder="请输入合同编号"></u-input>
+					<u-input v-model="dataForm.contractId" placeholder="请输入合同编号" :disabled="judgeWrite('contractId')">
+					</u-input>
 				</u-form-item>
 				<u-form-item label="业务人员" prop="businessPerson" v-if="judgeShow('businessPerson')">
-					<u-input v-model="dataForm.businessPerson" placeholder="请输入业务人员"></u-input>
+					<u-input v-model="dataForm.businessPerson" placeholder="请输入业务人员"
+						:disabled="judgeWrite('businessPerson')"></u-input>
 				</u-form-item>
 				<u-form-item label="签约时间" prop="signingDate" v-if="judgeShow('signingDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.signingDate" placeholder="请输入签约时间"></jnpf-date-time>
+					<jnpf-date-time type="datetime" v-model="dataForm.signingDate" placeholder="请输入签约时间"
+						:disabled="judgeWrite('signingDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="开始时间" prop="startDate" v-if="judgeShow('startDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.startDate" placeholder="开始时间"></jnpf-date-time>
+					<jnpf-date-time type="datetime" v-model="dataForm.startDate" placeholder="开始时间"
+						:disabled="judgeWrite('startDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="结束时间" prop="endDate" v-if="judgeShow('endDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.endDate" placeholder="结束时间"></jnpf-date-time>
+					<jnpf-date-time type="datetime" v-model="dataForm.endDate" placeholder="结束时间"
+						:disabled="judgeWrite('endDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="填写人员" prop="inputPerson" v-if="judgeShow('inputPerson')">
-					<u-input v-model="dataForm.inputPerson" placeholder="请输入填写人员"></u-input>
+					<u-input v-model="dataForm.inputPerson" placeholder="请输入填写人员" :disabled="judgeWrite('inputPerson')">
+					</u-input>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
-					<jnpf-file :list="fileList"/>
+					<jnpf-file :list="fileList" :disabled="judgeWrite('fileJson')" />
 				</u-form-item>
 				<u-form-item label="主要内容" prop="primaryCoverage" v-if="judgeShow('primaryCoverage')">
-					<u-input v-model="dataForm.primaryCoverage" placeholder="请输入主要内容" type="textarea"></u-input>
+					<u-input v-model="dataForm.primaryCoverage" placeholder="请输入主要内容" type="textarea"
+						:disabled="judgeWrite('primaryCoverage')"></u-input>
 				</u-form-item>
 				<u-form-item label="备注" prop="description" v-if="judgeShow('description')">
-					<u-input v-model="dataForm.description" placeholder="请输入备注" type="textarea"></u-input>
+					<u-input v-model="dataForm.description" placeholder="请输入备注" type="textarea"
+						:disabled="judgeWrite('description')"></u-input>
 				</u-form-item>
 			</view>
 		</u-form>
@@ -85,26 +103,26 @@
 				billEnCode: 'WF_ContractApprovalNo',
 				dataForm: {
 					flowTitle: '',
-					billNo:'',
-					flowUrgent:1,
-					firstPartyUnit:'',
-					firstPartyPerson:'',
-					firstPartyContact:'',
-					secondPartyUnit:'',
-					signingDate:'',
-					secondPartyContact:'',
-					description:'',
-					fileJson:'',
-					contractName:'',
-					contractClass:'',
-					contractType:'',
-					contractId:'',
-					primaryCoverage:'',
-					inputPerson:'',
-					startDate:'',
-					endDate:'',
-					businessPerson:'',
-					secondPartyPerson:''
+					billNo: '',
+					flowUrgent: 1,
+					firstPartyUnit: '',
+					firstPartyPerson: '',
+					firstPartyContact: '',
+					secondPartyUnit: '',
+					signingDate: '',
+					secondPartyContact: '',
+					description: '',
+					fileJson: '',
+					contractName: '',
+					contractClass: '',
+					contractType: '',
+					contractId: '',
+					primaryCoverage: '',
+					inputPerson: '',
+					startDate: '',
+					endDate: '',
+					businessPerson: '',
+					secondPartyPerson: ''
 				},
 				rules: {
 					flowTitle: [{
@@ -123,29 +141,29 @@
 						message: '流程编码不能为空',
 						trigger: 'change',
 					}],
-					signingDate:[{
+					signingDate: [{
 						required: true,
 						message: '签约时间不能为空',
 						trigger: 'change',
-						type:'number'
+						type: 'number'
 					}],
 					startDate: [{
 						required: true,
 						message: '开始时间不能为空',
 						trigger: 'change',
-						type:'number'
+						type: 'number'
 					}],
 					endDate: [{
 						required: true,
 						message: '结束时间不能为空',
 						trigger: 'change',
-						type:'number'
+						type: 'number'
 					}],
-					contractId:[{
+					contractId: [{
 						required: true,
 						message: '合同编号不能为空',
 						trigger: 'change',
-						type:'number'
+						type: 'number'
 					}]
 				}
 			}

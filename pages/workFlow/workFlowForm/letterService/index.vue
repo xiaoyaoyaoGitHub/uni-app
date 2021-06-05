@@ -2,43 +2,50 @@
 	<view class="jnpf-wrap jnpf-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
-			<u-form-item label="流程标题" prop="flowTitle" required>
-				<u-input v-model="dataForm.flowTitle" placeholder="流程标题"></u-input>
+			<u-form-item label="流程标题" prop="flowTitle" v-if="judgeShow('flowTitle')" required>
+				<u-input v-model="dataForm.flowTitle" placeholder="流程标题" :disabled="judgeWrite('flowTitle')"></u-input>
 			</u-form-item>
 			<u-form-item label="流程编码" prop="billNo" v-if="judgeShow('billNo')" required>
-				<u-input v-model="dataForm.billNo" placeholder="流程编码" ></u-input>
+				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
-			<u-form-item label="紧急程度" prop="flowUrgent" required>
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
+			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')" required>
+				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+					:disabled="judgeWrite('flowUrgent')">
 				</jnpf-select>
 			</u-form-item>
-			
+
 			<view class="jnpf-card">
 				<u-form-item label="主办单位" prop="hostUnit" v-if="judgeShow('hostUnit')">
-					<u-input v-model="dataForm.hostUnit" placeholder="请输入主办单位"></u-input>
+					<u-input v-model="dataForm.hostUnit" placeholder="请输入主办单位" :disabled="judgeWrite('hostUnit')">
+					</u-input>
 				</u-form-item>
 				<u-form-item label="发文标题" prop="title" v-if="judgeShow('title')">
-					<u-input v-model="dataForm.title" placeholder="请输入发文标题"></u-input>
+					<u-input v-model="dataForm.title" placeholder="请输入发文标题" :disabled="judgeWrite('title')"></u-input>
 				</u-form-item>
 				<u-form-item label="发文字号" prop="issuedNum" v-if="judgeShow('issuedNum')">
-					<u-input v-model="dataForm.issuedNum" placeholder="请输入发文字号"></u-input>
+					<u-input v-model="dataForm.issuedNum" placeholder="请输入发文字号" :disabled="judgeWrite('issuedNum')">
+					</u-input>
 				</u-form-item>
 				<u-form-item label="发文日期" prop="writingDate" v-if="judgeShow('writingDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.writingDate" placeholder="请输入发文日期"></jnpf-date-time>
+					<jnpf-date-time type="date" v-model="dataForm.writingDate" placeholder="请输入发文日期"
+						:disabled="judgeWrite('writingDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="份数" prop="shareNum" v-if="judgeShow('shareNum')">
-					<u-input v-model="dataForm.shareNum" placeholder="请输入份数" type="number"></u-input>
+					<u-input v-model="dataForm.shareNum" placeholder="请输入份数" type="number"
+						:disabled="judgeWrite('shareNum')"></u-input>
 				</u-form-item>
 				<u-form-item label="主送" prop="mainDelivery" v-if="judgeShow('mainDelivery')">
-					<u-input v-model="dataForm.mainDelivery" placeholder="请输入主送"></u-input>
+					<u-input v-model="dataForm.mainDelivery" placeholder="请输入主送" :disabled="judgeWrite('mainDelivery')">
+					</u-input>
 				</u-form-item>
 				<u-form-item label="抄送" prop="copy" v-if="judgeShow('copy')">
-					<u-input v-model="dataForm.copy" placeholder="请输入抄送" type="number"></u-input>
+					<u-input v-model="dataForm.copy" placeholder="请输入抄送" type="number" :disabled="judgeWrite('copy')">
+					</u-input>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
-					<jnpf-file :list="fileList"/>
+					<jnpf-file :list="fileList" :disabled="judgeWrite('fileJson')" />
 				</u-form-item>
-				
+
 			</view>
 		</u-form>
 	</view>
@@ -54,16 +61,16 @@
 				billEnCode: 'WF_LetterServiceNo',
 				dataForm: {
 					flowTitle: '',
-					billNo:'',
-					flowUrgent:1,
-					hostUnit:'',
-					copy:'',
-					title:'',
-					mainDelivery:'',
-					shareNum:'',
-					writingDate:'',
-					fileJson:'',
-					issuedNum:''
+					billNo: '',
+					flowUrgent: 1,
+					hostUnit: '',
+					copy: '',
+					title: '',
+					mainDelivery: '',
+					shareNum: '',
+					writingDate: '',
+					fileJson: '',
+					issuedNum: ''
 				},
 				rules: {
 					flowTitle: [{
@@ -82,14 +89,14 @@
 						message: '流程编码不能为空',
 						trigger: 'blur',
 					}],
-					writingDate:[{
+					writingDate: [{
 						required: true,
 						message: '发文日期不能为空',
 						trigger: 'blur',
 						type: 'number'
 					}],
 				},
-				
+
 			}
 		},
 		methods: {
@@ -103,7 +110,7 @@
 					this.dataForm.position = list.join(',')
 				}
 			},
-			
+
 		}
 	}
 </script>

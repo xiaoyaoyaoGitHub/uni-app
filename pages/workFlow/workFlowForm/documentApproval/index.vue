@@ -2,41 +2,49 @@
 	<view class="jnpf-wrap jnpf-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
-			<u-form-item label="流程标题" prop="flowTitle" required>
-				<u-input v-model="dataForm.flowTitle" placeholder="流程标题"></u-input>
+			<u-form-item label="流程标题" prop="flowTitle" v-if="judgeShow('flowTitle')" required>
+				<u-input v-model="dataForm.flowTitle" placeholder="流程标题" :disabled="judgeWrite('flowTitle')"></u-input>
 			</u-form-item>
 			<u-form-item label="流程编码" prop="billNo" v-if="judgeShow('billNo')" required>
-				<u-input v-model="dataForm.billNo" placeholder="流程编码" ></u-input>
+				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
-			<u-form-item label="紧急程度" prop="flowUrgent" required>
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
+			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')" required>
+				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+					:disabled="judgeWrite('flowUrgent')">
 				</jnpf-select>
 			</u-form-item>
 
 			<view class="jnpf-card">
 				<u-form-item label="文件名称" prop="fileName" v-if="judgeShow('fileName')">
-					<u-input v-model="dataForm.fileName" placeholder="请输入文件名称"></u-input>
+					<u-input v-model="dataForm.fileName" placeholder="请输入文件名称" :disabled="judgeWrite('fileName')">
+					</u-input>
 				</u-form-item>
 				<u-form-item label="拟稿人" prop="draftedPerson" v-if="judgeShow('draftedPerson')">
-					<u-input v-model="dataForm.draftedPerson" placeholder="请输入拟稿人" ></u-input>
+					<u-input v-model="dataForm.draftedPerson" placeholder="请输入拟稿人"
+						:disabled="judgeWrite('draftedPerson')"></u-input>
 				</u-form-item>
 				<u-form-item label="发文单位" prop="serviceUnit" v-if="judgeShow('serviceUnit')">
-					<u-input v-model="dataForm.serviceUnit" placeholder="请输入发文单位"></u-input>
+					<u-input v-model="dataForm.serviceUnit" placeholder="请输入发文单位" :disabled="judgeWrite('serviceUnit')">
+					</u-input>
 				</u-form-item>
 				<u-form-item label="文件拟办" prop="fillPreparation" v-if="judgeShow('fillPreparation')">
-					<u-input v-model="dataForm.fillPreparation" placeholder="请输入文件拟办"></u-input>
+					<u-input v-model="dataForm.fillPreparation" placeholder="请输入文件拟办"
+						:disabled="judgeWrite('fillPreparation')"></u-input>
 				</u-form-item>
 				<u-form-item label="文件编号" prop="fillNum" v-if="judgeShow('fillNum')">
-					<u-input v-model="dataForm.fillNum" placeholder="请输入文件编号"></u-input>
+					<u-input v-model="dataForm.fillNum" placeholder="请输入文件编号" :disabled="judgeWrite('fillNum')">
+					</u-input>
 				</u-form-item>
 				<u-form-item label="收文日期" prop="receiptDate" v-if="judgeShow('receiptDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.receiptDate" placeholder="请输入收文日期"></jnpf-date-time>
+					<jnpf-date-time type="date" v-model="dataForm.receiptDate" placeholder="请输入收文日期"
+						:disabled="judgeWrite('receiptDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
-					<jnpf-file :list="fileList"/>
+					<jnpf-file :list="fileList" :disabled="judgeWrite('fileJson')" />
 				</u-form-item>
 				<u-form-item label="修改意见" prop="modifyOpinion" v-if="judgeShow('modifyOpinion')">
-					<u-input v-model="dataForm.modifyOpinion" placeholder="请输入修改意见" type="textarea"></u-input>
+					<u-input v-model="dataForm.modifyOpinion" placeholder="请输入修改意见" type="textarea"
+						:disabled="judgeWrite('modifyOpinion')"></u-input>
 				</u-form-item>
 			</view>
 		</u-form>
@@ -61,8 +69,8 @@
 					fileName: '',
 					fillPreparation: '',
 					fillNum: '',
-					receiptDate:'',
-					fileJson:''
+					receiptDate: '',
+					fileJson: ''
 				},
 				rules: {
 					flowTitle: [{

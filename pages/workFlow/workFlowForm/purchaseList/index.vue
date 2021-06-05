@@ -2,55 +2,64 @@
 	<view class="jnpf-wrap jnpf-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
-			<u-form-item label="流程标题" prop="flowTitle" required>
-				<u-input v-model="dataForm.flowTitle" placeholder="流程标题"></u-input>
+			<u-form-item label="流程标题" prop="flowTitle" v-if="judgeShow('flowTitle')" required>
+				<u-input v-model="dataForm.flowTitle" placeholder="流程标题" :disabled="judgeWrite('flowTitle')"></u-input>
 			</u-form-item>
 			<u-form-item label="流程编码" prop="billNo" v-if="judgeShow('billNo')" required>
-				<u-input v-model="dataForm.billNo" placeholder="流程编码" ></u-input>
+				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
-			<u-form-item label="紧急程度" prop="flowUrgent" required>
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
+			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')" required>
+				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+					:disabled="judgeWrite('flowUrgent')">
 				</jnpf-select>
 			</u-form-item>
 
 			<view class="jnpf-card">
 				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
-					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员"></u-input>
+					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员" :disabled="judgeWrite('applyUser')">
+					</u-input>
 				</u-form-item>
 				<u-form-item label="申请部门" prop="departmental" v-if="judgeShow('departmental')">
-					<u-input v-model="dataForm.departmental" placeholder="请输入申请部门"></u-input>
+					<u-input v-model="dataForm.departmental" placeholder="请输入申请部门"
+						:disabled="judgeWrite('departmental')"></u-input>
 				</u-form-item>
 				<u-form-item label="供应商名称" prop="vendorName" v-if="judgeShow('vendorName')">
-					<u-input v-model="dataForm.vendorName" placeholder="请输入供应商名称"></u-input>
+					<u-input v-model="dataForm.vendorName" placeholder="请输入供应商名称" :disabled="judgeWrite('vendorName')">
+					</u-input>
 				</u-form-item>
 				<u-form-item label="采购人员" prop="buyer" v-if="judgeShow('buyer')">
-					<u-input v-model="dataForm.buyer" placeholder="输入采购人员"></u-input>
+					<u-input v-model="dataForm.buyer" placeholder="输入采购人员" :disabled="judgeWrite('buyer')"></u-input>
 				</u-form-item>
 				<u-form-item label="采购日期" prop="purchaseDate" v-if="judgeShow('purchaseDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.purchaseDate" placeholder="请输入采购日期"></jnpf-date-time>
+					<jnpf-date-time type="date" v-model="dataForm.purchaseDate" placeholder="请输入采购日期"
+						:disabled="judgeWrite('purchaseDate')"></jnpf-date-time>
 				</u-form-item>
-				
+
 				<u-form-item label="仓库" prop="warehouse" v-if="judgeShow('warehouse')">
-					<u-input v-model="dataForm.warehouse" placeholder="输入仓库"></u-input>
+					<u-input v-model="dataForm.warehouse" placeholder="输入仓库" :disabled="judgeWrite('warehouse')">
+					</u-input>
 				</u-form-item>
 				<u-form-item label="联系方式" prop="telephone" v-if="judgeShow('telephone')">
-					<u-input v-model="dataForm.telephone" placeholder="输入联系方式" type="number"></u-input>
+					<u-input v-model="dataForm.telephone" placeholder="输入联系方式" type="number"
+						:disabled="judgeWrite('telephone')"></u-input>
 				</u-form-item>
 				<u-form-item label="结算方式" prop="paymentMethod" v-if="judgeShow('paymentMethod')" required>
-					<jnpf-select v-model="dataForm.paymentMethod" placeholder="请选择结算方式"
-						:options="paymentMethodOptions"></jnpf-select>
+					<jnpf-select v-model="dataForm.paymentMethod" placeholder="请选择结算方式" :options="paymentMethodOptions"
+						:disabled="judgeWrite('paymentMethod')"></jnpf-select>
 				</u-form-item>
 				<u-form-item label="支付总额" prop="paymentMoney" v-if="judgeShow('paymentMoney')">
-					<u-input v-model="dataForm.paymentMoney" placeholder="输入支付总额" type="number"></u-input>
+					<u-input v-model="dataForm.paymentMoney" placeholder="输入支付总额" type="number"
+						:disabled="judgeWrite('paymentMoney')"></u-input>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
-					<jnpf-file :list="fileList"/>
+					<jnpf-file :list="fileList" :disabled="judgeWrite('fileJson')" />
 				</u-form-item>
 				<u-form-item label="用途原因" prop="reason" v-if="judgeShow('reason')">
-					<u-input v-model="dataForm.reason" placeholder="用途原因" type="textarea"></u-input>
+					<u-input v-model="dataForm.reason" placeholder="用途原因" type="textarea"
+						:disabled="judgeWrite('reason')"></u-input>
 				</u-form-item>
 			</view>
-			
+
 
 			<view class="jnpf-table">
 				<view class="jnpf-table-item" v-for="(item,i) in dataForm.entryList" :key="i">
@@ -61,27 +70,31 @@
 						</view>
 					</view>
 					<u-form-item label="商品名称" prop="dataForm.entryList[i].goodsName">
-						<u-input v-model="dataForm.entryList[i].goodsName" placeholder="请输入商品名称"></u-input>
+						<u-input v-model="dataForm.entryList[i].goodsName" placeholder="请输入商品名称"
+							:disabled="judgeWrite('entryList')"></u-input>
 					</u-form-item>
 					<u-form-item label="规格类型" prop="dataForm.entryList[i].specifications">
-						<u-input v-model="dataForm.entryList[i].specifications" placeholder="请输入规格类型"></u-input>
+						<u-input v-model="dataForm.entryList[i].specifications" placeholder="请输入规格类型"
+							:disabled="judgeWrite('entryList')"></u-input>
 					</u-form-item>
 					<u-form-item label="单位" prop="dataForm.entryList[i].unit">
-						<u-input v-model="dataForm.entryList[i].unit" placeholder="请输入单位" ></u-input>
+						<u-input v-model="dataForm.entryList[i].unit" placeholder="请输入单位"
+							:disabled="judgeWrite('entryList')"></u-input>
 					</u-form-item>
 					<u-form-item label="数量" prop="dataForm.entryList[i].qty">
 						<u-input v-model="dataForm.entryList[i].qty" placeholder="请输入数量" type="number"
-							@input="count(dataForm.entryList[i])"></u-input>
+							@input="count(dataForm.entryList[i])" :disabled="judgeWrite('entryList')"></u-input>
 					</u-form-item>
 					<u-form-item label="单价" prop="dataForm.entryList[i].price">
 						<u-input v-model="dataForm.entryList[i].price" placeholder="请输入单价" type="number"
-							@input="count(dataForm.entryList[i])"></u-input>
+							@input="count(dataForm.entryList[i])" :disabled="judgeWrite('entryList')"></u-input>
 					</u-form-item>
 					<u-form-item label="金额" prop="dataForm.entryList[i].amount">
-						<u-input v-model="dataForm.entryList[i].amount" placeholder="请输入金额" ></u-input>
+						<u-input v-model="dataForm.entryList[i].amount" placeholder="请输入金额" disabled></u-input>
 					</u-form-item>
 					<u-form-item label="备注" prop="dataForm.entryList[i].description">
-						<u-input v-model="dataForm.entryList[i].description" placeholder="请输入备注" type="textarea"></u-input>
+						<u-input v-model="dataForm.entryList[i].description" placeholder="请输入备注" type="textarea"
+							:disabled="judgeWrite('entryList')"></u-input>
 					</u-form-item>
 				</view>
 				<view class="jnpf-table-addBtn" @click="addItem">
@@ -107,14 +120,14 @@
 					warehouse: '',
 					vendorName: '',
 					reason: '',
-					fileJson:'',
+					fileJson: '',
 					buyer: '',
-					telephone:'',
-					paymentMethod:'',
-					purchaseDate:'',
-					departmental:'',
-					applyUser:'',
-					paymentMoney:'',
+					telephone: '',
+					paymentMethod: '',
+					purchaseDate: '',
+					departmental: '',
+					applyUser: '',
+					paymentMoney: '',
 					entryList: [{
 						goodsName: '',
 						specifications: '',
@@ -122,7 +135,7 @@
 						qty: '',
 						price: '',
 						amount: '',
-						description:''
+						description: ''
 					}]
 				},
 				rules: {
@@ -182,7 +195,7 @@
 					qty: '',
 					price: '',
 					amount: '',
-					description:''
+					description: ''
 				}
 				this.dataForm.entryList.push(item)
 			},

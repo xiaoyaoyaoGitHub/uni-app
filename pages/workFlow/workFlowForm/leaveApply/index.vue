@@ -2,53 +2,64 @@
 	<view class="jnpf-wrap jnpf-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
-			<u-form-item label="流程标题" prop="flowTitle" required>
-				<u-input v-model="dataForm.flowTitle" placeholder="流程标题"></u-input>
+			<u-form-item label="流程标题" prop="flowTitle" v-if="judgeShow('flowTitle')" required>
+				<u-input v-model="dataForm.flowTitle" placeholder="流程标题" :disabled="judgeWrite('flowTitle')"></u-input>
 			</u-form-item>
 			<u-form-item label="流程编码" prop="billNo" v-if="judgeShow('billNo')" required>
-				<u-input v-model="dataForm.billNo" placeholder="流程编码" ></u-input>
+				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
-			<u-form-item label="紧急程度" prop="flowUrgent" required>
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
+			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')" required>
+				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+					:disabled="judgeWrite('flowUrgent')">
 				</jnpf-select>
 			</u-form-item>
-			
+
 			<view class="jnpf-card">
 				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
-					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员"></u-input>
+					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员" :disabled="judgeWrite('applyUser')">
+					</u-input>
 				</u-form-item>
 				<u-form-item label="申请部门" prop="applyDept" v-if="judgeShow('applyDept')">
-					<u-input v-model="dataForm.applyDept" placeholder="请输入申请部门"></u-input>
+					<u-input v-model="dataForm.applyDept" placeholder="请输入申请部门" :disabled="judgeWrite('applyDept')">
+					</u-input>
 				</u-form-item>
 				<u-form-item label="申请职位" prop="applyPost" v-if="judgeShow('applyPost')">
-					<u-input v-model="dataForm.applyPost" placeholder="请输入申请职位"></u-input>
+					<u-input v-model="dataForm.applyPost" placeholder="请输入申请职位" :disabled="judgeWrite('applyPost')">
+					</u-input>
 				</u-form-item>
 				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')">
-					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"></jnpf-date-time>
+					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"
+						:disabled="judgeWrite('applyDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="请假类别" prop="leaveType" v-if="judgeShow('leaveType')" required>
-					<jnpf-select v-model="dataForm.leaveType" placeholder="请选择下拉框组" :options="leaveTypeList"></jnpf-select>
+					<jnpf-select v-model="dataForm.leaveType" placeholder="请选择下拉框组" :options="leaveTypeList"
+						:disabled="judgeWrite('leaveType')"></jnpf-select>
 				</u-form-item>
 				<u-form-item label="请假原因" prop="leaveReason" v-if="judgeShow('leaveReason')" required>
-					<u-input v-model="dataForm.leaveReason" placeholder="请输入请假原因" type="textarea"></u-input>
+					<u-input v-model="dataForm.leaveReason" placeholder="请输入请假原因" type="textarea"
+						:disabled="judgeWrite('leaveReason')"></u-input>
 				</u-form-item>
 				<u-form-item label="起始时间" prop="leaveStartTime" v-if="judgeShow('leaveStartTime')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.leaveStartTime" placeholder="请输入起始时间"></jnpf-date-time>
+					<jnpf-date-time type="datetime" v-model="dataForm.leaveStartTime" placeholder="请输入起始时间"
+						:disabled="judgeWrite('leaveStartTime')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="结束时间" prop="leaveEndTime" v-if="judgeShow('leaveEndTime')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.leaveEndTime" placeholder="请输入结束时间"></jnpf-date-time>
+					<jnpf-date-time type="datetime" v-model="dataForm.leaveEndTime" placeholder="请输入结束时间"
+						:disabled="judgeWrite('leaveEndTime')"></jnpf-date-time>
 				</u-form-item>
-				
+
 				<u-form-item label="请假天数" prop="leaveDayCount" v-if="judgeShow('leaveDayCount')" required>
-					<u-input v-model="dataForm.leaveDayCount" placeholder="请输入请假天数"></u-input>
+					<u-input v-model="dataForm.leaveDayCount" placeholder="请输入请假天数"
+						:disabled="judgeWrite('leaveDayCount')"></u-input>
 				</u-form-item>
 				<u-form-item label="请假小时" prop="leaveHour" v-if="judgeShow('leaveHour')" required>
-					<u-input v-model="dataForm.leaveHour" placeholder="请输入请假小时" type="number"></u-input>
+					<u-input v-model="dataForm.leaveHour" placeholder="请输入请假小时" type="number"
+						:disabled="judgeWrite('leaveHour')"></u-input>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
-					<jnpf-file :list="fileList"/>
+					<jnpf-file :list="fileList" :disabled="judgeWrite('fileJson')" />
 				</u-form-item>
-				
+
 			</view>
 		</u-form>
 	</view>
@@ -64,19 +75,19 @@
 				billEnCode: 'WF_LeaveApplyNo',
 				dataForm: {
 					flowTitle: '',
-					billNo:'',
-					flowUrgent:1,
-					applyUser:'',
-					leaveHour:'',
-					applyDept:'',
-					leaveStartTime:'',
-					leaveEndTime:'',
-					leaveDayCount:'',
-					leaveReason:'',
-					applyDate:'',
-					leaveType:'',
-					fileJson:'',
-					applyPost:''
+					billNo: '',
+					flowUrgent: 1,
+					applyUser: '',
+					leaveHour: '',
+					applyDept: '',
+					leaveStartTime: '',
+					leaveEndTime: '',
+					leaveDayCount: '',
+					leaveReason: '',
+					applyDate: '',
+					leaveType: '',
+					fileJson: '',
+					applyPost: ''
 				},
 				rules: {
 					flowTitle: [{
@@ -100,28 +111,28 @@
 						message: '请假小时不能为空',
 						trigger: 'blur',
 					}],
-					leaveStartTime:[{
+					leaveStartTime: [{
 						required: true,
 						message: '起始时间不能为空',
 						trigger: 'blur',
-						type:'number'
+						type: 'number'
 					}],
-					leaveDayCount:[{
+					leaveDayCount: [{
 						required: true,
 						message: '请假天数不能为空',
 						trigger: 'blur',
 					}],
-					leaveEndTime:[{
+					leaveEndTime: [{
 						required: true,
 						message: '结束时间不能为空',
 						trigger: 'blur',
-						type:'number'
+						type: 'number'
 					}],
-					leaveType:[{
+					leaveType: [{
 						required: true,
 						message: '请假原因不能为空',
 						trigger: 'blur',
-						
+
 					}],
 				},
 				leaveTypeList: [{
@@ -164,7 +175,7 @@
 						id: '6',
 						checked: false
 					},
-					
+
 				],
 			}
 		},
@@ -179,7 +190,7 @@
 					this.dataForm.applyPost = list.join(',')
 				}
 			},
-			
+
 		}
 	}
 </script>

@@ -2,44 +2,54 @@
 	<view class="jnpf-wrap jnpf-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
-			<u-form-item label="流程标题" prop="flowTitle" required>
-				<u-input v-model="dataForm.flowTitle" placeholder="流程标题"></u-input>
+			<u-form-item label="流程标题" prop="flowTitle" v-if="judgeShow('flowTitle')" required>
+				<u-input v-model="dataForm.flowTitle" placeholder="流程标题" :disabled="judgeWrite('flowTitle')"></u-input>
 			</u-form-item>
 			<u-form-item label="流程编码" prop="billNo" v-if="judgeShow('billNo')" required>
-				<u-input v-model="dataForm.billNo" placeholder="流程编码" ></u-input>
+				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
-			<u-form-item label="紧急程度" prop="flowUrgent" required>
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
+			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')" required>
+				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+					:disabled="judgeWrite('flowUrgent')">
 				</jnpf-select>
 			</u-form-item>
-			
+
 			<view class="jnpf-card">
 				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
-					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员"></u-input>
+					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员" :disabled="judgeWrite('applyUser')">
+					</u-input>
 				</u-form-item>
 				<u-form-item label="借阅部门" prop="borrowingDepartment" v-if="judgeShow('borrowingDepartment')">
-					<u-input v-model="dataForm.borrowingDepartment" placeholder="请输入申请人员"></u-input>
+					<u-input v-model="dataForm.borrowingDepartment" placeholder="请输入申请人员"
+						:disabled="judgeWrite('borrowingDepartment')"></u-input>
 				</u-form-item>
 				<u-form-item label="档案名称" prop="archivesName" v-if="judgeShow('archivesName')" required>
-					<u-input v-model="dataForm.archivesName" placeholder="请输入档案名称"></u-input>
+					<u-input v-model="dataForm.archivesName" placeholder="请输入档案名称"
+						:disabled="judgeWrite('archivesName')"></u-input>
 				</u-form-item>
 				<u-form-item label="档案编号" prop="archivesId" v-if="judgeShow('archivesId')" required>
-					<u-input v-model="dataForm.archivesId" placeholder="请输入档案编号"></u-input>
+					<u-input v-model="dataForm.archivesId" placeholder="请输入档案编号" :disabled="judgeWrite('archivesId')">
+					</u-input>
 				</u-form-item>
 				<u-form-item label="借阅时间" prop="borrowingDate" v-if="judgeShow('borrowingDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.borrowingDate" placeholder="请输入借阅时间"></jnpf-date-time>
+					<jnpf-date-time type="datetime" v-model="dataForm.borrowingDate" placeholder="请输入借阅时间"
+						:disabled="judgeWrite('borrowingDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="归还时间" prop="returnDate" v-if="judgeShow('returnDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.returnDate" placeholder="请输入归还时间"></jnpf-date-time>
+					<jnpf-date-time type="datetime" v-model="dataForm.returnDate" placeholder="请输入归还时间"
+						:disabled="judgeWrite('returnDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="借阅方式" prop="borrowMode" v-if="judgeShow('borrowMode')" required>
-					<jnpf-select v-model="dataForm.borrowMode" placeholder="请选择借阅方式" :options="borrowModeList"></jnpf-select>
+					<jnpf-select v-model="dataForm.borrowMode" placeholder="请选择借阅方式" :options="borrowModeList"
+						:disabled="judgeWrite('borrowMode')"></jnpf-select>
 				</u-form-item>
 				<u-form-item label="档案属性" prop="archivalAttributes" v-if="judgeShow('archivalAttributes')" required>
-					<jnpf-select v-model="dataForm.archivalAttributes" placeholder="请选择档案属性" :options="attributeList"></jnpf-select>
+					<jnpf-select v-model="dataForm.archivalAttributes" placeholder="请选择档案属性" :options="attributeList"
+						:disabled="judgeWrite('archivalAttributes')"></jnpf-select>
 				</u-form-item>
 				<u-form-item label="申请原因" prop="applyReason" v-if="judgeShow('applyReason')">
-					<u-input v-model="dataForm.applyReason" placeholder="请输入申请原因"></u-input>
+					<u-input v-model="dataForm.applyReason" placeholder="请输入申请原因" :disabled="judgeWrite('applyReason')">
+					</u-input>
 				</u-form-item>
 			</view>
 		</u-form>
@@ -56,17 +66,17 @@
 				billEnCode: 'WF_ArchivalBorrowNo',
 				dataForm: {
 					flowTitle: '',
-					billNo:'',
-					flowUrgent:1,
-					applyUser:'',
-					borrowingDepartment:'',
-					archivesName:'',
-					archivesId:'',
-					borrowingDate:'',
-					returnDate:'',
-					archivalAttributes:'',
-					borrowMode:'',
-					applyReason:''
+					billNo: '',
+					flowUrgent: 1,
+					applyUser: '',
+					borrowingDepartment: '',
+					archivesName: '',
+					archivesId: '',
+					borrowingDate: '',
+					returnDate: '',
+					archivalAttributes: '',
+					borrowMode: '',
+					applyReason: ''
 				},
 				rules: {
 					flowTitle: [{
@@ -89,13 +99,13 @@
 						required: true,
 						message: '借阅方式不能为空',
 						trigger: 'change',
-						
+
 					}],
 					archivalAttributes: [{
 						required: true,
 						message: '档案属性不能为空',
 						trigger: 'change',
-						
+
 					}],
 					archivesName: [{
 						required: true,
@@ -141,7 +151,7 @@
 						checked: false
 					}
 				],
-				attributeList:[{
+				attributeList: [{
 						fullName: '原件',
 						id: '1',
 						checked: false

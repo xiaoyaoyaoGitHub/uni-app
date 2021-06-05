@@ -3,42 +3,42 @@
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<u-form-item label="流程标题" prop="flowTitle" required v-if="judgeShow('flowTitle')">
-				<u-input v-model="dataForm.flowTitle" placeholder="流程标题"></u-input>
+				<u-input v-model="dataForm.flowTitle" placeholder="流程标题" :disabled="judgeWrite('flowTitle')"></u-input>
 			</u-form-item>
 			<u-form-item label="流程编码" prop="billNo" v-if="judgeShow('billNo')">
 				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')">
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
+				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions" :disabled="judgeWrite('flowUrgent')">
 				</jnpf-select>
 			</u-form-item>
 			<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
-				<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员"></u-input>
+				<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员" :disabled="judgeWrite('applyUser')"></u-input>
 			</u-form-item>
 			<u-form-item label="所属职务" prop="position" v-if="judgeShow('position')">
-				<u-input v-model="dataForm.position" placeholder="请输入所属职务"></u-input>
+				<u-input v-model="dataForm.position" placeholder="请输入所属职务" :disabled="judgeWrite('position')"></u-input>
 			</u-form-item>
 			<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')">
-				<jnpf-date-time type="date" placeholder="请选择申请日期" v-model="dataForm.applyDate"></jnpf-date-time>
+				<jnpf-date-time type="date" placeholder="请选择申请日期" v-model="dataForm.applyDate" :disabled="judgeWrite('applyDate')"></jnpf-date-time>
 			</u-form-item>
 			<view class="jnpf-card">
 				<u-form-item label="宴请人数" prop="banquetNum" v-if="judgeShow('banquetNum')">
-					<u-input v-model="dataForm.banquetNum" type="number" placeholder="请输入宴请人数"></u-input>
+					<u-input v-model="dataForm.banquetNum" type="number" placeholder="请输入宴请人数" :disabled="judgeWrite('banquetNum')"></u-input>
 				</u-form-item>
 				<u-form-item label="宴请人员" prop="banquetPeople" v-if="judgeShow('banquetPeople')">
-					<u-input v-model="dataForm.banquetPeople" placeholder="请输入宴请人员"></u-input>
+					<u-input v-model="dataForm.banquetPeople" placeholder="请输入宴请人员" :disabled="judgeWrite('banquetPeople')"></u-input>
 				</u-form-item>
 				<u-form-item label="人员总数" prop="total" v-if="judgeShow('total')">
-					<u-input v-model="dataForm.total" type="number" placeholder="请输入人员总数"></u-input>
+					<u-input v-model="dataForm.total" type="number" placeholder="请输入人员总数" :disabled="judgeWrite('total')"></u-input>
 				</u-form-item>
 				<u-form-item label="宴请地点" prop="place" v-if="judgeShow('place')">
-					<u-input v-model="dataForm.place" type="textarea" placeholder="请输入宴请地点"></u-input>
+					<u-input v-model="dataForm.place" type="textarea" placeholder="请输入宴请地点" :disabled="judgeWrite('place')"></u-input>
 				</u-form-item>
 				<u-form-item label="预计费用" prop="expectedCost" v-if="judgeShow('expectedCost')">
-					<u-input v-model="dataForm.expectedCost" type="number" placeholder="请输入预计费用"></u-input>
+					<u-input v-model="dataForm.expectedCost" type="number" placeholder="请输入预计费用" :disabled="judgeWrite('expectedCost')"></u-input>
 				</u-form-item>
 				<u-form-item label="备注" prop="description" v-if="judgeShow('description')">
-					<u-input v-model="dataForm.description" type="textarea" placeholder="请输入备注" />
+					<u-input v-model="dataForm.description" type="textarea" placeholder="请输入备注" :disabled="judgeWrite('description')"/>
 				</u-form-item>
 			</view>
 		</u-form>

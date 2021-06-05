@@ -2,42 +2,48 @@
 	<view class="jnpf-wrap jnpf-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
-			<u-form-item label="流程标题" prop="flowTitle" required>
-				<u-input v-model="dataForm.flowTitle" placeholder="流程标题"></u-input>
+			<u-form-item label="流程标题" prop="flowTitle" v-if="judgeShow('flowTitle')" required>
+				<u-input v-model="dataForm.flowTitle" placeholder="流程标题" :disabled="judgeWrite('flowTitle')"></u-input>
 			</u-form-item>
 			<u-form-item label="流程编码" prop="billNo" v-if="judgeShow('billNo')" required>
-				<u-input v-model="dataForm.billNo" placeholder="流程编码" ></u-input>
+				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
-			<u-form-item label="紧急程度" prop="flowUrgent" required>
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
+			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')" required>
+				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+					:disabled="judgeWrite('flowUrgent')">
 				</jnpf-select>
 			</u-form-item>
 
 			<view class="jnpf-card">
 				<u-form-item label="填报人" prop="writer" v-if="judgeShow('writer')" required>
-					<u-input v-model="dataForm.writer" placeholder="请输入填报人"></u-input>
+					<u-input v-model="dataForm.writer" placeholder="请输入填报人" :disabled="judgeWrite('writer')"></u-input>
 				</u-form-item>
 				<u-form-item label="填报日期" prop="writeDate" v-if="judgeShow('writeDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.writeDate" placeholder="请输入填报日期"></jnpf-date-time>
+					<jnpf-date-time type="date" v-model="dataForm.writeDate" placeholder="请输入填报日期"
+						:disabled="judgeWrite('writeDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="客户名称" prop="customerName" v-if="judgeShow('customerName')">
-					<u-input v-model="dataForm.customerName" placeholder="请输入客户名称" ></u-input>
+					<u-input v-model="dataForm.customerName" placeholder="请输入客户名称"
+						:disabled="judgeWrite('customerName')"></u-input>
 				</u-form-item>
 				<u-form-item label="合作人名" prop="partnerName" v-if="judgeShow('partnerName')">
-					<u-input v-model="dataForm.partnerName" placeholder="请输入合作人名"></u-input>
+					<u-input v-model="dataForm.partnerName" placeholder="请输入合作人名" :disabled="judgeWrite('partnerName')">
+					</u-input>
 				</u-form-item>
 				<u-form-item label="模板参考" prop="standardFile" v-if="judgeShow('standardFile')">
-					<u-input v-model="dataForm.standardFile" placeholder="请输入模板参考"></u-input>
+					<u-input v-model="dataForm.standardFile" placeholder="请输入模板参考"
+						:disabled="judgeWrite('standardFile')"></u-input>
 				</u-form-item>
 				<u-form-item label="报价类型" prop="quotationType" v-if="judgeShow('quotationType')">
-					<jnpf-select v-model="dataForm.quotationType" placeholder="请选择报价类型"
-						:options="quotationTypeList"></jnpf-select>
+					<jnpf-select v-model="dataForm.quotationType" placeholder="请选择报价类型" :options="quotationTypeList"
+						:disabled="judgeWrite('quotationType')"></jnpf-select>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
-					<jnpf-file :list="fileList"/>
+					<jnpf-file :list="fileList" :disabled="judgeWrite('fileJson')" />
 				</u-form-item>
 				<u-form-item label="情况描述" prop="custSituation" v-if="judgeShow('custSituation')">
-					<u-input v-model="dataForm.custSituation" placeholder="请输入情况描述"></u-input>
+					<u-input v-model="dataForm.custSituation" placeholder="请输入情况描述"
+						:disabled="judgeWrite('custSituation')"></u-input>
 				</u-form-item>
 			</view>
 		</u-form>
@@ -58,12 +64,12 @@
 					flowUrgent: 1,
 					customerName: '',
 					partnerName: '',
-					quotationType:'',
+					quotationType: '',
 					writer: '',
 					standardFile: '',
 					custSituation: '',
-					writeDate:'',
-					fileJson:''
+					writeDate: '',
+					fileJson: ''
 				},
 				rules: {
 					flowTitle: [{
@@ -94,25 +100,25 @@
 						trigger: 'change',
 					}],
 				},
-				quotationTypeList:[{
+				quotationTypeList: [{
 						fullName: "SL-I型报价",
-						id:"0",
-						checked:false
+						id: "0",
+						checked: false
 					},
 					{
 						fullName: "SL-II型报价",
-						id:"1",
-						checked:false
+						id: "1",
+						checked: false
 					},
 					{
 						fullName: "SL-III型报价",
-						id:"2",
-						checked:false
+						id: "2",
+						checked: false
 					},
 					{
 						fullName: "SL-IIh型报价",
-						id:"3",
-						checked:false
+						id: "3",
+						checked: false
 					}
 				],
 			}

@@ -2,58 +2,68 @@
 	<view class="jnpf-wrap jnpf-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
-			<u-form-item label="流程标题" prop="flowTitle" required>
-				<u-input v-model="dataForm.flowTitle" placeholder="流程标题"></u-input>
+			<u-form-item label="流程标题" prop="flowTitle" v-if="judgeShow('flowTitle')" required>
+				<u-input v-model="dataForm.flowTitle" placeholder="流程标题" :disabled="judgeWrite('flowTitle')"></u-input>
 			</u-form-item>
 			<u-form-item label="流程编码" prop="billNo" v-if="judgeShow('billNo')" required>
-				<u-input v-model="dataForm.billNo" placeholder="流程编码" ></u-input>
+				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
-			<u-form-item label="紧急程度" prop="flowUrgent" required>
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
+			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')" required>
+				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+					:disabled="judgeWrite('flowUrgent')">
 				</jnpf-select>
 			</u-form-item>
 
 			<view class="jnpf-card">
 				<u-form-item label="客户名称" prop="customerName" v-if="judgeShow('customerName')" required>
-					<u-input v-model="dataForm.customerName" placeholder="请输入客户名称"></u-input>
+					<u-input v-model="dataForm.customerName" placeholder="请输入客户名称"
+						:disabled="judgeWrite('customerName')"></u-input>
 				</u-form-item>
 				<u-form-item label="联系人员" prop="contacts" v-if="judgeShow('contacts')">
-					<u-input v-model="dataForm.contacts" placeholder="请输入联系人员"></u-input>
+					<u-input v-model="dataForm.contacts" placeholder="请输入联系人员" :disabled="judgeWrite('contacts')">
+					</u-input>
 				</u-form-item>
 				<u-form-item label="开单日期" prop="salesDate" v-if="judgeShow('salesDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.salesDate" placeholder="请输入开单日期"></jnpf-date-time>
+					<jnpf-date-time type="date" v-model="dataForm.salesDate" placeholder="请输入开单日期"
+						:disabled="judgeWrite('salesDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="联系电话" prop="contactPhone" v-if="judgeShow('contactPhone')">
-					<u-input v-model="dataForm.contactPhone" placeholder="请输入联系电话"></u-input>
+					<u-input v-model="dataForm.contactPhone" placeholder="请输入联系电话"
+						:disabled="judgeWrite('contactPhone')"></u-input>
 				</u-form-item>
 				<u-form-item label="客户地址" prop="customerAddres" v-if="judgeShow('customerAddres')">
-					<u-input v-model="dataForm.customerAddres" placeholder="输入送客户地址"></u-input>
+					<u-input v-model="dataForm.customerAddres" placeholder="输入送客户地址"
+						:disabled="judgeWrite('customerAddres')"></u-input>
 				</u-form-item>
 				<u-form-item label="业务人员" prop="salesman" v-if="judgeShow('salesman')">
-					<u-input v-model="dataForm.salesman" placeholder="输入业务人员"></u-input>
+					<u-input v-model="dataForm.salesman" placeholder="输入业务人员" :disabled="judgeWrite('salesman')">
+					</u-input>
 				</u-form-item>
 				<u-form-item label="发票编号" prop="ticketNum" v-if="judgeShow('ticketNum')">
-					<u-input v-model="dataForm.ticketNum" placeholder="输入发票编号"></u-input>
+					<u-input v-model="dataForm.ticketNum" placeholder="输入发票编号" :disabled="judgeWrite('ticketNum')">
+					</u-input>
 				</u-form-item>
 				<u-form-item label="发票类型" prop="invoiceType" v-if="judgeShow('invoiceType')">
-					<jnpf-select v-model="dataForm.invoiceType" placeholder="请选择结算方式"
-						:options="invoiceTypeList"></jnpf-select>
+					<jnpf-select v-model="dataForm.invoiceType" placeholder="请选择结算方式" :options="invoiceTypeList"
+						:disabled="judgeWrite('invoiceType')"></jnpf-select>
 				</u-form-item>
 				<u-form-item label="付款方式" prop="paymentMethod" v-if="judgeShow('paymentMethod')">
-					<jnpf-select v-model="dataForm.paymentMethod" placeholder="请选择付款方式"
-						:options="paymentMethodOptions"></jnpf-select>
+					<jnpf-select v-model="dataForm.paymentMethod" placeholder="请选择付款方式" :options="paymentMethodOptions"
+						:disabled="judgeWrite('paymentMethod')"></jnpf-select>
 				</u-form-item>
 				<u-form-item label="付款金额" prop="paymentMoney" v-if="judgeShow('paymentMoney')">
-					<u-input v-model="dataForm.paymentMoney" placeholder="输入付款金额"></u-input>
+					<u-input v-model="dataForm.paymentMoney" placeholder="输入付款金额"
+						:disabled="judgeWrite('paymentMoney')"></u-input>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
-					<jnpf-file :list="fileList"/>
+					<jnpf-file :list="fileList" :disabled="judgeWrite('fileJson')" />
 				</u-form-item>
 				<u-form-item label="开单备注" prop="description" v-if="judgeShow('description')">
-					<u-input v-model="dataForm.description" placeholder="输入开单备注" type="textarea"></u-input>
+					<u-input v-model="dataForm.description" placeholder="输入开单备注" type="textarea"
+						:disabled="judgeWrite('description')"></u-input>
 				</u-form-item>
 			</view>
-			
+
 
 			<view class="jnpf-table">
 				<view class="jnpf-table-item" v-for="(item,i) in dataForm.entryList" :key="i">
@@ -64,27 +74,31 @@
 						</view>
 					</view>
 					<u-form-item label="商品名称" prop="dataForm.entryList[i].goodsName">
-						<u-input v-model="dataForm.entryList[i].goodsName" placeholder="请输入商品名称"></u-input>
+						<u-input v-model="dataForm.entryList[i].goodsName" placeholder="请输入商品名称"
+							:disabled="judgeWrite('entryList')"></u-input>
 					</u-form-item>
 					<u-form-item label="规格类型" prop="dataForm.entryList[i].specifications">
-						<u-input v-model="dataForm.entryList[i].specifications" placeholder="请输入规格类型"></u-input>
+						<u-input v-model="dataForm.entryList[i].specifications" placeholder="请输入规格类型"
+							:disabled="judgeWrite('entryList')"></u-input>
 					</u-form-item>
 					<u-form-item label="单位" prop="dataForm.entryList[i].unit">
-						<u-input v-model="dataForm.entryList[i].unit" placeholder="请输入单位" ></u-input>
+						<u-input v-model="dataForm.entryList[i].unit" placeholder="请输入单位"
+							:disabled="judgeWrite('entryList')"></u-input>
 					</u-form-item>
 					<u-form-item label="数量" prop="dataForm.entryList[i].qty">
 						<u-input v-model="dataForm.entryList[i].qty" placeholder="请输入数量" type="number"
-							@input="count(dataForm.entryList[i])"></u-input>
+							@input="count(dataForm.entryList[i])" :disabled="judgeWrite('entryList')"></u-input>
 					</u-form-item>
 					<u-form-item label="单价" prop="dataForm.entryList[i].price">
 						<u-input v-model="dataForm.entryList[i].price" placeholder="请输入单价" type="number"
-							@input="count(dataForm.entryList[i])"></u-input>
+							@input="count(dataForm.entryList[i])" :disabled="judgeWrite('entryList')"></u-input>
 					</u-form-item>
 					<u-form-item label="金额" prop="dataForm.entryList[i].amount">
-						<u-input v-model="dataForm.entryList[i].amount" placeholder="请输入金额" ></u-input>
+						<u-input v-model="dataForm.entryList[i].amount" placeholder="请输入金额" disabled></u-input>
 					</u-form-item>
 					<u-form-item label="备注" prop="dataForm.entryList[i].description">
-						<u-input v-model="dataForm.entryList[i].description" placeholder="请输入备注" type="textarea"></u-input>
+						<u-input v-model="dataForm.entryList[i].description" placeholder="请输入备注" type="textarea"
+							:disabled="judgeWrite('entryList')"></u-input>
 					</u-form-item>
 				</view>
 				<view class="jnpf-table-addBtn" @click="addItem">
@@ -110,14 +124,14 @@
 					customerAddres: '',
 					contactPhone: '',
 					description: '',
-					fileJson:'',
+					fileJson: '',
 					salesman: '',
-					paymentMoney:'',
-					paymentMethod:'',
-					invoiceType:'',
-					salesDate:'',
-					contacts:'',
-					customerName:'',
+					paymentMoney: '',
+					paymentMethod: '',
+					invoiceType: '',
+					salesDate: '',
+					contacts: '',
+					customerName: '',
 					entryList: [{
 						goodsName: '',
 						specifications: '',
@@ -125,7 +139,7 @@
 						qty: '',
 						price: '',
 						amount: '',
-						description:''
+						description: ''
 					}]
 				},
 				rules: {
@@ -165,17 +179,17 @@
 				},
 				invoiceTypeList: [{
 						fullName: "普通发票",
-						id:"0",
+						id: "0",
 						checked: false
 					},
 					{
 						fullName: "专业发票",
-						id:"1",
+						id: "1",
 						checked: false
 					},
 					{
 						fullName: "其他",
-						id:"2",
+						id: "2",
 						checked: false
 					}
 				],
@@ -194,7 +208,7 @@
 					qty: '',
 					price: '',
 					amount: '',
-					description:''
+					description: ''
 				}
 				this.dataForm.entryList.push(item)
 			},

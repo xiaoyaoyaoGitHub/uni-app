@@ -2,29 +2,34 @@
 	<view class="jnpf-wrap jnpf-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
-			<u-form-item label="流程标题" prop="flowTitle" required>
-				<u-input v-model="dataForm.flowTitle" placeholder="流程标题"></u-input>
+			<u-form-item label="流程标题" prop="flowTitle" v-if="judgeShow('flowTitle')" required>
+				<u-input v-model="dataForm.flowTitle" placeholder="流程标题" :disabled="judgeWrite('flowTitle')"></u-input>
 			</u-form-item>
 			<u-form-item label="流程编码" prop="billNo" v-if="judgeShow('billNo')" required>
-				<u-input v-model="dataForm.billNo" placeholder="流程编码" ></u-input>
+				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
-			<u-form-item label="紧急程度" prop="flowUrgent" required>
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions">
+			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')" required>
+				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+					:disabled="judgeWrite('flowUrgent')">
 				</jnpf-select>
 			</u-form-item>
 
 			<view class="jnpf-card">
 				<u-form-item label="领料人员" prop="leadPeople" v-if="judgeShow('leadPeople')" required>
-					<u-input v-model="dataForm.leadPeople" placeholder="请输入领料人员"></u-input>
+					<u-input v-model="dataForm.leadPeople" placeholder="请输入领料人员" :disabled="judgeWrite('leadPeople')">
+					</u-input>
 				</u-form-item>
 				<u-form-item label="领料部门" prop="leadDepartment" v-if="judgeShow('leadDepartment')" required>
-					<u-input v-model="dataForm.leadDepartment" placeholder="请输入领料部门"></u-input>
+					<u-input v-model="dataForm.leadDepartment" placeholder="请输入领料部门"
+						:disabled="judgeWrite('leadDepartment')"></u-input>
 				</u-form-item>
 				<u-form-item label="领料日期" prop="leadDate" v-if="judgeShow('leadDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.leadDate" placeholder="请输入领料日期"></jnpf-date-time>
+					<jnpf-date-time type="date" v-model="dataForm.leadDate" placeholder="请输入领料日期"
+						:disabled="judgeWrite('leadDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="仓库" prop="warehouse" v-if="judgeShow('warehouse')">
-					<u-input v-model="dataForm.warehouse" placeholder="请输入仓库" type="number"></u-input>
+					<u-input v-model="dataForm.warehouse" placeholder="请输入仓库" type="number"
+						:disabled="judgeWrite('warehouse')"></u-input>
 				</u-form-item>
 			</view>
 
@@ -37,31 +42,37 @@
 						</view>
 					</view>
 					<u-form-item label="商品名称" prop="dataForm.entryList[i].goodsName">
-						<u-input v-model="dataForm.entryList[i].goodsName" placeholder="请输入商品名称"></u-input>
+						<u-input v-model="dataForm.entryList[i].goodsName" placeholder="请输入商品名称"
+							:disabled="judgeWrite('entryList')"></u-input>
 					</u-form-item>
 					<u-form-item label="规格类型" prop="dataForm.entryList[i].specifications">
-						<u-input v-model="dataForm.entryList[i].specifications" placeholder="规格类型"></u-input>
+						<u-input v-model="dataForm.entryList[i].specifications" placeholder="规格类型"
+							:disabled="judgeWrite('entryList')"></u-input>
 					</u-form-item>
 					<u-form-item label="单位" prop="dataForm.entryList[i].unit">
-						<u-input v-model="dataForm.entryList[i].unit" placeholder="单位" ></u-input>
+						<u-input v-model="dataForm.entryList[i].unit" placeholder="单位"
+							:disabled="judgeWrite('entryList')"></u-input>
 					</u-form-item>
 					<u-form-item label="需数量" prop="dataForm.entryList[i].needQty">
-						<u-number-box v-model="dataForm.entryList[i].needQty" :min="0" :max="100" :step="1" :input-width="120"
-							:positive-integer="false" :input-height="60"></u-number-box>
+						<u-number-box v-model="dataForm.entryList[i].needQty" :min="0" :max="100" :step="1"
+							:input-width="120" :positive-integer="false" :input-height="60"
+							:disabled="judgeWrite('entryList')"></u-number-box>
 					</u-form-item>
 					<u-form-item label="配数量" prop="dataForm.entryList[i].matchQty">
-						<u-number-box v-model="dataForm.entryList[i].matchQty" :min="0" :max="100" :step="1" :input-width="120"
-							:positive-integer="false" :input-height="60"  @change="count(dataForm.entryList[i])"></u-number-box>
+						<u-number-box v-model="dataForm.entryList[i].matchQty" :min="0" :max="100" :step="1"
+							:input-width="120" :positive-integer="false" :input-height="60"
+							@change="count(dataForm.entryList[i])" :disabled="judgeWrite('entryList')"></u-number-box>
 					</u-form-item>
 					<u-form-item label="单价" prop="dataForm.entryList[i].price">
 						<u-input v-model="dataForm.entryList[i].price" placeholder="单价" type="number"
-							@input="count(dataForm.entryList[i])"></u-input>
+							@input="count(dataForm.entryList[i])" :disabled="judgeWrite('entryList')"></u-input>
 					</u-form-item>
 					<u-form-item label="金额" prop="dataForm.entryList[i].amount">
-						<u-input v-model="dataForm.entryList[i].amount" placeholder="金额" ></u-input>
+						<u-input v-model="dataForm.entryList[i].amount" placeholder="金额" disabled></u-input>
 					</u-form-item>
 					<u-form-item label="备注" prop="dataForm.entryList[i].description">
-						<u-input v-model="dataForm.entryList[i].description" placeholder="备注"></u-input>
+						<u-input v-model="dataForm.entryList[i].description" placeholder="备注"
+							:disabled="judgeWrite('entryList')"></u-input>
 					</u-form-item>
 				</view>
 				<view class="jnpf-table-addBtn" @click="addItem">
@@ -82,12 +93,12 @@
 				billEnCode: 'WF_MaterialRequisitionNo',
 				dataForm: {
 					flowTitle: '',
-					billNo:'',
-					flowUrgent:1,
-					leadPeople:'',
-					warehouse:'',
-					leadDate:'',
-					leadDepartment:'',
+					billNo: '',
+					flowUrgent: 1,
+					leadPeople: '',
+					warehouse: '',
+					leadDate: '',
+					leadDepartment: '',
 					entryList: [{
 						goodsName: '',
 						specifications: '',
@@ -96,7 +107,7 @@
 						needQty: 0,
 						price: '',
 						amount: '',
-						description:''
+						description: ''
 					}]
 				},
 				rules: {
@@ -116,18 +127,18 @@
 						message: '流程编码不能为空',
 						trigger: 'blur',
 					}],
-					leadDate:[{
+					leadDate: [{
 						required: true,
 						message: '领料日期不能为空',
 						trigger: 'blur',
-						type:'number'
+						type: 'number'
 					}],
-					leadPeople:[{
+					leadPeople: [{
 						required: true,
 						message: '领料人员不能为空',
 						trigger: 'blur',
 					}],
-					leadDepartment:[{
+					leadDepartment: [{
 						required: true,
 						message: '领料部门不能为空',
 						trigger: 'blur',
@@ -149,7 +160,7 @@
 					needQty: 0,
 					price: '',
 					amount: '',
-					description:''
+					description: ''
 				}
 				this.dataForm.entryList.push(item)
 			},
