@@ -60,7 +60,20 @@
 	],
 	"subPackages": [{
 			"root": "pages/message",
-			"pages": []
+			"pages": [{
+                    "path" : "userDetail/index",
+                    "style": {
+						"navigationBarTitleText": "",
+                    	"navigationBarTextStyle": "white",
+                    	"navigationBarBackgroundColor": "#D8D8D8",
+                    	"app-plus": {
+                    		// "titleNView": false,
+                    		"bounce": "none" // 取消iOS回弹,避免和下拉刷新冲突 (小程序无法取消)
+                    	}
+                    }
+                
+                }
+            ]
 		},
 		{
 			"root": "pages/workFlow",

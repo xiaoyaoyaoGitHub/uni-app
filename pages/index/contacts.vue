@@ -7,7 +7,7 @@
 					bg-color="#f0f2f6" shape="square">
 				</u-search>
 			</view>
-			<view class="list-cell u-border-bottom" v-for="(item, i) in list" :key="i">
+			<view class="list-cell u-border-bottom" v-for="(item, i) in list" :key="i" @click="detail(item.id)">
 				<u-avatar :src="define.baseURL+item.headIcon"></u-avatar>
 				<view class="list-cell-txt">
 					<view class="u-font-30">{{item.realName}}/{{item.account}}</view>
@@ -61,6 +61,7 @@
 				getImUser(query, {
 					load: page.num == 1
 				}).then(res => {
+					console.log(res.data.list)
 					this.mescroll.endSuccess(res.data.list.length);
 					if (page.num == 1) this.list = [];
 					const list = res.data.list;
@@ -76,6 +77,15 @@
 					this.list = [];
 					this.mescroll.resetUpScroll();
 				}, 300)
+			},
+			detail(id){
+				let _url = '../message/userDetail/index?userId='+id
+				uni.navigateTo({
+					url: _url,
+					success: res => {},
+					fail: () => {},
+					complete: () => {}
+				});
 			}
 		}
 	}

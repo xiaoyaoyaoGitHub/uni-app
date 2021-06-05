@@ -60,6 +60,16 @@ export function getUserSelector() {
 		}
 	})
 }
+
+//获取用户详情
+export function getUesrDetail(id){
+	return request({
+		url: '/api/permission/Users/'+id,
+		method: 'GET',
+	})
+	
+}
+
 // 获取所有用户列表
 export function getUserAll() {
 	return request({
