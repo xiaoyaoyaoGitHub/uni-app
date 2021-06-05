@@ -1,7 +1,7 @@
 <template>
 	<view class="my-v">
 		<view class="u-flex user-box u-p-l-32 u-p-r-22 u-p-b-30" @click="openPage('/pages/my/personalData/index')">
-			<view class="u-m-r-10">
+			<view class="u-m-r-20">
 				<u-avatar :src="define.baseURL+userInfo.headIcon" size="140"></u-avatar>
 			</view>
 			<view class="u-flex-1">
@@ -12,7 +12,6 @@
 				<u-icon name="arrow-right" color="#969799" size="28"></u-icon>
 			</view>
 		</view>
-		
 		<view class="u-m-t-20">
 			<u-cell-group>
 				<u-cell-item title="企业组织" @click="openPage('/pages/my/business/index')">
@@ -73,7 +72,9 @@
 		background-color: #f0f2f6;
 	}
 
-	.user-box {
-		background-color: #fff;
+	.my-v {
+		.user-box {
+			background-color: #fff;
+		}
 	}
 </style>

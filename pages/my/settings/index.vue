@@ -11,7 +11,7 @@
 </template>
 
 <script>
-	import request from '../../../libs/resources.js'
+	import resources from '@/libs/resources.js'
 	export default {
 		data() {
 			return {
