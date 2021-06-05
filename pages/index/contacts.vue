@@ -1,86 +1,81 @@
 <template>
 	<view class="contacts-v">
-		<view class="search-box">
-			<u-search placeholder="请输入关键词搜索" v-model="keyword" height="72" :show-action="false" @change="search"
-				bg-color="#f0f2f6" shape="square">
-			</u-search>
-		</view>
-		<view class="list">
-			<u-index-list :scrollTop="scrollTop" :index-list="indexList">
-				<view v-for="(item, index) in treeData" :key="index">
-					<u-index-anchor :index="item.letter" />
-					<view class="list-cell u-border-bottom" v-for="(childItem, childIndex) in item.data"
-						:key="childIndex">
-						<u-avatar :src="define.baseURL+childItem.headIcon"></u-avatar>
-						<view class="list-cell-txt">
-							<view class="u-font-30">{{childItem.realName}}/{{childItem.account}}</view>
-							<view class="u-font-24 department">{{childItem.department}}</view>
-						</view>
-					</view>
+		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :sticky="true"
+			:down="downOption" :up="upOption" :bottombar="false">
+			<view class="search-box search-box_sticky">
+				<u-search placeholder="请输入关键词搜索" v-model="keyword" height="72" :show-action="false" @change="search"
+					bg-color="#f0f2f6" shape="square">
+				</u-search>
+			</view>
+			<view class="list-cell u-border-bottom" v-for="(item, i) in list" :key="i">
+				<u-avatar :src="define.baseURL+item.headIcon"></u-avatar>
+				<view class="list-cell-txt">
+					<view class="u-font-30">{{item.realName}}/{{item.account}}</view>
+					<view class="u-font-24 department">{{item.department}}</view>
 				</view>
-			</u-index-list>
-		</view>
+			</view>
+		</mescroll-body>
 	</view>
 </template>
 
 <script>
-	const letterArr = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S",
-		"T", "U", "V", "W", "X", "Y", "Z", "#"
-	];
 	import {
-		getUserAll
+		getImUser
 	} from '@/api/common.js'
+	import resources from '@/libs/resources.js'
+	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
 	export default {
+		mixins: [MescrollMixin],
 		data() {
 			return {
-				scrollTop: 0,
+				downOption: {
+					use: true,
+					auto: true
+				},
+				upOption: {
+					page: {
+						num: 0,
+						size: 20,
+						time: null
+					},
+					empty: {
+						use: true,
+						icon: resources.message.nodata,
+						tip: "暂无数据",
+						fixed: true,
+						top: "300rpx",
+					},
+					textNoMore: '没有更多数据',
+				},
 				keyword: '',
-				userList: [],
-				treeData: [],
-				indexList: []
+				list: []
 			}
 		},
-		onPageScroll(e) {
-			this.scrollTop = e.scrollTop;
-		},
-		onLoad() {
-			this.initData()
-		},
 		methods: {
-			initData() {
-				getUserAll().then(res => {
-					let list = res.data.list || []
-					list = list.map(o => ({
-						...o,
-						letter: o.quickQuery ? o.quickQuery.substr(0, 1).toUpperCase() : '#'
-					}))
-					this.userList = list
-					this.getTree(list)
+			upCallback(page) {
+				let query = {
+					currentPage: page.num,
+					pageSize: page.size,
+					keyword: this.keyword
+				}
+				getImUser(query, {
+					load: page.num == 1
+				}).then(res => {
+					this.mescroll.endSuccess(res.data.list.length);
+					if (page.num == 1) this.list = [];
+					const list = res.data.list;
+					this.list = this.list.concat(list);
+				}).catch(() => {
+					this.mescroll.endErr();
 				})
 			},
-			getTree(list) {
-				let treeData = []
-				for (let i = 0; i < letterArr.length; i++) {
-					let item = {
-						letter: letterArr[i],
-						data: []
-					}
-					for (let j = 0; j < list.length; j++) {
-						if (letterArr[i] === list[j].letter) {
-							item.data.push(list[j])
-						}
-					}
-					treeData.push(item)
-				}
-				treeData = treeData.filter(o => o.data.length)
-				this.indexList = treeData.map(o => o.letter)
-				if (this.keyword) this.indexList = []
-				this.treeData = treeData
-			},
-			search(val) {
-				let list = this.userList.filter(o => o.realName.indexOf(val) > -1 || o.account.indexOf(val) > -1 || o
-					.quickQuery.indexOf(val) > -1)
-				this.getTree(list)
+			search() {
+				// 节流,避免输入过快多次请求
+				this.searchTimer && clearTimeout(this.searchTimer)
+				this.searchTimer = setTimeout(() => {
+					this.list = [];
+					this.mescroll.resetUpScroll();
+				}, 300)
 			}
 		}
 	}

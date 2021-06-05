@@ -19,7 +19,7 @@
 						<view class="record-cell" v-if="item.handleOpinion">终止原因：{{item.handleOpinion}}</view>
 					</view>
 					<view v-else>
-						<view class="record-cell record-title">审核人员：{{item.userName}}</view>
+						<view class="record-cell record-title">审核人员：{{item.userName}}{{item.status?'(加签)':''}}</view>
 						<view class="record-cell">审核节点：{{item.nodeName}}</view>
 						<view class="record-cell">审核时间：{{item.handleTime|date('yyyy-mm-dd hh:MM')}}</view>
 						<view class="record-cell">审核状态：
@@ -43,7 +43,7 @@
 
 <script>
 	export default {
-		name: 'Steps',
+		name: 'Records',
 		props: {
 			options: {
 				type: Array,

@@ -2,7 +2,7 @@
 	<view class="flowCopy-v">
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :sticky="true"
 			:down="downOption" :up="upOption">
-			<view class="search-box sticky">
+			<view class="search-box search-box_sticky">
 				<u-search placeholder="请输入关键词搜索" v-model="keyword" height="72" :show-action="false" @change="search"
 					bg-color="#f0f2f6" shape="square">
 				</u-search>
@@ -83,14 +83,5 @@
 <style lang="scss">
 	page {
 		background-color: #f0f2f6;
-	}
-
-	.flowCopy-v {
-		.sticky {
-			z-index: 990;
-			position: sticky;
-			top: var(--window-top);
-			background-color: #fff;
-		}
 	}
 </style>

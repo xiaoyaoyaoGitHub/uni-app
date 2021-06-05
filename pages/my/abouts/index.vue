@@ -1,6 +1,6 @@
 <template>
 	<view class="abouts-v">
-		<view class="u-type-primary abouts-hd u-flex-col">
+		<view class="abouts-hd u-flex-col">
 			<image :src="logoSrc" mode="widthFix"></image>
 			<text>{{VersionNumber}}</text>
 		</view>
@@ -9,14 +9,14 @@
 				JNPF采用主流的两大技术Java/.Net开发，是一套低代码开发平台，可视化开发环境，有拖拽式的代码生成器，灵活的权限配置、SaaS服务，强大的接口对接，随心可变的工作流引擎，一站式开发多端使用Web、Android、IOS、微信小程序，并且有以构建业务流程、逻辑和数据模型等所需的功能；为企业项目节省80%的重回工作，让开发者将重心放在业务逻辑，不必烦恼底层架构设计，可短时间开发出如ERP、OA、CRM、HR、MIS以及电信、银行、政府、企业等各行业的企业应用系统。
 				引迈信息技术有限公司以诚信为根本、服务为基础理念，通过持续不断地研发技术创新、强化平台质量和颜值，为企业保驾护航！</text>
 		</view>
-		<view class="abouts-copyright u-font-13">
+		<view class="abouts-copyright u-font-26">
 			<text>Copyright © 2021 引迈信息技术有限公司出品</text>
 		</view>
 	</view>
 </template>
 
 <script>
-	import resources from '../../../libs/resources.js'
+	import resources from '@/libs/resources.js'
 	export default {
 		data() {
 			return {
@@ -24,15 +24,10 @@
 				logoSrc: resources.banner.loginlogo,
 			}
 		},
-		methods: {
-
-		}
 	}
 </script>
 
 <style lang="scss">
-	page {}
-
 	.abouts-v {
 		.abouts-hd {
 			width: 100%;
@@ -40,15 +35,18 @@
 			background-color: #3281ff;
 			height: 135px;
 			color: #FFFFFF;
+
 			image {
 				width: 83px;
 				height: 83px;
 			}
 		}
-		.content{
+
+		.content {
 			line-height: 48rpx;
 		}
-		.abouts-copyright{
+
+		.abouts-copyright {
 			position: fixed;
 			bottom: 20rpx;
 			left: 0;

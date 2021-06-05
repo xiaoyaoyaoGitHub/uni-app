@@ -1,13 +1,11 @@
 <template>
 	<view class="business-v">
-		<view class="business-list">
-			<u-cell-group>
-				<u-cell-item title="公司" :arrow="false">{{userInfo.organizeName}}</u-cell-item>
-				<u-cell-item title="部门" :arrow="false">{{userInfo.departmentName}}</u-cell-item>
-				<u-cell-item title="岗位" :arrow="false">{{positionIds}}</u-cell-item>
-				<u-cell-item title="角色" :arrow="false"></u-cell-item>
-			</u-cell-group>
-		</view>
+		<u-cell-group>
+			<u-cell-item title="公司" :value="userInfo.organizeName" :arrow="false"></u-cell-item>
+			<u-cell-item title="部门" :value="userInfo.departmentName" :arrow="false"></u-cell-item>
+			<u-cell-item title="岗位" :value="positionIds" :arrow="false"></u-cell-item>
+			<u-cell-item title="角色" :value="''" :arrow="false"></u-cell-item>
+		</u-cell-group>
 	</view>
 </template>
 
@@ -16,7 +14,7 @@
 		data() {
 			return {
 				userInfo: {},
-				positionIds:''
+				positionIds: ''
 			}
 		},
 		onLoad() {
@@ -32,9 +30,5 @@
 <style lang="scss">
 	page {
 		background-color: #f0f2f6;
-	}
-
-	.business-v {
-		.business-list {}
 	}
 </style>

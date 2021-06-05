@@ -150,12 +150,6 @@
 		/* #endif */
 	}
 }
-.contacts-v {
-	.u-index-anchor {
-		background-color: #f0f2f6 !important;
-		padding: 14rpx 32rpx !important;
-	}
-}
 .apply-v {
 	.banner {
 		.u-indicator-item-round.u-indicator-item-round-active {
@@ -196,4 +190,10 @@
 			}
 		}
 	}
+}
+.search-box_sticky {
+	z-index: 990;
+	position: sticky;
+	top: var(--window-top);
+	background-color: #fff;
 }
