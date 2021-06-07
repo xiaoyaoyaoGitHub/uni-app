@@ -18,6 +18,9 @@
 					<u-form-item label="抄送人员" prop="copyIds" v-if="config.isCustomCopy">
 						<jnpf-org-select v-model="dataForm.copyIds" multiple />
 					</u-form-item>
+					<u-form-item label="审批签名" prop="signImg" v-if="config.hasSign">
+						<Signature ref="sig" v-model="dataForm.signImg"></Signature>
+					</u-form-item>
 				</u-form>
 			</view>
 		</scroll-view>
@@ -28,7 +31,11 @@
 </template>
 
 <script>
+	import Signature from '../components/sin-signature/sin-signature.vue'
 	export default {
+		components: {
+			Signature,
+		},
 		data() {
 			return {
 				config: {},
@@ -49,13 +56,20 @@
 		},
 		methods: {
 			handleClick() {
+				if (this.config.hasSign && !this.dataForm.signImg) {
+					uni.showToast({
+						title: '请签名',
+						icon: 'none'
+					})
+					return
+				}
 				const query = {
 					...this.dataForm,
 					eventType: this.config.eventType
 				}
 				this.eventHub.$emit('operate', query);
 				uni.navigateBack();
-			},
+			}
 		}
 	}
 </script>
