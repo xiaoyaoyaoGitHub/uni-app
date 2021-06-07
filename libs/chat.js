@@ -2,8 +2,6 @@ import Vue from 'vue'
 import define from '@/utils/define'
 import store from '@/store'
 
-const $u = Vue.prototype.$u
-
 const Socket = {
 	contime: 0,
 	ws: null,
@@ -49,43 +47,23 @@ const Socket = {
 
 			uni.onSocketMessage(res => {
 				const data = JSON.parse(res.data)
-				// console.log(data)
 
 				switch (data.method) {
 					case "initMessage": //初始化
-						const showInfo = {
+						const msgInfo = {
 							noticeText: data.noticeDefaultText,
 							messageText: data.messageDefaultText,
 							messageCount: data.unreadMessageCount,
 							noticeCount: data.unreadNoticeCount,
-							noticeDate: $u.timeFormat(new Date, 'mm-dd hh:mm'),
-							messageDate: $u.timeFormat(new Date, 'mm-dd hh:mm')
+							noticeDate: 0,
+							messageDate: 0
 						}
 						let badgeNum = data.unreadMessageCount + data.unreadNoticeCount
 						for (let i = 0; i < data.unreadNums.length; i++) {
-							badgeNum = badgeNum + data.unreadNums[i].UnreadNum
+							badgeNum = badgeNum + data.unreadNums[i].unreadNum
 						}
-						const recentlys = data.unreadNums.map(o => {
-							let message = ''
-							switch (unreadNums[i].defaultMessageType) {
-								case 'text':
-									message = unreadNums[i].defaultMessage;
-									break;
-								case 'voice':
-									message = '[语音]'
-									break;
-								case 'image':
-									message = '[图片]'
-									break;
-							}
-							return {
-								...o,
-								message
-							}
-						})
-						store.commit('chat/SET_RECENTLYS', recentlys)
 						store.commit('chat/SET_BADGE_NUM', badgeNum)
-						store.commit('chat/SET_SHOWINFO', showInfo)
+						store.commit('chat/SET_MSGINFO', msgInfo)
 						break;
 					case "Online": //在线用户
 
@@ -97,7 +75,7 @@ const Socket = {
 
 						break;
 					case "receiveMessage": //接收消息
-
+						store.dispatch('chat/receiveMessage', data)
 						break;
 					case "messageList": //消息列表
 
@@ -106,11 +84,18 @@ const Socket = {
 
 						break;
 					case "logout":
-						$u.toast('登录已过期')
-						store.dispatch('user/resetToken').then(() => {
-							uni.reLaunch({
-								url: '/pages/login/index'
-							})
+						uni.showToast({
+							title: '登录已过期',
+							icon: 'none',
+							complete: () => {
+								setTimeout(() => {
+									store.dispatch('user/resetToken').then(() => {
+										uni.reLaunch({
+											url: '/pages/login/index'
+										})
+									})
+								}, 1500)
+							}
 						})
 						break;
 					default:

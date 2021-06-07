@@ -6,14 +6,7 @@
 	"pages": [{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "JNPF快速开发平台",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						// "type":"transparent",/* 头部渐隐 */
-						"coverage": "132px"
-					}
-				}
+				"navigationBarTitleText": "消息"
 			}
 		},
 		{
@@ -50,8 +43,7 @@
 			"path": "pages/index/my",
 			"style": {
 				"navigationBarTitleText": "我的",
-				"navigationBarBackgroundColor": "#ffffff",
-				"disableScroll": true
+				"navigationBarTextStyle": "white"
 			}
 		},
 		{
@@ -61,19 +53,26 @@
 	"subPackages": [{
 			"root": "pages/message",
 			"pages": [{
-                    "path" : "userDetail/index",
-                    "style": {
+					"path": "userDetail/index",
+					"style": {
 						"navigationBarTitleText": "",
-                    	"navigationBarTextStyle": "white",
-                    	"navigationBarBackgroundColor": "#D8D8D8",
-                    	"app-plus": {
-                    		// "titleNView": false,
-                    		"bounce": "none" // 取消iOS回弹,避免和下拉刷新冲突 (小程序无法取消)
-                    	}
-                    }
-                
-                }
-            ]
+						"navigationBarTextStyle": "white",
+						"navigationBarBackgroundColor": "#D8D8D8"
+					}
+				},
+				{
+					"path": "notice/index",
+					"style": {
+						"navigationBarTitleText": "通知公告"
+					}
+				},
+				{
+					"path": "sysMsg/index",
+					"style": {
+						"navigationBarTitleText": "系统消息"
+					}
+				}
+			]
 		},
 		{
 			"root": "pages/workFlow",
@@ -120,18 +119,14 @@
 					"style": {
 						"navigationBarTitleText": ""
 					}
+				},
+				{
+					"path": "allApplications/index",
+					"style": {
+						"navigationBarTitleText": ""
+					}
 				}
-			    ,{
-                    "path" : "allApplications/index",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-					
-                }
-                
-                }
-            ]
+			]
 		},
 		{
 			"root": "pages/apply",
@@ -144,81 +139,63 @@
 		{
 			"root": "pages/my",
 			"pages": [{
-				"path": "settings/index",
-				"style": {
-					"navigationBarTitleText": "设置"
-				}
-			},{
-                    "path" : "contactUs/index",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "联系我们"
-                }
-                
-                }
-                ,{
-                    "path" : "abouts/index",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "应用介绍",
-                    "enablePullDownRefresh": false
-                }
-                
-                },
+					"path": "settings/index",
+					"style": {
+						"navigationBarTitleText": "设置"
+					}
+				},
 				{
-				    "path" : "yinmaisoft/index",
-				    "style" :                                                                                    
+					"path": "contactUs/index",
+					"style": {
+						"navigationBarTitleText": "联系我们"
+					}
+				},
 				{
-				    "navigationBarTitleText": "",
-				    "enablePullDownRefresh": false
+					"path": "abouts/index",
+					"style": {
+						"navigationBarTitleText": "应用介绍"
+					}
+				},
+				// #ifdef MP
+				{
+					"path": "yinmaisoft/index",
+					"style": {
+						"navigationBarTitleText": ""
+					}
+				},
+				// #endif
+				{
+					"path": "accountSecurity/index",
+					"style": {
+						"navigationBarTitleText": "账号安全"
+					}
+				},
+				{
+					"path": "cancellation/index",
+					"style": {
+						"navigationBarTitleText": "注销账号"
+					}
+				},
+				{
+					"path": "personalData/index",
+					"style": {
+						"navigationBarTitleText": "个人信息"
+					}
+				},
+				{
+					"path": "business/index",
+					"style": {
+						"navigationBarTitleText": "企业组织"
+					}
 				}
-				
-				}
-                ,{
-                    "path" : "accountSecurity/index",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "账号安全",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-                ,{
-                    "path" : "cancellation/index",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "注销账号",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-                ,{
-                    "path" : "personalData/index",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "个人信息",
-                    "enablePullDownRefresh": false
-					
-                }
-                
-                }
-                ,{
-                    "path" : "business/index",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "企业组织",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-            ]
+			]
 		}
 	],
 	"preloadRule": {
-		// "pages/index/message": {
-		// 	"network": "all",
-		// 	"packages": ["pages/message"]
-		// },
+		"pages/index/message": {
+			"network": "all",
+			"packages": ["pages/message"]
+		},
 		"pages/index/workFlow": {
 			"network": "all",
 			"packages": ["pages/workFlow"]
@@ -274,8 +251,9 @@
 	},
 	"globalStyle": {
 		"navigationBarTitleText": "JNPF快速开发平台",
-		"navigationBarBackgroundColor": "#3281FF",
-		"backgroundColor": "#F8F8F8",
+		"navigationBarTextStyle": "black",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"backgroundColor": "#f0f2f6",
 		"usingComponents": {
 			"ly-tree-node": "/components/ly-tree/ly-tree-node"
 		}

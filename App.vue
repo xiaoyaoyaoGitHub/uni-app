@@ -1,4 +1,5 @@
 <script>
+	import chat from '@/libs/chat.js'
 	export default {
 		onLaunch: function() {
 			const token = uni.getStorageSync("token") || '';
@@ -6,6 +7,8 @@
 				uni.reLaunch({
 					url: '/pages/login/index'
 				})
+			} else {
+				chat.initSocket()
 			}
 		},
 		onShow: function() {
