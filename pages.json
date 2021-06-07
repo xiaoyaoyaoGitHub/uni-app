@@ -121,7 +121,17 @@
 						"navigationBarTitleText": ""
 					}
 				}
-			]
+			    ,{
+                    "path" : "allApplications/index",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+					
+                }
+                
+                }
+            ]
 		},
 		{
 			"root": "pages/apply",

@@ -21,15 +21,13 @@
 			</view>
 		</u-sticky>
 		<view class="workFlow-list">
-			<!-- 	<view class="part">
-				<view class="caption">常用应用</view>
-				<view class="u-flex u-flex-wrap">
-					<view class="item u-flex-col u-col-center">
-						<text class="u-font-40 item-icon" />
-						<text class="u-font-24 u-line-1">常用应用1</text>
-					</view>
-				</view>
-			</view> -->
+			<view class="part u-padding-35">
+				<!-- <view class="caption">全部应用</view> -->
+				<navigator url="/pages/workFlow/allApplications/index" class="tabs-item">
+					<text class="u-font-36">全部应用</text>
+				</navigator>
+			</view>
+			
 			<view class="part" v-for="(item,i) in flowEngineList" :key="i">
 				<view class="caption">{{item.fullName}}</view>
 				<view class="u-flex u-flex-wrap">
@@ -81,6 +79,7 @@
 					this.getFlowEngineList()
 				})
 			},
+			
 			getFlowEngineList() {
 				FlowEngineListAll().then(res => {
 					const list = res.data.list
@@ -91,10 +90,11 @@
 						this.$set(this.flowEngineList[i], 'children', child)
 						this.$set(this.flowEngineList[i], 'count', count)
 					}
-					this.flowEngineList = this.flowEngineList.filter(o => o.children.length)
+					this.flowEngineList = this.flowEngineList.filter(o => o.children.length);
 					uni.stopPullDownRefresh();
 				})
 			},
+			
 			handelClick(item) {
 				const config = {
 					id: '',
@@ -109,6 +109,7 @@
 					url: '/pages/workFlow/flowBefore/index?config=' + encodeURIComponent(JSON.stringify(config))
 				})
 			},
+			
 			toForm() {
 				const config = {
 					id: '',
@@ -178,7 +179,6 @@
 				background: #fff;
 				border-radius: 8rpx;
 				margin-bottom: 20rpx;
-
 				.caption {
 					padding-left: 32rpx;
 					font-size: 36rpx;
