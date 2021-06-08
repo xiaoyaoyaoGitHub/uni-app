@@ -128,6 +128,7 @@
 				}
 
 				.notice-item-txt {
+					width: calc(100% - 112rpx);
 					.titleBox {
 						.redDot {
 							height: 16rpx;
