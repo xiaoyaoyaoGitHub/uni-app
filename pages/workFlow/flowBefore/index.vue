@@ -176,6 +176,7 @@
 			},
 			getEngineInfo(data) {
 				FlowEngineInfo(data.flowId).then(res => {
+					
 					data.formConf = res.data.formData
 					const flowTemplateJson = res.data.flowTemplateJson ? JSON.parse(res.data.flowTemplateJson) :
 						null
@@ -204,10 +205,12 @@
 					}, 100)
 				})
 			},
+			
 			getBeforeInfo(data) {
 				FlowBeforeInfo(data.id, {
 					taskNodeId: data.taskNodeId
 				}).then(res => {
+					console.log(res)
 					this.flowTaskInfo = res.data.flowTaskInfo
 					this.flowTaskNodeList = res.data.flowTaskNodeList
 					this.recordList = res.data.flowTaskOperatorRecordList
@@ -277,6 +280,7 @@
 					.$refs.form.submit(eventType)
 			},
 			eventReciver(formData, eventType) {
+				console.log(formData, eventType)
 				this.formData = formData
 				this.eventType = eventType
 				if (eventType === 'save' || eventType === 'submit') {

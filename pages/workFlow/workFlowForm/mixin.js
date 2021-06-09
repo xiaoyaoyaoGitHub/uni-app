@@ -32,6 +32,7 @@ export default {
 	methods: {
 		/* 初始化处理 */
 		init(data) {
+			console.log(data)
 			this.dataForm.id = data.id || ''
 			this.setting = data
 			this.$nextTick(() => {
