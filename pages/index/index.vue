@@ -58,7 +58,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="reply-item u-border-bottom u-flex" v-for="(item,i) in list" :key="i">
+				<view class="reply-item u-border-bottom u-flex" v-for="(item,i) in list" :key="i" @click="toIm(item)">
 					<view class="reply-item-img">
 						<u-avatar :src="define.baseURL+item.headIcon" mode="square" size="96" />
 					</view>
@@ -113,6 +113,7 @@
 		},
 		onUnload() {
 			this.eventHub.$off('updateList')
+			this.eventHub.$off('updateMsgNum')
 		},
 		methods: {
 			upCallback(page) {
@@ -135,9 +136,9 @@
 				let boo = false
 				const len = this.list.length
 				for (let i = 0; i < len; i++) {
-					if (data.formUserId === this.list[i].id) {
+					if (data.id === this.list[i].id) {
 						this.list[i].unreadMessage += data.unreadMessage
-						this.list[i].latestMessage = data.formMessage
+						this.list[i].latestMessage = data.latestMessage
 						this.list[i].messageType = data.messageType
 						this.list[i].latestDate = data.latestDate
 						boo = true
@@ -146,8 +147,6 @@
 				}
 				if (boo) return
 				data.unreadMessage = data.unreadMessage
-				data.latestMessage = data.formMessage
-				data.id = data.formUserId
 				this.list.unshift(data)
 			},
 			getMsgText(text, type) {
@@ -171,6 +170,17 @@
 					url: path
 				})
 			},
+			toIm(item) {
+				const name = item.realName + '/' + item.account
+				if (item.unreadMessage) {
+					this.$store.dispatch('chat/reduceBadgeNum', item.unreadMessage)
+					item.unreadMessage = 0
+				}
+				uni.navigateTo({
+					url: '/pages/message/im/index?name=' + name + '&formUserId=' + item.id + '&headIcon=' + item
+						.headIcon
+				})
+			}
 		}
 	}
 </script>

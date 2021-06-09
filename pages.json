@@ -73,6 +73,12 @@
 					}
 				},
 				{
+					"path": "im/index",
+					"style": {
+						"navigationBarTitleText": ""
+					}
+				},
+				{
 					"path": "noticeDetail/index",
 					"style": {
 						"navigationBarTitleText": ""
