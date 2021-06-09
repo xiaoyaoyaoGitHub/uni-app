@@ -71,16 +71,11 @@
 					"style": {
 						"navigationBarTitleText": "系统消息"
 					}
-				}
-
-				, {
+				},
 					"path": "noticeDetail/index",
 					"style": {
-						"navigationBarTitleText": "公告",
-						"enablePullDownRefresh": false,
-						"navigationBarBackgroundColor": "#3281ff"
+						"navigationBarTitleText": ""
 					}
-
 				}
 			]
 		},
@@ -202,7 +197,7 @@
 		}
 	],
 	"preloadRule": {
-		"pages/index/message": {
+		"pages/index/index": {
 			"network": "all",
 			"packages": ["pages/message"]
 		},
@@ -261,8 +256,8 @@
 	},
 	"globalStyle": {
 		"navigationBarTitleText": "JNPF快速开发平台",
-		"navigationBarTextStyle": "white",
-		"navigationBarBackgroundColor": "#3281ff",
+		"navigationBarTextStyle": "black",
+		"navigationBarBackgroundColor": "#ffffff",
 		"backgroundColor": "#f0f2f6",
 		"usingComponents": {
 			"ly-tree-node": "/components/ly-tree/ly-tree-node"
