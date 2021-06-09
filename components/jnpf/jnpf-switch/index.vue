@@ -1,6 +1,6 @@
 <template>
 	<u-switch v-model="innerValue" :active-value="activeValue" :inactive-value="inactiveValue" :disabled="disabled"
-		@change="onChange" size='40'></u-switch>
+		@change="onChange"></u-switch>
 </template>
 
 <script>

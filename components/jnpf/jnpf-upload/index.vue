@@ -167,8 +167,8 @@
 				z-index: 10;
 				background-color: $u-type-error;
 				border-radius: 100rpx;
-				width: 38rpx;
-				height: 38rpx;
+				width: 44rpx;
+				height: 44rpx;
 				/* #ifndef APP-NVUE */
 				display: flex;
 				/* #endif */
