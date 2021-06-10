@@ -39,7 +39,7 @@
 						<view class="other" v-else>
 							<!-- 左-头像 -->
 							<view class="avatar">
-								<u-avatar :src="define.baseURL+userInfo.headIcon" size="80"></u-avatar>
+								<u-avatar :src="define.baseURL+headIcon" size="80"></u-avatar>
 							</view>
 							<!-- 右-消息 -->
 							<view class="content">
