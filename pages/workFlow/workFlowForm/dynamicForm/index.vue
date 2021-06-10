@@ -293,8 +293,7 @@
 							</view>
 						</view>
 						<view v-for="(childItem, childIndex) in items.__config__.children" :key="childIndex">
-							<u-form-item :label="childItem.__config__.label" prop="dataForm.table[i].comInput"
-								v-if="childItem.__config__.jnpfKey='comInput'">
+							<u-form-item :label="childItem.__config__.label" prop="dataForm.table[i].comInput">
 								<u-input v-model="dataForm[childItem.__vModel__]" placeholder="请输入"></u-input>
 							</u-form-item>
 						</view>
