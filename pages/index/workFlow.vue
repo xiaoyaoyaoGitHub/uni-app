@@ -27,7 +27,7 @@
 					<text class="u-font-36">全部应用</text>
 				</navigator>
 			</view>
-			
+
 			<view class="part" v-for="(item,i) in flowEngineList" :key="i">
 				<view class="caption">{{item.fullName}}</view>
 				<view class="u-flex u-flex-wrap">
@@ -50,7 +50,9 @@
 	import {
 		FlowEngineListAll
 	} from '@/api/workFlow/flowEngine'
+	import IndexMixin from './mixin.js'
 	export default {
+		mixins: [IndexMixin],
 		data() {
 			return {
 				enable: true,
@@ -79,7 +81,6 @@
 					this.getFlowEngineList()
 				})
 			},
-			
 			getFlowEngineList() {
 				FlowEngineListAll().then(res => {
 					const list = res.data.list
@@ -94,7 +95,6 @@
 					uni.stopPullDownRefresh();
 				})
 			},
-			
 			handelClick(item) {
 				const config = {
 					id: '',
@@ -109,7 +109,6 @@
 					url: '/pages/workFlow/flowBefore/index?config=' + encodeURIComponent(JSON.stringify(config))
 				})
 			},
-			
 			toForm() {
 				const config = {
 					id: '',
@@ -179,6 +178,7 @@
 				background: #fff;
 				border-radius: 8rpx;
 				margin-bottom: 20rpx;
+
 				.caption {
 					padding-left: 32rpx;
 					font-size: 36rpx;

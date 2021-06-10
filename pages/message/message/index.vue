@@ -1,5 +1,5 @@
 <template>
-	<view class="sysMsg-v">
+	<view class="message-v">
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :sticky="true"
 			:down="downOption" :up="upOption" :bottombar="false">
 			<view class="search-box search-box_sticky">
@@ -7,17 +7,22 @@
 					bg-color="#f0f2f6" shape="square">
 				</u-search>
 			</view>
-			<view class="u-flex-col sysMsg-list">
-				<view class="u-flex sysMsg-item" v-for="(item, i) in list" :key="i" @click="detail(item)">
-					<view class="sysMsg-item-img sysMsg-item-icon u-flex u-row-center">
-						<text class="icon-ym icon-ym-xitong" />
+			<view class="message-list">
+				<view class="u-flex message-item u-border-bottom " v-for="(item, i) in list" :key="i"
+					@click="detail(item)">
+					<view class="message-item-img message-item-icon u-flex u-row-center">
+						<text class="icon-ym icon-ym-sysNotice" v-if="type==1" />
+						<text class="icon-ym icon-ym-xitong" v-if="type==2" />
 					</view>
-					<view class="u-flex-col sysMsg-item-txt">
-						<view class="u-flex titleBox">
+					<view class="message-item-txt">
+						<view class="message-item-title u-flex">
 							<text class="redDot" v-if="!item.isRead"></text>
 							<text class="title u-line-1">{{item.title}}</text>
 						</view>
-						<text class="releaseUser">发布者：{{item.creatorUser}}</text>
+						<view class="u-flex u-row-between message-item-cell">
+							<text>{{item.creatorUser}}</text>
+							<text class="u-font-24">{{item.lastModifyTime|date('mm-dd hh:MM')}}</text>
+						</view>
 					</view>
 				</view>
 			</view>
@@ -27,8 +32,8 @@
 
 <script>
 	import {
-		getSysMsgList,
-		sysMsgInfo
+		getMessageList,
+		getMessageDetail
 	} from '@/api/message.js'
 	import resources from '@/libs/resources.js'
 	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
@@ -57,17 +62,15 @@
 				},
 				keyword: '',
 				list: [],
-				isRead: 0
+				type: '1'
 			}
 		},
-		onLoad() {
-			this.eventHub.$on('refresh', () => {
-				this.list = [];
-				this.mescroll.resetUpScroll();
-			})
-		},
-		onUnload() {
-			this.eventHub.$off('refresh')
+		onLoad(option) {
+			this.type = option.type || '1'
+			const title = this.type != '1' ? '系统消息' : '通知公告'
+			uni.setNavigationBarTitle({
+				title: title
+			});
 		},
 		methods: {
 			upCallback(page) {
@@ -75,9 +78,9 @@
 					currentPage: page.num,
 					pageSize: page.size,
 					keyword: this.keyword,
-					type: 2
+					type: this.type
 				}
-				getSysMsgList(query, {
+				getMessageList(query, {
 					load: page.num == 1
 				}).then(res => {
 					this.mescroll.endSuccess(res.data.list.length);
@@ -89,7 +92,6 @@
 				})
 			},
 			search() {
-				// 节流,避免输入过快多次请求
 				this.searchTimer && clearTimeout(this.searchTimer)
 				this.searchTimer = setTimeout(() => {
 					this.list = [];
@@ -97,57 +99,76 @@
 				}, 300)
 			},
 			detail(item) {
-				item.isRead = 1
-				sysMsgInfo(item.id).then(res => {
-					let bodyText = JSON.parse(res.data.bodyText)
-					let url = '';
-					switch (bodyText.type) {
-						case 1:
-							url = '../../workFlow/flowLaunch/index'
-							break;
-						case 2:
-							url = '../../workFlow/flowTodo/index'
-							break;
-						case 3:
-							url = '../../workFlow/flowDone/index'
-							break;
-						default:
-							url = "../../workFlow/flowLaunch/index";
+				if (this.type == '1') {
+					if (!item.isRead) {
+						item.isRead = 1
+						this.$store.commit('chat/SET_MSGINFO_NUM', this.type)
 					}
 					uni.navigateTo({
-						url: url
+						url: '/pages/message/messageDetail/index?id=' + item.id
 					});
-				})
+				} else {
+					getMessageDetail(item.id).then(res => {
+						if (!item.isRead) {
+							item.isRead = 1
+							this.$store.commit('chat/SET_MSGINFO_NUM', this.type)
+						}
+						let bodyText = res.data.bodyText ? JSON.parse(res.data.bodyText) : {}
+						let url = '';
+						switch (bodyText.type) {
+							case 1:
+								url = '/pages/workFlow/flowLaunch/index'
+								break;
+							case 2:
+								url = '/pages/workFlow/flowTodo/index'
+								break;
+							case 3:
+								url = '/pages/workFlow/flowCopy/index'
+								break;
+							default:
+								url = "/pages/workFlow/flowLaunch/index";
+						}
+						uni.navigateTo({
+							url: url
+						});
+					})
+				}
 			}
 		}
 	}
 </script>
 
 <style lang="scss">
-	page {}
-
-	.sysMsg-v {
-		.sysMsg-list {
+	.message-v {
+		.message-list {
 			padding: 0 32rpx;
 			background-color: #fff;
 
-			.sysMsg-item {
+			.message-item {
 				height: 132rpx;
-				border-bottom: 1px solid #ECECEC;
 
-				.sysMsg-item-img {
+				.message-item-img {
 					width: 96rpx;
 					height: 96rpx;
-					border-radius: 16rpx;
 					overflow: hidden;
 					margin-right: 16rpx;
 					flex-shrink: 0;
+					border-radius: 50%;
+					background-color: #3B87F7;
+
+					.icon-ym {
+						color: #fff;
+						font-size: 50rpx;
+					}
 				}
 
-				.sysMsg-item-txt {
+				.message-item-txt {
 					width: calc(100% - 112rpx);
 
-					.titleBox {
+					.message-item-title {
+						line-height: 46rpx;
+						margin-bottom: 6rpx;
+
 						.redDot {
 							height: 16rpx;
 							width: 16rpx;
@@ -157,25 +178,15 @@
 							margin-right: 6rpx;
 							flex-shrink: 0;
 						}
+
+						.title {
+							font-size: 32rpx;
+						}
 					}
 
-					.title {
-						font-size: 32rpx;
-					}
-
-					.releaseUser {
+					.message-item-cell {
 						color: #C6C6C6;
 						font-size: 28rpx;
-					}
-				}
-
-				.sysMsg-item-icon {
-					background-color: #3B87F7;
-					border-radius: 50%;
-
-					.icon-ym {
-						color: #fff;
-						font-size: 50rpx;
 					}
 				}
 			}

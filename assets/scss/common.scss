@@ -197,3 +197,14 @@
 	top: var(--window-top);
 	background-color: #fff;
 }
+.msg-text{
+	font-size: 32rpx !important;
+	line-height: 48rpx !important;
+	.msg-text-emoji{
+		vertical-align: top;
+		width: 48rpx;
+		height: 48rpx;
+		display: inline-block;
+	}
+}
+

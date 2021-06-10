@@ -72,16 +72,16 @@ const Socket = {
 
 						break;
 					case "sendMessage": //发送消息
-
+						store.dispatch('chat/sendMessage', data)
 						break;
 					case "receiveMessage": //接收消息
 						store.dispatch('chat/receiveMessage', data)
 						break;
 					case "messageList": //消息列表
-
+						store.dispatch('chat/getMessageList', data)
 						break;
 					case "messagePush": //消息推送
-
+						store.dispatch('chat/messagePush', data)
 						break;
 					case "logout":
 						uni.showToast({

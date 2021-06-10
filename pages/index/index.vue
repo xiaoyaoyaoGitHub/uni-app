@@ -9,11 +9,11 @@
 					</u-search>
 				</view>
 				<view class="head-tabs u-flex u-row-around u-border-bottom">
-					<view class="head-tabs-item" @click="openPage('/pages/message/sysMsg/index')">
+					<view class="head-tabs-item" @click="openPage('/pages/message/message/index?type=2')">
 						<text class="icon-ym icon-ym-xitong u-m-r-4 u-font-30" />
 						<text>系统</text>
 					</view>
-					<view class="head-tabs-item" @click="openPage('/pages/message/notice/index')">
+					<view class="head-tabs-item" @click="openPage('/pages/message/message/index?type=1')">
 						<text class="icon-ym icon-ym-gonggao u-m-r-4 u-font-30" />
 						<text>公告</text>
 					</view>
@@ -24,7 +24,8 @@
 				</view>
 			</view>
 			<view class="replyList">
-				<view class="reply-item u-border-bottom u-flex" @click="openPage('/pages/message/notice/index')">
+				<view class="reply-item u-border-bottom u-flex"
+					@click="openPage('/pages/message/message/index?type=1')">
 					<view class="reply-item-img reply-item-icon u-flex u-row-center">
 						<text class="icon-ym icon-ym-sysNotice" />
 					</view>
@@ -32,16 +33,17 @@
 						<view class="reply-item-cell reply-item-title u-flex u-row-between">
 							<text class="title">通知公告</text>
 							<text
-								class="u-font-24">{{msgInfo.noticeDate||$u.timeFormat(new Date, 'mm-dd hh:MM')}}</text>
+								class="u-font-24">{{msgInfo.noticeDate?$u.timeFormat(msgInfo.noticeDate, 'mm-dd hh:MM'):$u.timeFormat(new Date, 'mm-dd hh:MM')}}</text>
 						</view>
 						<view class="reply-item-cell u-flex u-row-between">
-							<text class="">{{msgInfo.noticeText}}</text>
+							<text class="reply-item-txt-msg u-line-1">{{msgInfo.noticeText}}</text>
 							<u-badge type="error" :count="msgInfo.noticeCount" :absolute="false"
 								v-if="msgInfo.noticeCount" />
 						</view>
 					</view>
 				</view>
-				<view class="reply-item u-border-bottom u-flex" @click="openPage('/pages/message/sysMsg/index')">
+				<view class="reply-item u-border-bottom u-flex"
+					@click="openPage('/pages/message/message/index?type=2')">
 					<view class="reply-item-img reply-item-icon u-flex u-row-center">
 						<text class="icon-ym icon-ym-xitong" />
 					</view>
@@ -49,16 +51,16 @@
 						<view class="reply-item-cell reply-item-title u-flex u-row-between">
 							<text class="title">系统消息</text>
 							<text
-								class="u-font-24">{{msgInfo.messageDate||$u.timeFormat(new Date, 'mm-dd hh:MM')}}</text>
+								class="u-font-24">{{msgInfo.messageDate?$u.timeFormat(msgInfo.messageDate, 'mm-dd hh:MM'):$u.timeFormat(new Date, 'mm-dd hh:MM')}}</text>
 						</view>
 						<view class="reply-item-cell u-flex u-row-between">
-							<text class="">{{msgInfo.messageText}}</text>
+							<text class="reply-item-txt-msg u-line-1">{{msgInfo.messageText}}</text>
 							<u-badge type="error" :count="msgInfo.messageCount" :absolute="false"
 								v-if="msgInfo.messageCount" />
 						</view>
 					</view>
 				</view>
-				<view class="reply-item u-border-bottom u-flex" v-for="(item,i) in list" :key="i">
+				<view class="reply-item u-border-bottom u-flex" v-for="(item,i) in list" :key="i" @click="toIm(item)">
 					<view class="reply-item-img">
 						<u-avatar :src="define.baseURL+item.headIcon" mode="square" size="96" />
 					</view>
@@ -68,7 +70,8 @@
 							<text class="u-font-24">{{item.latestDate|timeFrom}}</text>
 						</view>
 						<view class="reply-item-cell u-flex u-row-between">
-							<text class="">{{getMsgText(item.latestMessage,item.messageType)}}</text>
+							<text
+								class="reply-item-txt-msg u-line-1">{{getMsgText(item.latestMessage,item.messageType)}}</text>
 							<u-badge type="error" :count="item.unreadMessage" :absolute="false" />
 						</view>
 					</view>
@@ -81,6 +84,7 @@
 <script>
 	import chat from '@/libs/chat.js'
 	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
+	import IndexMixin from './mixin.js'
 	import {
 		mapGetters
 	} from "vuex"
@@ -88,7 +92,7 @@
 		getIMReply
 	} from '@/api/message.js'
 	export default {
-		mixins: [MescrollMixin],
+		mixins: [MescrollMixin, IndexMixin],
 		data() {
 			return {
 				keyword: '',
@@ -101,6 +105,11 @@
 				},
 			}
 		},
+		watch: {
+			badgeNum(val) {
+				this.setTabBarBadge()
+			}
+		},
 		computed: {
 			...mapGetters(['msgInfo']),
 		},
@@ -110,9 +119,13 @@
 			this.eventHub.$on('updateList', data => {
 				this.updateReply(data)
 			})
+			this.eventHub.$on('updateMsgNum', id => {
+				this.updateMsgNum(id)
+			})
 		},
 		onUnload() {
 			this.eventHub.$off('updateList')
+			this.eventHub.$off('updateMsgNum')
 		},
 		methods: {
 			upCallback(page) {
@@ -135,9 +148,9 @@
 				let boo = false
 				const len = this.list.length
 				for (let i = 0; i < len; i++) {
-					if (data.formUserId === this.list[i].id) {
+					if (data.id === this.list[i].id) {
 						this.list[i].unreadMessage += data.unreadMessage
-						this.list[i].latestMessage = data.formMessage
+						this.list[i].latestMessage = data.latestMessage
 						this.list[i].messageType = data.messageType
 						this.list[i].latestDate = data.latestDate
 						boo = true
@@ -146,9 +159,18 @@
 				}
 				if (boo) return
 				data.unreadMessage = data.unreadMessage
-				data.latestMessage = data.formMessage
-				data.id = data.formUserId
 				this.list.unshift(data)
+			},
+			updateMsgNum(id) {
+				const len = this.list.length
+				for (let i = 0; i < len; i++) {
+					if (id === this.list[i].id) {
+						const num = this.list[i].unreadMessage
+						this.$store.commit('chat/REDUCE_BADGE_NUM', num)
+						this.list[i].unreadMessage = 0
+						break
+					}
+				}
 			},
 			getMsgText(text, type) {
 				let message = ''
@@ -171,6 +193,17 @@
 					url: path
 				})
 			},
+			toIm(item) {
+				const name = item.realName + '/' + item.account
+				if (item.unreadMessage) {
+					this.$store.commit('chat/REDUCE_BADGE_NUM', item.unreadMessage)
+					item.unreadMessage = 0
+				}
+				uni.navigateTo({
+					url: '/pages/message/im/index?name=' + name + '&formUserId=' + item.id + '&headIcon=' + item
+						.headIcon
+				})
+			}
 		}
 	}
 </script>
@@ -205,6 +238,7 @@
 					border-radius: 16rpx;
 					overflow: hidden;
 					margin-right: 16rpx;
+					flex-shrink: 0;
 				}
 
 				.reply-item-icon {
@@ -231,6 +265,10 @@
 								font-size: 32rpx;
 								color: #000000;
 							}
+						}
+
+						.reply-item-txt-msg {
+							width: 480rpx;
 						}
 					}
 				}
