@@ -61,25 +61,19 @@
 					}
 				},
 				{
-					"path": "notice/index",
-					"style": {
-						"navigationBarTitleText": "通知公告"
-					}
-				},
-				{
-					"path": "sysMsg/index",
-					"style": {
-						"navigationBarTitleText": "系统消息"
-					}
-				},
-				{
-					"path": "im/index",
+					"path": "message/index",
 					"style": {
 						"navigationBarTitleText": ""
 					}
 				},
 				{
-					"path": "noticeDetail/index",
+					"path": "messageDetail/index",
+					"style": {
+						"navigationBarTitleText": ""
+					}
+				},
+				{
+					"path": "im/index",
 					"style": {
 						"navigationBarTitleText": ""
 					}

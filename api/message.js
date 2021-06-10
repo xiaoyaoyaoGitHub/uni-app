@@ -6,33 +6,17 @@ export function getIMReply() {
 		url: '/api/message/imreply',
 	})
 }
-//获取公告列表
-export function getNoticeList(data) {
+//获取消息列表
+export function getMessageList(data, options) {
 	return request({
-		method: 'GET',
 		url: '/api/message',
-		data
+		data,
+		options
 	})
 }
-//公告详情
-export function getNoticeDetail(id) {
+//消息详情
+export function getMessageDetail(id) {
 	return request({
-		method: 'GET',
-		url: `/api/message/ReadInfo/${id}`
-	})
-}
-//获取系统消息列表
-export function getSysMsgList(data) {
-	return request({
-		method: 'GET',
-		url: '/api/message',
-		data
-	})
-}
-//系统消息详情
-export function sysMsgInfo(id) {
-	return request({
-		method: 'GET',
 		url: `/api/message/ReadInfo/${id}`
 	})
 }

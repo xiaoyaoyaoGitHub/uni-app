@@ -21,6 +21,16 @@ const mutations = {
 	SET_MSGINFO(state, msgInfo) {
 		state.msgInfo = msgInfo
 	},
+	SET_MSGINFO_NUM(state, type) {
+		if (type === '1') {
+			state.msgInfo.noticeCount -= 1
+		} else {
+			state.msgInfo.messageCount -= 1
+		}
+		let badgeNum = state.badgeNum - 1
+		if (badgeNum < 0) badgeNum = 0
+		state.badgeNum = badgeNum
+	},
 	SET_FORMUSERID(state, formUserId) {
 		state.formUserId = formUserId
 	},
@@ -77,6 +87,21 @@ const actions = {
 		commit
 	}, data) {
 		Vue.prototype.eventHub && Vue.prototype.eventHub.$emit('getMessageList', data)
+	},
+	messagePush({
+		state,
+		commit
+	}, data) {
+		if (data.messageType == "1") {
+			state.msgInfo.noticeCount += data.unreadNoticeCount;
+			state.msgInfo.noticeText = data.title;
+			state.msgInfo.noticeDate = new Date().getTime();
+		} else {
+			state.msgInfo.messageCount += data.unreadNoticeCount;
+			state.msgInfo.messageText = data.title;
+			state.msgInfo.messageDate = new Date().getTime();
+		}
+		commit('ADD_BADGE_NUM', data.unreadNoticeCount || 1)
 	}
 }
 export default {

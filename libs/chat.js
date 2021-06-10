@@ -81,7 +81,7 @@ const Socket = {
 						store.dispatch('chat/getMessageList', data)
 						break;
 					case "messagePush": //消息推送
-
+						store.dispatch('chat/messagePush', data)
 						break;
 					case "logout":
 						uni.showToast({

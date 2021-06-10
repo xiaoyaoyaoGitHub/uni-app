@@ -9,11 +9,11 @@
 					</u-search>
 				</view>
 				<view class="head-tabs u-flex u-row-around u-border-bottom">
-					<view class="head-tabs-item" @click="openPage('/pages/message/sysMsg/index')">
+					<view class="head-tabs-item" @click="openPage('/pages/message/message/index?type=2')">
 						<text class="icon-ym icon-ym-xitong u-m-r-4 u-font-30" />
 						<text>系统</text>
 					</view>
-					<view class="head-tabs-item" @click="openPage('/pages/message/notice/index')">
+					<view class="head-tabs-item" @click="openPage('/pages/message/message/index?type=1')">
 						<text class="icon-ym icon-ym-gonggao u-m-r-4 u-font-30" />
 						<text>公告</text>
 					</view>
@@ -24,7 +24,8 @@
 				</view>
 			</view>
 			<view class="replyList">
-				<view class="reply-item u-border-bottom u-flex" @click="openPage('/pages/message/notice/index')">
+				<view class="reply-item u-border-bottom u-flex"
+					@click="openPage('/pages/message/message/index?type=1')">
 					<view class="reply-item-img reply-item-icon u-flex u-row-center">
 						<text class="icon-ym icon-ym-sysNotice" />
 					</view>
@@ -32,7 +33,7 @@
 						<view class="reply-item-cell reply-item-title u-flex u-row-between">
 							<text class="title">通知公告</text>
 							<text
-								class="u-font-24">{{msgInfo.noticeDate||$u.timeFormat(new Date, 'mm-dd hh:MM')}}</text>
+								class="u-font-24">{{msgInfo.noticeDate?$u.timeFormat(msgInfo.noticeDate, 'mm-dd hh:MM'):$u.timeFormat(new Date, 'mm-dd hh:MM')}}</text>
 						</view>
 						<view class="reply-item-cell u-flex u-row-between">
 							<text class="reply-item-txt-msg u-line-1">{{msgInfo.noticeText}}</text>
@@ -41,7 +42,8 @@
 						</view>
 					</view>
 				</view>
-				<view class="reply-item u-border-bottom u-flex" @click="openPage('/pages/message/sysMsg/index')">
+				<view class="reply-item u-border-bottom u-flex"
+					@click="openPage('/pages/message/message/index?type=2')">
 					<view class="reply-item-img reply-item-icon u-flex u-row-center">
 						<text class="icon-ym icon-ym-xitong" />
 					</view>
@@ -49,7 +51,7 @@
 						<view class="reply-item-cell reply-item-title u-flex u-row-between">
 							<text class="title">系统消息</text>
 							<text
-								class="u-font-24">{{msgInfo.messageDate||$u.timeFormat(new Date, 'mm-dd hh:MM')}}</text>
+								class="u-font-24">{{msgInfo.messageDate?$u.timeFormat(msgInfo.messageDate, 'mm-dd hh:MM'):$u.timeFormat(new Date, 'mm-dd hh:MM')}}</text>
 						</view>
 						<view class="reply-item-cell u-flex u-row-between">
 							<text class="reply-item-txt-msg u-line-1">{{msgInfo.messageText}}</text>
