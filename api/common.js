@@ -90,7 +90,7 @@ export function getImUser(data, options) {
 // 获取接口数据
 export function previewDataInterface(id) {
 	return request({
-		url: `/api/system/Base/DataInterface/${id}/Actions/Response`,
+		url: `/api/system/DataInterface/${id}/Actions/Response`,
 		options: {
 			load: false
 		}
