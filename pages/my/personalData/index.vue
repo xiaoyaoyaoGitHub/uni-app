@@ -2,7 +2,7 @@
 	<view class="personalData-v">
 		<u-cell-group>
 			<u-cell-item title="头像" :arrow="false">
-				<u-avatar :src="define.baseURL+userInfo.headIcon" size="64" slot="right-icon"></u-avatar>
+				<u-avatar :src="baseURL+userInfo.headIcon" size="64" slot="right-icon"></u-avatar>
 			</u-cell-item>
 			<u-cell-item title="姓名" :value="userInfo.userName" :arrow="false"></u-cell-item>
 			<u-cell-item title="性别" :value="userInfo.gender == 0 ? '女' : '男'" :arrow="false"></u-cell-item>
@@ -18,6 +18,11 @@
 		data() {
 			return {
 				userInfo: {}
+			}
+		},
+		computed: {
+			baseURL() {
+				return this.define.baseURL
 			}
 		},
 		onLoad() {

@@ -19,7 +19,7 @@
 								<!-- 图片消息 -->
 								<view v-if="msg.contentType=='image'" class="msg-img"
 									@click="showPic(msg.content.path)">
-									<image lazy-load="true" :src="define.baseURL+urlPrefix+'T'+msg.content.path"
+									<image lazy-load="true" :src="urlPrefix+'T'+msg.content.path"
 										:style="{'width': msg.content.width+'px','height': msg.content.height+'px'}">
 									</image>
 								</view>
@@ -32,14 +32,14 @@
 							</view>
 							<!-- 右-头像 -->
 							<view class="avatar">
-								<u-avatar :src="define.baseURL+userInfo.headIcon" size="80"></u-avatar>
+								<u-avatar :src="baseURL+userInfo.headIcon" size="80"></u-avatar>
 							</view>
 						</view>
 						<!-- 收到的消息 -->
 						<view class="other" v-else>
 							<!-- 左-头像 -->
 							<view class="avatar">
-								<u-avatar :src="define.baseURL+headIcon" size="80"></u-avatar>
+								<u-avatar :src="baseURL+headIcon" size="80"></u-avatar>
 							</view>
 							<!-- 右-消息 -->
 							<view class="content">
@@ -50,7 +50,7 @@
 								<!-- 图片消息 -->
 								<view v-if="msg.contentType=='image'" class="msg-img"
 									@click="showPic(msg.content.path)">
-									<image lazy-load="true" :src="define.baseURL+urlPrefix+'T'+msg.content.path"
+									<image lazy-load="true" :src="urlPrefix+'T'+msg.content.path"
 										:style="{'width': msg.content.width+'px','height': msg.content.height+'px'}">
 									</image>
 								</view>
@@ -97,7 +97,7 @@
 			<!-- #endif -->
 			<view class="voice-mode" :class="[isVoice?'':'hidden',recording?'recording':'']" @touchstart="voiceBegin"
 				@touchmove.stop.prevent="voiceIng" @touchend="voiceEnd" @touchcancel="voiceCancel">{{voiceTis}}</view>
-			<view class="text-mode" v-show="!isVoice">
+			<view class="text-mode" v-if="!isVoice">
 				<view class="input-area">
 					<textarea auto-height :cursor-spacing="8" maxlength="500" v-model="textMsg" @focus="textareaFocus"
 						:focus="textFocus" />
@@ -183,11 +183,14 @@
 				recordLength: 0,
 				textMsg: '',
 				msgImageList: [],
-				urlPrefix: '/api/file/Image/IM/'
+				urlPrefix: this.define.baseURL + '/api/file/Image/IM/'
 			}
 		},
 		computed: {
 			...mapGetters(['userInfo']),
+			baseURL() {
+				return this.define.baseURL
+			}
 		},
 		watch: {},
 		onLoad(option) {
@@ -247,7 +250,7 @@
 							} else {
 								content = o.content
 							}
-							msgImageList.push(this.define.baseURL + this.urlPrefix + content.path)
+							msgImageList.push(this.urlPrefix + content.path)
 						}
 					}
 					return this.dealMsg(o)
@@ -401,7 +404,7 @@
 				}
 				this.msgList.push(data)
 				if (data.contentType === 'image') {
-					this.msgImageList.push(this.define.baseURL + this.urlPrefix + data.content.path)
+					this.msgImageList.push(this.urlPrefix + data.content.path)
 				}
 				this.$nextTick(() => {
 					this.mescroll.scrollTo(99999, 0)
@@ -427,7 +430,7 @@
 				this.hideDrawer()
 				this.sendMessage(this.textMsg, 'text')
 				this.textMsg = ''
-				this.textFocus = true
+				// this.textFocus = true
 			},
 			sendMessage(content, type) {
 				const messageObj = {
@@ -555,13 +558,13 @@
 			showPic(path) { // 预览图片
 				uni.previewImage({
 					indicator: "none",
-					current: this.define.baseURL + this.urlPrefix + path,
+					current: this.urlPrefix + path,
 					urls: this.msgImageList
 				});
 			},
 			playVoice(msg) { // 播放语音
 				this.AUDIO.stop();
-				this.AUDIO.src = this.define.baseURL + this.urlPrefix + msg.content.path;
+				this.AUDIO.src = this.urlPrefix + msg.content.path;
 				if (this.playMsgid != null && this.playMsgid == msg.id) {
 					this.$nextTick(() => {
 						this.AUDIO.stop();

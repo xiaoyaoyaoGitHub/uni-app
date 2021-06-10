@@ -62,7 +62,7 @@
 				</view>
 				<view class="reply-item u-border-bottom u-flex" v-for="(item,i) in list" :key="i" @click="toIm(item)">
 					<view class="reply-item-img">
-						<u-avatar :src="define.baseURL+item.headIcon" mode="square" size="96" />
+						<u-avatar :src="baseURL+item.headIcon" mode="square" size="96" />
 					</view>
 					<view class="reply-item-txt u-flex-1">
 						<view class="reply-item-cell reply-item-title u-flex u-row-between">
@@ -112,6 +112,9 @@
 		},
 		computed: {
 			...mapGetters(['msgInfo']),
+			baseURL() {
+				return this.define.baseURL
+			}
 		},
 		onLoad() {
 			if (!this.$store.state.chat.socket) chat.initSocket()

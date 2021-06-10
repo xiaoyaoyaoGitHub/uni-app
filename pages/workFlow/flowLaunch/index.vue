@@ -8,21 +8,22 @@
 				</u-search>
 			</view>
 			<view class="flow-list">
-				<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in list" :key="item.id"
-					@click="handleClick" @open="open" :options="options" @content-click="goDetail(item)"
-					class="u-m-b-20">
-					<view class="item">
-						<view class="item-cell item-title u-border-bottom">
-							<text class="title u-line-1">{{item.fullName}}</text>
+				<view class="u-m-b-20" v-for="(item, index) in list" :key="item.id">
+					<u-swipe-action :index="index" :show="item.show" @click="handleClick" @open="open"
+						:options="options" @content-click="goDetail(item)" class="u-m-b-20">
+						<view class="item">
+							<view class="item-cell item-title u-border-bottom">
+								<text class="title u-line-1">{{item.fullName}}</text>
+							</view>
+							<view class="item-cell">
+								<text class="time">{{item.creatorTime | date('yyyy-mm-dd hh:MM')}}</text>
+								<text :class="'status '+getFlowStatus(item.status).statusCss">
+									{{getFlowStatus(item.status).text}}
+								</text>
+							</view>
 						</view>
-						<view class="item-cell">
-							<text class="time">{{item.creatorTime | date('yyyy-mm-dd hh:MM')}}</text>
-							<text :class="'status '+getFlowStatus(item.status).statusCss">
-								{{getFlowStatus(item.status).text}}
-							</text>
-						</view>
-					</view>
-				</u-swipe-action>
+					</u-swipe-action>
+				</view>
 			</view>
 		</mescroll-body>
 	</view>
@@ -196,11 +197,5 @@
 <style lang="scss">
 	page {
 		background-color: #f0f2f6;
-	}
-
-	.flowLaunch-v {
-		.u-swipe-content {
-			margin-bottom: 20rpx;
-		}
 	}
 </style>

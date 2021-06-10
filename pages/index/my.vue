@@ -2,7 +2,7 @@
 	<view class="my-v">
 		<view class="u-flex user-box u-p-l-32 u-p-r-22 u-p-b-30" @click="openPage('/pages/my/personalData/index')">
 			<view class="u-m-r-20">
-				<u-avatar :src="define.baseURL+userInfo.headIcon" size="140"></u-avatar>
+				<u-avatar :src="baseURL+userInfo.headIcon" size="140"></u-avatar>
 			</view>
 			<view class="u-flex-1">
 				<view class="u-font-18 u-p-b-20">{{userInfo.userName}}/{{userInfo.userAccount}}</view>
@@ -53,6 +53,11 @@
 		data() {
 			return {
 				userInfo: {}
+			}
+		},
+		computed: {
+			baseURL() {
+				return this.define.baseURL
 			}
 		},
 		onLoad() {
