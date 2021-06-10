@@ -47,7 +47,9 @@
 </template>
 
 <script>
+	import IndexMixin from './mixin.js'
 	export default {
+		mixins: [IndexMixin],
 		data() {
 			return {
 				userInfo: {}

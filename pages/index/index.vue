@@ -35,7 +35,7 @@
 								class="u-font-24">{{msgInfo.noticeDate||$u.timeFormat(new Date, 'mm-dd hh:MM')}}</text>
 						</view>
 						<view class="reply-item-cell u-flex u-row-between">
-							<text class="">{{msgInfo.noticeText}}</text>
+							<text class="reply-item-txt-msg u-line-1">{{msgInfo.noticeText}}</text>
 							<u-badge type="error" :count="msgInfo.noticeCount" :absolute="false"
 								v-if="msgInfo.noticeCount" />
 						</view>
@@ -52,7 +52,7 @@
 								class="u-font-24">{{msgInfo.messageDate||$u.timeFormat(new Date, 'mm-dd hh:MM')}}</text>
 						</view>
 						<view class="reply-item-cell u-flex u-row-between">
-							<text class="">{{msgInfo.messageText}}</text>
+							<text class="reply-item-txt-msg u-line-1">{{msgInfo.messageText}}</text>
 							<u-badge type="error" :count="msgInfo.messageCount" :absolute="false"
 								v-if="msgInfo.messageCount" />
 						</view>
@@ -68,7 +68,8 @@
 							<text class="u-font-24">{{item.latestDate|timeFrom}}</text>
 						</view>
 						<view class="reply-item-cell u-flex u-row-between">
-							<text class="">{{getMsgText(item.latestMessage,item.messageType)}}</text>
+							<text
+								class="reply-item-txt-msg u-line-1">{{getMsgText(item.latestMessage,item.messageType)}}</text>
 							<u-badge type="error" :count="item.unreadMessage" :absolute="false" />
 						</view>
 					</view>
@@ -81,6 +82,7 @@
 <script>
 	import chat from '@/libs/chat.js'
 	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
+	import IndexMixin from './mixin.js'
 	import {
 		mapGetters
 	} from "vuex"
@@ -88,7 +90,7 @@
 		getIMReply
 	} from '@/api/message.js'
 	export default {
-		mixins: [MescrollMixin],
+		mixins: [MescrollMixin, IndexMixin],
 		data() {
 			return {
 				keyword: '',
@@ -101,6 +103,11 @@
 				},
 			}
 		},
+		watch: {
+			badgeNum(val) {
+				this.setTabBarBadge()
+			}
+		},
 		computed: {
 			...mapGetters(['msgInfo']),
 		},
@@ -109,6 +116,9 @@
 			this.$store.dispatch('user/getUserInfo')
 			this.eventHub.$on('updateList', data => {
 				this.updateReply(data)
+			})
+			this.eventHub.$on('updateMsgNum', id => {
+				this.updateMsgNum(id)
 			})
 		},
 		onUnload() {
@@ -149,6 +159,17 @@
 				data.unreadMessage = data.unreadMessage
 				this.list.unshift(data)
 			},
+			updateMsgNum(id) {
+				const len = this.list.length
+				for (let i = 0; i < len; i++) {
+					if (id === this.list[i].id) {
+						const num = this.list[i].unreadMessage
+						this.$store.commit('chat/REDUCE_BADGE_NUM', num)
+						this.list[i].unreadMessage = 0
+						break
+					}
+				}
+			},
 			getMsgText(text, type) {
 				let message = ''
 				switch (type) {
@@ -173,7 +194,7 @@
 			toIm(item) {
 				const name = item.realName + '/' + item.account
 				if (item.unreadMessage) {
-					this.$store.dispatch('chat/reduceBadgeNum', item.unreadMessage)
+					this.$store.commit('chat/REDUCE_BADGE_NUM', item.unreadMessage)
 					item.unreadMessage = 0
 				}
 				uni.navigateTo({
@@ -215,6 +236,7 @@
 					border-radius: 16rpx;
 					overflow: hidden;
 					margin-right: 16rpx;
+					flex-shrink: 0;
 				}
 
 				.reply-item-icon {
@@ -241,6 +263,10 @@
 								font-size: 32rpx;
 								color: #000000;
 							}
+						}
+
+						.reply-item-txt-msg {
+							width: 480rpx;
 						}
 					}
 				}

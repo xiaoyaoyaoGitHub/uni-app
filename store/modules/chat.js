@@ -8,16 +8,14 @@ const state = {
 };
 const mutations = {
 	SET_BADGE_NUM(state, badgeNum) {
-		if (badgeNum) {
-			uni.setTabBarBadge({
-				index: 0,
-				text: badgeNum > 99 ? '99+' : badgeNum.toString()
-			});
-		} else {
-			uni.removeTabBarBadge({
-				index: 0
-			});
-		}
+		state.badgeNum = badgeNum
+	},
+	ADD_BADGE_NUM(state, num) {
+		state.badgeNum += num
+	},
+	REDUCE_BADGE_NUM(state, num) {
+		let badgeNum = state.badgeNum - num
+		if (badgeNum < 0) badgeNum = 0
 		state.badgeNum = badgeNum
 	},
 	SET_MSGINFO(state, msgInfo) {
@@ -54,8 +52,7 @@ const actions = {
 	},
 	receiveMessage({
 		state,
-		commit,
-		dispatch
+		commit
 	}, data) {
 		if (state.formUserId === data.formUserId) {
 			data.unreadMessage = 0
@@ -69,26 +66,11 @@ const actions = {
 			Vue.prototype.eventHub && Vue.prototype.eventHub.$emit('addMsg', item)
 		} else {
 			data.unreadMessage = 1
-			dispatch('addBadgeNum', 1)
+			commit('ADD_BADGE_NUM', 1)
 		}
 		data.id = data.formUserId
 		data.latestMessage = data.formMessage
 		Vue.prototype.eventHub && Vue.prototype.eventHub.$emit('updateList', data)
-	},
-	addBadgeNum({
-		state,
-		commit
-	}, num) {
-		const badgeNum = state.badgeNum + num
-		commit('SET_BADGE_NUM', badgeNum)
-	},
-	reduceBadgeNum({
-		state,
-		commit
-	}, num) {
-		let badgeNum = state.badgeNum - num
-		if (badgeNum < 0) badgeNum = 0
-		commit('SET_BADGE_NUM', badgeNum)
 	},
 	getMessageList({
 		state,

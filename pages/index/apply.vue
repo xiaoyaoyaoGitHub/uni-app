@@ -9,7 +9,9 @@
 
 <script>
 	import resources from '@/libs/resources.js'
+	import IndexMixin from './mixin.js'
 	export default {
+		mixins: [IndexMixin],
 		data() {
 			return {
 				bannerList: [{

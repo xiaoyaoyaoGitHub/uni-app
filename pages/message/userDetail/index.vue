@@ -2,27 +2,31 @@
 	<view class="userDetail-v">
 		<view class="userDetail-hd u-flex-col">
 			<view class="u-m-t-60">
-				<u-avatar :src="userData.headIcon"></u-avatar>
+				<u-avatar :src="userData.headIcon" size="120"></u-avatar>
 			</view>
 			<view class="u-m-t-32 u-font-32 name">
 				<text>{{userData.realName}}</text>
 			</view>
 			<view class="u-m-t-20 u-font-24">
-				<text>{{userData.position || '研发 产品经理'}}</text>
+				<text>{{userData.position}}</text>
 			</view>
 			<view class="u-m-t-32 u-flex userDetail-hd-btn">
-				<view class="u-m-r-40 btn" @click="Jump('1')"><text
-						class="ym-custom ym-custom-phone u-font-40 tabs-icon copy" /></view>
-				<view class="u-m-l-40 btn" @click="Jump('2')"><text
-						class="ym-custom ym-custom-comment u-font-40 tabs-icon copy" /></view>
+				<view class="u-m-r-40 btn" @click="call()">
+					<text class="ym-custom ym-custom-phone u-font-40" />
+				</view>
+				<view class="u-m-l-40 btn" @click="toIm()">
+					<text class="ym-custom ym-custom-comment u-font-40" />
+				</view>
 			</view>
-			<u-cell-group class="u-m-t-50">
-				<u-cell-item title="手机号" :value="userData.telePhone || '未填写'" :arrow="false" :title-style="titleStyle"></u-cell-item>
-				<u-cell-item title="微信号" :value="'未填写'" :arrow="false" :title-style="titleStyle"></u-cell-item>
-				<u-cell-item title="座机号" :value="'未填写'" :arrow="false" :title-style="titleStyle"></u-cell-item>
-				<u-cell-item title="邮箱" :value="userData.email || '未填写'" :arrow="false" :title-style="titleStyle"></u-cell-item>
-			</u-cell-group>
 		</view>
+		<u-cell-group>
+			<u-cell-item title="手机号" :value="userData.telePhone || '未填写'" :arrow="false" :title-style="titleStyle">
+			</u-cell-item>
+			<u-cell-item title="微信号" :value="'未填写'" :arrow="false" :title-style="titleStyle"></u-cell-item>
+			<u-cell-item title="座机号" :value="'未填写'" :arrow="false" :title-style="titleStyle"></u-cell-item>
+			<u-cell-item title="邮箱" :value="userData.email || '未填写'" :arrow="false" :title-style="titleStyle">
+			</u-cell-item>
+		</u-cell-group>
 	</view>
 </template>
 
@@ -34,51 +38,50 @@
 		data() {
 			return {
 				userData: {},
-				titleStyle:{
-					color:'#999999'
+				titleStyle: {
+					color: '#999999'
 				}
 			}
 		},
-		onLoad(url) {
-			let userId = url.userId;
+		onLoad(option) {
+			let userId = option.userId;
 			this.getUserDetail(userId)
 		},
-
 		methods: {
 			getUserDetail(userId) {
 				getUesrDetail(userId).then(res => {
 					this.userData = res.data
-				}).catch(() => {
-
+					uni.setNavigationBarTitle({
+						title: this.userData.realName + '/' + this.userData.account
+					});
 				})
 			},
-			Jump(index) {
-				switch (index) {
-					case '1':
-						uni.makePhoneCall({
-							phoneNumber: this.userData.telePhone,
-						})
-						break;
-					case '2':
-						
-						break;
-				}
+			call() {
+				if (!this.userData.telePhone) return
+				uni.makePhoneCall({
+					phoneNumber: this.userData.telePhone
+				})
 			},
+			toIm() {
+				const userData = this.userData
+				const name = userData.realName + '/' + userData.account
+				this.eventHub.$emit('updateMsgNum', userData.id)
+				uni.navigateTo({
+					url: '/pages/message/im/index?name=' + name + '&formUserId=' + userData.id + '&headIcon=' +
+						userData.headIcon
+				})
+			}
 		}
 	}
 </script>
 
 <style lang="scss">
-	page {}
-
 	.userDetail-v {
 		.userDetail-hd {
-			width: 100%;
-			height: 566rpx;
+			height: 482rpx;
 			background-color: #D8D8D8;
 			color: #FFFFFF;
 			align-items: center;
-			
 		}
 
 		.name {
@@ -89,7 +92,7 @@
 			.btn {
 				width: 84rpx;
 				height: 84rpx;
-				border: 2px solid #FFFFFF;
+				border: 4rpx solid #FFFFFF;
 				border-radius: 50%;
 				text-align: center;
 				line-height: 80rpx;

@@ -24,8 +24,9 @@
 	} from '@/api/common.js'
 	import resources from '@/libs/resources.js'
 	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
+	import IndexMixin from './mixin.js'
 	export default {
-		mixins: [MescrollMixin],
+		mixins: [MescrollMixin, IndexMixin],
 		data() {
 			return {
 				downOption: {
@@ -61,7 +62,6 @@
 				getImUser(query, {
 					load: page.num == 1
 				}).then(res => {
-					
 					this.mescroll.endSuccess(res.data.list.length);
 					if (page.num == 1) this.list = [];
 					const list = res.data.list;
@@ -78,14 +78,10 @@
 					this.mescroll.resetUpScroll();
 				}, 300)
 			},
-			detail(id){
-				let _url = '../message/userDetail/index?userId='+id
+			detail(id) {
 				uni.navigateTo({
-					url: _url,
-					success: res => {},
-					fail: () => {},
-					complete: () => {}
-				});
+					url: '/pages/message/userDetail/index?userId=' + id,
+				})
 			}
 		}
 	}
