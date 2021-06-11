@@ -1,6 +1,6 @@
 <template>
 	<view class="im-v">
-		<view class="" @click="hideDrawer">
+		<view @click="hideDrawer">
 			<mescroll-body ref="mescrollRef" bottom="50%" @init="mescrollInit" :down="downOption" @down="downCallback"
 				:up="upOption">
 				<!-- 无更多消息 -->
@@ -14,19 +14,22 @@
 							<view class="content">
 								<!-- 文字消息 -->
 								<view v-if="msg.contentType==='text'" class="msg-text">
-									<u-parse :html="msg.content"></u-parse>
+									<block v-for="(item,i) in msg.msgContent" :key="i">
+										<text class="msg-text-txt" v-if="item.type=='text'">{{item.content}}</text>
+										<image class="msg-text-emoji" :src="item.content" v-if="item.type=='emjio'" />
+									</block>
 								</view>
 								<!-- 图片消息 -->
 								<view v-if="msg.contentType=='image'" class="msg-img"
-									@click="showPic(msg.content.path)">
-									<image lazy-load="true" :src="urlPrefix+'T'+msg.content.path"
-										:style="{'width': msg.content.width+'px','height': msg.content.height+'px'}">
+									@click="showPic(msg.msgContent.path)">
+									<image lazy-load="true" :src="urlPrefix+'T'+msg.msgContent.path"
+										:style="{'width': msg.msgContent.width+'px','height': msg.msgContent.height+'px'}">
 									</image>
 								</view>
 								<!-- 语言消息 -->
 								<view v-if="msg.contentType==='voice'" class="msg-text msg-voice"
 									@click="playVoice(msg)" :class="playMsgid == msg.id?'play':''">
-									<view class="length">{{msg.content.length}}</view>
+									<view class="length">{{msg.msgContent.length}}</view>
 									<view class="icon my-voice"></view>
 								</view>
 							</view>
@@ -45,20 +48,23 @@
 							<view class="content">
 								<!-- 文字消息 -->
 								<view v-if="msg.contentType ==='text'" class="msg-text">
-									<u-parse :html="msg.content"></u-parse>
+									<block v-for="(item,i) in msg.msgContent" :key="i">
+										<text class="msg-text-txt" v-if="item.type=='text'">{{item.content}}</text>
+										<image class="msg-text-emoji" :src="item.content" v-if="item.type=='emjio'" />
+									</block>
 								</view>
 								<!-- 图片消息 -->
 								<view v-if="msg.contentType=='image'" class="msg-img"
-									@click="showPic(msg.content.path)">
-									<image lazy-load="true" :src="urlPrefix+'T'+msg.content.path"
-										:style="{'width': msg.content.width+'px','height': msg.content.height+'px'}">
+									@click="showPic(msg.msgContent.path)">
+									<image lazy-load="true" :src="urlPrefix+'T'+msg.msgContent.path"
+										:style="{'width': msg.msgContent.width+'px','height': msg.msgContent.height+'px'}">
 									</image>
 								</view>
 								<!-- 语音消息 -->
 								<view v-if="msg.contentType==='voice'" class="msg-text msg-voice"
 									@click="playVoice(msg)" :class="playMsgid == msg.id?'play':''">
 									<view class="icon other-voice"></view>
-									<view class="length">{{msg.content.length}}</view>
+									<view class="length">{{msg.msgContent.length}}</view>
 								</view>
 							</view>
 						</view>
@@ -398,30 +404,29 @@
 				}
 				data.id = this.$u.guid()
 				if (data.contentType === "text") {
-					data.content = this.replaceEmoji(data.content)
-				} else if (data.contentType === "image") {
-					data.content = this.setPicSize(data.content)
+					data.msgContent = this.replaceEmoji(data.content)
+				}
+				if (data.contentType === "image") {
+					this.msgImageList.push(this.urlPrefix + data.content.path)
+					data.msgContent = this.setPicSize(data.content)
+				}
+				if (data.contentType === "voice") {
+					data.msgContent = data.content
 				}
 				this.msgList.push(data)
-				if (data.contentType === 'image') {
-					this.msgImageList.push(this.urlPrefix + data.content.path)
-				}
 				this.$nextTick(() => {
 					this.mescroll.scrollTo(99999, 0)
 				})
 			},
 			dealMsg(item) {
 				if (item.contentType === "text") {
-					item.content = this.replaceEmoji(item.content)
-				} else if (item.contentType === "image") {
-					if (!item.content) return item
-					if (typeof(item.content) === 'string') {
-						item.content = this.setPicSize(JSON.parse(item.content))
-					} else {
-						item.content = this.setPicSize(item.content)
-					}
-				} else {
-					item.content = JSON.parse(item.content)
+					item.msgContent = this.replaceEmoji(item.content)
+				}
+				if (item.contentType === "image") {
+					item.msgContent = this.setPicSize(JSON.parse(item.content))
+				}
+				if (item.contentType === "voice") {
+					item.msgContent = JSON.parse(item.content)
 				}
 				return item
 			},
@@ -540,20 +545,37 @@
 				return content;
 			},
 			replaceEmoji(str) { //替换表情符号为图片
-				let replacedStr = str.replace(/\[([^(\]|\[)]*)\]/g, (item, index) => {
-					let obj = ''
-					for (let i = 0; i < this.emojiList.length; i++) {
-						let row = this.emojiList[i];
-						if (row.alt == item) {
-							let url = this.getEmojiUrl(row.url)
-							obj = `<img src="${url}" class="msg-text-emoji" />`
-							break
+				let replacedStr = str.replace(/\[([^(\]|\[)]*)\]/g, item => 'jnpfjnpf' + item + 'jnpfjnpf');
+				let strArr = replacedStr.split(/jnpfjnpfjnpfjnpf|jnpfjnpf/g)
+				strArr = strArr.filter(o => o)
+				let contentList = []
+				for (let i = 0; i < strArr.length; i++) {
+					let item = {
+						content: strArr[i],
+						type: 'emjio'
+					}
+					if (/\[([^(\]|\[)]*)\]/.test(strArr[i])) {
+						let content = ''
+						for (let j = 0; j < this.emojiList.length; j++) {
+							let row = this.emojiList[j];
+							if (row.alt == strArr[i]) {
+								content = this.getEmojiUrl(row.url)
+								break
+							}
+						}
+						item = {
+							content: content,
+							type: 'emjio'
+						}
+					} else {
+						item = {
+							content: strArr[i],
+							type: 'text'
 						}
 					}
-					return obj
-				});
-				str = replacedStr;
-				return str
+					contentList.push(item)
+				}
+				return contentList
 			},
 			showPic(path) { // 预览图片
 				uni.previewImage({
@@ -564,7 +586,7 @@
 			},
 			playVoice(msg) { // 播放语音
 				this.AUDIO.stop();
-				this.AUDIO.src = this.urlPrefix + msg.content.path;
+				this.AUDIO.src = this.urlPrefix + msg.msgContent.path;
 				if (this.playMsgid != null && this.playMsgid == msg.id) {
 					this.$nextTick(() => {
 						this.AUDIO.stop();

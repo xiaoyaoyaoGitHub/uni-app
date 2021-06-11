@@ -351,6 +351,16 @@ page {
           flex-wrap: wrap;
           background-color: #fff;
           color: #3A3A3A;
+					.msg-text-txt{
+						font-size: 32rpx;
+						line-height: 48rpx;
+					}
+					.msg-text-emoji{
+						vertical-align: top;
+						width: 48rpx;
+						height: 48rpx;
+						display: inline-block;
+					}
         }
 
         .msg-img {
