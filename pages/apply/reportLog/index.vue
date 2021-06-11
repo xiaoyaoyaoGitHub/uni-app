@@ -131,7 +131,7 @@
 			detail(id){
 				let url = './form?id='+id+'&type='+this.current
 				if(id == 'add'){
-					url = './form'
+					url = './form?type=0'
 				}
 				uni.navigateTo({
 					url:url

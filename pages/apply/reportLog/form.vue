@@ -71,7 +71,7 @@
 						trigger: 'blur'
 					}],
 				},
-				type: '',
+				type: '0',
 				disabled:false
 			}
 		},
