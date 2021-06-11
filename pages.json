@@ -12,11 +12,10 @@
 		{
 			"path": "pages/login/index",
 			"style": {
-				"navigationBarTextStyle": "white",
-				"navigationBarBackgroundColor": "#3281ff",
+				"navigationStyle":"custom",
 				"app-plus": {
 					"titleNView": false,
-					"bounce": "none" // 取消iOS回弹,避免和下拉刷新冲突 (小程序无法取消)
+					"bounce": "none"
 				}
 			}
 		},
@@ -43,7 +42,10 @@
 			"path": "pages/index/my",
 			"style": {
 				"navigationBarTitleText": "我的",
-				"navigationBarTextStyle": "white"
+				"navigationBarTextStyle": "white",
+				"app-plus": {
+					"bounce": "none"
+				}
 			}
 		},
 		{
@@ -175,13 +177,19 @@
 			"pages": [{
 					"path": "settings/index",
 					"style": {
-						"navigationBarTitleText": "设置"
+						"navigationBarTitleText": "设置",
+						"app-plus": {
+							"bounce": "none"
+						}
 					}
 				},
 				{
 					"path": "contactUs/index",
 					"style": {
-						"navigationBarTitleText": "联系我们"
+						"navigationBarTitleText": "联系我们",
+						"app-plus": {
+							"bounce": "none"
+						}
 					}
 				},
 				{
@@ -201,25 +209,37 @@
 				{
 					"path": "accountSecurity/index",
 					"style": {
-						"navigationBarTitleText": "账号安全"
+						"navigationBarTitleText": "账号安全",
+						"app-plus": {
+							"bounce": "none"
+						}
 					}
 				},
 				{
 					"path": "cancellation/index",
 					"style": {
-						"navigationBarTitleText": "注销账号"
+						"navigationBarTitleText": "注销账号",
+						"app-plus": {
+							"bounce": "none"
+						}
 					}
 				},
 				{
 					"path": "personalData/index",
 					"style": {
-						"navigationBarTitleText": "个人信息"
+						"navigationBarTitleText": "个人信息",
+						"app-plus": {
+							"bounce": "none"
+						}
 					}
 				},
 				{
 					"path": "business/index",
 					"style": {
-						"navigationBarTitleText": "企业组织"
+						"navigationBarTitleText": "企业组织",
+						"app-plus": {
+							"bounce": "none"
+						}
 					}
 				}
 			]

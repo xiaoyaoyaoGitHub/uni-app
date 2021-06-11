@@ -7,5 +7,6 @@ const define = {
 		"ws://192.168.0.18:7004/api/message/websocket",
 	comUploadUrl: baseURL + '/api/file/Uploader/',
 	timeout: process.env.NODE_ENV === 'production' ? 60000 : 10000,
+	version: "3.2"
 }
 export default define

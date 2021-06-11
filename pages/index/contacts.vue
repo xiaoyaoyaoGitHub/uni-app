@@ -8,7 +8,7 @@
 				</u-search>
 			</view>
 			<view class="list-cell u-border-bottom" v-for="(item, i) in list" :key="i" @click="detail(item.id)">
-				<u-avatar :src="define.baseURL+item.headIcon"></u-avatar>
+				<u-avatar :src="baseURL+item.headIcon"></u-avatar>
 				<view class="list-cell-txt">
 					<view class="u-font-30">{{item.realName}}/{{item.account}}</view>
 					<view class="u-font-24 department">{{item.department}}</view>
@@ -50,6 +50,11 @@
 				},
 				keyword: '',
 				list: []
+			}
+		},
+		computed: {
+			baseURL() {
+				return this.define.baseURL
 			}
 		},
 		methods: {

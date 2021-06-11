@@ -5,11 +5,11 @@
 				<view v-if="!disabled" class="u-delete-icon" @tap.stop="deleteItem(index)">
 					<u-icon class="u-icon" name="close" size="20" color="#ffffff"></u-icon>
 				</view>
-				<image class="u-preview-image" :src="define.baseURL+item.url" mode="aspectFill"
-					@tap.stop="doPreviewImage(define.baseURL+item.url)"></image>
+				<image class="u-preview-image" :src="baseURL+item.url" mode="aspectFill"
+					@tap.stop="doPreviewImage(baseURL+item.url)"></image>
 			</view>
 		</template>
-		<u-upload width="150" height="150" :action="define.comUploadUrl+type" :headers="uploadHeaders"
+		<u-upload width="150" height="150" :action="comUploadUrl+type" :headers="uploadHeaders"
 			:max-size="fileSize*1024*1024" :max-count="realLimit" :show-upload-list="false" :show-progress="false"
 			:deletable="deletable" @on-success="onSuccess" @on-error="handleError"></u-upload>
 	</view>
@@ -82,6 +82,14 @@
 				this.realLimit = this.limit
 			}
 		},
+		computed: {
+			baseURL() {
+				return this.define.baseURL
+			},
+			comUploadUrl() {
+				return this.define.comUploadUrl
+			},
+		},
 		methods: {
 			onSuccess(data, index, lists, name) {
 				if (data.code == 200) {
@@ -116,7 +124,7 @@
 				});
 			},
 			doPreviewImage(url) {
-				const images = this.fileList.map(item => this.define.baseURL + item.url);
+				const images = this.fileList.map(item => this.baseURL + item.url);
 				uni.previewImage({
 					urls: images,
 					current: url,

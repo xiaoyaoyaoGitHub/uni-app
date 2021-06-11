@@ -38,7 +38,7 @@ const actions = {
 		return new Promise((resolve, reject) => {
 			logout().then(() => {
 				commit('SET_TOKEN', '')
-				// commit('SET_USERINFO', {})
+				commit('SET_USERINFO', {})
 				dispatch('resetToken')
 				resolve()
 			}).catch(error => {

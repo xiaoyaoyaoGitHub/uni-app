@@ -45,8 +45,6 @@
 </script>
 
 <style lang="scss">
-	$padding-l : 0 16rpx;
-
 	.cancellation-v {
 		.cancellation-hd {
 			width: 100%;
@@ -94,13 +92,12 @@
 			}
 
 			.btn {
-				padding: $padding-l;
+				padding: 0 32rpx;
 				width: 100%;
 				position: fixed;
-				bottom: 20rpx;
+				bottom: 40rpx;
 				margin: 0 auto;
 			}
-
 		}
 	}
 </style>
