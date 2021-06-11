@@ -4,6 +4,19 @@
 			<u-swiper :list="bannerList" height="300"></u-swiper>
 		</view>
 		<u-notice-bar :list="['你好朋友，感谢使用JNPF快速开发平台新版本']" type="none"></u-notice-bar>
+		
+		<view class="u-flex-col u-m-t-24 u-p-l-16">
+			<!-- <navigator :url="'/pages/navigate/navigate?item='+ encodeURIComponent(JSON.stringify(item))"></navigator> -->
+			<navigator url="/pages/apply/reportLog/index" class="u-m-b-20">
+				<text>汇报日志</text>
+			</navigator>
+			<navigator url="/pages/apply/schedule/index" class="u-m-b-20">
+				<text>我的日程</text>
+			</navigator>
+			<navigator url="/pages/apply/fieldPunchCard/index" class="u-m-b-20">
+				<text>外勤打卡</text>
+			</navigator>
+		</view>
 	</view>
 </template>
 

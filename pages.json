@@ -136,7 +136,35 @@
 		},
 		{
 			"root": "pages/apply",
-			"pages": []
+			"pages": [{
+				"path": "reportLog/index",
+				"style": {
+					"navigationBarTitleText": "汇报日志",
+					"enablePullDownRefresh": false
+				}
+
+			}, {
+				"path": "reportLog/form",
+				"style": {
+					"navigationBarTitleText": "日志编辑",
+					"enablePullDownRefresh": false
+				}
+
+			}, {
+				"path": "schedule/index",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false
+				}
+
+			}, {
+				"path": "fieldPunchCard/index",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false
+				}
+
+			}]
 		},
 		{
 			"root": "pages/contacts",
