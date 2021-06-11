@@ -197,3 +197,12 @@
 	top: var(--window-top);
 	background-color: #fff;
 }
+.copyright{
+	position: fixed;
+	bottom: 40rpx;
+	left: 0;
+	right: 0;
+	text-align: center;
+	color: #9A9A9A;
+	font-size: 26rpx;
+}

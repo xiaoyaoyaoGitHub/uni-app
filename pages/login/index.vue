@@ -30,9 +30,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="copyright">
-			<text class="txt">Copyright © 2021 引迈信息技术有限公司出品</text>
-		</view>
+		<view class="copyright">Copyright © 2021 引迈信息技术有限公司出品</view>
 	</view>
 </template>
 
@@ -106,44 +104,40 @@
 	page {}
 
 	.logo-v {
-		.login-bg{
-			image{
+		.login-bg {
+			image {
 				width: 100%;
 				height: 100%;
 			}
 		}
-		.copyright {
-			color: #AEAFB5;
-			width: 100%;
-			position: absolute;
-			bottom: 0;
-			display: flex;
-			flex-direction: row;
-			justify-content: center;
-			padding-bottom: 20rpx;
-		}
+
 		.logo-hd {
 			width: 100%;
 			position: absolute;
 			top: 200rpx;
+
 			.logoImg {
 				width: 160rpx;
 				height: 160rpx;
 				margin: 0 auto;
+
 				image {
 					width: 100%;
 					height: 100%;
 					border-radius: 20%;
 				}
 			}
-			.introduce{
+
+			.introduce {
 				justify-content: center;
 				align-items: center;
-				.text-one{
+
+				.text-one {
 					height: 70rpx;
 					font-weight: 700;
 				}
-				.text-two{
+
+				.text-two {
 					color: #999999;
 				}
 			}

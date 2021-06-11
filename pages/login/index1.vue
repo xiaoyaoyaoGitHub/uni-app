@@ -9,7 +9,6 @@
 			</view>
 			<view class="loginSwitch u-flex-col">
 				<view class="tabs" :class="{'active2': loginMethod == 'password'}">
-					<!-- loginMethod == 'password' ? 'active2' : 'active1' -->
 					<text class="tab u-m-r-64 u-font-28" :class="{'active':loginMethod == 'verification'}"
 						@click="changeTab('verification')">验证码登录</text>
 					<text class="tab u-m-l-64 u-font-28" :class="{'active':loginMethod == 'password'}"
@@ -21,7 +20,6 @@
 						<u-form-item prop="account">
 							<u-input v-model="formData.account" placeholder="请输入帐号"></u-input>
 						</u-form-item>
-
 						<u-form-item prop="password" v-if="loginMethod == 'password'">
 							<u-input v-model="formData.password" type="password" placeholder="请输入密码"></u-input>
 						</u-form-item>
@@ -47,9 +45,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="copyright">
-			<text class="txt">Copyright © 2021 引迈信息技术有限公司出品</text>
-		</view>
+		<view class="copyright">Copyright © 2021 引迈信息技术有限公司出品</view>
 		<u-verification-code seconds="60" ref="uCode" @change="codeChange"></u-verification-code>
 	</view>
 </template>
@@ -231,30 +227,23 @@
 	page {}
 
 	.logo-v {
-		.login-bg{
-			image{
+		.login-bg {
+			image {
 				width: 100%;
 				height: 100%;
 			}
 		}
-		.copyright {
-			color: #AEAFB5;
-			width: 100%;
-			position: absolute;
-			bottom: 0;
-			display: flex;
-			flex-direction: row;
-			justify-content: center;
-			padding-bottom: 20rpx;
-		}
+
 		.logo-hd {
 			width: 100%;
 			position: absolute;
 			top: 180rpx;
+
 			.logoImg {
 				width: 160rpx;
 				height: 160rpx;
 				margin: 0 auto;
+
 				image {
 					width: 100%;
 					height: 100%;

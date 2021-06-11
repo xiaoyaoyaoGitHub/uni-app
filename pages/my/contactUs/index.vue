@@ -22,7 +22,7 @@
 				<text class="textSize"><text style="color: #303133;">节假日：</text>{{holidayWorkingHours}}</text>
 			</view>
 		</view>
-		<view class="copyright u-font-26"><text>Copyright © 2021 引迈信息技术有限公司出品</text></view>
+		<view class="copyright">Copyright © 2021 引迈信息技术有限公司出品</view>
 		<u-popup v-model="showPopup" mode="center">
 			<view class="center-box">
 				<image class="image" :src="wechat_qrcode" :data-path="wechat_qrcode" @longpress="saveImage" />
@@ -168,15 +168,6 @@
 			height: 86rpx;
 			line-height: 86rpx;
 			font-weight: 700;
-		}
-
-		.copyright {
-			position: fixed;
-			bottom: 20rpx;
-			left: 0;
-			right: 0;
-			text-align: center;
-			color: #9A9A9A;
 		}
 	}
 </style>

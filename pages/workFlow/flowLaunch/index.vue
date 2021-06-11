@@ -8,7 +8,7 @@
 				</u-search>
 			</view>
 			<view class="flow-list">
-				<view class="u-m-b-20" v-for="(item, index) in list" :key="item.id">
+				<view class="flow-list-box" v-for="(item, index) in list" :key="item.id">
 					<u-swipe-action :index="index" :show="item.show" @click="handleClick" @open="open"
 						:options="options" @content-click="goDetail(item)" class="u-m-b-20">
 						<view class="item">
@@ -197,5 +197,12 @@
 <style lang="scss">
 	page {
 		background-color: #f0f2f6;
+	}
+
+	.flowLaunch-v {
+		.flow-list-box {
+			width: 100%;
+			margin-bottom: 20rpx;
+		}
 	}
 </style>
