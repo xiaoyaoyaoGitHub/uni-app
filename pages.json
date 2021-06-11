@@ -4,6 +4,37 @@
 		"^jnpf-(.*)": "@/components/jnpf/jnpf-$1/index.vue"
 	},
 	"pages": [{
+			"path": "pages/launch/index",
+			"style": {
+				"app-plus": {
+					"titleNView": false,
+					"bounce": "none"
+				}
+			}
+		},
+		// #ifdef APP-PLUS
+		{
+			"path": "pages/launch/policy",
+			"style": {
+				"navigationBarTitleText": "",
+				"app-plus": {
+					"titleNView": false,
+					"bounce": "none"
+				}
+			}
+		},
+		{
+			"path": "pages/launch/guide",
+			"style": {
+				"navigationBarTitleText": "",
+				"app-plus": {
+					"titleNView": false,
+					"bounce": "none"
+				}
+			}
+		},
+		// #endif
+		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "消息"
@@ -12,7 +43,7 @@
 		{
 			"path": "pages/login/index",
 			"style": {
-				"navigationStyle":"custom",
+				"navigationStyle": "custom",
 				"app-plus": {
 					"titleNView": false,
 					"bounce": "none"
@@ -139,34 +170,32 @@
 		{
 			"root": "pages/apply",
 			"pages": [{
-				"path": "reportLog/index",
-				"style": {
-					"navigationBarTitleText": "汇报日志",
-					"enablePullDownRefresh": false
+					"path": "reportLog/index",
+					"style": {
+						"navigationBarTitleText": "汇报日志",
+						"enablePullDownRefresh": false
+					}
+				},
+				{
+					"path": "reportLog/form",
+					"style": {
+						"navigationBarTitleText": "日志编辑",
+						"enablePullDownRefresh": false
+					}
+				},
+				{
+					"path": "schedule/index",
+					"style": {
+						"navigationBarTitleText": ""
+					}
+				},
+				{
+					"path": "fieldPunchCard/index",
+					"style": {
+						"navigationBarTitleText": ""
+					}
 				}
-
-			}, {
-				"path": "reportLog/form",
-				"style": {
-					"navigationBarTitleText": "日志编辑",
-					"enablePullDownRefresh": false
-				}
-
-			}, {
-				"path": "schedule/index",
-				"style": {
-					"navigationBarTitleText": "",
-					"enablePullDownRefresh": false
-				}
-
-			}, {
-				"path": "fieldPunchCard/index",
-				"style": {
-					"navigationBarTitleText": "",
-					"enablePullDownRefresh": false
-				}
-
-			}]
+			]
 		},
 		{
 			"root": "pages/contacts",
@@ -254,14 +283,10 @@
 			"network": "all",
 			"packages": ["pages/workFlow"]
 		},
-		// "pages/index/apply": {
-		// 	"network": "all",
-		// 	"packages": ["pages/apply"]
-		// },
-		// "pages/index/contacts": {
-		// 	"network": "all",
-		// 	"packages": ["pages/contacts"]
-		// },
+		"pages/index/apply": {
+			"network": "all",
+			"packages": ["pages/apply"]
+		},
 		"pages/index/my": {
 			"network": "all",
 			"packages": ["pages/my"]

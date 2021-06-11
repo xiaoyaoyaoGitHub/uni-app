@@ -2,14 +2,11 @@
 	import chat from '@/libs/chat.js'
 	export default {
 		onLaunch: function() {
-			const token = uni.getStorageSync("token") || '';
-			if (!token) {
-				uni.reLaunch({
-					url: '/pages/login/index'
-				})
-			} else {
-				chat.initSocket()
-			}
+			// #ifdef H5
+			const token = uni.getStorageSync("token");
+			if (!token) return
+			chat.initSocket()
+			// #endif
 		},
 		onShow: function() {
 			// console.log('App Show')
