@@ -186,7 +186,13 @@
 				{
 					"path": "schedule/index",
 					"style": {
-						"navigationBarTitleText": ""
+						"navigationBarTitleText": "我的日程"
+					}
+				},
+				{
+					"path": "schedule/form",
+					"style": {
+						"navigationBarTitleText": "日程新增"
 					}
 				},
 				{

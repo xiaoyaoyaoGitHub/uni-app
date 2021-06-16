@@ -48,7 +48,7 @@
 		getSendJournalList,
 		getReceiveJournalList,
 		handelReportLog
-	} from '@/api/reportLog/reportLog.js'
+	} from '@/api/apply/reportLog.js'
 	import define from '@/utils/define.js'
 	import resources from '@/libs/resources.js'
 	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";

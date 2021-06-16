@@ -33,7 +33,7 @@
 		infoReportLog,
 		saveReportLog,
 		modifyReportLog
-	} from '@/api/reportLog/reportLog.js'
+	} from '@/api/apply/reportLog.js'
 	export default {
 		data() {
 			return {
@@ -95,7 +95,6 @@
 		methods: {
 			save() {
 				this.$refs.dataForm.validate((valid) => {
-					console.log(this.dataForm.id)
 					this.dataForm.toUserId = this.dataForm.userIds
 					if (valid) {
 						if (this.dataForm.id) {

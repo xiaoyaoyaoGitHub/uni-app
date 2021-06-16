@@ -380,11 +380,11 @@
 				})
 			},
 			submit() {
-				console.log(this.dataForm);
+				
 				this.$refs.dataForm.validate(valid => {
 					if (valid) {
 						console.log('验证通过');
-						// console.log(this.dataForm);
+						
 
 					} else {
 						console.log('验证失败');

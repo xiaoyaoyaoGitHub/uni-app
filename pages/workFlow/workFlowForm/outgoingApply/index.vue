@@ -112,7 +112,6 @@
 		},
 		methods: {
 			selfInit(data) {
-				console.log(this.userInfo)
 				this.dataForm.applyDate = new Date().getTime()
 				this.dataForm.flowTitle = this.userInfo.userName + "的请假申请"
 				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount

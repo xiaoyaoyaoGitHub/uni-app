@@ -342,7 +342,6 @@
 				this.setting = data;
 				this.filedList = JSON.parse(this.setting.formConf);
 				let fields = this.filedList.fields;
-				console.log(fields)
 				let defaultValue;
 				let vModel;
 				let dataType;

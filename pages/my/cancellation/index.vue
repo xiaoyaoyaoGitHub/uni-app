@@ -35,7 +35,7 @@
 					content: '您的JNPF账号将被删除，您确定要注销JNPF账号么？',
 					success: res => {
 						if (res.confirm) {
-							console.log('确定')
+							
 						}
 					}
 				})

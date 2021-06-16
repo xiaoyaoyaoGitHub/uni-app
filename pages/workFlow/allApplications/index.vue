@@ -84,7 +84,7 @@
 				})
 			},
 			handel(type){
-				console.log(type)
+				
 			},
 			change(index) {
 				this.current = index;

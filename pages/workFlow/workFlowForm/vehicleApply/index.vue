@@ -118,7 +118,7 @@
 		},
 		methods: {
 			selfInit(data) {
-				console.log(this.userInfo)
+				
 				this.dataForm.applyDate = new Date().getTime()
 				this.dataForm.flowTitle = this.userInfo.userName + "的车辆申请"
 				this.dataForm.carMan = this.userInfo.userName + '/' + this.userInfo.userAccount

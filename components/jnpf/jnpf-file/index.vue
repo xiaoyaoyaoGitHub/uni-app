@@ -45,7 +45,7 @@
 						uni.openDocument({
 							filePath: filePath,
 							success: res => {
-								console.log(res)
+								
 							}
 						});
 					}
