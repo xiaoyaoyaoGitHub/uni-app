@@ -198,7 +198,7 @@
 				{
 					"path": "fieldPunchCard/index",
 					"style": {
-						"navigationBarTitleText": ""
+						"navigationBarTitleText": "外勤打卡"
 					}
 				}
 			]
