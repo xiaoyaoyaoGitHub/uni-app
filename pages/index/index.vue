@@ -130,6 +130,15 @@
 			this.eventHub.$off('updateList')
 			this.eventHub.$off('updateMsgNum')
 		},
+		onNavigationBarButtonTap(e) {
+			if (e.index == 0) {
+				uni.scanCode({
+					success: res => {
+						// console.log(JSON.stringify(res.result))
+					}
+				});
+			};
+		},
 		methods: {
 			upCallback(page) {
 				getIMReply().then(res => {
