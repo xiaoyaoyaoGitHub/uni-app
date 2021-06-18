@@ -182,15 +182,13 @@
 			"pages": [{
 					"path": "reportLog/index",
 					"style": {
-						"navigationBarTitleText": "汇报日志",
-						"enablePullDownRefresh": false
+						"navigationBarTitleText": "汇报日志"
 					}
 				},
 				{
 					"path": "reportLog/form",
 					"style": {
-						"navigationBarTitleText": "日志编辑",
-						"enablePullDownRefresh": false
+						"navigationBarTitleText": ""
 					}
 				},
 				{
@@ -202,7 +200,7 @@
 				{
 					"path": "schedule/form",
 					"style": {
-						"navigationBarTitleText": "日程新增"
+						"navigationBarTitleText": ""
 					}
 				},
 				{
@@ -212,10 +210,6 @@
 					}
 				}
 			]
-		},
-		{
-			"root": "pages/contacts",
-			"pages": []
 		},
 		{
 			"root": "pages/my",

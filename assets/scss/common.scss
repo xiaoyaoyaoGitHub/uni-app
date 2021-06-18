@@ -206,3 +206,22 @@
 	color: #9A9A9A;
 	font-size: 26rpx;
 }
+	.com-addBtn {
+		width: 110rpx;
+		height: 110rpx;
+		border-radius: 50%;
+		background-color: rgba(41, 121, 255, 0.7);
+		position: fixed;
+		bottom: 100rpx;
+		right: 40rpx;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.com-saveBox {
+		width: 100%;
+		position: fixed;
+		bottom: 30rpx;
+		left: 0;
+		padding: 0 32rpx;
+	}

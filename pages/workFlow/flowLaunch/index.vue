@@ -10,7 +10,7 @@
 			<view class="flow-list">
 				<view class="flow-list-box" v-for="(item, index) in list" :key="item.id">
 					<u-swipe-action :index="index" :show="item.show" @click="handleClick" @open="open"
-						:options="options" @content-click="goDetail(item)" class="u-m-b-20">
+						:options="options" @content-click="goDetail(item)">
 						<view class="item">
 							<view class="item-cell item-title u-border-bottom">
 								<text class="title u-line-1">{{item.fullName}}</text>

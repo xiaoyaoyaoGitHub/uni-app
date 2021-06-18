@@ -5,57 +5,29 @@
 			<view class="lunar jnpf-card u-m-t-20">
 				{{changedate}}
 			</view>
-			<view v-for="(item,index) in scheduleList" :key="index" class=" u-m-b-20">
+			<view v-for="(item,index) in scheduleList" :key="index" class="schedule-item">
 				<u-swipe-action :index="index" :show="item.show" @click="removeList" @open="open" :options="options"
 					@content-click="goDetail(item.id)">
 					<view class="calendar-listBox u-flex-col">
-						<text class="startTime u-m-b-15 u-font-24">{{item.startTime | date('yyyy-mm-dd')}}</text>
-						<view class="endTimeBox u-flex  u-m-t-15">
-							<text class="endTime u-font-24">{{item.endTime | date('yyyy-mm-dd')}}</text>
-							<text class="content u-m-l-15">{{item.content}}</text>
-						</view>
+						<text class="startTime u-m-b-15 u-font-24">
+							{{item.startTime | date('yyyy-mm-dd')}} - {{item.endTime | date('yyyy-mm-dd')}}
+						</text>
+						<view class="content">{{item.content}}</view>
 					</view>
 				</u-swipe-action>
 			</view>
 		</view>
-
-		<!-- 新增按钮 -->
-		<view class="addBtn" @click="goDetail('add')">
-			<text class="u-font-60 addBtnTxt">+</text>
+		<view class="com-addBtn" @click="goDetail()">
+			<u-icon name="plus" size="60" color="#fff" />
 		</view>
 	</view>
 </template>
 
 <script>
 	import calendar from './calendar/uni-calendar.vue'
-	/**
-	 * 获取任意时间
-	 */
-	function getDate(date, AddDayCount = 0) {
-		if (!date) {
-			date = new Date()
-		}
-		if (typeof date !== 'object') {
-			date = date.replace(/-/g, '/')
-		}
-		const dd = new Date(date)
-
-		dd.setDate(dd.getDate() + AddDayCount) // 获取AddDayCount天后的日期
-
-		const y = dd.getFullYear()
-		const m = dd.getMonth() + 1 < 10 ? '0' + (dd.getMonth() + 1) : dd.getMonth() + 1 // 获取当前月份的日期，不足10补0
-		const d = dd.getDate() < 10 ? '0' + dd.getDate() : dd.getDate() // 获取当前几号，不足10补0
-		return {
-			fullDate: y + '-' + m + '-' + d,
-			year: y,
-			month: m,
-			date: d,
-			day: dd.getDay()
-		}
-	}
 	import {
-		initSchedule,
-		detailSchedule
+		getScheduleList,
+		delSchedule
 	} from '@/api/apply/schedule.js'
 	export default {
 		components: {
@@ -83,10 +55,8 @@
 						backgroundColor: '#dd524d'
 					}
 				}],
-
 			}
 		},
-
 		methods: {
 			/* 初始化请求 */
 			initdate(cale, nowDate) {
@@ -105,12 +75,12 @@
 					}
 				}
 				this.scheduleList.splice(0);
-				
+
 				let query = {
 					startTime: startTime,
 					endTime: endTime,
 				}
-				initSchedule(query).then(res => {
+				getScheduleList(query).then(res => {
 					let signList = res.data.signList;
 					let todayList = res.data.todayList;
 					for (let i = 0; i < 6; i++) {
@@ -126,9 +96,7 @@
 						}
 					}
 				})
-
 			},
-			
 			change(e) {
 				let lunar = e.lunar;
 				this.changedate = '农历  ' + lunar.IMonthCn + lunar.IDayCn;
@@ -138,7 +106,7 @@
 					endTime: this.endDate,
 					dateTime: e.fulldate
 				}
-				initSchedule(query).then(res => {
+				getScheduleList(query).then(res => {
 					let todayList = res.data.todayList;
 					if (todayList && todayList.length) {
 						for (let i = 0; i < todayList.length; i++) {
@@ -148,35 +116,26 @@
 				})
 			},
 			monthSwitch(e) {
-				
+
 			},
-			
 			goDetail(id) {
-				let url = './form?id=' + id
-				if (id == 'add') {
-					url = './form'
-				}
+				const url = './form' + (id ? '?id=' + id : '')
 				uni.navigateTo({
 					url: url
 				})
 			},
-
 			open(index) {
 				this.scheduleList[index].show = true;
 				this.scheduleList.map((val, idx) => {
 					if (index != idx) this.scheduleList[idx].show = false;
 				})
 			},
-
 			removeList(index, index1) {
 				const item = this.scheduleList[index];
-				detailSchedule(item.id).then(res => {
+				delSchedule(item.id).then(res => {
 					this.scheduleList[index].show = false;
 					this.$u.toast('删除成功')
 					this.scheduleList.splice(index, 1);
-					uni.redirectTo({
-						url: 'index',
-					});
 				})
 			},
 		}
@@ -192,36 +151,23 @@
 		.calendar-b {
 			.lunar {
 				background-color: #FFFFFF;
-				padding: 40rpx 16rpx;
+				padding: 40rpx 32rpx;
 				margin-bottom: 20rpx;
 			}
 
 			.calendar-listBox {
-				padding: 15rpx 16rpx;
+				padding: 16rpx 32rpx;
 				background-color: #FFFFFF;
 
-				.startTime,
-				.endTime {
+				.startTime {
 					color: #9a9a9a;
 				}
 			}
 		}
 
-		.addBtn {
-			width: 110rpx;
-			height: 110rpx;
-			border-radius: 50%;
-			background-color: rgba(0, 140, 255, 0.6);
-			position: fixed;
-			bottom: 100rpx;
-			right: 40rpx;
-			text-align: center;
-
-			.addBtnTxt {
-				color: #FFFFFF;
-				line-height: 96rpx;
-				font-size: 80rpx;
-			}
+		.schedule-item {
+			width: 100%;
+			margin-bottom: 20rpx;
 		}
 	}
 </style>
