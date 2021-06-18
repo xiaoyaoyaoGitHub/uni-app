@@ -26,7 +26,7 @@
 				<!-- #endif -->
 			</view>
 
-			<view class="exhibition-list u-p-l-16 u-p-r-16">
+			<view class="exhibition-list u-p-l-32 u-p-r-32">
 				<view class="u-border-bottom cell-navigate">
 					<view class="txtBox">
 						<view class="u-font-30">我的位置</view>
