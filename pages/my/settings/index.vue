@@ -6,7 +6,9 @@
 			<u-cell-item title="隐私政策" @click='openPage(policy)'></u-cell-item>
 			<!-- #endif -->
 		</u-cell-group>
-		<view class="logout-cell" hover-class="u-cell-hover" @click="logout">退出登录</view>
+		<view class="u-p-t-20">
+			<view class="logout-cell" hover-class="u-cell-hover" @click="logout">退出登录</view>
+		</view>
 	</view>
 </template>
 
@@ -54,8 +56,7 @@
 	.settings-v {
 		.logout-cell {
 			text-align: center;
-			margin-top: 20rpx;
-			font-size: 32rpx;
+			font-size: 28rpx;
 			line-height: 100rpx;
 			background-color: #fff;
 		}
