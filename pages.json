@@ -208,6 +208,12 @@
 					"style": {
 						"navigationBarTitleText": "外勤打卡"
 					}
+				},
+				{
+					"path": "order/index",
+					"style": {
+						"navigationBarTitleText": "订单示例"
+					}
 				}
 			]
 		},

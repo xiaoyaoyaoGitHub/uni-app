@@ -22,7 +22,7 @@ export default {
 			setting: {},
 			userInfo: {},
 			eventType: '',
-			paymentMethodOptions:[]
+			paymentMethodOptions: []
 		}
 	},
 	mounted() {
@@ -38,6 +38,7 @@ export default {
 				this.$refs.dataForm.resetFields()
 				if (this.beforeInit) this.beforeInit()
 				if (data.id) {
+					if (this.selfGetInfo && typeof this.selfGetInfo === "function") return this.selfGetInfo()
 					Info(this.setting.enCode, data.id).then(res => {
 						this.dataForm = res.data
 						if (res.data.fileJson) {
@@ -57,7 +58,6 @@ export default {
 				}
 			})
 		},
-		
 		getPaymentMethodOptions() {
 			this.$store.dispatch('base/getDictionaryData', {
 				sort: 'WFSettlementMethod'
@@ -73,6 +73,7 @@ export default {
 					if ('fileJson' in this.dataForm) {
 						this.dataForm.fileJson = JSON.stringify(this.fileList)
 					}
+					this.eventType = eventType
 					if (eventType === 'save' || eventType === 'submit') {
 						if (this.selfSubmit && typeof this.selfSubmit === "function") {
 							this.selfSubmit(this.dataForm)

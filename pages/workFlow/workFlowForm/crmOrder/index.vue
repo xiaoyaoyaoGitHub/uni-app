@@ -5,14 +5,14 @@
 			<u-form-item label="订单编码" prop="orderCode" v-if="judgeShow('orderCode')">
 				<u-input v-model="dataForm.orderCode" placeholder="订单编码" disabled></u-input>
 			</u-form-item>
-			<u-form-item label="客户名称" prop="customerId" required v-if="judgeShow('customerId')">
+			<u-form-item label="客户名称" prop="customerId" required v-if="judgeShow('customerName')">
 				<jnpf-tree-select v-model="dataForm.customerId" placeholder="请选择客户名称" :options="customerOptions"
-					@change="onCustomerChange" :props="props" :disabled="judgeWrite('customerId')">
+					@change="onCustomerChange" :props="props" :disabled="judgeWrite('customerName')">
 				</jnpf-tree-select>
 			</u-form-item>
 			<u-form-item label="业务人员" prop="salesmanId" required v-if="judgeShow('salesmanId')">
 				<jnpf-org-select v-model="dataForm.salesmanId" placeholder="请选择业务人员" @change="onChange"
-					:disabled="judgeWrite('customerId')">
+					:disabled="judgeWrite('salesmanId')">
 				</jnpf-org-select>
 			</u-form-item>
 			<u-form-item label="订单日期" prop="orderDate" required v-if="judgeShow('orderDate')">
@@ -27,7 +27,7 @@
 				</u-form-item>
 				<u-form-item label="付款金额" prop="receivableMoney" v-if="judgeShow('receivableMoney')">
 					<u-input v-model="dataForm.receivableMoney" type="number" placeholder="付款金额"
-						:disabled="judgeWrite('customerId')"></u-input>
+						:disabled="judgeWrite('receivableMoney')"></u-input>
 				</u-form-item>
 				<u-form-item label="定金比率" prop="earnestRate" v-if="judgeShow('earnestRate')">
 					<u-input v-model="dataForm.earnestRate" type="number" placeholder="请输入定金比率"
@@ -112,7 +112,6 @@
 					<u-icon name="plus" color="#2979ff"></u-icon>商品添购
 				</view>
 			</view>
-
 			<view class="jnpf-table" v-if="judgeShow('collectionPlanList')">
 				<view class="jnpf-table-item" v-for="(item,i) in dataForm.collectionPlanList" :key="i">
 					<view class="jnpf-table-item-title u-flex u-row-between">
@@ -157,8 +156,11 @@
 	import comMixin from '../mixin'
 	import {
 		getGoodsList,
-		getCustomerList
-	} from '@/api/workFlow/workFlowForm'
+		getCustomerList,
+		Info,
+		Create,
+		Update
+	} from '@/api/apply/order'
 	export default {
 		name: 'crmOrder',
 		mixins: [comMixin],
@@ -244,6 +246,39 @@
 			this.initData()
 		},
 		methods: {
+			selfGetInfo() {
+				Info(this.setting.id).then(res => {
+					this.dataForm = res.data
+				})
+			},
+			selfSubmit() {
+				this.dataForm.status = this.eventType === 'submit' ? 0 : 1
+				if (this.eventType === 'save') return this.selfHandleRequest()
+				uni.showModal({
+					title: '提示',
+					content: '您确定要提交当前流程吗？',
+					success: res => {
+						if (res.confirm) {
+							this.selfHandleRequest()
+						}
+					}
+				})
+			},
+			selfHandleRequest() {
+				if (!this.dataForm.id) delete(this.dataForm.id)
+				const formMethod = this.dataForm.id ? Update : Create
+				formMethod(this.dataForm).then(res => {
+					uni.showToast({
+						title: res.msg,
+						complete: () => {
+							setTimeout(() => {
+								this.eventHub.$emit('refresh')
+								uni.navigateBack()
+							}, 1500)
+						}
+					})
+				})
+			},
 			initData() {
 				getGoodsList().then(res => {
 					this.goodsOptions = res.data.list

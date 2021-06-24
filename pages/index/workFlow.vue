@@ -108,20 +108,6 @@
 				uni.navigateTo({
 					url: '/pages/workFlow/flowBefore/index?config=' + encodeURIComponent(JSON.stringify(config))
 				})
-			},
-			toForm() {
-				const config = {
-					id: '',
-					enCode: 'crmOrder',
-					flowId: '52d3144909d04e2f8a6629ab2ab39e14',
-					formType: 1,
-					opType: '-1',
-					taskNodeId: '',
-					fullName: '新增订单'
-				}
-				uni.navigateTo({
-					url: '/pages/workFlow/flowBefore/index?config=' + encodeURIComponent(JSON.stringify(config))
-				})
 			}
 		}
 	}

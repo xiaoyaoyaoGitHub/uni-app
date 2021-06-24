@@ -46,28 +46,3 @@ export function DynamicUpdate(key, data) {
 		data
 	})
 }
-
-// 获取商品列表
-export function getGoodsList(data) {
-	return request({
-		url: `/api/workflow/Form/CrmOrder/Goods`,
-		method: 'get',
-		data,
-		options: {
-			load: false
-		}
-	})
-}
-// 获取客户列表
-export function getCustomerList(keyword) {
-	return request({
-		url: `/api/workflow/Form/CrmOrder/Customer`,
-		method: 'get',
-		data: {
-			keyword: keyword || ''
-		},
-		options: {
-			load: false
-		}
-	})
-}
