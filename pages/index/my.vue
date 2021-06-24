@@ -29,6 +29,7 @@
 				</u-cell-item>
 			</u-cell-group>
 		</view>
+		<!-- #ifdef APP-NVUE -->
 		<view class="u-m-t-20">
 			<u-cell-group>
 				<u-cell-item title="账号安全" @click="openPage('/pages/my/accountSecurity/index')">
@@ -36,6 +37,7 @@
 				</u-cell-item>
 			</u-cell-group>
 		</view>
+		<!-- #endif -->
 		<view class="u-m-t-20">
 			<u-cell-group>
 				<u-cell-item title="设置" @click="openPage('/pages/my/settings/index')">

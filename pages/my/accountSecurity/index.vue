@@ -2,7 +2,6 @@
 	<view class="accountSecurity-v">
 		<u-cell-group>
 			<u-cell-item title="注销账号" @click="openPage('/pages/my/cancellation/index')"></u-cell-item>
-			<u-cell-item title="修改密码" @click="openPage()"></u-cell-item>
 		</u-cell-group>
 	</view>
 </template>
@@ -11,11 +10,11 @@
 	export default {
 		data() {
 			return {
-				
+
 			}
 		},
 		methods: {
-			openPage(path){
+			openPage(path) {
 				uni.navigateTo({
 					url: path
 				})
