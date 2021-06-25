@@ -63,8 +63,7 @@
 		{
 			"path": "pages/index/workFlow",
 			"style": {
-				"navigationBarTitleText": "协同",
-				"enablePullDownRefresh": true
+				"navigationBarTitleText": "协同"
 			}
 		},
 		{
@@ -76,7 +75,7 @@
 		{
 			"path": "pages/index/contacts",
 			"style": {
-				"navigationBarTitleText": "通讯"
+				"navigationBarTitleText": "通讯录"
 			}
 		},
 		{

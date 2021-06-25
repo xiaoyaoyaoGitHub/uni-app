@@ -1,7 +1,6 @@
 <template>
 	<view class="index-v">
-		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :sticky="true"
-			:up="upOption" :bottombar="false">
+		<mescroll-body ref="mescrollRef" @down="downCallback" :sticky="true" :up="upOption" :bottombar="false">
 			<view class="search-box_sticky">
 				<view class="search-box">
 					<u-search placeholder="请输入关键词搜索" v-model="keyword" height="72" :show-action="false" @change="search"
@@ -98,10 +97,7 @@
 				keyword: '',
 				list: [],
 				upOption: {
-					use: true,
-					empty: {
-						use: false,
-					},
+					use: false
 				},
 			}
 		},
@@ -140,7 +136,7 @@
 			};
 		},
 		methods: {
-			upCallback(page) {
+			downCallback(page) {
 				getIMReply().then(res => {
 					this.list = res.data.list;
 					this.mescroll.endSuccess(res.data.list.length, false);

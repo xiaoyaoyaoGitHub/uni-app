@@ -1,45 +1,46 @@
 <template>
 	<view class="workFlow-v">
-		<u-sticky :enable="enable">
-			<view class="tabs u-flex">
-				<navigator url="/pages/workFlow/flowLaunch/index" class="tabs-item u-flex-col u-col-center">
-					<text class="icon-ym icon-ym-flowLaunch-app u-font-40 tabs-icon launch" />
-					<text class="u-font-24">我发起的</text>
-				</navigator>
-				<navigator url="/pages/workFlow/flowTodo/index" class="tabs-item u-flex-col u-col-center">
-					<text class="icon-ym icon-ym-flowTodo-app u-font-40 tabs-icon todo" />
-					<text class="u-font-24">待办事宜</text>
-				</navigator>
-				<navigator url="/pages/workFlow/flowDone/index" class="tabs-item u-flex-col u-col-center">
-					<text class="icon-ym icon-ym-flowDone-app u-font-40 tabs-icon done" />
-					<text class="u-font-24">已办事宜</text>
-				</navigator>
-				<navigator url="/pages/workFlow/flowCopy/index" class="tabs-item u-flex-col u-col-center">
-					<text class="icon-ym icon-ym-flowCopy-app u-font-40 tabs-icon copy" />
-					<text class="u-font-24">抄送我的</text>
-				</navigator>
+		<mescroll-body ref="mescrollRef" @down="downCallback" :sticky="true" :up="upOption" :bottombar="false">
+			<view class="search-box_sticky">
+				<view class="tabs u-flex">
+					<navigator url="/pages/workFlow/flowLaunch/index" class="tabs-item u-flex-col u-col-center">
+						<text class="icon-ym icon-ym-flowLaunch-app u-font-40 tabs-icon launch" />
+						<text class="u-font-24">我发起的</text>
+					</navigator>
+					<navigator url="/pages/workFlow/flowTodo/index" class="tabs-item u-flex-col u-col-center">
+						<text class="icon-ym icon-ym-flowTodo-app u-font-40 tabs-icon todo" />
+						<text class="u-font-24">待办事宜</text>
+					</navigator>
+					<navigator url="/pages/workFlow/flowDone/index" class="tabs-item u-flex-col u-col-center">
+						<text class="icon-ym icon-ym-flowDone-app u-font-40 tabs-icon done" />
+						<text class="u-font-24">已办事宜</text>
+					</navigator>
+					<navigator url="/pages/workFlow/flowCopy/index" class="tabs-item u-flex-col u-col-center">
+						<text class="icon-ym icon-ym-flowCopy-app u-font-40 tabs-icon copy" />
+						<text class="u-font-24">抄送我的</text>
+					</navigator>
+				</view>
 			</view>
-		</u-sticky>
-		<view class="workFlow-list">
-			<view class="part u-padding-35">
-				<!-- <view class="caption">全部应用</view> -->
-				<navigator url="/pages/workFlow/allApplications/index" class="tabs-item">
-					<text class="u-font-36">全部应用</text>
-				</navigator>
-			</view>
-
-			<view class="part" v-for="(item,i) in flowEngineList" :key="i">
-				<view class="caption">{{item.fullName}}</view>
-				<view class="u-flex u-flex-wrap">
-					<view class="item u-flex-col u-col-center" v-for="(child,ii) in item.children" :key="ii"
-						@click="handelClick(child)">
-						<text class="u-font-40 item-icon" :class="child.icon"
-							:style="{'background':child.iconBackground|| '#008cff'}" />
-						<text class="u-font-24 u-line-1 item-text">{{child.fullName}}</text>
+			<view class="workFlow-list">
+				<view class="part">
+					<view class="caption">全部应用</view>
+					<navigator url="/pages/workFlow/allApplications/index" class="tabs-item">
+						<text class="u-font-36">全部应用</text>
+					</navigator>
+				</view>
+				<view class="part" v-for="(item,i) in flowEngineList" :key="i">
+					<view class="caption">{{item.fullName}}</view>
+					<view class="u-flex u-flex-wrap">
+						<view class="item u-flex-col u-col-center" v-for="(child,ii) in item.children" :key="ii"
+							@click="handelClick(child)">
+							<text class="u-font-40 item-icon" :class="child.icon"
+								:style="{'background':child.iconBackground|| '#008cff'}" />
+							<text class="u-font-24 u-line-1 item-text">{{child.fullName}}</text>
+						</view>
 					</view>
 				</view>
 			</view>
-		</view>
+		</mescroll-body>
 	</view>
 </template>
 
@@ -50,35 +51,29 @@
 	import {
 		FlowEngineListAll
 	} from '@/api/workFlow/flowEngine'
+	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
 	import IndexMixin from './mixin.js'
 	export default {
-		mixins: [IndexMixin],
+		mixins: [MescrollMixin, IndexMixin],
 		data() {
 			return {
-				enable: true,
 				categoryList: [],
 				flowEngineList: [],
+				upOption: {
+					use: false
+				}
 			}
 		},
-		onLoad() {
-			this.getDictionaryData()
-		},
-		onShow() {
-			this.enable = true
-		},
-		onHide() {
-			this.enable = false
-		},
-		onPullDownRefresh() {
-			this.getDictionaryData()
-		},
 		methods: {
-			getDictionaryData() {
+			downCallback() {
 				this.$store.dispatch('base/getDictionaryData', {
 					sort: 'WorkFlowCategory'
 				}).then(res => {
 					this.categoryList = res
 					this.getFlowEngineList()
+					this.mescroll.endSuccess(res.length, false);
+				}).catch(() => {
+					this.mescroll.endErr();
 				})
 			},
 			getFlowEngineList() {
@@ -92,7 +87,6 @@
 						this.$set(this.flowEngineList[i], 'count', count)
 					}
 					this.flowEngineList = this.flowEngineList.filter(o => o.children.length);
-					uni.stopPullDownRefresh();
 				})
 			},
 			handelClick(item) {
