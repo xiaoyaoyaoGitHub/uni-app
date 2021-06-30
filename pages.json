@@ -39,6 +39,7 @@
 			"style": {
 				"navigationBarTitleText": "消息",
 				"app-plus": {
+					//#ifdef APP-PLUS
 					"titleNView": {
 						"buttons": [{
 							"fontSize": "22px",
@@ -47,6 +48,7 @@
 							"text": "\ue6bd"
 						}]
 					}
+					//#endif
 				}
 			}
 		},
@@ -212,6 +214,18 @@
 					"path": "order/index",
 					"style": {
 						"navigationBarTitleText": "订单示例"
+					}
+				},
+				{
+					"path": "features/index",
+					"style": {
+						"navigationBarTitleText": ""
+					}
+				},
+				{
+					"path": "features/form",
+					"style": {
+						"navigationBarTitleText": ""
 					}
 				}
 			]
