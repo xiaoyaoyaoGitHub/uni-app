@@ -66,27 +66,11 @@
 		},
 		methods: {
 			downCallback() {
-				this.$store.dispatch('base/getDictionaryData', {
-					sort: 'WorkFlowCategory'
-				}).then(res => {
-					this.categoryList = res
-					this.getFlowEngineList()
-					this.mescroll.endSuccess(res.length, false);
+				FlowEngineListAll().then(res => {
+					this.flowEngineList = res.data.list
+					this.mescroll.endSuccess(res.data.list.length, false);
 				}).catch(() => {
 					this.mescroll.endErr();
-				})
-			},
-			getFlowEngineList() {
-				FlowEngineListAll().then(res => {
-					const list = res.data.list
-					this.flowEngineList = JSON.parse(JSON.stringify(this.categoryList))
-					for (let i = 0; i < this.flowEngineList.length; i++) {
-						let child = list.filter(o => this.flowEngineList[i].enCode === o.category)
-						let count = child.length
-						this.$set(this.flowEngineList[i], 'children', child)
-						this.$set(this.flowEngineList[i], 'count', count)
-					}
-					this.flowEngineList = this.flowEngineList.filter(o => o.children.length);
 				})
 			},
 			handelClick(item) {
