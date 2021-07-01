@@ -6,6 +6,14 @@ export function config(id) {
 		method: 'GET'
 	})
 }
+
+export function wirteBack(id,featuresId) {
+	return request({
+		url: `/api/visualdev/OnlineDev/App/${featuresId}/${id}`,
+		method: 'GET'
+	})
+}
+
 export function list(data) {
 	return request({
 		url: `/api/visualdev/OnlineDev/App/${data.featuresId}/List`,

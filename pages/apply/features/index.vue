@@ -3,40 +3,199 @@
 		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :sticky="true"
 			:down="downOption" :up="upOption" :bottombar="false">
 			<view class="features-hd u-flex">
-				<u-dropdown>
-					<u-dropdown-item v-model="sortValue" title="排序" :options="options1"></u-dropdown-item>
+				<u-dropdown ref="uDropdown">
+					<u-dropdown-item v-model="sortValue" title="排序" :options="sortData"
+						@change="changeSolt($event,sortData)"></u-dropdown-item>
 					<u-dropdown-item title="筛选" v-model="screenAalue">
-						<view class="slot-content">
-							<!-- <view class="u-text-center u-content-color u-m-t-20 u-m-b-20">其他自定义内容</view>
-							<view class="u-text-center u-content-color u-m-t-20 u-m-b-20">其他自定义内容</view>
-							<view class="u-text-center u-content-color u-m-t-20 u-m-b-20">其他自定义内容</view>
-							<view class="u-text-center u-content-color u-m-t-20 u-m-b-20">其他自定义内容</view>
-							<view class="u-text-center u-content-color u-m-t-20 u-m-b-20">其他自定义内容</view>
-							<view class="u-text-center u-content-color u-m-t-20 u-m-b-20">其他自定义内容</view> -->
-						</view>
-						<view class="buttom-box">
-							<u-button class="buttom-btn">重置</u-button>
-							<u-button class="buttom-btn" type="primary">检索</u-button>
-						</view>
+						<u-form :model="filterForm" ref="filterForm" :errorType="['toast']" label-position="left"
+							label-width="150" label-align="left">
+							<view class="slot-content" v-for="(filter,index) in filter" :key='index'>
+								<view class="u-p-l-16 u-p-r-16 slotList">
+									<u-form-item :label="filter.__config__.label"
+										v-if="filter.__config__.jnpfKey == 'comInput'">
+										<u-input placeholder="请输入" v-model="filterForm[filter.__vModel__]"></u-input>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="billRule"
+										v-if="filter.__config__.jnpfKey == 'billRule'">
+										<u-input v-model="filterForm[filter.__vModel__]" placeholder="系统自动生成" disabled>
+										</u-input>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="createUser"
+										v-if="filter.__config__.jnpfKey == 'createUser'">
+										<u-input v-model="filterForm[filter.__vModel__]" placeholder="系统自动生成" disabled>
+										</u-input>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="createTime"
+										v-if="filter.__config__.jnpfKey == 'createTime'">
+										<u-input v-model="filterForm[filter.__vModel__]" placeholder="系统自动生成" disabled>
+										</u-input>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="modifyUser"
+										v-if="filter.__config__.jnpfKey == 'modifyUser'">
+										<u-input v-model="filterForm[filter.__vModel__]" placeholder="系统自动生成" disabled>
+										</u-input>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="modifyTime"
+										v-if="filter.__config__.jnpfKey == 'modifyTime'">
+										<u-input v-model="filterForm[filter.__vModel__]" placeholder="系统自动生成" disabled>
+										</u-input>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="currOrganize"
+										v-if="filter.__config__.jnpfKey == 'currOrganize'">
+										<u-input v-model="filterForm[filter.__vModel__]" placeholder="系统自动生成" disabled>
+										</u-input>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="currDept"
+										v-if="filter.__config__.jnpfKey == 'currDept'">
+										<u-input v-model="filterForm[filter.__vModel__]" placeholder="系统自动生成" disabled>
+										</u-input>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="currPosition"
+										v-if="filter.__config__.jnpfKey == 'currPosition'">
+										<u-input v-model="filterForm[filter.__vModel__]" placeholder="系统自动生成" disabled>
+										</u-input>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label"
+										v-if="filter.__config__.jnpfKey == 'textarea'">
+										<u-input placeholder="请输入" v-model="filterForm[filter.__vModel__]"
+											type="textarea"></u-input>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="checkbox"
+										v-if="filter.__config__.jnpfKey == 'checkbox'">
+										<jnpf-select v-model="filterForm[filter.__vModel__]" placeholder="请选择下拉框组"
+											:options="filter.__config__.options" :props="filter.__config__.props"
+											multiple>
+										</jnpf-select>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="numInput"
+										v-if="filter.__config__.jnpfKey == 'numInput'">
+										<u-number-box v-model="filterForm[filter.__vModel__]" :min="filter.min"
+											:max="filter.max" :step="filter.step" :input-width="120"
+											:positive-integer="false" :input-height="60">
+										</u-number-box>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="select"
+										v-if="filter.__config__.jnpfKey == 'select'">
+										<jnpf-select v-model="filterForm[filter.__vModel__]" placeholder="请选择下拉框组"
+											:options="filter.__config__.options" :props="filter.__config__.props">
+										</jnpf-select>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="radio"
+										v-if="filter.__config__.jnpfKey == 'radio'">
+										<u-radio-group v-model="filterForm[filter.__vModel__]">
+											<u-radio v-for="(radios, radioIndex) in filter.__config__.options"
+												:key="radioIndex" :name="radios[filter.__config__.props.value]">
+												{{ radios[filter.__config__.props.label] }}
+											</u-radio>
+										</u-radio-group>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="switch"
+										v-if="filter.__config__.jnpfKey == 'switch'">
+										<jnpf-switch v-model="filterForm[filter.__vModel__]"></jnpf-switch>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="cascader"
+										v-if="filter.__config__.jnpfKey == 'cascader'">
+										<jnpf-cascader v-model="filterForm[filter.__vModel__]" placeholder="请选择级联选择"
+											:options="filter.__config__.options">
+										</jnpf-cascader>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="time"
+										v-if="filter.__config__.jnpfKey == 'time'">
+										<jnpf-date-time type="time" v-model="filterForm[filter.__vModel__]">
+										</jnpf-date-time>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="date"
+										v-if="filter.__config__.jnpfKey == 'date'">
+										<jnpf-date-time type="date" v-model="filterForm[filter.__vModel__]">
+										</jnpf-date-time>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="uploadImg"
+										v-if="filter.__config__.jnpfKey == 'uploadImg'">
+										<jnpf-upload v-model="filterForm[filter.__vModel__]"></jnpf-upload>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="rate"
+										v-if="filter.__config__.jnpfKey == 'rate'">
+										<u-rate v-model="filterForm[filter.__vModel__]" size="40"
+											@change="changeRate($event,filter.__vModel__)">
+										</u-rate>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="slider"
+										v-if="filter.__config__.jnpfKey == 'slider'">
+										<u-slider v-model="filterForm[filter.__vModel__]" :step="filter.step"
+											:min="filter.min" :max="filter.max" style="width: 100%;">
+											<view class="">
+												<view class="badge-button">
+													{{filterForm[filter.__vModel__]}}
+												</view>
+											</view>
+										</u-slider>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="comSelect"
+										v-if="filter.__config__.jnpfKey == 'comSelect'">
+										<jnpf-org-select type="organize" v-model="filterForm[filter.__vModel__]">
+										</jnpf-org-select>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="depSelect"
+										v-if="filter.__config__.jnpfKey == 'depSelect'">
+										<jnpf-org-select type="department" v-model="filterForm[filter.__vModel__]">
+										</jnpf-org-select>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="userSelect"
+										v-if="filter.__config__.jnpfKey == 'userSelect'">
+										<jnpf-org-select v-model="filterForm[filter.__vModel__]"></jnpf-org-select>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="posSelect"
+										v-if="filter.__config__.jnpfKey == 'posSelect'">
+										<jnpf-org-select type="position" v-model="filterForm[filter.__vModel__]">
+										</jnpf-org-select>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="divider"
+										v-if="filter.__config__.jnpfKey == 'divider'">
+										<u-divider>{{filter.__config__.default}}</u-divider>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="address"
+										v-if="filter.__config__.jnpfKey == 'address'">
+										<jnpf-city-select v-model="filterForm[filter.__vModel__]" placeholder="请选择省市区"
+											:level="2">
+										</jnpf-city-select>
+									</u-form-item>
+									<u-form-item :label="filter.__config__.label" prop="treeSelect"
+										v-if="filter.__config__.jnpfKey == 'treeSelect'">
+										<jnpf-tree-select v-model="filterForm[filter.__vModel__]" placeholder="请选择树形选择"
+											:options="filter.__config__.options">
+										</jnpf-tree-select>
+									</u-form-item>
+									<u-form-item prop="groupTitle" v-if="filter.__config__.jnpfKey == 'groupTitle'">
+										<jnpf-group :content="filter.content"
+											:content-position="filter['content-position']"></jnpf-group>
+									</u-form-item>
+								</view>
+							</view>
+							<view class="buttom-box">
+								<u-button class="buttom-btn" @click="reset">重置</u-button>
+								<u-button class="buttom-btn" type="primary" @click="retrieval">检索</u-button>
+							</view>
+						</u-form>
 					</u-dropdown-item>
 				</u-dropdown>
 			</view>
 
 			<view class="features-listBox u-p-l-16 u-p-r-16">
-				<view class="features-list u-m-t-20" v-for="(item,index) in list" :key='index' @click="">
+				<view class="features-list u-m-t-20" v-for="(item,index) in list" :key='index'>
 					<u-swipe-action :index="index" :show="item.show" @click="handleClick" @open="open"
 						:options="options" @content-click="goDetail(item.id)">
-						<view class="features-item u-flex" v-for="(items,i) in item">
-							<text>{{items.label+':'}}</text>
-							<text class="u-p-l-16">{{items.value}}</text>
+						<view class="features-item u-flex" v-for="(config,i) in configData" :key="i">
+							<text>{{config.label+':'}}</text>
+							<text class="u-p-l-16">{{item[config.prop]}}</text>
 						</view>
 					</u-swipe-action>
 				</view>
 			</view>
 		</mescroll-body>
-		<view class="com-addBtn" @click="goDetail()">
+		<view class="com-addBtn" @click="add()">
 			<u-icon name="plus" size="60" color="#fff" />
 		</view>
+
 	</view>
 </template>
 
@@ -64,15 +223,6 @@
 					},
 
 				],
-				options2: [{
-						label: '去冰',
-						value: 1,
-					},
-					{
-						label: '加冰',
-						value: 2,
-					},
-				],
 				downOption: {
 					use: true,
 					auto: true
@@ -80,7 +230,7 @@
 				upOption: {
 					page: {
 						num: 0,
-						size: 20,
+						size: 5,
 						time: null
 					},
 					empty: {
@@ -89,12 +239,10 @@
 						tip: "暂无数据",
 						fixed: true,
 						top: "300rpx",
+						zIndex: 9
 					},
 					textNoMore: '没有更多数据',
 				},
-				keyword: '',
-				list: [],
-				userInfo: {},
 				options: [{
 					text: '删除',
 					style: {
@@ -102,15 +250,13 @@
 					}
 				}],
 				id: '',
-				data: {
-					columnData: {},
-					formData: [],
-					tables: []
-				},
 				list: [],
 				sortData: [],
 				filter: [],
-				configData: []
+				configData: [],
+				filterForm: {},
+				page: {},
+				upCallbackData:'',
 			}
 		},
 		onLoad(option) {
@@ -128,90 +274,120 @@
 		methods: {
 			init() {
 				config(this.id).then(res => {
-					console.log(res)
 					this.flowEngine(res.data)
-
 				})
 			},
+
+
 
 			/* 初始化处理 */
 			flowEngine(data) {
 				let configList = JSON.parse(data.columnData);
-				console.log(configList)
 				/* 排序赋值 */
-				this.sortData = configList.sortList
+				let sortData = [];
+				for (let i = 0; i < configList.sortList.length; i++) {
+					let descItem = {
+						label: configList.sortList[i].label + '倒序',
+						sidx: configList.sortList[i].prop,
+						value: configList.sortList[i].prop + 'desc',
+						sort: 'desc'
+					}
+					let ascItem = {
+						label: configList.sortList[i].label + '升序',
+						sidx: configList.sortList[i].prop,
+						value: configList.sortList[i].prop + 'asc',
+						sort: 'asc'
+					}
+
+					sortData.push(descItem, ascItem)
+				}
+				this.sortData = sortData
+				console.log(this.sortData)
 				/* 筛选赋值 */
-				this.filter = configList.searchList
+				this.filter = configList.searchList;
+
 				this.configData = configList.columnList
-			},
-			closeDropdown() {
-				this.$refs.uDropdown.close();
 			},
 			open(index) {
 				this.list[index].show = true;
 				this.list.map((val, idx) => {
 					if (index != idx) this.list[idx].show = false;
 				})
-				
 			},
 			handleClick(index) {
 				const item = this.list[index];
-				delList(this.id,item[0].id).then(res => {
+				delList(this.id, item.id).then(res => {
 					this.$u.toast(res.msg)
 					this.list.splice(index, 1)
-					this.list[index].show = false;
 				})
 			},
-			goDetail(id) {
-				const url = './form?type=' + this.current + (id ? '&id=' + id : '')
-				uni.navigateTo({
-					url: url
-				})
+
+
+			retrieval() {
+				this.upCallbackData = '0'
+				this.mescroll.resetUpScroll();
+				this.$refs.uDropdown.close();
 			},
+			reset() {
+				this.filterForm = {}
+				this.mescroll.resetUpScroll();
+				this.$refs.uDropdown.close();
+			},
+
+			changeSolt(e, data) {
+				for (let i = 0; i < data.length; i++) {
+					this.upCallbackData = data[i]
+					if (e == data[i].value) return this.mescroll.resetUpScroll();
+				}
+			},
+
 			/* 渲染列表页 */
 			upCallback(page) {
+				this.page = page;
 				let query = {
 					currentPage: page.num,
 					pageSize: page.size,
-					keyword: this.keyword,
-					featuresId: this.id
+					featuresId: this.id,
+					sort: 'asc'
 				}
+				switch (typeof(this.upCallbackData)) {
+					case 'string':
+						query.json = this.filterForm
+						break
+					case 'object':
+						query.sort = this.upCallbackData.sort,
+						query.sidx = this.upCallbackData.sidx
+						break
+					default:
+				}
+
 				list(query, {
 					load: page.num == 1
 				}).then(res => {
 					this.mescroll.endSuccess(res.data.list.length);
 					if (page.num == 1) this.list = [];
-					let data = res.data.list.map(o =>({
+					let list = res.data.list.map(o => ({
 						show: false,
 						...o
 					}));
-					for (let j = 0; j < data.length; j++) {
-						let _showList = [];
-						let val = data[j];
-						console.log(val)
-						for (let i = 0; i < this.configData.length; i++) {
-							let prop = this.configData[i].prop;
-							let label = this.configData[i].label;
-							let _show = {};
-							_show.id = val.id
-							_show.prop = prop
-							_show.label = label
-							if (val[prop]) _show.value = val[prop]
-							_showList.push(_show)
-						}
-						this.list.push(_showList)
-					}
+					this.list = this.list.concat(list);
+
 				}).catch(() => {
 					this.mescroll.endErr();
 				})
 			},
 
-
+			add(id) {
+				const url = './form?featuresId=' + this.id
+				uni.navigateTo({
+					url: url
+				})
+			},
 
 			goDetail(id) {
-				let url = './form?featuresId=' + this.id
+				let url = './form?id=' + id + '&&featuresId=' + this.id
 				if (this.scanType) {
-					url = './form?featuresId=' + this.id + '&type=' + this.scanType
+					url = './form?id=' + id + "&featuresId=" + this.id + '&type=' + this.scanType
 				}
 				uni.navigateTo({
 					url: url
@@ -265,6 +441,12 @@
 	}
 
 	.features-v {
+
+
+		.slotList {
+			background-color: #FFFFFF;
+		}
+
 		.features-hd {
 			width: 100%;
 			background-color: #FFFFFF;

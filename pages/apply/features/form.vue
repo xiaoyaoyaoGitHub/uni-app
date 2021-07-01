@@ -316,7 +316,8 @@
 	import {
 		config,
 		create,
-		update
+		update,
+		wirteBack
 	} from '@/api/apply/features.js'
 	export default {
 		data() {
@@ -340,20 +341,22 @@
 			this.$refs.dataForm.setRules(this.rules);
 		},
 		onLoad(option) {
-			console.log(option)
 			let featuresId = option.featuresId
 			/* 判断url里面有没有id 返回true/false  修改表单的id*/
 			this.isId = Object.prototype.hasOwnProperty.call(option, 'id');
 			this.featuresId = option.featuresId
 			if (this.isId) {
 				this.id = option.id
+				wirteBack(this.id,featuresId).then(res =>{
+					this.dataForm = JSON.parse(res.data.data)
+					this.dataForm.id = this.id
+				})
 			}
 			this.init(featuresId)
 		},
 		methods: {
 			init(id) {
 				config(id).then(res => {
-					console.log(res)
 					this.filedList = JSON.parse(res.data.formData);
 				})
 			},
@@ -361,7 +364,6 @@
 				this.$refs.dataForm.validate((valid) => {
 					if (valid) {
 						const method = this.dataForm.id ? update : create;
-
 						let data = {
 							data: JSON.stringify(this.dataForm)
 						}
