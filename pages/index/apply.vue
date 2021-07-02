@@ -16,7 +16,10 @@
 			<navigator url="/pages/apply/fieldPunchCard/index" class="u-m-b-20">
 				<text>外勤打卡</text>
 			</navigator>
-			<navigator url="/pages/apply/features/index?id=fda7b796317a4cf280890288ee7bb916"><text>领用申请</text></navigator>
+			<navigator url="/pages/apply/features/index?id=fda7b796317a4cf280890288ee7bb916"><text>领用申请</text>
+			</navigator>
+			<navigator url="/pages/apply/staffInformation/index"><text>职员示例</text>
+			</navigator>
 		</view>
 	</view>
 </template>
