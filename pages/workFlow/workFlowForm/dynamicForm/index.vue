@@ -495,9 +495,6 @@
 				limit: {}
 			}
 		},
-		onLoad(url) {
-
-		},
 		mounted() {
 			this.$refs.dataForm.setRules(this.rules)
 		},
@@ -509,21 +506,20 @@
 			init(data) {
 				this.dataForm.id = data.id || '';
 				this.setting = data;
-				console.log(this.setting)
+
 				this.filedList = JSON.parse(this.setting.formConf);
-				console.log(this.filedList)
+
 				let fields = this.filedList.fields;
 				let defaultValue;
 				let vModel;
 				let dataType;
 				let propsUrl;
 				let dynamicList;
-				let _options;
 				let jnpfKey;
 				let children;
 				let required;
 				let label;
-				
+
 				for (let i = 0; i < fields.length; i++) {
 					defaultValue = fields[i].__config__.defaultValue;
 					vModel = fields[i].__vModel__;
@@ -534,10 +530,22 @@
 					label = fields[i].__config__.label;
 					if (required) {
 						this.rules[vModel] = [{
-							required : true,
-							message : label+'不能为空',
-							trigger : 'blur'
+							required: true,
+							message: label + '不能为空',
+							trigger: 'blur',
 						}];
+						if (vModel.indexOf('dateField') >= 0 ||
+							vModel.indexOf('selectField') >= 0 || vModel.indexOf('radioField') >= 0) {
+							this.rules[vModel] = this.rules[vModel].map(o => ({
+								type: 'number',
+								...o
+							}))
+						} else if (vModel.indexOf('checkboxField') >= 0) {
+							this.rules[vModel] = this.rules[vModel].map(o => ({
+								type: 'array',
+								...o
+							}))
+						}
 					}
 					if (defaultValue) this.$set(this.dataForm, vModel, defaultValue);
 					if (jnpfKey == 'card') {
@@ -547,17 +555,39 @@
 						let card_dataType;
 						let card_propsUrl;
 						let card_dynamicList;
-						let card_options;
 						let card_jnpfKey;
+						let card_required;
+						let card_label;
 						for (let j = 0; j < children.length; j++) {
 							card_dataType = children[j].__config__.dataType;
 							card_propsUrl = children[j].__config__.propsUrl;
 							card_jnpfKey = children[j].__config__.jnpfKey;
 							card_defaultValue = children[j].__config__.defaultValue;
 							card_vModel = children[j].__vModel__;
+							card_label = children[j].__config__.label;
+							card_required = children[j].__config__.required;
 							if (card_defaultValue) this.$set(this.dataForm, card_vModel, card_defaultValue);
 							if (card_dataType == 'dynamic') {
 								this.dynamicHandel(card_propsUrl, children[j], card_jnpfKey)
+							}
+							if (card_required) {
+								this.rules[card_vModel] = [{
+									required: true,
+									message: card_label + '不能为空',
+									trigger: 'change'
+								}];
+								if (card_vModel.indexOf('dateField') >= 0 ||
+									card_vModel.indexOf('selectField') >= 0 || card_vModel.indexOf('radioField') >= 0) {
+									this.rules[card_vModel] = this.rules[card_vModel].map(o => ({
+										type: 'number',
+										...o
+									}))
+								} else if (card_vModel.indexOf('checkboxField') >= 0) {
+									this.rules[card_vModel] = this.rules[card_vModel].map(o => ({
+										type: 'array',
+										...o
+									}))
+								}
 							}
 						}
 					}
@@ -565,7 +595,7 @@
 						this.dynamicHandel(propsUrl, fields[i], jnpfKey)
 					}
 				}
-				
+
 				if (data.id) {
 					DynamicInfo(data.id).then(res => {
 						this.dataForm = JSON.parse(res.data.data)

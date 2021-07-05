@@ -302,7 +302,6 @@
 					sortData.push(descItem, ascItem)
 				}
 				this.sortData = sortData
-				console.log(this.sortData)
 				/* 筛选赋值 */
 				this.filter = configList.searchList;
 
