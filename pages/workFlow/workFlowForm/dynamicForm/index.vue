@@ -219,7 +219,7 @@
 				</template>
 
 				<!-- 卡片 -->
-				<view class="jnpf-card">
+				<view class="jnpf-card" v-if="items.__config__.jnpfKey == 'card'">
 					<block v-for="(card,i) in items.__config__.children" :key='i'>
 						<template v-if="card.__config__.jnpfKey == 'billRule'">
 							<u-form-item :label="card.__config__.label" :prop="card.__vModel__"
@@ -446,27 +446,34 @@
 
 
 				<!-- 子表 -->
-				<template v-if="items.__config__.jnpfKey == 'table'">
-					<view class="jnpf-table" v-if="judgeShow(items.__vModel__)">
-						<view class="jnpf-table-item" v-for="(tableItem,tableIndex) in dataForm[items.__vModel__]"
-							:key='tableIndex'>
-							<view class="jnpf-table-item-title u-flex u-row-between">
-								<text class="jnpf-table-item-title-num">设计子表({{tableIndex+1}})</text>
-								<view class="jnpf-table-item-title-action" v-if="dataForm.table.length>1"
-									@click="delItem(tableIndex)">删除
-								</view>
-							</view>
-							<view v-for="(childItem, childIndex) in items.__config__.children" :key="childIndex">
-								<u-form-item :label="childItem.__config__.label" :prop="childItem.__vModel__">
-									<u-input v-model="dataForm[childItem.__vModel__]" placeholder="请输入"></u-input>
-								</u-form-item>
-							</view>
+				<view class="jnpf-table" v-if="items.__config__.jnpfKey == 'table'">
+					<view class="jnpf-table-item" v-for="(item,i) in dataForm[items.__vModel__]" :key="i">
+						<view class="jnpf-table-item-title u-flex u-row-between">
+							<text class="jnpf-table-item-title-num">{{items.__config__.label}}({{i+1}})</text>
+							<view class="jnpf-table-item-title-action" @click="delItem(i,items.__vModel__)"
+								v-if="dataForm[items.__vModel__].length > 1">删除</view>
 						</view>
-						<view class="jnpf-table-addBtn" @click="addItem(items)">
-							<u-icon name="plus" color="#2979ff"></u-icon>添加
+						<view v-for="(children,c) in items.__config__.children">
+
+							<u-form-item :label="children.__config__.label" :prop="children.__vModel__"
+								v-if="children.__config__.jnpfKey == 'select'">
+								<jnpf-select v-model="dataForm[items.__vModel__][i][children.__vModel__]"
+									placeholder="请选择下拉框组" :options="children.__slot__.options"
+									:props="children.__config__.props">
+								</jnpf-select>
+							</u-form-item>
+							<u-form-item :label="children.__config__.label" :prop="children.__vModel__"
+								v-if="children.__config__.jnpfKey == 'date'">
+								<jnpf-date-time type="date"
+									v-model="dataForm[items.__vModel__][i][children.__vModel__]">
+								</jnpf-date-time>
+							</u-form-item>
 						</view>
 					</view>
-				</template>
+					<view class="jnpf-table-addBtn" @click="addTable(items)">
+						<u-icon name="plus" color="#2979ff"></u-icon>添加
+					</view>
+				</view>
 			</view>
 		</u-form>
 	</view>
@@ -487,7 +494,13 @@
 				filedList: [],
 				setting: {},
 				dataForm: {
-					// table: []
+					tableField112: [{
+							timeField113: ''
+						},
+						{
+							timeField113: ''
+						},
+					]
 				},
 				rules: {},
 				tableVmodel: [],
@@ -496,7 +509,7 @@
 			}
 		},
 		mounted() {
-			this.$refs.dataForm.setRules(this.rules)
+			this.$refs.dataForm.setRules(this.rules);
 		},
 		methods: {
 			changeRate(e, model) {
@@ -504,12 +517,12 @@
 				this.$set(this.dataForm, model, rateVal)
 			},
 			init(data) {
+				this.dataForm = {}
 				this.dataForm.id = data.id || '';
 				this.setting = data;
-
 				this.filedList = JSON.parse(this.setting.formConf);
-
 				let fields = this.filedList.fields;
+				console.log(fields)
 				let defaultValue;
 				let vModel;
 				let dataType;
@@ -535,7 +548,8 @@
 							trigger: 'blur',
 						}];
 						if (vModel.indexOf('dateField') >= 0 ||
-							vModel.indexOf('selectField') >= 0 || vModel.indexOf('radioField') >= 0) {
+							vModel.indexOf('selectField') >= 0 || vModel.indexOf('radioField') >= 0 || vModel.indexOf(
+								'switchField') >= 0) {
 							this.rules[vModel] = this.rules[vModel].map(o => ({
 								type: 'number',
 								...o
@@ -548,7 +562,10 @@
 						}
 					}
 					if (defaultValue) this.$set(this.dataForm, vModel, defaultValue);
-					if (jnpfKey == 'card') {
+
+
+					if (jnpfKey == 'card' || jnpfKey == 'table') {
+						let item = {};
 						children = fields[i].__config__.children;
 						let card_defaultValue;
 						let card_vModel;
@@ -566,6 +583,7 @@
 							card_vModel = children[j].__vModel__;
 							card_label = children[j].__config__.label;
 							card_required = children[j].__config__.required;
+							item[card_vModel] = card_defaultValue;
 							if (card_defaultValue) this.$set(this.dataForm, card_vModel, card_defaultValue);
 							if (card_dataType == 'dynamic') {
 								this.dynamicHandel(card_propsUrl, children[j], card_jnpfKey)
@@ -577,7 +595,8 @@
 									trigger: 'change'
 								}];
 								if (card_vModel.indexOf('dateField') >= 0 ||
-									card_vModel.indexOf('selectField') >= 0 || card_vModel.indexOf('radioField') >= 0) {
+									card_vModel.indexOf('selectField') >= 0 || card_vModel.indexOf('radioField') >= 0 ||
+									card_vModel.indexOf('switchField') >= 0) {
 									this.rules[card_vModel] = this.rules[card_vModel].map(o => ({
 										type: 'number',
 										...o
@@ -590,6 +609,8 @@
 								}
 							}
 						}
+						this.dataForm[vModel] = [];
+						this.dataForm[vModel].push(item)
 					}
 					if (dataType == 'dynamic') {
 						this.dynamicHandel(propsUrl, fields[i], jnpfKey)
@@ -615,14 +636,19 @@
 				})
 			},
 
-			addItem(item) {
-				let childItem = {}
-				let list = this.dataForm.table
+			addTable(item) {
+				console.log(item)
+				let childItem = {};
+				let list = this.dataForm[item.__vModel__];
+				console.log(list)
 				for (var j = 0; j < item.__config__.children.length; j++) {
 					let e = item.__config__.children[j]
 					childItem[e.__vModel__] = e.__config__.defaultValue
 				}
-				this.dataForm.table.push(childItem)
+				this.dataForm[item.__vModel__].push(childItem)
+			},
+			delItem(item, i, model) {
+				this.dataForm[model].splice(i, 1);
 			},
 			/* 可见 */
 			judgeShow(id) {
@@ -661,7 +687,7 @@
 
 <style lang="scss" scoped>
 	uni-view {
-		display: inline;
+		// display: inline;
 	}
 
 	.badge-button {
