@@ -55,8 +55,8 @@ const Socket = {
 							messageText: data.messageDefaultText,
 							messageCount: data.unreadMessageCount,
 							noticeCount: data.unreadNoticeCount,
-							noticeDate: 0,
-							messageDate: 0
+							noticeDate: data.noticeDefaultTime || 0,
+							messageDate: data.messageDefaultTime || 0
 						}
 						let badgeNum = data.unreadMessageCount + data.unreadNoticeCount
 						for (let i = 0; i < data.unreadNums.length; i++) {
