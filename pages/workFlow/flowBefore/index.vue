@@ -176,6 +176,7 @@
 			},
 			getEngineInfo(data) {
 				FlowEngineInfo(data.flowId).then(res => {
+					data.type = res.data.type
 					data.formConf = res.data.formData
 					const flowTemplateJson = res.data.flowTemplateJson ? JSON.parse(res.data.flowTemplateJson) :
 						null
@@ -213,6 +214,7 @@
 					this.recordList = res.data.flowTaskOperatorRecordList
 					this.properties = res.data.approversProperties || {}
 					this.endTime = this.flowTaskInfo.completion == 100 ? this.flowTaskInfo.endTime : 0
+					data.type = this.flowTaskInfo.type
 					const flowTemplateJson = this.flowTaskInfo.flowTemplateJson ? JSON.parse(this.flowTaskInfo
 						.flowTemplateJson) : null
 					this.endTime = this.flowTaskInfo.completion == 100 ? this.flowTaskInfo.endTime : 0
