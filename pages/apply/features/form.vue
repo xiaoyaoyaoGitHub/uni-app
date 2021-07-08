@@ -295,25 +295,108 @@
 				</view>
 
 				<!-- 子表 -->
-				<!-- <view class="jnpf-table" v-if="items.__config__.jnpfKey == 'table'">
-					<view class="jnpf-table-item" v-for="(tableItem,tableIndex) in dataForm[items.__vModel__]"
-						:key='tableIndex'>
-						<view class="jnpf-table-item-title u-flex u-row-between">
-							<text class="jnpf-table-item-title-num">设计子表({{tableIndex+1}})</text>
-							<view class="jnpf-table-item-title-action" v-if="dataForm.table.length>1"
-								@click="delItem(tableIndex)">删除
+				<template v-if="items.__config__.jnpfKey == 'table'">
+					<view class="jnpf-table">
+						<view class="jnpf-table-item" v-for="(item,i) in dataForm[items.__vModel__]" :key="i">
+							<view class="jnpf-table-item-title u-flex u-row-between">
+								<text class="jnpf-table-item-title-num">{{items.__config__.label}}({{i+1}})</text>
+								<view class="jnpf-table-item-title-action" @click="delItem(i,items.__vModel__)"
+									v-if="dataForm[items.__vModel__].length > 1">删除</view>
+							</view>
+							<view v-for="(children,c) in items.__config__.children">
+								<template v-if="children.__config__.jnpfKey == 'comInput'">
+									<u-form-item :label="children.__config__.label" :prop="children.__vModel__">
+										<u-input placeholder="请输入"
+											v-model="dataForm[items.__vModel__][i][children.__vModel__]"></u-input>
+									</u-form-item>
+								</template>
+								<template v-if="children.__config__.jnpfKey == 'numInput'">
+									<u-form-item :label="children.__config__.label" :prop="children.__vModel__">
+										<u-number-box v-model="dataForm[items.__vModel__][i][children.__vModel__]"
+											:min="children.min" :max="children.max" :step="children.step"
+											:input-width="120" :positive-integer="false" :input-height="60">
+										</u-number-box>
+									</u-form-item>
+								</template>
+								<u-form-item :label="children.__config__.label" :prop="children.__vModel__"
+									v-if="children.__config__.jnpfKey == 'select'">
+									<jnpf-select v-model="dataForm[items.__vModel__][i][children.__vModel__]"
+										placeholder="请选择下拉框组" :options="children.__slot__.options"
+										:props="children.__config__.props">
+									</jnpf-select>
+								</u-form-item>
+								<template v-if="children.__config__.jnpfKey == 'treeSelect'">
+									<u-form-item :label="children.__config__.label" :prop="children.__vModel__">
+										<jnpf-tree-select v-model="dataForm[items.__vModel__][i][children.__vModel__]"
+											:placeholder="children.placeholder" :options="children.options">
+										</jnpf-tree-select>
+									</u-form-item>
+								</template>
+								<template v-if="children.__config__.jnpfKey == 'cascader'">
+									<u-form-item :label="children.__config__.label" :prop="children.__vModel__">
+										<jnpf-cascader v-model="dataForm[items.__vModel__][i][children.__vModel__]"
+											placeholder="请选择级联选择" :options="children.options">
+										</jnpf-cascader>
+									</u-form-item>
+								</template>
+								<u-form-item :label="children.__config__.label" :prop="children.__vModel__"
+									v-if="children.__config__.jnpfKey == 'date'">
+									<jnpf-date-time type="date"
+										v-model="dataForm[items.__vModel__][i][children.__vModel__]">
+									</jnpf-date-time>
+								</u-form-item>
+								<u-form-item :label="children.__config__.label" :prop="children.__vModel__"
+									v-if="children.__config__.jnpfKey == 'time'">
+									<jnpf-date-time type="time"
+										v-model="dataForm[items.__vModel__][i][children.__vModel__]">
+									</jnpf-date-time>
+								</u-form-item>
+								<u-form-item :label="children.__config__.label" :prop="children.__vModel__"
+									v-if="children.__config__.jnpfKey == 'address'">
+									<jnpf-city-select v-model="dataForm[items.__vModel__][i][children.__vModel__]"
+										placeholder="请选择省市区" :level="2">
+									</jnpf-city-select>
+								</u-form-item>
+								<template v-if="children.__config__.jnpfKey == 'comSelect'">
+									<u-form-item :label="children.__config__.label" :prop="children.__vModel__">
+										<jnpf-org-select type="organize"
+											v-model="dataForm[items.__vModel__][i][children.__vModel__]">
+										</jnpf-org-select>
+									</u-form-item>
+								</template>
+								<template v-if="children.__config__.jnpfKey == 'depSelect'">
+									<u-form-item :label="children.__config__.label" :prop="children.__vModel__">
+										<jnpf-org-select type="department"
+											v-model="dataForm[items.__vModel__][i][children.__vModel__]">
+										</jnpf-org-select>
+									</u-form-item>
+								</template>
+								<template v-if="children.__config__.jnpfKey == 'userSelect'">
+									<u-form-item :label="children.__config__.label" :prop="children.__vModel__">
+										<jnpf-org-select v-model="dataForm[items.__vModel__][i][children.__vModel__]">
+										</jnpf-org-select>
+									</u-form-item>
+								</template>
+								<template v-if="children.__config__.jnpfKey == 'posSelect'">
+									<u-form-item :label="children.__config__.label" :prop="children.__vModel__">
+										<jnpf-org-select type="position"
+											v-model="dataForm[items.__vModel__][i][children.__vModel__]">
+										</jnpf-org-select>
+									</u-form-item>
+								</template>
+								<template v-if="children.__config__.jnpfKey == 'switch'">
+									<u-form-item :label="children.__config__.label" :prop="children.__vModel__">
+										<jnpf-switch v-model="dataForm[items.__vModel__][i][children.__vModel__]">
+										</jnpf-switch>
+									</u-form-item>
+								</template>
 							</view>
 						</view>
-						<view v-for="(childItem, childIndex) in items.__config__.children" :key="childIndex">
-							<u-form-item :label="childItem.__config__.label" prop="dataForm.table[i].comInput">
-								<u-input v-model="dataForm[childItem.__vModel__]" placeholder="请输入"></u-input>
-							</u-form-item>
+						<view class="jnpf-table-addBtn" @click="addTable(items)">
+							<u-icon name="plus" color="#2979ff"></u-icon>添加
 						</view>
 					</view>
-					<view class="jnpf-table-addBtn" @click="addItem(items)">
-						<u-icon name="plus" color="#2979ff"></u-icon>添加
-					</view>
-				</view> -->
+				</template>
 			</view>
 
 		</u-form>
@@ -336,9 +419,7 @@
 			return {
 				filedList: [],
 				setting: {},
-				dataForm: {
-					// table: []
-				},
+				dataForm: {},
 				rules: {},
 				tableVmodel: [],
 				options: [],
@@ -380,11 +461,12 @@
 						let cardRequired;
 						let cardVModel;
 						let cardLabel;
+						let jnpfKey;
 						for (let i = 0; i < fields.length; i++) {
 							required = fields[i].__config__.required;
 							label = fields[i].__config__.label;
 							vModel = fields[i].__vModel__;
-							children = fields[i].__config__.children || [];
+							jnpfKey = fields[i].__config__.jnpfKey;
 							if (required) {
 								this.rules[vModel] = [{
 									required: true,
@@ -392,48 +474,80 @@
 									trigger: 'blur'
 								}];
 								if (vModel.indexOf('dateField') >= 0 ||
-									vModel.indexOf('selectField') >= 0 || vModel.indexOf(
-										'radioField') >= 0) {
+									vModel.indexOf('selectField') >= 0 || vModel.indexOf('radioField') >=
+									0 || vModel.indexOf(
+										'switchField') >= 0 || vModel.indexOf(
+										'numInputField') >= 0) {
 									this.rules[vModel] = this.rules[vModel].map(o => ({
 										type: 'number',
 										...o
 									}))
-								} else if (vModel.indexOf('checkboxField') >= 0) {
+								} else if (vModel.indexOf('checkboxField') >= 0 || vModel.indexOf(
+										'addressField') >= 0) {
 									this.rules[vModel] = this.rules[vModel].map(o => ({
 										type: 'array',
 										...o
 									}))
 								}
 							}
-							for (let c = 0; c < children.length; c++) {
-								cardRequired = children[c].__config__.required;
-								cardVModel = children[c].__vModel__;
-								cardLabel = children[c].__config__.label;
-								if (cardRequired) {
-									this.rules[cardVModel] = [{
-										required: true,
-										message: cardLabel + '不能为空',
-										trigger: 'blur'
-									}];
-									if (card_vModel.indexOf('dateField') >= 0 ||
-										card_vModel.indexOf('selectField') >= 0 || card_vModel.indexOf(
-											'radioField') >= 0) {
-										this.rules[cardVModel] = this.rules[cardVModel].map(o => ({
-											type: 'number',
-											...o
-										}))
-									} else if (cardVModel.indexOf('checkboxField') >= 0) {
-										this.rules[cardVModel] = this.rules[cardVModel].map(o => ({
-											type: 'array',
-											...o
-										}))
+							if (jnpfKey == 'card' || jnpfKey == 'table') {
+								children = fields[i].__config__.children || [];
+								let item = {};
+								for (let c = 0; c < children.length; c++) {
+									cardRequired = children[c].__config__.required;
+									cardVModel = children[c].__vModel__;
+									cardLabel = children[c].__config__.label;
+									item[cardVModel] = '';
+									if (cardRequired) {
+										this.rules[cardVModel] = [{
+											required: true,
+											message: cardLabel + '不能为空',
+											trigger: 'blur'
+										}];
+										if (cardVModel.indexOf('dateField') >= 0 ||
+											cardVModel.indexOf('selectField') >= 0 || cardVModel.indexOf(
+												'radioField') >= 0 ||
+											cardVModel.indexOf('switchField') >= 0 || cardVModel.indexOf(
+												'numInputField') >= 0) {
+											this.rules[cardVModel] = this.rules[cardVModel].map(o => ({
+												type: 'number',
+												...o
+											}))
+										} else if (cardVModel.indexOf('checkboxField') >= 0 || cardVModel
+											.indexOf(
+												'addressField') >= 0) {
+											this.rules[cardVModel] = this.rules[cardVModel].map(o => ({
+												type: 'array',
+												...o
+											}))
+										}
 									}
+									this.dataForm[vModel] = [];
+									this.dataForm[vModel].push(item)
 								}
 							}
 						}
 					})
 				})
 			},
+			addTable(item) {
+				this.$forceUpdate();
+				let childItem = {};
+				let list = this.dataForm[item.__vModel__];
+				for (var j = 0; j < item.__config__.children.length; j++) {
+					let e = item.__config__.children[j]
+					childItem[e.__vModel__] = '';
+				}
+				console.log(childItem)
+				this.dataForm[item.__vModel__].push(childItem)
+				this.$forceUpdate();
+			},
+			delItem(i, model) {
+				this.$forceUpdate();
+				this.dataForm[model].splice(i, 1);
+				this.$forceUpdate();
+			},
+
 			submit() {
 				this.$refs.dataForm.validate((valid) => {
 					if (valid) {
