@@ -1,25 +1,13 @@
 import {
 	mapGetters
 } from "vuex"
-import {
-	getMenuList
-} from '@/api/apply/apply.js'
+
 export default {
-	data() {
-		return {
-			menuList:[]
-		};
-	},
 	computed: {
 		...mapGetters(['badgeNum']),
 	},
 	onShow() {
 		this.setTabBarBadge()
-	},
-	onLoad() {
-		getMenuList().then(res => {
-			this.menuList = res.data.menuList
-		})
 	},
 	methods: {
 		setTabBarBadge() {
