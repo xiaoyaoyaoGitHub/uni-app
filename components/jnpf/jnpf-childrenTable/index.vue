@@ -68,11 +68,11 @@
 			}
 		},
 
-		created() {
-			setTimeout(() => {
-				this.addTable(this.items)
-			}, 0)
-		},
+		// created() {
+		// 	setTimeout(() => {
+		// 		this.addTable(this.items)
+		// 	}, 0)
+		// },
 
 		methods: {
 			addTable(items) {

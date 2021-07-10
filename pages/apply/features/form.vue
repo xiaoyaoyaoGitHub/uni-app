@@ -1,13 +1,16 @@
 <template>
-	<view>
-		<jnpfFormControl :formData='formData' ref="formControl" @submit="submitForm" v-if="flag" :webType='webType' />
-		<view class="buttom-actions">
-			<u-button class="buttom-btn" @click="jnpf.goBack">{{formData.cancelButtonText}}</u-button>
-			<u-button class="buttom-btn" type="primary" @click="submit">{{formData.confirmButtonText}}</u-button>
-		</view>
+	<view class="logForm-v jnpf-wrap">
+		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
+			label-width="150" label-align="left">
+			<jnpfFormControl :formData='filedList' ref="formControl" @submit="submitForm" v-if="flag"
+				:webType='webType' :dataForm="dataForm"/>
+			<view class="buttom-actions">
+				<u-button class="buttom-btn" @click="jnpf.goBack">{{filedList.cancelButtonText}}</u-button>
+				<u-button class="buttom-btn" type="primary" @click="submit">{{filedList.confirmButtonText}}</u-button>
+			</view>
+		</u-form>
 	</view>
 </template>
-
 <script>
 	import {
 		config,
@@ -22,7 +25,7 @@
 		},
 		data() {
 			return {
-				formData: {},
+				filedList: {},
 				dataForm: {},
 				rules: {},
 				isId: false,
@@ -33,34 +36,126 @@
 			}
 		},
 		onLoad(option) {
-			let featuresId = option.featuresId
 			/* 判断url里面有没有id 返回true/false  修改表单的id*/
 			this.isId = Object.prototype.hasOwnProperty.call(option, 'id');
-			this.featuresId = option.featuresId;
+			this.featuresId = option.featuresId
 			if (this.isId) {
 				this.id = option.id
+				wirteBack(this.id, this.featuresId).then(res => {
+					this.dataForm = JSON.parse(res.data.data)
+					this.dataForm.id = this.id
+				})
 			}
-			this.init(featuresId);
+			this.init(this.featuresId);
 		},
 		onUnload() {
 			this.eventHub.$off('refresh')
 		},
+		mounted() {
+			this.$refs.dataForm.setRules(this.rules);
+		},
 		methods: {
-			init(id) {
-				config(id).then(res => {
-					this.formData = JSON.parse(res.data.formData);
-					this.webType = res.data.webType;
-					if (this.isId) {
-						wirteBack(this.id, this.featuresId).then(res => {
-							let data = JSON.parse(res.data.data);
-							data.id = res.data.id;
-							this.$refs.formControl.dataForm = data
-							this.flag = true
-						})
-					}
-					this.flag = true
+			// init(id) {
+			// 	config(id).then(res => {
+			// 		this.formData = JSON.parse(res.data.formData);
+			// 		this.webType = res.data.webType;
+			// 		if (this.isId) {
+			// 			wirteBack(this.id, this.featuresId).then(res => {
+			// 				let data = JSON.parse(res.data.data);
+			// 				data.id = res.data.id;
+			// 				this.$refs.formControl.dataForm = data
+			// 				this.flag = true
+			// 			})
+			// 		}
+			// 		this.flag = true
+			// 	})
+			// },
+			
+			init() {
+				this.$nextTick(function() {
+					config(this.featuresId).then(res => {
+						console.log(res)
+						this.filedList = JSON.parse(res.data.formData);
+						this.webType = res.data.webType
+						let fields = this.filedList.fields;
+						let required;
+						let label;
+						let vModel;
+						let children;
+						let cardRequired;
+						let cardVModel;
+						let cardLabel;
+						let jnpfKey;
+						this.flag = true
+						for (let i = 0; i < fields.length; i++) {
+							required = fields[i].__config__.required;
+							label = fields[i].__config__.label;
+							vModel = fields[i].__vModel__;
+							jnpfKey = fields[i].__config__.jnpfKey;
+							if (required) {
+								this.rules[vModel] = [{
+									required: true,
+									message: label + '不能为空',
+									trigger: 'blur'
+								}];
+								if (vModel.indexOf('dateField') >= 0 ||
+									vModel.indexOf('selectField') >= 0 || vModel.indexOf('radioField') >=
+									0 || vModel.indexOf(
+										'switchField') >= 0 || vModel.indexOf(
+										'numInputField') >= 0) {
+									this.rules[vModel] = this.rules[vModel].map(o => ({
+										type: 'number',
+										...o
+									}))
+								} else if (vModel.indexOf('checkboxField') >= 0 || vModel.indexOf(
+										'addressField') >= 0) {
+									this.rules[vModel] = this.rules[vModel].map(o => ({
+										type: 'array',
+										...o
+									}))
+								}
+							}
+							if (jnpfKey == 'card' || jnpfKey == 'table') {
+								children = fields[i].__config__.children || [];
+								let item = {};
+								for (let c = 0; c < children.length; c++) {
+									cardRequired = children[c].__config__.required;
+									cardVModel = children[c].__vModel__;
+									cardLabel = children[c].__config__.label;
+									item[cardVModel] = '';
+									if (cardRequired) {
+										this.rules[cardVModel] = [{
+											required: true,
+											message: cardLabel + '不能为空',
+											trigger: 'blur'
+										}];
+										if (cardVModel.indexOf('dateField') >= 0 ||
+											cardVModel.indexOf('selectField') >= 0 || cardVModel.indexOf(
+												'radioField') >= 0 ||
+											cardVModel.indexOf('switchField') >= 0 || cardVModel.indexOf(
+												'numInputField') >= 0) {
+											this.rules[cardVModel] = this.rules[cardVModel].map(o => ({
+												type: 'number',
+												...o
+											}))
+										} else if (cardVModel.indexOf('checkboxField') >= 0 || cardVModel
+											.indexOf(
+												'addressField') >= 0) {
+											this.rules[cardVModel] = this.rules[cardVModel].map(o => ({
+												type: 'array',
+												...o
+											}))
+										}
+									}
+									this.dataForm[vModel] = [];
+									this.dataForm[vModel].push(item)
+								}
+							}
+						}
+					})
 				})
 			},
+			
 			submit() {
 				this.$refs.formControl.submitForm()
 			},

@@ -1,11 +1,17 @@
 <template>
 	<view>
 		<template v-if="webType === '1'">
-			<jnpfFormControl :formData='formData' ref="formControl" :webType='webType' @submit="submitForm">
-			</jnpfFormControl>
-			<view class="buttom-actions">
-				<u-button class="buttom-btn" @click="jnpf.goBack">{{formData.cancelButtonText}}</u-button>
-				<u-button class="buttom-btn" type="primary" @click="submit">{{formData.confirmButtonText}}</u-button>
+			<view class="logForm-v jnpf-wrap">
+				<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
+					label-width="150" label-align="left">
+					<jnpfFormControl :formData='filedList' ref="formControl" :webType='webType' @submit="submitForm"
+						:dataForm='dataForm' v-if="flag" />
+					<view class="buttom-actions">
+						<u-button class="buttom-btn" @click="jnpf.goBack">{{filedList.cancelButtonText}}</u-button>
+						<u-button class="buttom-btn" type="primary" @click="submit">{{filedList.confirmButtonText}}
+						</u-button>
+					</view>
+				</u-form>
 			</view>
 		</template>
 
@@ -223,7 +229,7 @@
 				</view>
 			</view>
 		</template>
-	
+
 		<template v-if="webType === '3'">
 			<view></view>
 		</template>
@@ -293,12 +299,18 @@
 				filterForm: {},
 				page: {},
 				upCallbackData: '',
-				formData: {},
+				filedList: {},
+				dataForm: {},
 				webType: '',
-				featuresId: ''
+				featuresId: '',
+				flag: false,
+				rules: {},
 			}
 		},
 		onLoad(option) {
+			
+			
+			
 			this.id = option.id;
 			this.featuresId = option.id;
 			this.init();
@@ -312,14 +324,117 @@
 		onUnload() {
 			this.eventHub.$off('refresh')
 		},
+		mounted() {
+			this.$nextTick(() => {
+				setTimeout(()=>{
+					if(this.$refs.dataForm){
+						this.$refs.dataForm.setRules(this.rules);
+					}
+				},300)
+			})
+		},
 		methods: {
+			// init() {
+			// 	config(this.id).then(res => {
+			// 		this.formData = JSON.parse(res.data.formData)
+			// 		this.webType = res.data.webType
+			// 		this.flowEngine(res.data)
+			// 	})
+			// },
+
+
 			init() {
-				config(this.id).then(res => {
-					this.formData = JSON.parse(res.data.formData)
-					this.webType = res.data.webType
-					this.flowEngine(res.data)
+				this.$nextTick(function() {
+					config(this.id).then(res => {
+						console.log(res)
+						this.flowEngine(res.data)
+						this.filedList = JSON.parse(res.data.formData);
+						this.webType = res.data.webType
+						let fields = this.filedList.fields;
+						let required;
+						let label;
+						let vModel;
+						let children;
+						let cardRequired;
+						let cardVModel;
+						let cardLabel;
+						let jnpfKey;
+						this.flag = true
+						for (let i = 0; i < fields.length; i++) {
+							required = fields[i].__config__.required;
+							label = fields[i].__config__.label;
+							vModel = fields[i].__vModel__;
+							jnpfKey = fields[i].__config__.jnpfKey;
+							if (required) {
+								this.rules[vModel] = [{
+									required: true,
+									message: label + '不能为空',
+									trigger: 'blur'
+								}];
+								if (vModel.indexOf('dateField') >= 0 ||
+									vModel.indexOf('selectField') >= 0 || vModel.indexOf('radioField') >=
+									0 || vModel.indexOf(
+										'switchField') >= 0 || vModel.indexOf(
+										'numInputField') >= 0) {
+									this.rules[vModel] = this.rules[vModel].map(o => ({
+										type: 'number',
+										...o
+									}))
+								} else if (vModel.indexOf('checkboxField') >= 0 || vModel.indexOf(
+										'addressField') >= 0) {
+									this.rules[vModel] = this.rules[vModel].map(o => ({
+										type: 'array',
+										...o
+									}))
+								}
+							}
+							if (jnpfKey == 'card' || jnpfKey == 'table') {
+								children = fields[i].__config__.children || [];
+								let item = {};
+								for (let c = 0; c < children.length; c++) {
+									cardRequired = children[c].__config__.required;
+									cardVModel = children[c].__vModel__;
+									cardLabel = children[c].__config__.label;
+									item[cardVModel] = '';
+									if (cardRequired) {
+										this.rules[cardVModel] = [{
+											required: true,
+											message: cardLabel + '不能为空',
+											trigger: 'blur'
+										}];
+										if (cardVModel.indexOf('dateField') >= 0 ||
+											cardVModel.indexOf('selectField') >= 0 || cardVModel.indexOf(
+												'radioField') >= 0 ||
+											cardVModel.indexOf('switchField') >= 0 || cardVModel.indexOf(
+												'numInputField') >= 0) {
+											this.rules[cardVModel] = this.rules[cardVModel].map(o => ({
+												type: 'number',
+												...o
+											}))
+										} else if (cardVModel.indexOf('checkboxField') >= 0 || cardVModel
+											.indexOf(
+												'addressField') >= 0) {
+											this.rules[cardVModel] = this.rules[cardVModel].map(o => ({
+												type: 'array',
+												...o
+											}))
+										}
+									}
+									this.dataForm[vModel] = [];
+									this.dataForm[vModel].push(item)
+								}
+							}
+						}
+					})
 				})
 			},
+
+
+
+
+
+
+
 
 			/* 初始化处理 */
 			flowEngine(data) {
@@ -453,7 +568,11 @@
 				})
 			},
 			submit() {
-				this.$refs.formControl.submitForm()
+				this.$refs.dataForm.validate((valid) => {
+					if (valid) {
+						this.$refs.formControl.submitForm()
+					}
+				})
 			}
 		}
 	}
