@@ -2,7 +2,8 @@
 	<view class="jnpf-wrap jnpf-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
-			<jnpfFormControl :formData='filedList' ref="dynamicForm" :dataForm='dataForm' v-if="flag" :judgeShow='judgeShow' :judgeWrite='judgeWrite'/>
+			<jnpfFormControl :formData='filedList' ref="dynamicForm" :dataForm='dataForm' v-if="flag"
+				:judgeShow='judgeShow' :judgeWrite='judgeWrite' />
 		</u-form>
 	</view>
 </template>
@@ -43,7 +44,6 @@
 		},
 		mounted() {
 			this.$refs.dataForm.setRules(this.rules);
-			console.log(this.$refs.dataForm)
 		},
 		methods: {
 			changeRate(e, model) {
@@ -51,14 +51,14 @@
 				this.$set(this.dataForm, model, rateVal)
 			},
 			init(data) {
-				
 				this.dataForm = {}
 				this.dataForm.id = data.id || '';
 				this.setting = data;
-				this.filedList = JSON.parse(this.setting.formConf);
+				let filedList = JSON.parse(this.setting.formConf);
+				this.filedList = filedList;
 				this.flag = true
 				let fields = this.filedList.fields;
-				console.log(data)
+				let formOperates = data.formOperates
 				let defaultValue;
 				let vModel;
 				let dataType;
@@ -68,6 +68,8 @@
 				let children;
 				let required;
 				let label;
+				let isShow;
+				let newFields = [];
 				for (let i = 0; i < fields.length; i++) {
 					defaultValue = fields[i].__config__.defaultValue;
 					vModel = fields[i].__vModel__;
@@ -76,6 +78,19 @@
 					jnpfKey = fields[i].__config__.jnpfKey;
 					required = fields[i].__config__.required;
 					label = fields[i].__config__.label;
+					isShow = fields[i].__config__.noShow;
+					/* 表单权限处理 */
+					for(let key in formOperates){
+						fields[i].disabled = this.judgeWrite(vModel)
+						if (formOperates.length > 0) {
+							if (vModel == formOperates[key].id) {
+								if(!isShow){
+									fields[i].__config__.noShow = !this.judgeShow(vModel);
+								}
+							}
+						}
+					}
+					/* 表单权限处理End */
 					if (required) {
 						this.rules[vModel] = [{
 							required: true,
@@ -98,8 +113,6 @@
 						}
 					}
 					if (defaultValue) this.$set(this.dataForm, vModel, defaultValue);
-
-
 					if (jnpfKey == 'card' || jnpfKey == 'table') {
 						let item = {};
 						children = fields[i].__config__.children;
@@ -111,6 +124,7 @@
 						let card_jnpfKey;
 						let card_required;
 						let card_label;
+						let card_noShow;
 						for (let j = 0; j < children.length; j++) {
 							card_dataType = children[j].__config__.dataType;
 							card_propsUrl = children[j].__config__.propsUrl;
@@ -119,7 +133,21 @@
 							card_vModel = children[j].__vModel__;
 							card_label = children[j].__config__.label;
 							card_required = children[j].__config__.required;
+							card_noShow = children[j].__config__.noShow
 							item[card_vModel] = card_defaultValue;
+							children[j].disabled = this.judgeWrite(card_vModel)
+							/* 表单权限处理 */
+							if(jnpfKey == 'card'){
+								if(formOperates.length > 0){
+									if(card_vModel == formOperates[i].id){
+										if(!card_noShow){
+											children[j].__config__.noShow = !this.judgeShow(card_vModel)
+										}
+									}
+								}
+							}
+							/* 表单权限处理End */
+
 							if (card_defaultValue) this.$set(this.dataForm, card_vModel, card_defaultValue);
 							if (card_dataType == 'dynamic') {
 								this.dynamicHandel(card_propsUrl, children[j], card_jnpfKey)
@@ -155,6 +183,7 @@
 					}
 				}
 
+				
 				if (data.id) {
 					DynamicInfo(data.id).then(res => {
 						this.dataForm = JSON.parse(res.data.data)

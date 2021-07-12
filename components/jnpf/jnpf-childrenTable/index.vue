@@ -9,34 +9,34 @@
 			<view v-for="(children,c) in items.__config__.children" :key='c'>
 				<u-form-item :label="children.__config__.label" :prop="children.__vModel__">
 					<u-input placeholder="请输入" v-model="dataForm[items.__vModel__][i][children.__vModel__]"
-						v-if="children.__config__.jnpfKey === 'comInput'" />
+						v-if="children.__config__.jnpfKey === 'comInput'" :disabled="children.disabled" />
 					<u-number-box v-model="dataForm[items.__vModel__][i][children.__vModel__]" :min="children.min"
 						:max="children.max" :step="children.step" :input-width="120" :positive-integer="false"
-						:input-height="60" v-if="children.__config__.jnpfKey == 'numInput'" />
+						:input-height="60" v-if="children.__config__.jnpfKey == 'numInput'" :disabled="children.disabled" />
 					<jnpf-select v-model="dataForm[items.__vModel__][i][children.__vModel__]" placeholder="请选择下拉框组"
 						:options="children.__slot__.options" :props="children.__config__.props"
-						v-if="children.__config__.jnpfKey == 'select'" />
+						v-if="children.__config__.jnpfKey == 'select'" :disabled="children.disabled" />
 					<jnpf-tree-select v-model="dataForm[items.__vModel__][i][children.__vModel__]"
 						:placeholder="children.placeholder" :options="children.options"
-						v-if="children.__config__.jnpfKey == 'treeSelect'" />
+						v-if="children.__config__.jnpfKey == 'treeSelect'" :disabled="children.disabled" />
 					<jnpf-cascader v-model="dataForm[items.__vModel__][i][children.__vModel__]" placeholder="请选择级联选择"
-						:options="children.options" v-if="children.__config__.jnpfKey == 'cascader'" />
+						:options="children.options" v-if="children.__config__.jnpfKey == 'cascader'" :disabled="children.disabled" />
 					<jnpf-date-time type="date" v-model="dataForm[items.__vModel__][i][children.__vModel__]"
-						v-if="children.__config__.jnpfKey == 'date'" />
+						v-if="children.__config__.jnpfKey == 'date'" :disabled="children.disabled" />
 					<jnpf-date-time type="time" v-model="dataForm[items.__vModel__][i][children.__vModel__]"
-						v-if="children.__config__.jnpfKey == 'time'" />
+						v-if="children.__config__.jnpfKey == 'time'" :disabled="children.disabled" />
 					<jnpf-city-select v-model="dataForm[items.__vModel__][i][children.__vModel__]" placeholder="请选择省市区"
-						:level="2" v-if="children.__config__.jnpfKey == 'address'" />
+						:level="2" v-if="children.__config__.jnpfKey == 'address'" :disabled="children.disabled" />
 					<jnpf-org-select type="organize" v-model="dataForm[items.__vModel__][i][children.__vModel__]"
-						v-if="children.__config__.jnpfKey == 'comSelect'" />
+						v-if="children.__config__.jnpfKey == 'comSelect'" :disabled="children.disabled" />
 					<jnpf-org-select type="department" v-model="dataForm[items.__vModel__][i][children.__vModel__]"
-						v-if="children.__config__.jnpfKey == 'depSelect'" />
+						v-if="children.__config__.jnpfKey == 'depSelect'" :disabled="children.disabled" />
 					<jnpf-org-select v-model="dataForm[items.__vModel__][i][children.__vModel__]"
-						v-if="children.__config__.jnpfKey == 'userSelect'" />
+						v-if="children.__config__.jnpfKey == 'userSelect'" :disabled="children.disabled" />
 					<jnpf-org-select type="position" v-model="dataForm[items.__vModel__][i][children.__vModel__]"
-						v-if="children.__config__.jnpfKey == 'posSelect'" />
+						v-if="children.__config__.jnpfKey == 'posSelect'" :disabled="children.disabled" />
 					<jnpf-switch v-model="dataForm[items.__vModel__][i][children.__vModel__]"
-						v-if="children.__config__.jnpfKey == 'switch'" />
+						v-if="children.__config__.jnpfKey == 'switch'" :disabled="children.disabled" />
 				</u-form-item>
 			</view>
 		</view>
@@ -76,15 +76,17 @@
 
 		methods: {
 			addTable(items) {
-				this.$forceUpdate();
-				let childItem = {};
-				let list = this.dataForm[items.__vModel__];
-				for (var j = 0; j < items.__config__.children.length; j++) {
-					let e = items.__config__.children[j]
-					childItem[e.__vModel__] = '';
+				if(!items){
+					this.$forceUpdate();
+					let childItem = {};
+					let list = this.dataForm[items.__vModel__];
+					for (var j = 0; j < items.__config__.children.length; j++) {
+						let e = items.__config__.children[j]
+						childItem[e.__vModel__] = '';
+					}
+					this.dataForm[items.__vModel__].push(childItem)
+					this.$forceUpdate();
 				}
-				this.dataForm[items.__vModel__].push(childItem)
-				this.$forceUpdate();
 			},
 			delItem(i, model) {
 				this.$forceUpdate();
