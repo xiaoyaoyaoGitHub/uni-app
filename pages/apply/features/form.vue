@@ -2,8 +2,8 @@
 	<view class="logForm-v jnpf-wrap">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
-			<jnpfFormControl :formData='filedList' ref="formControl" @submit="submitForm" v-if="flag"
-				:webType='webType' :dataForm="dataForm"/>
+			<jnpfFormControl :formData='filedList' ref="formControl" @submit="submitForm" v-if="flag" :webType='webType'
+				:dataForm="dataForm" />
 			<view class="buttom-actions">
 				<u-button class="buttom-btn" @click="jnpf.goBack">{{filedList.cancelButtonText}}</u-button>
 				<u-button class="buttom-btn" type="primary" @click="submit">{{filedList.confirmButtonText}}</u-button>
@@ -70,7 +70,7 @@
 			// 		this.flag = true
 			// 	})
 			// },
-			
+
 			init() {
 				this.$nextTick(function() {
 					config(this.featuresId).then(res => {
@@ -155,29 +155,32 @@
 					})
 				})
 			},
-			
+
 			submit() {
 				this.$refs.formControl.submitForm()
 			},
 			submitForm() {
-				const method = this.$refs.formControl.dataForm.id ? update : create;
-				console.log(method)
-				let data = {
-					data: JSON.stringify(this.$refs.formControl.dataForm)
-				}
-				if (this.isId) {
-					data.id = this.id
-				}
-				method(data, this.featuresId).then(res => {
-					uni.showToast({
-						title: res.msg,
-						complete: () => {
-							setTimeout(() => {
-								this.eventHub.$emit('refresh')
-								uni.navigateBack()
-							}, 1500)
+				this.$refs.dataForm.validate((valid) => {
+					if (valid) {
+						const method = this.$refs.formControl.dataForm.id ? update : create;
+						let data = {
+							data: JSON.stringify(this.$refs.formControl.dataForm)
 						}
-					})
+						if (this.isId) {
+							data.id = this.id
+						}
+						method(data, this.featuresId).then(res => {
+							uni.showToast({
+								title: res.msg,
+								complete: () => {
+									setTimeout(() => {
+										this.eventHub.$emit('refresh')
+										uni.navigateBack()
+									}, 1500)
+								}
+							})
+						})
+					}
 				})
 			}
 		}
