@@ -9,34 +9,34 @@
 			<view v-for="(children,c) in items.__config__.children" :key='c'>
 				<u-form-item :label="children.__config__.label" :prop="children.__vModel__">
 					<u-input placeholder="请输入" v-model="dataForm[items.__vModel__][i][children.__vModel__]"
-						v-if="children.__config__.jnpfKey === 'comInput'" :disabled="children.disabled" />
+						v-if="children.__config__.jnpfKey === 'comInput'" :disabled="items.disabled" />
 					<u-number-box v-model="dataForm[items.__vModel__][i][children.__vModel__]" :min="children.min"
 						:max="children.max" :step="children.step" :input-width="120" :positive-integer="false"
-						:input-height="60" v-if="children.__config__.jnpfKey == 'numInput'" :disabled="children.disabled" />
+						:input-height="60" v-if="children.__config__.jnpfKey == 'numInput'" :disabled="items.disabled" />
 					<jnpf-select v-model="dataForm[items.__vModel__][i][children.__vModel__]" placeholder="请选择下拉框组"
 						:options="children.__slot__.options" :props="children.__config__.props"
-						v-if="children.__config__.jnpfKey == 'select'" :disabled="children.disabled" />
+						v-if="children.__config__.jnpfKey == 'select'" :disabled="items.disabled" />
 					<jnpf-tree-select v-model="dataForm[items.__vModel__][i][children.__vModel__]"
 						:placeholder="children.placeholder" :options="children.options"
-						v-if="children.__config__.jnpfKey == 'treeSelect'" :disabled="children.disabled" />
+						v-if="children.__config__.jnpfKey == 'treeSelect'" :disabled="items.disabled" />
 					<jnpf-cascader v-model="dataForm[items.__vModel__][i][children.__vModel__]" placeholder="请选择级联选择"
-						:options="children.options" v-if="children.__config__.jnpfKey == 'cascader'" :disabled="children.disabled" />
+						:options="children.options" v-if="children.__config__.jnpfKey == 'cascader'" :disabled="items.disabled" />
 					<jnpf-date-time type="date" v-model="dataForm[items.__vModel__][i][children.__vModel__]"
-						v-if="children.__config__.jnpfKey == 'date'" :disabled="children.disabled" />
+						v-if="children.__config__.jnpfKey == 'date'" :disabled="items.disabled" />
 					<jnpf-date-time type="time" v-model="dataForm[items.__vModel__][i][children.__vModel__]"
-						v-if="children.__config__.jnpfKey == 'time'" :disabled="children.disabled" />
+						v-if="children.__config__.jnpfKey == 'time'" :disabled="items.disabled" />
 					<jnpf-city-select v-model="dataForm[items.__vModel__][i][children.__vModel__]" placeholder="请选择省市区"
-						:level="2" v-if="children.__config__.jnpfKey == 'address'" :disabled="children.disabled" />
+						:level="2" v-if="children.__config__.jnpfKey == 'address'" :disabled="items.disabled" />
 					<jnpf-org-select type="organize" v-model="dataForm[items.__vModel__][i][children.__vModel__]"
-						v-if="children.__config__.jnpfKey == 'comSelect'" :disabled="children.disabled" />
+						v-if="children.__config__.jnpfKey == 'comSelect'" :disabled="items.disabled" />
 					<jnpf-org-select type="department" v-model="dataForm[items.__vModel__][i][children.__vModel__]"
-						v-if="children.__config__.jnpfKey == 'depSelect'" :disabled="children.disabled" />
+						v-if="children.__config__.jnpfKey == 'depSelect'" :disabled="items.disabled" />
 					<jnpf-org-select v-model="dataForm[items.__vModel__][i][children.__vModel__]"
-						v-if="children.__config__.jnpfKey == 'userSelect'" :disabled="children.disabled" />
+						v-if="children.__config__.jnpfKey == 'userSelect'" :disabled="items.disabled" />
 					<jnpf-org-select type="position" v-model="dataForm[items.__vModel__][i][children.__vModel__]"
-						v-if="children.__config__.jnpfKey == 'posSelect'" :disabled="children.disabled" />
+						v-if="children.__config__.jnpfKey == 'posSelect'" :disabled="items.disabled" />
 					<jnpf-switch v-model="dataForm[items.__vModel__][i][children.__vModel__]"
-						v-if="children.__config__.jnpfKey == 'switch'" :disabled="children.disabled" />
+						v-if="children.__config__.jnpfKey == 'switch'" :disabled="items.disabled" />
 				</u-form-item>
 			</view>
 		</view>

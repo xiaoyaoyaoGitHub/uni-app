@@ -258,12 +258,6 @@
 					return {}
 				}
 			},
-			judgeShow: {
-				type: Function
-			},
-			judgeWrite: {
-				type: Function
-			},
 			webType: {
 				type: String,
 				default () {

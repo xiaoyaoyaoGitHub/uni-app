@@ -2,8 +2,7 @@
 	<view class="jnpf-wrap jnpf-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
-			<jnpfFormControl :formData='filedList' ref="dynamicForm" :dataForm='dataForm' v-if="flag"
-				:judgeShow='judgeShow' :judgeWrite='judgeWrite' />
+			<jnpfFormControl :formData='filedList' ref="dynamicForm" :dataForm='dataForm' v-if="flag"/>
 		</u-form>
 	</view>
 </template>
@@ -56,9 +55,11 @@
 				this.setting = data;
 				let filedList = JSON.parse(this.setting.formConf);
 				this.filedList = filedList;
+				
 				this.flag = true
 				let fields = this.filedList.fields;
-				let formOperates = data.formOperates
+				let formOperates = data.formOperates;
+				
 				let defaultValue;
 				let vModel;
 				let dataType;
