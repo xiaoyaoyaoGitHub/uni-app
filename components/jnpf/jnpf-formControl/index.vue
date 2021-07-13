@@ -31,7 +31,7 @@
 					</jnpf-select>
 					<u-number-box v-model="dataForm[items.__vModel__]" :min="items.min || 0" :max="items.max || 10"
 						:step="items.step" :input-width="120" :positive-integer="false" :input-height="60"
-						v-if="items.__config__.jnpfKey == 'numInput'" :disabled="items.disabled"/>
+						v-if="items.__config__.jnpfKey == 'numInput'" :disabled="items.disabled" />
 					<jnpf-select v-model="dataForm[items.__vModel__]" placeholder="请选择下拉框组"
 						:options="items.__slot__.options" :props="items.__config__.props"
 						v-if="items.__config__.jnpfKey == 'select'" :disabled="items.disabled" />
@@ -176,7 +176,7 @@
 					<jnpfChildrenTable :items='items' :dataForm='dataForm'></jnpfChildrenTable>
 				</view>
 			</template>
-			
+
 			<!-- #endif -->
 
 			<!-- #ifdef MP-WEIXIN -->
@@ -193,12 +193,13 @@
 								<u-input placeholder="请输入" v-model="dataForm[items.__vModel__][i][children.__vModel__]"
 									v-if="children.__config__.jnpfKey === 'comInput'" :disabled="items.disabled" />
 								<u-number-box v-model="dataForm[items.__vModel__][i][children.__vModel__]"
-									:min="children.min || 0" :max="children.max || 10" :step="children.step" :input-width="120"
-									:positive-integer="false" :input-height="60"
-									v-if="children.__config__.jnpfKey == 'numInput'" :disabled="items.disabled"/>
+									:min="children.min || 0" :max="children.max || 10" :step="children.step"
+									:input-width="120" :positive-integer="false" :input-height="60"
+									v-if="children.__config__.jnpfKey == 'numInput'" :disabled="items.disabled" />
 								<jnpf-select v-model="dataForm[items.__vModel__][i][children.__vModel__]"
 									placeholder="请选择下拉框组" :options="children.__slot__.options"
-									:props="children.__config__.props" v-if="children.__config__.jnpfKey == 'select'" :disabled="items.disabled" />
+									:props="children.__config__.props" v-if="children.__config__.jnpfKey == 'select'"
+									:disabled="items.disabled" />
 								<jnpf-tree-select v-model="dataForm[items.__vModel__][i][children.__vModel__]"
 									:placeholder="children.placeholder" :options="children.options"
 									v-if="children.__config__.jnpfKey == 'treeSelect'" :disabled="items.disabled" />
@@ -210,10 +211,11 @@
 								<jnpf-date-time type="time" v-model="dataForm[items.__vModel__][i][children.__vModel__]"
 									v-if="children.__config__.jnpfKey == 'time'" :disabled="items.disabled" />
 								<jnpf-city-select v-model="dataForm[items.__vModel__][i][children.__vModel__]"
-									placeholder="请选择省市区" :level="2" v-if="children.__config__.jnpfKey == 'address'" :disabled="items.disabled" />
+									placeholder="请选择省市区" :level="2" v-if="children.__config__.jnpfKey == 'address'"
+									:disabled="items.disabled" />
 								<jnpf-org-select type="organize"
 									v-model="dataForm[items.__vModel__][i][children.__vModel__]"
-									v-if="children.__config__.jnpfKey == 'comSelect'" :disabled="items.disabled"/>
+									v-if="children.__config__.jnpfKey == 'comSelect'" :disabled="items.disabled" />
 								<jnpf-org-select type="department"
 									v-model="dataForm[items.__vModel__][i][children.__vModel__]"
 									v-if="children.__config__.jnpfKey == 'depSelect'" :disabled="items.disabled" />
@@ -267,30 +269,18 @@
 		data() {
 			return {
 				options: [],
+				data: {}
 			}
 		},
-
 		methods: {
 			// #ifdef MP-WEIXIN
-			addTable(items) {
-				this.$forceUpdate();
-				let childItem = {};
-				let list = this.dataForm[items.__vModel__];
-				for (var j = 0; j < items.__config__.children.length; j++) {
-					let e = items.__config__.children[j]
-					childItem[e.__vModel__] = '';
-				}
-				this.dataForm[items.__vModel__].push(childItem)
-				this.$forceUpdate();
+			addTable(items){
+				this.$emit('addTable',items)
 			},
 			delItem(i, model) {
-				this.$forceUpdate();
-				this.dataForm[model].splice(i, 1);
-				this.$forceUpdate();
+				this.$emit('delItem',i, model)
 			},
 			// #endif
-
-
 			submitForm() {
 				this.$emit('submit', this.dataForm)
 			}

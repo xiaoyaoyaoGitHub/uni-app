@@ -68,15 +68,9 @@
 			}
 		},
 
-		// created() {
-		// 	setTimeout(() => {
-		// 		this.addTable(this.items)
-		// 	}, 0)
-		// },
-
 		methods: {
 			addTable(items) {
-				if(!items){
+				if(!items.disabled){
 					this.$forceUpdate();
 					let childItem = {};
 					let list = this.dataForm[items.__vModel__];
