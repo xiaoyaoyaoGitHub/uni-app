@@ -25,10 +25,11 @@
 						v-if="items.__config__.jnpfKey == 'comInput'" :disabled="items.disabled" />
 					<u-input placeholder="请输入" v-model="dataForm[items.__vModel__]" type="textarea"
 						v-if="items.__config__.jnpfKey == 'textarea'" :disabled="items.disabled" />
-					<jnpf-select v-model="dataForm[items.__vModel__]" placeholder="请选择下拉框组"
-						:options="items.__slot__.options" :props="items.__config__.props" multiple
-						v-if="items.__config__.jnpfKey == 'checkbox'" :disabled="items.disabled">
-					</jnpf-select>
+
+					<jnpf-checkbox v-model="dataForm[items.__vModel__]" :options="items.__slot__.options"
+						placeholder="请选择下拉框组" v-if="items.__config__.jnpfKey == 'checkbox'" :disabled="items.disabled"
+						:props="items.__config__.props" />
+
 					<u-number-box v-model="dataForm[items.__vModel__]" :min="items.min || 0" :max="items.max || 10"
 						:step="items.step" :input-width="120" :positive-integer="false" :input-height="60"
 						v-if="items.__config__.jnpfKey == 'numInput'" :disabled="items.disabled" />
@@ -109,9 +110,9 @@
 							v-if="card.__config__.jnpfKey == 'comInput'" :disabled="card.disabled" />
 						<u-input placeholder="请输入" v-model="dataForm[card.__vModel__]" type="textarea"
 							v-if="card.__config__.jnpfKey == 'textarea'" :disabled="card.disabled" />
-						<jnpf-select v-model="dataForm[card.__vModel__]" placeholder="请选择下拉框组"
-							:options="card.__slot__.options" :props="card.__config__.props" multiple
-							v-if="card.__config__.jnpfKey == 'checkbox'" :disabled="card.disabled" />
+						<jnpf-checkbox v-model="dataForm[items.__vModel__]" :options="items.__slot__.options"
+							placeholder="请选择下拉框组" v-if="items.__config__.jnpfKey == 'checkbox'" :disabled="items.disabled"
+							:props="items.__config__.props" />
 						<u-number-box v-model="dataForm[card.__vModel__]" :min="card.min || 0" :max="card.max || 10"
 							:step="card.step" :input-width="120" :positive-integer="false" :input-height="60"
 							v-if="card.__config__.jnpfKey == 'numInput'" :disabled="card.disabled" />
@@ -274,11 +275,11 @@
 		},
 		methods: {
 			// #ifdef MP-WEIXIN
-			addTable(items){
-				this.$emit('addTable',items)
+			addTable(items) {
+				this.$emit('addTable', items)
 			},
 			delItem(i, model) {
-				this.$emit('delItem',i, model)
+				this.$emit('delItem', i, model)
 			},
 			// #endif
 			submitForm() {

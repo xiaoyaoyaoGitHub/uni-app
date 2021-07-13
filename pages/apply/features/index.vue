@@ -22,95 +22,91 @@
 					<view class="features-hd u-flex">
 						<u-dropdown ref="uDropdown">
 							<u-dropdown-item v-model="sortValue" title="排序" :options="sortData"
-								@change="changeSolt($event,sortData)"></u-dropdown-item>
-							<u-dropdown-item title="筛选" v-model="screenAalue">
+								@change="changeSolt($event,sortData)" />
+							<!-- 筛选 -->
+							<u-dropdown-item title="筛选" v-model="screenAalue" class="dropdownItem">
 								<u-form :model="filterForm" ref="filterForm" :errorType="['toast']"
 									label-position="left" label-width="150" label-align="left">
 									<view class="slot-content" v-for="(filter,index) in filter" :key='index'>
 										<view class="u-p-l-16 u-p-r-16 slotList">
 											<u-form-item :label="filter.__config__.label"
 												v-if="filter.__config__.jnpfKey == 'comInput'">
-												<u-input placeholder="请输入" v-model="filterForm[filter.__vModel__]">
-												</u-input>
+												<u-input placeholder="请输入" v-model="filterForm[filter.__vModel__]" />
 											</u-form-item>
 											<u-form-item :label="filter.__config__.label" prop="billRule"
 												v-if="filter.__config__.jnpfKey == 'billRule'">
 												<u-input v-model="filterForm[filter.__vModel__]" placeholder="系统自动生成"
-													disabled>
-												</u-input>
+													disabled />
 											</u-form-item>
 											<u-form-item :label="filter.__config__.label" prop="createUser"
 												v-if="filter.__config__.jnpfKey == 'createUser'">
 												<u-input v-model="filterForm[filter.__vModel__]" placeholder="系统自动生成"
-													disabled>
-												</u-input>
+													disabled />
+
 											</u-form-item>
 											<u-form-item :label="filter.__config__.label" prop="createTime"
 												v-if="filter.__config__.jnpfKey == 'createTime'">
 												<u-input v-model="filterForm[filter.__vModel__]" placeholder="系统自动生成"
-													disabled>
-												</u-input>
+													disabled />
+
 											</u-form-item>
 											<u-form-item :label="filter.__config__.label" prop="modifyUser"
 												v-if="filter.__config__.jnpfKey == 'modifyUser'">
 												<u-input v-model="filterForm[filter.__vModel__]" placeholder="系统自动生成"
-													disabled>
-												</u-input>
+													disabled />
+
 											</u-form-item>
 											<u-form-item :label="filter.__config__.label" prop="modifyTime"
 												v-if="filter.__config__.jnpfKey == 'modifyTime'">
 												<u-input v-model="filterForm[filter.__vModel__]" placeholder="系统自动生成"
-													disabled>
-												</u-input>
+													disabled />
+
 											</u-form-item>
 											<u-form-item :label="filter.__config__.label" prop="currOrganize"
 												v-if="filter.__config__.jnpfKey == 'currOrganize'">
 												<u-input v-model="filterForm[filter.__vModel__]" placeholder="系统自动生成"
-													disabled>
-												</u-input>
+													disabled />
+
 											</u-form-item>
 											<u-form-item :label="filter.__config__.label" prop="currDept"
 												v-if="filter.__config__.jnpfKey == 'currDept'">
 												<u-input v-model="filterForm[filter.__vModel__]" placeholder="系统自动生成"
-													disabled>
-												</u-input>
+													disabled />
+
 											</u-form-item>
 											<u-form-item :label="filter.__config__.label" prop="currPosition"
 												v-if="filter.__config__.jnpfKey == 'currPosition'">
 												<u-input v-model="filterForm[filter.__vModel__]" placeholder="系统自动生成"
-													disabled>
-												</u-input>
+													disabled />
+
 											</u-form-item>
 											<u-form-item :label="filter.__config__.label"
 												v-if="filter.__config__.jnpfKey == 'textarea'">
 												<u-input placeholder="请输入" v-model="filterForm[filter.__vModel__]"
-													type="textarea"></u-input>
+													type="textarea" />
 											</u-form-item>
 											<u-form-item :label="filter.__config__.label" prop="checkbox"
 												v-if="filter.__config__.jnpfKey == 'checkbox'">
-												<jnpf-select v-model="filterForm[filter.__vModel__]"
-													placeholder="请选择下拉框组" :options="filter.__config__.options"
-													:props="filter.__config__.props" multiple>
-												</jnpf-select>
+												<jnpf-checkbox v-model="filterForm[filter.__vModel__]"
+													:options="filter.__slot__.options" placeholder="请选择下拉框组"
+													:disabled="filter.disabled" />
 											</u-form-item>
 											<u-form-item :label="filter.__config__.label" prop="numInput"
 												v-if="filter.__config__.jnpfKey == 'numInput'">
 												<u-number-box v-model="filterForm[filter.__vModel__]" :min="filter.min"
 													:max="filter.max" :step="filter.step" :input-width="120"
-													:positive-integer="false" :input-height="60">
-												</u-number-box>
+													:positive-integer="false" :input-height="60" />
 											</u-form-item>
 											<u-form-item :label="filter.__config__.label" prop="select"
 												v-if="filter.__config__.jnpfKey == 'select'">
 												<jnpf-select v-model="filterForm[filter.__vModel__]"
-													placeholder="请选择下拉框组" :options="filter.__config__.options"
-													:props="filter.__config__.props">
-												</jnpf-select>
+													placeholder="请选择下拉框组" :options="filter.__slot__.options"
+													:props="filter.__config__.props" />
 											</u-form-item>
 											<u-form-item :label="filter.__config__.label" prop="radio"
 												v-if="filter.__config__.jnpfKey == 'radio'">
 												<u-radio-group v-model="filterForm[filter.__vModel__]">
-													<u-radio v-for="(radios, radioIndex) in filter.__config__.options"
+													<u-radio v-for="(radios, radioIndex) in filter.__slot__.options"
 														:key="radioIndex" :name="radios[filter.__config__.props.value]">
 														{{ radios[filter.__config__.props.label] }}
 													</u-radio>
@@ -118,33 +114,29 @@
 											</u-form-item>
 											<u-form-item :label="filter.__config__.label" prop="switch"
 												v-if="filter.__config__.jnpfKey == 'switch'">
-												<jnpf-switch v-model="filterForm[filter.__vModel__]"></jnpf-switch>
+												<jnpf-switch v-model="filterForm[filter.__vModel__]" />
 											</u-form-item>
 											<u-form-item :label="filter.__config__.label" prop="cascader"
 												v-if="filter.__config__.jnpfKey == 'cascader'">
 												<jnpf-cascader v-model="filterForm[filter.__vModel__]"
-													placeholder="请选择级联选择" :options="filter.__config__.options">
-												</jnpf-cascader>
+													placeholder="请选择级联选择" :options="filter.options" />
 											</u-form-item>
 											<u-form-item :label="filter.__config__.label" prop="time"
 												v-if="filter.__config__.jnpfKey == 'time'">
-												<jnpf-date-time type="time" v-model="filterForm[filter.__vModel__]">
-												</jnpf-date-time>
+												<jnpf-date-time type="time" v-model="filterForm[filter.__vModel__]" />
 											</u-form-item>
 											<u-form-item :label="filter.__config__.label" prop="date"
 												v-if="filter.__config__.jnpfKey == 'date'">
-												<jnpf-date-time type="date" v-model="filterForm[filter.__vModel__]">
-												</jnpf-date-time>
+												<jnpf-date-time type="date" v-model="filterForm[filter.__vModel__]" />
 											</u-form-item>
 											<u-form-item :label="filter.__config__.label" prop="uploadImg"
 												v-if="filter.__config__.jnpfKey == 'uploadImg'">
-												<jnpf-upload v-model="filterForm[filter.__vModel__]"></jnpf-upload>
+												<jnpf-upload v-model="filterForm[filter.__vModel__]" />
 											</u-form-item>
 											<u-form-item :label="filter.__config__.label" prop="rate"
 												v-if="filter.__config__.jnpfKey == 'rate'">
 												<u-rate v-model="filterForm[filter.__vModel__]" size="40"
-													@change="changeRate($event,filter.__vModel__)">
-												</u-rate>
+													@change="changeRate($event,filter.__vModel__)" />
 											</u-form-item>
 											<u-form-item :label="filter.__config__.label" prop="slider"
 												v-if="filter.__config__.jnpfKey == 'slider'">
@@ -160,47 +152,34 @@
 											<u-form-item :label="filter.__config__.label" prop="comSelect"
 												v-if="filter.__config__.jnpfKey == 'comSelect'">
 												<jnpf-org-select type="organize"
-													v-model="filterForm[filter.__vModel__]">
-												</jnpf-org-select>
+													v-model="filterForm[filter.__vModel__]" />
 											</u-form-item>
 											<u-form-item :label="filter.__config__.label" prop="depSelect"
 												v-if="filter.__config__.jnpfKey == 'depSelect'">
 												<jnpf-org-select type="department"
-													v-model="filterForm[filter.__vModel__]">
-												</jnpf-org-select>
+													v-model="filterForm[filter.__vModel__]" />
 											</u-form-item>
 											<u-form-item :label="filter.__config__.label" prop="userSelect"
 												v-if="filter.__config__.jnpfKey == 'userSelect'">
-												<jnpf-org-select v-model="filterForm[filter.__vModel__]">
-												</jnpf-org-select>
+												<jnpf-org-select v-model="filterForm[filter.__vModel__]" />
 											</u-form-item>
 											<u-form-item :label="filter.__config__.label" prop="posSelect"
 												v-if="filter.__config__.jnpfKey == 'posSelect'">
 												<jnpf-org-select type="position"
-													v-model="filterForm[filter.__vModel__]">
-												</jnpf-org-select>
+													v-model="filterForm[filter.__vModel__]" />
 											</u-form-item>
-											<u-form-item :label="filter.__config__.label" prop="divider"
-												v-if="filter.__config__.jnpfKey == 'divider'">
-												<u-divider>{{filter.__config__.default}}</u-divider>
-											</u-form-item>
+
 											<u-form-item :label="filter.__config__.label" prop="address"
 												v-if="filter.__config__.jnpfKey == 'address'">
 												<jnpf-city-select v-model="filterForm[filter.__vModel__]"
-													placeholder="请选择省市区" :level="2">
-												</jnpf-city-select>
+													placeholder="请选择省市区" :level="2" />
 											</u-form-item>
 											<u-form-item :label="filter.__config__.label" prop="treeSelect"
 												v-if="filter.__config__.jnpfKey == 'treeSelect'">
 												<jnpf-tree-select v-model="filterForm[filter.__vModel__]"
-													placeholder="请选择树形选择" :options="filter.__config__.options">
-												</jnpf-tree-select>
+													placeholder="请选择树形选择" :options="filter.options" />
 											</u-form-item>
-											<u-form-item prop="groupTitle"
-												v-if="filter.__config__.jnpfKey == 'groupTitle'">
-												<jnpf-group :content="filter.content"
-													:content-position="filter['content-position']"></jnpf-group>
-											</u-form-item>
+
 										</view>
 									</view>
 									<view class="buttom-box">
@@ -308,9 +287,9 @@
 			}
 		},
 		onLoad(option) {
-			
-			
-			
+
+
+
 			this.id = option.id;
 			this.featuresId = option.id;
 			this.init();
@@ -326,11 +305,11 @@
 		},
 		mounted() {
 			this.$nextTick(() => {
-				setTimeout(()=>{
-					if(this.$refs.dataForm){
+				setTimeout(() => {
+					if (this.$refs.dataForm) {
 						this.$refs.dataForm.setRules(this.rules);
 					}
-				},300)
+				}, 300)
 			})
 		},
 		methods: {
@@ -581,7 +560,7 @@
 	page {
 		background-color: #f0f2f6;
 	}
-
+	
 	.buttom-box {
 		background-color: #fff;
 		display: flex;
@@ -620,9 +599,9 @@
 		;
 	}
 
+
+
 	.features-v {
-
-
 		.slotList {
 			background-color: #FFFFFF;
 		}
@@ -632,7 +611,7 @@
 			background-color: #FFFFFF;
 			justify-content: space-evenly;
 			color: #999999;
-			box-shadow: 2px 2px 5px #c4c4c4
+			box-shadow: 2px 2px 5px #c4c4c4;
 		}
 
 		.features-listBox {
