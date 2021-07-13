@@ -10,8 +10,8 @@
 				<u-form-item :label="children.__config__.label" :prop="children.__vModel__">
 					<u-input placeholder="请输入" v-model="dataForm[items.__vModel__][i][children.__vModel__]"
 						v-if="children.__config__.jnpfKey === 'comInput'" :disabled="items.disabled" />
-					<u-number-box v-model="dataForm[items.__vModel__][i][children.__vModel__]" :min="children.min"
-						:max="children.max" :step="children.step" :input-width="120" :positive-integer="false"
+					<u-number-box v-model="dataForm[items.__vModel__][i][children.__vModel__]" :min="children.min || 0"
+						:max="children.max || 10" :step="children.step" :input-width="120" :positive-integer="false"
 						:input-height="60" v-if="children.__config__.jnpfKey == 'numInput'" :disabled="items.disabled" />
 					<jnpf-select v-model="dataForm[items.__vModel__][i][children.__vModel__]" placeholder="请选择下拉框组"
 						:options="children.__slot__.options" :props="children.__config__.props"
