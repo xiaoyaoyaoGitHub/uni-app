@@ -346,7 +346,6 @@
 			init() {
 				this.$nextTick(function() {
 					config(this.id).then(res => {
-						console.log(res)
 						this.flowEngine(res.data)
 						this.filedList = JSON.parse(res.data.formData);
 						this.webType = res.data.webType

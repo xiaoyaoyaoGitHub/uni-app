@@ -74,7 +74,6 @@
 			init() {
 				this.$nextTick(function() {
 					config(this.featuresId).then(res => {
-						console.log(res)
 						this.filedList = JSON.parse(res.data.formData);
 						this.webType = res.data.webType
 						let fields = this.filedList.fields;
