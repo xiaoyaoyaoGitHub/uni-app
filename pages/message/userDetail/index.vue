@@ -5,10 +5,10 @@
 				<u-avatar :src="userData.headIcon" size="120"></u-avatar>
 			</view>
 			<view class="u-m-t-32 u-font-32 name">
-				<text>{{userData.realName}}</text>
+				<text>{{userData.realName}}/{{userData.account}}</text>
 			</view>
 			<view class="u-m-t-20 u-font-24">
-				<text>{{userData.position}}</text>
+				<text>{{userData.positionName}}</text>
 			</view>
 			<view class="u-m-t-32 u-flex userDetail-hd-btn">
 				<view class="u-m-r-40 btn" @click="call()">
@@ -20,10 +20,10 @@
 			</view>
 		</view>
 		<u-cell-group>
-			<u-cell-item title="手机号" :value="userData.telePhone || '未填写'" :arrow="false" :title-style="titleStyle">
+			<u-cell-item title="手机号" :value="userData.mobilePhone || '未填写'" :arrow="false" :title-style="titleStyle">
 			</u-cell-item>
-			<u-cell-item title="微信号" :value="'未填写'" :arrow="false" :title-style="titleStyle"></u-cell-item>
-			<u-cell-item title="座机号" :value="'未填写'" :arrow="false" :title-style="titleStyle"></u-cell-item>
+			<u-cell-item title="座机号" :value="userData.telePhone || '未填写'" :arrow="false" :title-style="titleStyle">
+			</u-cell-item>
 			<u-cell-item title="邮箱" :value="userData.email || '未填写'" :arrow="false" :title-style="titleStyle">
 			</u-cell-item>
 		</u-cell-group>
@@ -57,9 +57,9 @@
 				})
 			},
 			call() {
-				if (!this.userData.telePhone) return
+				if (!this.userData.mobilePhone) return
 				uni.makePhoneCall({
-					phoneNumber: this.userData.telePhone
+					phoneNumber: this.userData.mobilePhone
 				})
 			},
 			toIm() {

@@ -17,7 +17,8 @@
 							<view class="flowStatus" v-if="config.opType==0 || config.opType==4">
 								<image :src="flowStatus" mode="widthFix"></image>
 							</view>
-							<childForm ref="child" :config="config" @eventReciver="eventReciver" />
+							<childForm ref="child" :config="config" @eventReciver="eventReciver"
+								@setBtnLoad="setBtnLoad" />
 						</view>
 					</scroll-view>
 				</swiper-item>
@@ -211,7 +212,8 @@
 				}).then(res => {
 					this.flowTaskInfo = res.data.flowTaskInfo
 					this.flowTaskNodeList = res.data.flowTaskNodeList
-					this.recordList = res.data.flowTaskOperatorRecordList
+					const recordList = res.data.flowTaskOperatorRecordList || []
+					this.recordList = recordList.reverse()
 					this.properties = res.data.approversProperties || {}
 					this.endTime = this.flowTaskInfo.completion == 100 ? this.flowTaskInfo.endTime : 0
 					data.type = this.flowTaskInfo.type
@@ -403,6 +405,9 @@
 				approvalMethod(this.config.taskId, query).then(res => {
 					this.toastAndBack(res.msg, true)
 				})
+			},
+			setBtnLoad(val) {
+				this.btnLoading = !!val
 			},
 			toastAndBack(title, refresh) {
 				uni.showToast({

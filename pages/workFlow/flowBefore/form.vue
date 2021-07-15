@@ -1,17 +1,18 @@
 <template>
 	<view>
 		<template v-if="config.formType == 1">
-			<applyBanquet ref="form" @eventReciver="eventReciver" v-if="config.enCode==='applyBanquet'"/>
-			<applyDeliverGoods ref="form" @eventReciver="eventReciver" v-if="config.enCode==='applyDeliverGoods'"/>
-			<applyMeeting ref="form" @eventReciver="eventReciver" v-if="config.enCode==='applyMeeting'"/>
-			<archivalBorrow ref="form" @eventReciver="eventReciver" v-if="config.enCode==='archivalBorrow'"/>
-			<articlesWarehous ref="form" @eventReciver="eventReciver" v-if="config.enCode==='articlesWarehous'"/>
-			<batchPack ref="form" @eventReciver="eventReciver" v-if="config.enCode==='batchPack'"/>
-			<batchTable ref="form" @eventReciver="eventReciver" v-if="config.enCode==='batchTable'"/>
-			<conBilling ref="form" @eventReciver="eventReciver" v-if="config.enCode==='conBilling'"/>
-			<contractApproval ref="form" @eventReciver="eventReciver" v-if="config.enCode==='contractApproval'"/>
-			<contractApprovalSheet ref="form" @eventReciver="eventReciver" v-if="config.enCode==='contractApprovalSheet'"/>
-			<payDistribution ref="form" @eventReciver="eventReciver" v-if="config.enCode==='payDistribution'"/>
+			<applyBanquet ref="form" @eventReciver="eventReciver" v-if="config.enCode==='applyBanquet'" />
+			<applyDeliverGoods ref="form" @eventReciver="eventReciver" v-if="config.enCode==='applyDeliverGoods'" />
+			<applyMeeting ref="form" @eventReciver="eventReciver" v-if="config.enCode==='applyMeeting'" />
+			<archivalBorrow ref="form" @eventReciver="eventReciver" v-if="config.enCode==='archivalBorrow'" />
+			<articlesWarehous ref="form" @eventReciver="eventReciver" v-if="config.enCode==='articlesWarehous'" />
+			<batchPack ref="form" @eventReciver="eventReciver" v-if="config.enCode==='batchPack'" />
+			<batchTable ref="form" @eventReciver="eventReciver" v-if="config.enCode==='batchTable'" />
+			<conBilling ref="form" @eventReciver="eventReciver" v-if="config.enCode==='conBilling'" />
+			<contractApproval ref="form" @eventReciver="eventReciver" v-if="config.enCode==='contractApproval'" />
+			<contractApprovalSheet ref="form" @eventReciver="eventReciver"
+				v-if="config.enCode==='contractApprovalSheet'" />
+			<payDistribution ref="form" @eventReciver="eventReciver" v-if="config.enCode==='payDistribution'" />
 			<crmOrder ref="form" @eventReciver="eventReciver" v-if="config.enCode==='crmOrder'" />
 			<debitBill ref="form" @eventReciver="eventReciver" v-if="config.enCode==='debitBill'" />
 			<documentApproval ref="form" @eventReciver="eventReciver" v-if="config.enCode==='documentApproval'" />
@@ -19,34 +20,34 @@
 			<expenseExpenditure ref="form" @eventReciver="eventReciver" v-if="config.enCode==='expenseExpenditure'" />
 			<finishedProduct ref="form" @eventReciver="eventReciver" v-if="config.enCode==='finishedProduct'" />
 			<incomeRecognition ref="form" @eventReciver="eventReciver" v-if="config.enCode==='incomeRecognition'" />
-			<leaveApply ref="form" @eventReciver="eventReciver" v-if="config.enCode==='leaveApply'"/>
-			<letterService ref="form" @eventReciver="eventReciver" v-if="config.enCode==='letterService'"/>
-			<materialRequisition ref="form" @eventReciver="eventReciver" v-if="config.enCode==='materialRequisition'"/>
-			<monthlyReport ref="form" @eventReciver="eventReciver" v-if="config.enCode==='monthlyReport'"/>
-			<officeSupplies ref="form" @eventReciver="eventReciver" v-if="config.enCode==='officeSupplies'"/>
-			<outboundOrder ref="form" @eventReciver="eventReciver" v-if="config.enCode==='outboundOrder'"/>
-			<outgoingApply ref="form" @eventReciver="eventReciver" v-if="config.enCode==='outgoingApply'"/>
-			<paymentApply ref="form" @eventReciver="eventReciver" v-if="config.enCode==='paymentApply'"/>
-			<postBatchTab ref="form" @eventReciver="eventReciver" v-if="config.enCode==='postBatchTab'"/>
-			<procurementMaterial ref="form" @eventReciver="eventReciver" v-if="config.enCode==='procurementMaterial'"/>
-			<purchaseList ref="form" @eventReciver="eventReciver" v-if="config.enCode==='purchaseList'"/>
-			<quotationApproval ref="form" @eventReciver="eventReciver" v-if="config.enCode==='quotationApproval'"/>
-			<receiptProcessing ref="form" @eventReciver="eventReciver" v-if="config.enCode==='receiptProcessing'"/>
-			<receiptSign ref="form" @eventReciver="eventReciver" v-if="config.enCode==='receiptSign'"/>
-			<rewardPunishment ref="form" @eventReciver="eventReciver" v-if="config.enCode==='rewardPunishment'"/>
-			<salesOrder ref="form" @eventReciver="eventReciver" v-if="config.enCode==='salesOrder'"/>
-			<salesSupport ref="form" @eventReciver="eventReciver" v-if="config.enCode==='salesSupport'"/>
-			<staffOvertime ref="form" @eventReciver="eventReciver" v-if="config.enCode==='staffOvertime'"/>
-			<supplementCard ref="form" @eventReciver="eventReciver" v-if="config.enCode==='supplementCard'"/>
-			<travelApply ref="form" @eventReciver="eventReciver" v-if="config.enCode==='travelApply'"/>
-			<travelReimbursement ref="form" @eventReciver="eventReciver" v-if="config.enCode==='travelReimbursement'"/>
-			<vehicleApply ref="form" @eventReciver="eventReciver" v-if="config.enCode==='vehicleApply'"/>
-			<violationHandling ref="form" @eventReciver="eventReciver" v-if="config.enCode==='violationHandling'"/>
-			<warehouseReceipt ref="form" @eventReciver="eventReciver" v-if="config.enCode==='warehouseReceipt'"/>
-			<workContactSheet ref="form" @eventReciver="eventReciver" v-if="config.enCode==='workContactSheet'"/>
+			<leaveApply ref="form" @eventReciver="eventReciver" v-if="config.enCode==='leaveApply'" />
+			<letterService ref="form" @eventReciver="eventReciver" v-if="config.enCode==='letterService'" />
+			<materialRequisition ref="form" @eventReciver="eventReciver" v-if="config.enCode==='materialRequisition'" />
+			<monthlyReport ref="form" @eventReciver="eventReciver" v-if="config.enCode==='monthlyReport'" />
+			<officeSupplies ref="form" @eventReciver="eventReciver" v-if="config.enCode==='officeSupplies'" />
+			<outboundOrder ref="form" @eventReciver="eventReciver" v-if="config.enCode==='outboundOrder'" />
+			<outgoingApply ref="form" @eventReciver="eventReciver" v-if="config.enCode==='outgoingApply'" />
+			<paymentApply ref="form" @eventReciver="eventReciver" v-if="config.enCode==='paymentApply'" />
+			<postBatchTab ref="form" @eventReciver="eventReciver" v-if="config.enCode==='postBatchTab'" />
+			<procurementMaterial ref="form" @eventReciver="eventReciver" v-if="config.enCode==='procurementMaterial'" />
+			<purchaseList ref="form" @eventReciver="eventReciver" v-if="config.enCode==='purchaseList'" />
+			<quotationApproval ref="form" @eventReciver="eventReciver" v-if="config.enCode==='quotationApproval'" />
+			<receiptProcessing ref="form" @eventReciver="eventReciver" v-if="config.enCode==='receiptProcessing'" />
+			<receiptSign ref="form" @eventReciver="eventReciver" v-if="config.enCode==='receiptSign'" />
+			<rewardPunishment ref="form" @eventReciver="eventReciver" v-if="config.enCode==='rewardPunishment'" />
+			<salesOrder ref="form" @eventReciver="eventReciver" v-if="config.enCode==='salesOrder'" />
+			<salesSupport ref="form" @eventReciver="eventReciver" v-if="config.enCode==='salesSupport'" />
+			<staffOvertime ref="form" @eventReciver="eventReciver" v-if="config.enCode==='staffOvertime'" />
+			<supplementCard ref="form" @eventReciver="eventReciver" v-if="config.enCode==='supplementCard'" />
+			<travelApply ref="form" @eventReciver="eventReciver" v-if="config.enCode==='travelApply'" />
+			<travelReimbursement ref="form" @eventReciver="eventReciver" v-if="config.enCode==='travelReimbursement'" />
+			<vehicleApply ref="form" @eventReciver="eventReciver" v-if="config.enCode==='vehicleApply'" />
+			<violationHandling ref="form" @eventReciver="eventReciver" v-if="config.enCode==='violationHandling'" />
+			<warehouseReceipt ref="form" @eventReciver="eventReciver" v-if="config.enCode==='warehouseReceipt'" />
+			<workContactSheet ref="form" @eventReciver="eventReciver" v-if="config.enCode==='workContactSheet'" />
 		</template>
 		<template v-else>
-			<dynamicForm ref="form" @eventReciver="eventReciver" />
+			<dynamicForm ref="form" @eventReciver="eventReciver" @setBtnLoad="setBtnLoad" />
 		</template>
 	</view>
 </template>
@@ -152,6 +153,9 @@
 		methods: {
 			eventReciver(formData, eventType) {
 				this.$emit('eventReciver', formData, eventType)
+			},
+			setBtnLoad(val) {
+				this.$emit('setBtnLoad', val)
 			}
 		}
 	}

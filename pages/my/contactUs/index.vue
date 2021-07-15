@@ -79,12 +79,10 @@
 						// #ifdef APP-PLUS
 						plus.runtime.openURL(this.url);
 						// #endif
-						// #ifdef H5
-						window.open(this.url);
-						// #endif
-						// #ifdef MP
+						// #ifndef APP-PLUS
 						uni.navigateTo({
-							url: '../yinmaisoft/index'
+							url: '/pages/apply/externalLink/index?fullName=福建引迈信息技术有限公司&url=' + encodeURIComponent(
+								this.url)
 						})
 						// #endif
 						break;

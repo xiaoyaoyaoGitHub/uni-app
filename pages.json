@@ -171,9 +171,9 @@
 					}
 				},
 				{
-					"path": "allApplications/index",
+					"path": "allApp/index",
 					"style": {
-						"navigationBarTitleText": ""
+						"navigationBarTitleText": "更多应用"
 					}
 				}
 			]
@@ -217,6 +217,12 @@
 					}
 				},
 				{
+					"path": "externalLink/index",
+					"style": {
+						"navigationBarTitleText": ""
+					}
+				},
+				{
 					"path": "features/index",
 					"style": {
 						"navigationBarTitleText": ""
@@ -256,14 +262,6 @@
 						"navigationBarTitleText": "应用介绍"
 					}
 				},
-				// #ifdef MP
-				{
-					"path": "yinmaisoft/index",
-					"style": {
-						"navigationBarTitleText": ""
-					}
-				},
-				// #endif
 				{
 					"path": "accountSecurity/index",
 					"style": {

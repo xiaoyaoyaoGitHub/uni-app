@@ -112,7 +112,7 @@
 		},
 		onLoad() {
 			if (!this.$store.state.chat.socket) chat.initSocket()
-			this.$store.dispatch('user/getUserInfo')
+			this.$store.dispatch('user/getCurrentUser')
 			this.eventHub.$on('updateList', data => {
 				this.updateReply(data)
 			})

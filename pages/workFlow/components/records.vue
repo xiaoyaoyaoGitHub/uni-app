@@ -1,6 +1,12 @@
 <template>
 	<view class="records">
 		<u-time-line>
+			<u-time-line-item v-if="endTime">
+				<template v-slot:content>
+					<view class="record-cell record-title">流程结束</view>
+					<view class="record-cell">结束时间：{{endTime|date('yyyy-mm-dd hh:MM')}}</view>
+				</template>
+			</u-time-line-item>
 			<u-time-line-item v-for="(item,i) in options" :key="i">
 				<template v-slot:content>
 					<view v-if="item.handleStatus==2">
@@ -18,8 +24,26 @@
 						<view class="record-cell">终止时间：{{item.handleTime|date('yyyy-mm-dd hh:MM')}}</view>
 						<view class="record-cell" v-if="item.handleOpinion">终止原因：{{item.handleOpinion}}</view>
 					</view>
+					<view v-else-if="item.handleStatus==5">
+						<view class="record-cell record-title">执行人员：{{item.userName}}</view>
+						<view class="record-cell">执行动作：<text class="u-type-primary">指派</text></view>
+						<view class="record-cell">执行时间：{{item.handleTime|date('yyyy-mm-dd hh:MM')}}</view>
+						<view class="record-cell">指派人员：{{item.operatorId}}</view>
+					</view>
+					<view v-else-if="item.handleStatus==6">
+						<view class="record-cell record-title">执行人员：{{item.userName}}</view>
+						<view class="record-cell">执行动作：<text class="u-type-primary">加签</text></view>
+						<view class="record-cell">执行时间：{{item.handleTime|date('yyyy-mm-dd hh:MM')}}</view>
+						<view class="record-cell">加签人员：{{item.operatorId}}</view>
+					</view>
+					<view v-else-if="item.handleStatus==7">
+						<view class="record-cell record-title">执行人员：{{item.userName}}</view>
+						<view class="record-cell">执行动作：<text class="u-type-primary">转办</text></view>
+						<view class="record-cell">执行时间：{{item.handleTime|date('yyyy-mm-dd hh:MM')}}</view>
+						<view class="record-cell">转办人员：{{item.operatorId}}</view>
+					</view>
 					<view v-else>
-						<view class="record-cell record-title">审核人员：{{item.userName}}{{item.status?'(加签)':''}}</view>
+						<view class="record-cell record-title">审核人员：{{item.userName}}{{item.status==1?'(加签)':''}}</view>
 						<view class="record-cell">审核节点：{{item.nodeName}}</view>
 						<view class="record-cell">审核时间：{{item.handleTime|date('yyyy-mm-dd hh:MM')}}</view>
 						<view class="record-cell">审核状态：
@@ -30,10 +54,6 @@
 						<view class="record-cell" v-if="item.signImg">审核签名：
 							<image class="record-cell-img" :src="item.signImg" mode="widthFix" />
 						</view>
-					</view>
-					<view v-if="endTime">
-						<view class="record-cell record-title">流程结束</view>
-						<view class="record-cell">结束时间：{{item.endTime|date('yyyy-mm-dd hh:MM')}}</view>
 					</view>
 				</template>
 			</u-time-line-item>

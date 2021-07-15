@@ -62,12 +62,11 @@ export function getUserSelector() {
 }
 
 //获取用户详情
-export function getUesrDetail(id){
+export function getUesrDetail(id) {
 	return request({
-		url: '/api/permission/Users/'+id,
-		method: 'GET',
+		url: '/api/app/User/' + id,
+		method: 'GET'
 	})
-	
 }
 
 // 获取所有用户列表
@@ -137,9 +136,9 @@ export function logout() {
 }
 
 // 获取当前用户信息
-export function getUserInfo() {
+export function getCurrentUser() {
 	return request({
-		url: '/api/oauth/CurrentUser'
+		url: '/api/app/User'
 	})
 }
 

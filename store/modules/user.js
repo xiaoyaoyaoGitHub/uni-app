@@ -1,6 +1,6 @@
 import {
 	logout,
-	getUserInfo
+	getCurrentUser
 } from '@/api/common.js'
 const state = {
 	token: "",
@@ -17,12 +17,12 @@ const mutations = {
 }
 
 const actions = {
-	getUserInfo({
+	getCurrentUser({
 		commit
 	}) {
 		return new Promise((resolve, reject) => {
-			getUserInfo().then(res => {
-				const userInfo = res.data.userInfo
+			getCurrentUser().then(res => {
+				const userInfo = res.data
 				commit('SET_USERINFO', userInfo)
 				uni.setStorageSync('userInfo', userInfo)
 				resolve(userInfo)

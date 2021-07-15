@@ -123,8 +123,12 @@
 						tip: "暂无数据",
 						fixed: true,
 						top: "300rpx",
+						zIndex: 5
 					},
 					textNoMore: '没有更多数据',
+					toTop: {
+						bottom: 250
+					}
 				},
 				list: [],
 				listQuery: {
@@ -209,7 +213,6 @@
 					formType: 1,
 					opType: opType,
 					status: status,
-					taskNodeId: '',
 					fullName: fullName || '新增订单',
 				}
 				uni.navigateTo({

@@ -5,8 +5,8 @@
 				<u-avatar :src="baseURL+userInfo.headIcon" size="64" slot="right-icon"></u-avatar>
 			</u-cell-item>
 			<u-cell-item title="姓名" :value="userInfo.userName" :arrow="false"></u-cell-item>
-			<u-cell-item title="性别" :value="userInfo.gender == 0 ? '女' : '男'" :arrow="false"></u-cell-item>
-			<u-cell-item title="生日" :value="'2021-04-24'" :arrow="false">2021-04-24</u-cell-item>
+			<u-cell-item title="性别" :value="gender" :arrow="false"></u-cell-item>
+			<u-cell-item title="生日" :value="birthday" :arrow="false"></u-cell-item>
 			<u-cell-item title="手机号" :value="userInfo.mobilePhone" :arrow="false"></u-cell-item>
 			<u-cell-item title="邮箱" :value="userInfo.email" :arrow="false"></u-cell-item>
 		</u-cell-group>
@@ -17,6 +17,8 @@
 	export default {
 		data() {
 			return {
+				gender: '',
+				birthday: '',
 				userInfo: {}
 			}
 		},
@@ -27,6 +29,8 @@
 		},
 		onLoad() {
 			this.userInfo = uni.getStorageSync('userInfo') || {};
+			this.gender = this.userInfo.gender == 1 ? '男' : this.userInfo.gender == 2 ? '女' : '保密'
+			this.birthday = this.userInfo.birthday ? this.$u.timeFormat(msgInfo.messageDate, 'yyyy-mm-dd') : ''
 		},
 	}
 </script>
