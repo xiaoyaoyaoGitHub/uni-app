@@ -12,7 +12,8 @@
 						v-if="children.__config__.jnpfKey === 'comInput'" :disabled="items.disabled" />
 					<u-number-box v-model="dataForm[items.__vModel__][i][children.__vModel__]" :min="children.min || 0"
 						:max="children.max || 10" :step="children.step" :input-width="120" :positive-integer="false"
-						:input-height="60" v-if="children.__config__.jnpfKey == 'numInput'" :disabled="items.disabled" />
+						:input-height="60" v-if="children.__config__.jnpfKey == 'numInput'"
+						:disabled="items.disabled" />
 					<jnpf-select v-model="dataForm[items.__vModel__][i][children.__vModel__]" placeholder="请选择下拉框组"
 						:options="children.__slot__.options" :props="children.__config__.props"
 						v-if="children.__config__.jnpfKey == 'select'" :disabled="items.disabled" />
@@ -20,7 +21,8 @@
 						:placeholder="children.placeholder" :options="children.options"
 						v-if="children.__config__.jnpfKey == 'treeSelect'" :disabled="items.disabled" />
 					<jnpf-cascader v-model="dataForm[items.__vModel__][i][children.__vModel__]" placeholder="请选择级联选择"
-						:options="children.options" v-if="children.__config__.jnpfKey == 'cascader'" :disabled="items.disabled" />
+						:options="children.options" v-if="children.__config__.jnpfKey == 'cascader'"
+						:disabled="items.disabled" />
 					<jnpf-date-time type="date" v-model="dataForm[items.__vModel__][i][children.__vModel__]"
 						v-if="children.__config__.jnpfKey == 'date'" :disabled="items.disabled" />
 					<jnpf-date-time type="time" v-model="dataForm[items.__vModel__][i][children.__vModel__]"
@@ -67,10 +69,12 @@
 				list: {}
 			}
 		},
-
+		created() {
+			console.log(this.dataForm)
+		},
 		methods: {
 			addTable(items) {
-				if(!items.disabled){
+				if (!items.disabled) {
 					this.$forceUpdate();
 					let childItem = {};
 					let list = this.dataForm[items.__vModel__];
@@ -80,12 +84,25 @@
 					}
 					this.dataForm[items.__vModel__].push(childItem)
 					this.$forceUpdate();
+					uni.showToast({
+						title: '添加成功',
+						duration: 1000
+					});
 				}
 			},
 			delItem(i, model) {
-				this.$forceUpdate();
-				this.dataForm[model].splice(i, 1);
-				this.$forceUpdate();
+				uni.showModal({
+					content: '确定删除子表？',
+					success: (res) => {
+						if (res.confirm) {
+							this.dataForm[model].splice(i, 1);
+							uni.showToast({
+								title: '删除成功',
+								duration: 1000
+							});
+						}
+					}
+				});
 			},
 		}
 	}

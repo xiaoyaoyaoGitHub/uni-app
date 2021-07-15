@@ -115,7 +115,7 @@
 						}
 					}
 					if (defaultValue) this.$set(this.dataForm, vModel, defaultValue);
-					console.log("dataForm", this.dataForm)
+					
 					if (jnpfKey == 'card' || jnpfKey == 'table') {
 						let item = {};
 						children = fields[i].__config__.children;

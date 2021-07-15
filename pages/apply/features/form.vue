@@ -3,7 +3,7 @@
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<jnpfFormControl :formData='filedList' ref="formControl" @submit="submitForm" v-if="flag" :webType='webType'
-				:dataForm="dataForm" />
+				:dataForm="dataForm" @addTable='addTable' @delItem='delItem'/>
 			<view class="buttom-actions">
 				<u-button class="buttom-btn" @click="jnpf.goBack">{{filedList.cancelButtonText}}</u-button>
 				<u-button class="buttom-btn" type="primary" @click="submit">{{filedList.confirmButtonText}}</u-button>
@@ -55,22 +55,6 @@
 			this.$refs.dataForm.setRules(this.rules);
 		},
 		methods: {
-			// init(id) {
-			// 	config(id).then(res => {
-			// 		this.formData = JSON.parse(res.data.formData);
-			// 		this.webType = res.data.webType;
-			// 		if (this.isId) {
-			// 			wirteBack(this.id, this.featuresId).then(res => {
-			// 				let data = JSON.parse(res.data.data);
-			// 				data.id = res.data.id;
-			// 				this.$refs.formControl.dataForm = data
-			// 				this.flag = true
-			// 			})
-			// 		}
-			// 		this.flag = true
-			// 	})
-			// },
-
 			init() {
 				this.$nextTick(function() {
 					config(this.featuresId).then(res => {
@@ -154,7 +138,40 @@
 					})
 				})
 			},
-
+			// #ifdef MP-WEIXIN
+			addTable(items){
+				if (!items.disabled) {
+					this.$forceUpdate();
+					let childItem = {};
+					let list = this.dataForm[items.__vModel__];
+					for (var j = 0; j < items.__config__.children.length; j++) {
+						let e = items.__config__.children[j]
+						childItem[e.__vModel__] = '';
+					}
+					this.dataForm[items.__vModel__].push(childItem)
+					this.$forceUpdate();
+					uni.showToast({
+						title: '添加成功',
+						duration: 1000
+					});
+				}
+			},
+			delItem(i, model) {
+				uni.showModal({
+					content: '确定删除子表？',
+					success: (res) => {
+						if (res.confirm) {
+							this.dataForm[model].splice(i, 1);
+							uni.showToast({
+								title: '删除成功',
+								duration: 1000
+							});
+						}
+					}
+				});
+			},
+			// #endif
+			
 			submit() {
 				this.$refs.formControl.submitForm()
 			},

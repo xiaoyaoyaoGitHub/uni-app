@@ -55,16 +55,10 @@
 						v-if="items.__config__.jnpfKey == 'date'" :disabled="items.disabled" />
 					<jnpf-upload v-model="dataForm[items.__vModel__]" v-if="items.__config__.jnpfKey == 'uploadImg'"
 						:disabled="items.disabled" />
-					<u-rate v-model="dataForm[items.__vModel__]" size="40" @change="changeRate($event,items.__vModel__)"
-						v-if="items.__config__.jnpfKey == 'rate'" :disabled="items.disabled" />
+					<u-rate v-model="dataForm[items.__vModel__]" size="40" v-if="items.__config__.jnpfKey == 'rate'"
+						:disabled="items.disabled" @change="changeRate($event,items.__vModel__)" />
 					<u-slider v-model="dataForm[items.__vModel__]" :step="items.step" :min="items.min" :max="items.max"
-						style="width: 100%;" v-if="items.__config__.jnpfKey == 'slider'" :disabled="items.disabled">
-						<view class="">
-							<view class="badge-button">
-								{{dataForm[items.__vModel__]}}
-							</view>
-						</view>
-					</u-slider>
+						style="width: 100%;" :disabled="items.disabled" v-if="items.__config__.jnpfKey == 'slider'" />
 					<jnpf-org-select type="organize" v-model="dataForm[items.__vModel__]"
 						v-if="items.__config__.jnpfKey == 'comSelect'" :disabled="items.disabled" />
 					<jnpf-org-select type="department" v-model="dataForm[items.__vModel__]"
@@ -111,8 +105,8 @@
 						<u-input placeholder="请输入" v-model="dataForm[card.__vModel__]" type="textarea"
 							v-if="card.__config__.jnpfKey == 'textarea'" :disabled="card.disabled" />
 						<jnpf-checkbox v-model="dataForm[items.__vModel__]" :options="items.__slot__.options"
-							placeholder="请选择下拉框组" v-if="items.__config__.jnpfKey == 'checkbox'" :disabled="items.disabled"
-							:props="items.__config__.props" />
+							placeholder="请选择下拉框组" v-if="items.__config__.jnpfKey == 'checkbox'"
+							:disabled="items.disabled" :props="items.__config__.props" />
 						<u-number-box v-model="dataForm[card.__vModel__]" :min="card.min || 0" :max="card.max || 10"
 							:step="card.step" :input-width="120" :positive-integer="false" :input-height="60"
 							v-if="card.__config__.jnpfKey == 'numInput'" :disabled="card.disabled" />
@@ -141,13 +135,7 @@
 							@change="changeRate($event,card.__vModel__)" v-if="card.__config__.jnpfKey == 'rate'"
 							:disabled="card.disabled" />
 						<u-slider v-model="dataForm[card.__vModel__]" :step="card.step" :min="card.min" :max="card.max"
-							style="width: 100%;" v-if="card.__config__.jnpfKey == 'slider'" :disabled="card.disabled">
-							<view class="">
-								<view class="badge-button">
-									{{dataForm[card.__vModel__]}}
-								</view>
-							</view>
-						</u-slider>
+							style="width: 100%;" :disabled="card.disabled" v-if="card.__config__.jnpfKey == 'slider'" />
 						<jnpf-org-select type="organize" v-model="dataForm[card.__vModel__]"
 							v-if="card.__config__.jnpfKey == 'comSelect'" :disabled="card.disabled" />
 						<jnpf-org-select type="department" v-model="dataForm[card.__vModel__]"
@@ -177,7 +165,6 @@
 					<jnpfChildrenTable :items='items' :dataForm='dataForm'></jnpfChildrenTable>
 				</view>
 			</template>
-
 			<!-- #endif -->
 
 			<!-- #ifdef MP-WEIXIN -->
@@ -269,8 +256,7 @@
 		},
 		data() {
 			return {
-				options: [],
-				data: {}
+				options: []
 			}
 		},
 		methods: {
@@ -282,6 +268,9 @@
 				this.$emit('delItem', i, model)
 			},
 			// #endif
+			changeRate(e, vModel) {
+				this.dataForm[vModel] = e
+			},
 			submitForm() {
 				this.$emit('submit', this.dataForm)
 			}
