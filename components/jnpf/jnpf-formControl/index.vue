@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view v-if="flag">
 		<view v-for="(items,index) in formData.fields" :key='index'>
 			<template v-if="!items.__config__.noShow">
 				<u-form-item v-if="items.__config__.jnpfKey != 'table' && items.__config__.jnpfKey != 'card'"
@@ -28,7 +28,7 @@
 
 					<jnpf-checkbox v-model="dataForm[items.__vModel__]" :options="items.__slot__.options"
 						placeholder="请选择下拉框组" v-if="items.__config__.jnpfKey == 'checkbox'" :disabled="items.disabled"
-						:props="items.__config__.props" />
+						:props="items.__config__.props"/>
 
 					<u-number-box v-model="dataForm[items.__vModel__]" :min="items.min || 0" :max="items.max || 10"
 						:step="items.step" :input-width="120" :positive-integer="false" :input-height="60"
@@ -104,9 +104,9 @@
 							v-if="card.__config__.jnpfKey == 'comInput'" :disabled="card.disabled" />
 						<u-input placeholder="请输入" v-model="dataForm[card.__vModel__]" type="textarea"
 							v-if="card.__config__.jnpfKey == 'textarea'" :disabled="card.disabled" />
-						<jnpf-checkbox v-model="dataForm[items.__vModel__]" :options="items.__slot__.options"
-							placeholder="请选择下拉框组" v-if="items.__config__.jnpfKey == 'checkbox'"
-							:disabled="items.disabled" :props="items.__config__.props" />
+						<jnpf-checkbox v-model="dataForm[card.__vModel__]" :options="card.__slot__.options"
+							placeholder="请选择下拉框组" v-if="card.__config__.jnpfKey == 'checkbox'"
+							:disabled="card.disabled" :props="card.__config__.props" />
 						<u-number-box v-model="dataForm[card.__vModel__]" :min="card.min || 0" :max="card.max || 10"
 							:step="card.step" :input-width="120" :positive-integer="false" :input-height="60"
 							v-if="card.__config__.jnpfKey == 'numInput'" :disabled="card.disabled" />
@@ -251,6 +251,12 @@
 				type: String,
 				default () {
 					return ''
+				}
+			},
+			flag:{
+				type:Boolean,
+				default (){
+					return false
 				}
 			}
 		},

@@ -3,7 +3,7 @@
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<jnpfFormControl :formData='filedList' ref="formControl" @submit="submitForm" v-if="flag" :webType='webType'
-				:dataForm="dataForm" @addTable='addTable' @delItem='delItem' />
+				:dataForm="dataForm" @addTable='addTable' @delItem='delItem' :flag='flag'/>
 			<view class="buttom-actions">
 				<u-button class="buttom-btn" @click="jnpf.goBack">{{filedList.cancelButtonText}}</u-button>
 				<u-button class="buttom-btn" type="primary" @click="submit">{{filedList.confirmButtonText}}</u-button>
@@ -40,19 +40,17 @@
 			this.isId = Object.prototype.hasOwnProperty.call(option, 'id');
 			this.featuresId = option.featuresId
 			this.init(this.featuresId);
-			this.$nextTick(() => {
-				setTimeout(() => {
-					if (this.isId) {
-						this.id = option.id
-						wirteBack(this.id, this.featuresId).then(res => {
-							this.dataForm = JSON.parse(res.data.data);
-							this.dataForm.id = this.id;
-						})
-					}
-				},0)
-			})
+
+			if (this.isId) {
+				this.id = option.id
+				wirteBack(this.id, this.featuresId).then(res => {
+					this.dataForm = JSON.parse(res.data.data);
+					this.dataForm.id = this.id;
+					if(this.dataForm) this.flag = true;
+				})
+			}
 		},
-		
+
 		mounted() {
 			this.$refs.dataForm.setRules(this.rules);
 		},
@@ -71,7 +69,6 @@
 						let cardVModel;
 						let cardLabel;
 						let jnpfKey;
-						this.flag = true
 						for (let i = 0; i < fields.length; i++) {
 							required = fields[i].__config__.required;
 							label = fields[i].__config__.label;
@@ -137,6 +134,7 @@
 									}
 									this.dataForm[vModel] = [];
 									this.dataForm[vModel].push(item)
+									if(this.dataForm) this.flag = true
 								}
 							}
 						}
