@@ -67,7 +67,7 @@
 					...this.dataForm,
 					eventType: this.config.eventType
 				}
-				this.eventHub.$emit('operate', query);
+				uni.$emit('operate', query);
 				uni.navigateBack();
 			}
 		}

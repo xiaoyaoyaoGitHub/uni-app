@@ -272,7 +272,7 @@
 						title: res.msg,
 						complete: () => {
 							setTimeout(() => {
-								this.eventHub.$emit('refresh')
+								uni.$emit('refresh')
 								uni.navigateBack()
 							}, 1500)
 						}

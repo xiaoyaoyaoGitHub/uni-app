@@ -10,7 +10,6 @@ Object.assign(Vue.prototype, {
 	define: require("./utils/define").default,
 	request: require("./utils/request").default,
 	jnpf: require("./utils/jnpf").default,
-	eventHub: new Vue(),
 	$store: store
 })
 

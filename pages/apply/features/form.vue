@@ -53,7 +53,7 @@
 			})
 		},
 		onUnload() {
-			this.eventHub.$off('refresh')
+			uni.$off('refresh')
 		},
 		mounted() {
 			this.$refs.dataForm.setRules(this.rules);

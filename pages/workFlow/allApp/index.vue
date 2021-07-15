@@ -121,7 +121,7 @@
 				addUsual(query).then(res => {
 					this.usualList.push(item)
 					item.isData = true
-					this.eventHub.$emit('updateUsualList')
+					uni.$emit('updateUsualList')
 					uni.showToast({
 						title: res.msg
 					})
@@ -131,7 +131,7 @@
 				delUsual(item.id).then(res => {
 					this.usualList = this.usualList.filter(o => o.id !== item.id)
 					item.isData = false
-					this.eventHub.$emit('updateUsualList')
+					uni.$emit('updateUsualList')
 					uni.showToast({
 						title: res.msg
 					})

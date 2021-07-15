@@ -82,14 +82,14 @@
 		},
 		onLoad() {
 			this.userInfo = uni.getStorageSync('userInfo') || {}
-			this.eventHub.$on('refresh', () => {
+			uni.$on('refresh', () => {
 				this.list = [];
 				this.current = 0
 				this.mescroll.resetUpScroll();
 			})
 		},
 		onUnload() {
-			this.eventHub.$off('refresh')
+			uni.$off('refresh')
 		},
 		methods: {
 			upCallback(page) {

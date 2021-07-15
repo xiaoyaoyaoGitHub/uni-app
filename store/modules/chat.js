@@ -1,5 +1,3 @@
-import Vue from 'vue'
-
 const state = {
 	socket: null,
 	badgeNum: 0,
@@ -57,8 +55,8 @@ const actions = {
 			sendTime: data.dateTime,
 			method: data.method
 		}
-		Vue.prototype.eventHub && Vue.prototype.eventHub.$emit('addMsg', addItem)
-		Vue.prototype.eventHub && Vue.prototype.eventHub.$emit('updateList', item)
+		uni.$emit('addMsg', addItem)
+		uni.$emit('updateList', item)
 	},
 	receiveMessage({
 		state,
@@ -73,20 +71,20 @@ const actions = {
 				sendTime: data.dateTime,
 				method: data.method
 			}
-			Vue.prototype.eventHub && Vue.prototype.eventHub.$emit('addMsg', item)
+			uni.$emit('addMsg', item)
 		} else {
 			data.unreadMessage = 1
 			commit('ADD_BADGE_NUM', 1)
 		}
 		data.id = data.formUserId
 		data.latestMessage = data.formMessage
-		Vue.prototype.eventHub && Vue.prototype.eventHub.$emit('updateList', data)
+		uni.$emit('updateList', data)
 	},
 	getMessageList({
 		state,
 		commit
 	}, data) {
-		Vue.prototype.eventHub && Vue.prototype.eventHub.$emit('getMessageList', data)
+		uni.$emit('getMessageList', data)
 	},
 	messagePush({
 		state,

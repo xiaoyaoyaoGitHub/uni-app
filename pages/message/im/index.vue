@@ -203,10 +203,10 @@
 			this.formUserId = option.formUserId;
 			this.headIcon = option.headIcon;
 			this.name = option.name;
-			this.eventHub.$on('getMessageList', data => {
+			uni.$on('getMessageList', data => {
 				this.getMessageList(data)
 			})
-			this.eventHub.$on('addMsg', data => {
+			uni.$on('addMsg', data => {
 				this.addMsg(data)
 			})
 			this.$store.commit('chat/SET_FORMUSERID', this.formUserId)
@@ -237,8 +237,8 @@
 			// #endif
 		},
 		onUnload() {
-			this.eventHub.$off('getMessageList')
-			this.eventHub.$off('addMsg')
+			uni.$off('getMessageList')
+			uni.$off('addMsg')
 			this.$store.commit('chat/SET_FORMUSERID', '')
 			// #ifndef MP-ALIPAY
 			this.AUDIO.stop();

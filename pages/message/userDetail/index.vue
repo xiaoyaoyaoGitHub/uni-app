@@ -65,7 +65,7 @@
 			toIm() {
 				const userData = this.userData
 				const name = userData.realName + '/' + userData.account
-				this.eventHub.$emit('updateMsgNum', userData.id)
+				uni.$emit('updateMsgNum', userData.id)
 				uni.navigateTo({
 					url: '/pages/message/im/index?name=' + name + '&formUserId=' + userData.id + '&headIcon=' +
 						userData.headIcon

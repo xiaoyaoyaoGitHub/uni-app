@@ -141,12 +141,12 @@
 			if (!config) return this.jnpf.goBack()
 			this.config = config
 			this.init()
-			this.eventHub.$on('operate', data => {
+			uni.$on('operate', data => {
 				this[data.eventType + 'Handle'](data)
 			})
 		},
 		onUnload() {
-			this.eventHub.$off('operate')
+			uni.$off('operate')
 		},
 		methods: {
 			tabChange(index) {
@@ -324,7 +324,7 @@
 						title: res.msg,
 						complete: () => {
 							setTimeout(() => {
-								if (this.formData.id) this.eventHub.$emit('refresh')
+								if (this.formData.id) uni.$emit('refresh')
 								this.btnLoading = false
 								uni.navigateBack()
 							}, 1500)
@@ -414,7 +414,7 @@
 					title: title,
 					complete: () => {
 						setTimeout(() => {
-							if (refresh) this.eventHub.$emit('refresh')
+							if (refresh) uni.$emit('refresh')
 							uni.navigateBack()
 						}, 1500)
 					}

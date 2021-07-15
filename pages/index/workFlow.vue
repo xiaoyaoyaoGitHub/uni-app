@@ -78,12 +78,12 @@
 			}
 		},
 		onLoad() {
-			this.eventHub.$on('updateUsualList', data => {
+			uni.$on('updateUsualList', data => {
 				this.getUsualList()
 			})
 		},
 		onUnload() {
-			this.eventHub.$off('updateUsualList')
+			uni.$off('updateUsualList')
 		},
 		methods: {
 			getUsualList() {

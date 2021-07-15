@@ -113,16 +113,16 @@
 		onLoad() {
 			if (!this.$store.state.chat.socket) chat.initSocket()
 			this.$store.dispatch('user/getCurrentUser')
-			this.eventHub.$on('updateList', data => {
+			uni.$on('updateList', data => {
 				this.updateReply(data)
 			})
-			this.eventHub.$on('updateMsgNum', id => {
+			uni.$on('updateMsgNum', id => {
 				this.updateMsgNum(id)
 			})
 		},
 		onUnload() {
-			this.eventHub.$off('updateList')
-			this.eventHub.$off('updateMsgNum')
+			uni.$off('updateList')
+			uni.$off('updateMsgNum')
 		},
 		onNavigationBarButtonTap(e) {
 			if (e.index == 0) {
