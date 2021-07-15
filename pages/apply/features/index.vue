@@ -299,7 +299,7 @@
 		onUnload() {
 			uni.$off('refresh')
 		},
-		
+
 		mounted() {
 			this.$nextTick(() => {
 				setTimeout(() => {
@@ -310,7 +310,7 @@
 			})
 		},
 		methods: {
-			
+
 			init() {
 				this.$nextTick(function() {
 					config(this.id).then(res => {
@@ -326,7 +326,6 @@
 						let cardVModel;
 						let cardLabel;
 						let jnpfKey;
-						this.flag = true
 						for (let i = 0; i < fields.length; i++) {
 							required = fields[i].__config__.required;
 							label = fields[i].__config__.label;
@@ -392,6 +391,7 @@
 								}
 							}
 						}
+						this.flag = true
 					})
 				})
 			},
@@ -421,11 +421,10 @@
 				/* 筛选赋值 */
 				this.filter = configList.searchList;
 				/* 列表 */
-				this.configData = configList.columnList
-				console.log("configData",this.configData)
+				this.configData = configList.columnList;
 			},
-			
-			
+
+
 			/* 渲染列表页 */
 			upCallback(page) {
 				this.page = page;
@@ -445,7 +444,7 @@
 						break
 					default:
 				}
-			
+
 				list(query, {
 					load: page.num == 1
 				}).then(res => {
@@ -456,18 +455,11 @@
 						...o
 					}));
 					this.list = this.list.concat(list);
-					for(let i = 0;i<this.list.length;i++){
-						for(let key in this.list[i]){
-							if(key.indexOf('checkboxField')>=0 || key.indexOf('cascaderField')>=0){
-								this.list[i][key] = this.list[i][key].toString()
-							}
-						}
-					}
 				}).catch(() => {
 					this.mescroll.endErr();
 				})
 			},
-			
+
 			open(index) {
 				this.list[index].show = true;
 				this.list.map((val, idx) => {
@@ -480,7 +472,7 @@
 				delList(this.id, item.id).then(res => {
 					this.$u.toast(res.msg);
 					this.list.splice(index, 1);
-					if(this.list.length == 0){
+					if (this.list.length == 0) {
 						this.mescroll.resetUpScroll();
 					}
 				})
@@ -505,7 +497,7 @@
 				}
 			},
 
-			
+
 			add(id) {
 				const url = './form?featuresId=' + this.id
 				uni.navigateTo({
@@ -554,7 +546,7 @@
 	page {
 		background-color: #f0f2f6;
 	}
-	
+
 	.buttom-box {
 		background-color: #fff;
 		display: flex;
@@ -588,9 +580,7 @@
 			}
 
 			/* #endif */
-		}
-
-		;
+		};
 	}
 
 

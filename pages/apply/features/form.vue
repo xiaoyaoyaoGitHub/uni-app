@@ -49,12 +49,10 @@
 							this.dataForm.id = this.id;
 						})
 					}
-				}, 100)
+				},0)
 			})
 		},
-		onUnload() {
-			uni.$off('refresh')
-		},
+		
 		mounted() {
 			this.$refs.dataForm.setRules(this.rules);
 		},
