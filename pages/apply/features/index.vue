@@ -290,15 +290,14 @@
 			this.id = option.id;
 			this.featuresId = option.id;
 			this.init();
-			this.eventHub.$on('refresh', () => {
+			uni.$on('refresh', () => {
 				this.list = [];
 				this.mescroll.resetUpScroll();
-				this.$forceUpdate();
 			})
 		},
 
 		onUnload() {
-			this.eventHub.$off('refresh')
+			uni.$off('refresh')
 		},
 		
 		mounted() {
@@ -479,8 +478,11 @@
 			handleClick(index) {
 				const item = this.list[index];
 				delList(this.id, item.id).then(res => {
-					this.$u.toast(res.msg)
-					this.list.splice(index, 1)
+					this.$u.toast(res.msg);
+					this.list.splice(index, 1);
+					if(this.list.length == 0){
+						this.mescroll.resetUpScroll();
+					}
 				})
 			},
 

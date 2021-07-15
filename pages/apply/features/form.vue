@@ -3,7 +3,7 @@
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<jnpfFormControl :formData='filedList' ref="formControl" @submit="submitForm" v-if="flag" :webType='webType'
-				:dataForm="dataForm" @addTable='addTable' @delItem='delItem'/>
+				:dataForm="dataForm" @addTable='addTable' @delItem='delItem' />
 			<view class="buttom-actions">
 				<u-button class="buttom-btn" @click="jnpf.goBack">{{filedList.cancelButtonText}}</u-button>
 				<u-button class="buttom-btn" type="primary" @click="submit">{{filedList.confirmButtonText}}</u-button>
@@ -40,8 +40,8 @@
 			this.isId = Object.prototype.hasOwnProperty.call(option, 'id');
 			this.featuresId = option.featuresId
 			this.init(this.featuresId);
-			this.$nextTick(()=>{
-				setTimeout(()=>{
+			this.$nextTick(() => {
+				setTimeout(() => {
 					if (this.isId) {
 						this.id = option.id
 						wirteBack(this.id, this.featuresId).then(res => {
@@ -49,7 +49,7 @@
 							this.dataForm.id = this.id;
 						})
 					}
-				},100)
+				}, 100)
 			})
 		},
 		onUnload() {
@@ -110,7 +110,7 @@
 									cardVModel = children[c].__vModel__;
 									cardLabel = children[c].__config__.label;
 									item[cardVModel] = '';
-									if(cardVModel.indexOf('numInputField') >= 0){
+									if (cardVModel.indexOf('numInputField') >= 0) {
 										item[cardVModel] = 0
 									}
 									if (cardRequired) {
@@ -146,7 +146,7 @@
 				})
 			},
 			// #ifdef MP-WEIXIN
-			addTable(items){
+			addTable(items) {
 				if (!items.disabled) {
 					this.$forceUpdate();
 					let childItem = {};
@@ -196,7 +196,7 @@
 								title: res.msg,
 								complete: () => {
 									setTimeout(() => {
-										this.eventHub.$emit('refresh')
+										uni.$emit('refresh')
 										uni.navigateBack()
 									}, 1500)
 								}
