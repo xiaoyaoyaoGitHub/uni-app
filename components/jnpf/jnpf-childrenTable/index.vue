@@ -69,9 +69,6 @@
 				list: {}
 			}
 		},
-		created() {
-			console.log(this.dataForm)
-		},
 		methods: {
 			addTable(items) {
 				if (!items.disabled) {

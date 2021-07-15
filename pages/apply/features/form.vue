@@ -39,14 +39,18 @@
 			/* 判断url里面有没有id 返回true/false  修改表单的id*/
 			this.isId = Object.prototype.hasOwnProperty.call(option, 'id');
 			this.featuresId = option.featuresId
-			if (this.isId) {
-				this.id = option.id
-				wirteBack(this.id, this.featuresId).then(res => {
-					this.dataForm = JSON.parse(res.data.data)
-					this.dataForm.id = this.id
-				})
-			}
 			this.init(this.featuresId);
+			this.$nextTick(()=>{
+				setTimeout(()=>{
+					if (this.isId) {
+						this.id = option.id
+						wirteBack(this.id, this.featuresId).then(res => {
+							this.dataForm = JSON.parse(res.data.data);
+							this.dataForm.id = this.id;
+						})
+					}
+				},100)
+			})
 		},
 		onUnload() {
 			this.eventHub.$off('refresh')
@@ -106,6 +110,9 @@
 									cardVModel = children[c].__vModel__;
 									cardLabel = children[c].__config__.label;
 									item[cardVModel] = '';
+									if(cardVModel.indexOf('numInputField') >= 0){
+										item[cardVModel] = 0
+									}
 									if (cardRequired) {
 										this.rules[cardVModel] = [{
 											required: true,
@@ -171,7 +178,6 @@
 				});
 			},
 			// #endif
-			
 			submit() {
 				this.$refs.formControl.submitForm()
 			},
