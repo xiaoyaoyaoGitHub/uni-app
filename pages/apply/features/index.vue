@@ -190,7 +190,7 @@
 							</u-dropdown-item>
 						</u-dropdown>
 					</view>
-
+					<!-- 列表 -->
 					<view class="features-listBox u-p-l-16 u-p-r-16">
 						<view class="features-list u-m-t-20" v-for="(item,index) in list" :key='index'>
 							<u-swipe-action :index="index" :show="item.show" @click="handleClick" @open="open"
@@ -287,9 +287,6 @@
 			}
 		},
 		onLoad(option) {
-
-
-
 			this.id = option.id;
 			this.featuresId = option.id;
 			this.init();
@@ -303,6 +300,7 @@
 		onUnload() {
 			this.eventHub.$off('refresh')
 		},
+		
 		mounted() {
 			this.$nextTick(() => {
 				setTimeout(() => {
@@ -313,15 +311,7 @@
 			})
 		},
 		methods: {
-			// init() {
-			// 	config(this.id).then(res => {
-			// 		this.formData = JSON.parse(res.data.formData)
-			// 		this.webType = res.data.webType
-			// 		this.flowEngine(res.data)
-			// 	})
-			// },
-
-
+			
 			init() {
 				this.$nextTick(function() {
 					config(this.id).then(res => {
@@ -407,13 +397,6 @@
 				})
 			},
 
-
-
-
-
-
-
-
 			/* 初始化处理 */
 			flowEngine(data) {
 				let configList = JSON.parse(data.columnData);
@@ -438,10 +421,54 @@
 				this.sortData = sortData
 				/* 筛选赋值 */
 				this.filter = configList.searchList;
-
+				/* 列表 */
 				this.configData = configList.columnList
+				console.log("configData",this.configData)
 			},
-
+			
+			
+			/* 渲染列表页 */
+			upCallback(page) {
+				this.page = page;
+				let query = {
+					currentPage: page.num,
+					pageSize: page.size,
+					featuresId: this.id,
+					sort: 'asc'
+				}
+				switch (typeof(this.upCallbackData)) {
+					case 'string':
+						query.json = this.filterForm
+						break
+					case 'object':
+						query.sort = this.upCallbackData.sort,
+							query.sidx = this.upCallbackData.sidx
+						break
+					default:
+				}
+			
+				list(query, {
+					load: page.num == 1
+				}).then(res => {
+					this.mescroll.endSuccess(res.data.list.length);
+					if (page.num == 1) this.list = [];
+					let list = res.data.list.map(o => ({
+						show: false,
+						...o
+					}));
+					this.list = this.list.concat(list);
+					for(let i = 0;i<this.list.length;i++){
+						for(let key in this.list[i]){
+							if(key.indexOf('checkboxField')>=0 || key.indexOf('cascaderField')>=0){
+								this.list[i][key] = this.list[i][key].toString()
+							}
+						}
+					}
+				}).catch(() => {
+					this.mescroll.endErr();
+				})
+			},
+			
 			open(index) {
 				this.list[index].show = true;
 				this.list.map((val, idx) => {
@@ -476,42 +503,7 @@
 				}
 			},
 
-			/* 渲染列表页 */
-			upCallback(page) {
-				this.page = page;
-				let query = {
-					currentPage: page.num,
-					pageSize: page.size,
-					featuresId: this.id,
-					sort: 'asc'
-				}
-				switch (typeof(this.upCallbackData)) {
-					case 'string':
-						query.json = this.filterForm
-						break
-					case 'object':
-						query.sort = this.upCallbackData.sort,
-							query.sidx = this.upCallbackData.sidx
-						break
-					default:
-				}
-
-				list(query, {
-					load: page.num == 1
-				}).then(res => {
-					this.mescroll.endSuccess(res.data.list.length);
-					if (page.num == 1) this.list = [];
-					let list = res.data.list.map(o => ({
-						show: false,
-						...o
-					}));
-					this.list = this.list.concat(list);
-
-				}).catch(() => {
-					this.mescroll.endErr();
-				})
-			},
-
+			
 			add(id) {
 				const url = './form?featuresId=' + this.id
 				uni.navigateTo({
