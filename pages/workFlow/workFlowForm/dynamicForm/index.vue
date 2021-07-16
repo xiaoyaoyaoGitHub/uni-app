@@ -3,7 +3,7 @@
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<jnpfFormControl :formData='filedList' ref="dynamicForm" :dataForm='dataForm' v-if="flag"
-				@addTable='addTable' @delItem='delItem' />
+				@addTable='addTable' @delItem='delItem' :flag='flag'/>
 		</u-form>
 	</view>
 </template>
@@ -56,11 +56,8 @@
 				this.setting = data;
 				let filedList = JSON.parse(this.setting.formConf);
 				this.filedList = filedList;
-
-				this.flag = true
 				let fields = this.filedList.fields;
 				let formOperates = data.formOperates;
-
 				let defaultValue;
 				let vModel;
 				let dataType;
@@ -185,13 +182,12 @@
 						this.dynamicHandel(propsUrl, fields[i], jnpfKey)
 					}
 				}
-
-
 				if (data.id) {
 					DynamicInfo(data.id).then(res => {
 						this.dataForm = JSON.parse(res.data.data)
 					})
 				}
+				this.flag = true
 			},
 
 			dynamicHandel(propsUrl, item, jnpfKey) {

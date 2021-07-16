@@ -134,7 +134,7 @@
 							wirteBack(this.id, this.featuresId).then(res => {
 								this.dataForm = JSON.parse(res.data.data);
 								this.dataForm.id = this.id;
-								if (this.dataForm) this.flag = true;
+								this.flag = true;
 							})
 						}
 						this.flag = true
