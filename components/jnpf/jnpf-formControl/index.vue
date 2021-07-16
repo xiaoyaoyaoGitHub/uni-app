@@ -19,8 +19,7 @@
 					<u-input v-model="dataForm[items.__vModel__]" placeholder="系统自动生成" disabled
 						v-if="items.__config__.jnpfKey == 'currDept'" />
 					<u-input v-model="dataForm[items.__vModel__]" placeholder="系统自动生成" disabled
-						v-if="items.__config__.jnpfKey == 'currPosition'" />
-
+						v-if="items.__config__.jnpfKey == 'currPosition'"/>
 					<u-input placeholder="请输入" v-model="dataForm[items.__vModel__]"
 						v-if="items.__config__.jnpfKey == 'comInput'" :disabled="items.disabled" />
 					<u-input placeholder="请输入" v-model="dataForm[items.__vModel__]" type="textarea"

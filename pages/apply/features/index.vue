@@ -5,7 +5,7 @@
 				<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 					label-width="150" label-align="left">
 					<jnpfFormControl :formData='filedList' ref="formControl" :webType='webType' @submit="submitForm"
-						:dataForm='dataForm' v-if="flag" />
+						:dataForm='dataForm' v-if="flag" :flag="flag"/>
 					<view class="buttom-actions">
 						<u-button class="buttom-btn" @click="jnpf.goBack">{{filedList.cancelButtonText}}</u-button>
 						<u-button class="buttom-btn" type="primary" @click="submit">{{filedList.confirmButtonText}}

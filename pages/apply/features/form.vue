@@ -38,10 +38,10 @@
 		onLoad(option) {
 			/* 判断url里面有没有id 返回true/false  修改表单的id*/
 			this.isId = Object.prototype.hasOwnProperty.call(option, 'id');
+			if(!this.isId) this.flag = true
 			this.featuresId = option.featuresId
 			this.init(this.featuresId);
 			this.id = option.id
-			
 		},
 
 		mounted() {
@@ -49,96 +49,93 @@
 		},
 		methods: {
 			init() {
-				this.$nextTick(function() {
-					config(this.featuresId).then(res => {
-						this.filedList = JSON.parse(res.data.formData);
-						this.webType = res.data.webType
-						let fields = this.filedList.fields;
-						let required;
-						let label;
-						let vModel;
-						let children;
-						let cardRequired;
-						let cardVModel;
-						let cardLabel;
-						let jnpfKey;
-						for (let i = 0; i < fields.length; i++) {
-							required = fields[i].__config__.required;
-							label = fields[i].__config__.label;
-							vModel = fields[i].__vModel__;
-							jnpfKey = fields[i].__config__.jnpfKey;
-							if (required) {
-								this.rules[vModel] = [{
-									required: true,
-									message: label + '不能为空',
-									trigger: 'blur'
-								}];
-								if (vModel.indexOf('dateField') >= 0 ||
-									vModel.indexOf('selectField') >= 0 || vModel.indexOf('radioField') >=
-									0 || vModel.indexOf(
-										'switchField') >= 0 || vModel.indexOf(
-										'numInputField') >= 0) {
-									this.rules[vModel] = this.rules[vModel].map(o => ({
-										type: 'number',
-										...o
-									}))
-								} else if (vModel.indexOf('checkboxField') >= 0 || vModel.indexOf(
-										'addressField') >= 0) {
-									this.rules[vModel] = this.rules[vModel].map(o => ({
-										type: 'array',
-										...o
-									}))
-								}
-							}
-							if (jnpfKey == 'card' || jnpfKey == 'table') {
-								children = fields[i].__config__.children || [];
-								let item = {};
-								for (let c = 0; c < children.length; c++) {
-									cardRequired = children[c].__config__.required;
-									cardVModel = children[c].__vModel__;
-									cardLabel = children[c].__config__.label;
-									item[cardVModel] = '';
-									if (cardVModel.indexOf('numInputField') >= 0) {
-										item[cardVModel] = 0
-									}
-									if (cardRequired) {
-										this.rules[cardVModel] = [{
-											required: true,
-											message: cardLabel + '不能为空',
-											trigger: 'blur'
-										}];
-										if (cardVModel.indexOf('dateField') >= 0 ||
-											cardVModel.indexOf('selectField') >= 0 || cardVModel.indexOf(
-												'radioField') >= 0 ||
-											cardVModel.indexOf('switchField') >= 0 || cardVModel.indexOf(
-												'numInputField') >= 0) {
-											this.rules[cardVModel] = this.rules[cardVModel].map(o => ({
-												type: 'number',
-												...o
-											}))
-										} else if (cardVModel.indexOf('checkboxField') >= 0 || cardVModel
-											.indexOf(
-												'addressField') >= 0) {
-											this.rules[cardVModel] = this.rules[cardVModel].map(o => ({
-												type: 'array',
-												...o
-											}))
-										}
-									}
-									this.dataForm[vModel] = [];
-									this.dataForm[vModel].push(item)
-								}
+				config(this.featuresId).then(res => {
+					this.filedList = JSON.parse(res.data.formData);
+					this.webType = res.data.webType
+					let fields = this.filedList.fields;
+					let required;
+					let label;
+					let vModel;
+					let children;
+					let cardRequired;
+					let cardVModel;
+					let cardLabel;
+					let jnpfKey;
+					for (let i = 0; i < fields.length; i++) {
+						required = fields[i].__config__.required;
+						label = fields[i].__config__.label;
+						vModel = fields[i].__vModel__;
+						jnpfKey = fields[i].__config__.jnpfKey;
+						if (required) {
+							this.rules[vModel] = [{
+								required: true,
+								message: label + '不能为空',
+								trigger: 'blur'
+							}];
+							if (vModel.indexOf('dateField') >= 0 ||
+								vModel.indexOf('selectField') >= 0 || vModel.indexOf('radioField') >=
+								0 || vModel.indexOf(
+									'switchField') >= 0 || vModel.indexOf(
+									'numInputField') >= 0) {
+								this.rules[vModel] = this.rules[vModel].map(o => ({
+									type: 'number',
+									...o
+								}))
+							} else if (vModel.indexOf('checkboxField') >= 0 || vModel.indexOf(
+									'addressField') >= 0) {
+								this.rules[vModel] = this.rules[vModel].map(o => ({
+									type: 'array',
+									...o
+								}))
 							}
 						}
-						if (this.isId) {
-							wirteBack(this.id, this.featuresId).then(res => {
-								this.dataForm = JSON.parse(res.data.data);
-								this.dataForm.id = this.id;
-								this.flag = true;
-							})
+						if (jnpfKey == 'card' || jnpfKey == 'table') {
+							children = fields[i].__config__.children || [];
+							let item = {};
+							for (let c = 0; c < children.length; c++) {
+								cardRequired = children[c].__config__.required;
+								cardVModel = children[c].__vModel__;
+								cardLabel = children[c].__config__.label;
+								item[cardVModel] = '';
+								if (cardVModel.indexOf('numInputField') >= 0) {
+									item[cardVModel] = 0
+								}
+								if (cardRequired) {
+									this.rules[cardVModel] = [{
+										required: true,
+										message: cardLabel + '不能为空',
+										trigger: 'blur'
+									}];
+									if (cardVModel.indexOf('dateField') >= 0 ||
+										cardVModel.indexOf('selectField') >= 0 || cardVModel.indexOf(
+											'radioField') >= 0 ||
+										cardVModel.indexOf('switchField') >= 0 || cardVModel.indexOf(
+											'numInputField') >= 0) {
+										this.rules[cardVModel] = this.rules[cardVModel].map(o => ({
+											type: 'number',
+											...o
+										}))
+									} else if (cardVModel.indexOf('checkboxField') >= 0 || cardVModel
+										.indexOf(
+											'addressField') >= 0) {
+										this.rules[cardVModel] = this.rules[cardVModel].map(o => ({
+											type: 'array',
+											...o
+										}))
+									}
+								}
+								this.dataForm[vModel] = [];
+								this.dataForm[vModel].push(item)
+							}
 						}
-						this.flag = true
-					})
+					}
+					if (this.isId) {
+						wirteBack(this.id, this.featuresId).then(res => {
+							this.dataForm = JSON.parse(res.data.data);
+							this.dataForm.id = this.id;
+							this.flag = true;
+						})
+					}
 				})
 			},
 			// #ifdef MP-WEIXIN
