@@ -128,7 +128,17 @@
 			if (e.index == 0) {
 				uni.scanCode({
 					success: res => {
-						// console.log(JSON.stringify(res.result))
+						try {
+							const result = JSON.parse(res.result)
+							if (result.type === 'appDesignPreview') {
+								uni.navigateTo({
+									url: '/pages/apply/dynamicModel/index?isPreview=1&id=' + result.id,
+									fail: (err) => {
+										this.$u.toast("暂无此页面")
+									}
+								})
+							}
+						} catch (e) {}
 					}
 				});
 			};

@@ -277,8 +277,19 @@
   display: flex;
   flex-direction: column;
 
-  .main {
+  .dropdown-slot-content-main {
     background-color: #fff;
+    max-height: 100%;
+    overflow: auto;
+
+    &.search-main {
+      overflow: hidden;
+    }
+
+    .search-form {
+      max-height: calc(100% - 88rpx);
+      overflow: auto;
+    }
   }
 
   .buttom-actions {
@@ -300,3 +311,11 @@
   font-size: 22rpx;
   line-height: 1;
 }
+
+/* #ifdef MP */
+.u-form-item-switch {
+  padding-top: 26rpx;
+  box-sizing: border-box;
+  height: 70rpx;
+}
+/* #endif */

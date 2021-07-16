@@ -1,12 +1,12 @@
 <template>
-	<view class="order-v">
+	<view class="dynamicModel-list-v">
 		<view class="head-warp com-dropdown">
 			<u-dropdown class="u-dropdown" ref="uDropdown">
-				<u-dropdown-item title="排序" :options="sortOptions" @change="onChange">
+				<u-dropdown-item title="排序" :options="sortOptions">
 					<view class="dropdown-slot-content">
 						<view class="dropdown-slot-content-main">
 							<u-cell-group>
-								<u-cell-item @click="cellClick(item.value)" :arrow="false" :title="item.label"
+								<u-cell-item @click="cellClick(item)" :arrow="false" :title="item.label"
 									v-for="(item, index) in sortOptions" :key="index" :title-style="{
 									color: sortValue == item.value ? '#2979ff' : '#606266' }">
 									<u-icon v-if="sortValue == item.value" name="checkbox-mark" color="#2979ff"
@@ -19,16 +19,10 @@
 				</u-dropdown-item>
 				<u-dropdown-item title="筛选">
 					<view class="dropdown-slot-content">
-						<view class="dropdown-slot-content-main">
-							<view class="u-p-l-32 u-p-r-32">
-								<u-form label-position="left" label-width="150" label-align="left">
-									<u-form-item label="起始日期" prop="startTime">
-										<jnpf-date-time type="date" v-model="listQuery.startTime"></jnpf-date-time>
-									</u-form-item>
-									<u-form-item label="结束日期" prop="endTime">
-										<jnpf-date-time type="date" v-model="listQuery.endTime"></jnpf-date-time>
-									</u-form-item>
-								</u-form>
+						<view class="dropdown-slot-content-main search-main">
+							<view class="u-p-l-32 u-p-r-32 search-form">
+								<Parser :formConf="searchList" ref="searchForm" v-if="showParser"
+									@submit="sumbitSearchForm" />
 							</view>
 							<view class="buttom-actions">
 								<u-button class="buttom-btn" @click="reset">重置</u-button>
@@ -48,23 +42,20 @@
 		<view class="list-warp">
 			<mescroll-uni ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :fixed="false"
 				:down="downOption" :up="upOption">
-				<view class="flow-list">
-					<view class="flow-list-box" v-for="(item, index) in list" :key="item.id">
+				<view class="list">
+					<view class="list-box" v-for="(item, index) in list" :key="item.id">
 						<u-swipe-action :index="index" :show="item.show" @click="handleClick" @open="open"
-							:options="options" @content-click="goDetail(item.id,item.currentState,item.customerName)">
+							:options="options" @content-click="goDetail(item.id,item.flowState)">
 							<view class="item">
-								<view class="item-cell item-title u-border-bottom">
-									<text class="title u-line-1">{{item.customerName}}</text>
+								<view class="item-cell u-line-1" v-for="(column,i) in columnList" :key="i">
+									<text>{{column.label}}：</text>
+									<text>{{item[column.prop]}}</text>
 								</view>
-								<view class="item-cell">
-									<text class="time">{{item.orderCode}}</text>
-									<text :class="'status '+getFlowStatus(item.currentState).statusCss">
-										{{getFlowStatus(item.currentState).text}}
+								<view class="item-cell" v-if="config.webType==3">
+									<text>审批状态：</text>
+									<text :class="getFlowStatus(item.flowState).statusCss">
+										{{getFlowStatus(item.flowState).text}}
 									</text>
-								</view>
-								<view class="item-cell">
-									<text class="time">{{item.salesmanName}}</text>
-									<text class="time">{{item.orderDate | date('yyyy-mm-dd')}}</text>
 								</view>
 							</view>
 						</u-swipe-action>
@@ -81,35 +72,23 @@
 <script>
 	import resources from '@/libs/resources.js'
 	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
+	import Parser from '../parser/index.vue'
 	import {
-		getOrderList,
-		Delete
-	} from '@/api/apply/order'
+		getModelList,
+		deteleModel
+	} from '@/api/apply/visualDev'
 	export default {
 		mixins: [MescrollMixin],
+		props: ['config', 'modelId', 'isPreview', 'title'],
+		components: {
+			Parser
+		},
 		data() {
 			return {
-				sortValue: 0,
-				sortOptions: [{
-						label: '单据升序',
-						value: 1,
-					},
-					{
-						label: '单据降序',
-						value: 2,
-					},
-					{
-						label: '日期升序',
-						value: 3,
-					},
-					{
-						label: '日期降序',
-						value: 4,
-					}
-				],
+				sortValue: '',
 				downOption: {
 					use: true,
-					auto: true
+					auto: false
 				},
 				upOption: {
 					page: {
@@ -135,37 +114,80 @@
 					sort: 'desc',
 					sidx: '',
 					keyword: '',
-					startTime: '',
-					endTime: ''
+					json: ''
 				},
 				options: [{
 					text: '删除',
 					style: {
 						backgroundColor: '#dd524d'
 					}
-				}]
+				}],
+				showParser: false,
+				columnData: {},
+				columnList: [],
+				sortOptions: [],
+				searchList: []
 			}
 		},
-		onLoad() {
+		created() {
+			this.init()
 			uni.$on('refresh', () => {
 				this.list = [];
 				this.mescroll.resetUpScroll();
 			})
 		},
-		onUnload() {
+		beforeDestroy() {
 			uni.$off('refresh')
 		},
 		methods: {
+			init() {
+				this.columnData = JSON.parse(this.config.columnData)
+				this.upOption.page.size = this.columnData.hasPage ? this.columnData.pageSize : 1000000
+				this.setDefaultQuery()
+				this.columnList = this.columnData.columnList
+				this.searchList = this.columnData.searchList
+				const sortList = this.columnData.sortList
+				let sortOptions = [];
+				for (let i = 0; i < sortList.length; i++) {
+					let ascItem = {
+						label: sortList[i].label + '升序',
+						value: sortList[i].prop + 'asc',
+						sidx: sortList[i].prop,
+						sort: 'asc'
+					}
+					let descItem = {
+						label: sortList[i].label + '降序',
+						sidx: sortList[i].prop,
+						value: sortList[i].prop + 'desc',
+						sort: 'desc'
+					}
+					sortOptions.push(ascItem, descItem)
+				}
+				this.sortOptions = sortOptions
+				this.showParser = true
+				if (this.isPreview == '1') return
+				this.initData()
+			},
+			initData() {},
+			setDefaultQuery() {
+				this.listQuery.sort = this.columnData.sort
+				this.listQuery.sidx = this.columnData.defaultSidx
+			},
 			upCallback(page) {
-				let query = {
+				if (this.isPreview == '1') return this.mescroll.endSuccess(0, false);
+				const query = {
 					currentPage: page.num,
 					pageSize: page.size,
 					...this.listQuery
 				}
-				getOrderList(query, {
+				getModelList(this.modelId, query, {
 					load: page.num == 1
 				}).then(res => {
-					this.mescroll.endSuccess(res.data.list.length);
+					if (this.columnData.hasPage) {
+						this.mescroll.endSuccess(res.data.list.length);
+					} else {
+						this.mescroll.endSuccess(res.data.list.length, false);
+					}
 					if (page.num == 1) this.list = [];
 					const list = res.data.list.map(o => ({
 						show: false,
@@ -178,12 +200,12 @@
 			},
 			handleClick(index, index1) {
 				const item = this.list[index]
-				if ([1, 2, 5].includes(item.currentState)) {
+				if (this.config.webType == 3 && [1, 2, 5].includes(item.flowState)) {
 					this.$u.toast("流程正在审核,请勿删除")
 					this.list[index].show = false
 					return
 				}
-				Delete(item.id).then(res => {
+				deteleModel(this.modelId, item.id).then(res => {
 					this.$u.toast(res.msg)
 					this.list.splice(index, 1)
 				})
@@ -195,29 +217,38 @@
 				})
 			},
 			search() {
-				// this.listQuery.sort = 'desc'
-				// this.listQuery.sidx = ''
+				if (this.isPreview == '1') return
 				this.searchTimer && clearTimeout(this.searchTimer)
 				this.searchTimer = setTimeout(() => {
 					this.list = [];
 					this.mescroll.resetUpScroll();
 				}, 300)
 			},
-			goDetail(id, status, fullName) {
-				let opType = '-1'
-				if ([1, 2, 5].includes(status)) opType = 0
-				const config = {
-					id: id,
-					enCode: 'crmOrder',
-					flowId: '52d3144909d04e2f8a6629ab2ab39e14',
-					formType: 1,
-					opType: opType,
-					status: status,
-					fullName: fullName || '新增订单',
+			goDetail(id, status) {
+				if (this.config.webType == 3) {
+					let opType = '-1'
+					if ([1, 2, 5].includes(status)) opType = 0
+					const config = {
+						id: id || '',
+						enCode: this.config.flowEnCode,
+						flowId: this.config.flowId,
+						formType: 2,
+						type: 1,
+						opType,
+						status: status || '',
+						isPreview: this.isPreview,
+						fullName: id ? '编辑' : '新增'
+					}
+					uni.navigateTo({
+						url: '/pages/workFlow/flowBefore/index?config=' + encodeURIComponent(JSON.stringify(
+							config))
+					})
+				} else {
+					uni.navigateTo({
+						url: '/pages/apply/dynamicModel/form?modelId=' + this.modelId + '&isPreview=' +
+							this.isPreview + (id ? '&id=' + id : '')
+					})
 				}
-				uni.navigateTo({
-					url: '/pages/workFlow/flowBefore/index?config=' + encodeURIComponent(JSON.stringify(config))
-				})
 			},
 			getFlowStatus(val) {
 				let status
@@ -267,21 +298,34 @@
 				}
 				return status
 			},
-			cellClick(val) {
-				this.listQuery.sort = val == 1 || val == 3 ? 'asc' : 'desc'
-				this.listQuery.sidx = val == 1 || val == 2 ? 'orderCode' : 'orderDate'
-				this.sortValue = val
+			cellClick(item) {
+				if (this.sortValue === item.value) return
+				this.listQuery.sort = item.sort
+				this.listQuery.sidx = item.sidx
+				this.sortValue = item.value
 				this.$refs.uDropdown.close();
+				if (this.isPreview == '1') return
 				this.$nextTick(() => {
 					this.list = [];
 					this.mescroll.resetUpScroll();
 				})
 			},
 			reset() {
-				this.listQuery.startTime = ''
-				this.listQuery.endTime = ''
+				this.$refs.searchForm && this.$refs.searchForm.resetForm()
 			},
 			closeDropdown() {
+				if (this.isPreview == '1') {
+					uni.showToast({
+						title: '功能预览不支持检索',
+						icon: 'none'
+					})
+					return
+				}
+				this.$refs.searchForm && this.$refs.searchForm.submitForm()
+			},
+			sumbitSearchForm(data) {
+				const json = data || {}
+				this.listQuery.json = JSON.stringify(json) !== '{}' ? JSON.stringify(json) : ''
 				this.$refs.uDropdown.close();
 				this.$nextTick(() => {
 					this.list = [];
@@ -304,7 +348,7 @@
 		/* #endif */
 	}
 
-	.order-v {
+	.dynamicModel-list-v {
 		height: 100%;
 		display: flex;
 		flex-direction: column;
@@ -319,9 +363,24 @@
 			min-height: 0;
 		}
 
-		.flow-list-box {
-			width: 100%;
-			margin-bottom: 20rpx;
+		.list {
+
+			.list-box {
+				width: 100%;
+				margin-bottom: 20rpx;
+
+				.item {
+					background-color: #fff;
+					padding: 0 32rpx;
+
+					.item-cell {
+						height: 90rpx;
+						line-height: 90rpx;
+						font-size: 28rpx;
+						color: #333333;
+					}
+				}
+			}
 		}
 	}
 </style>

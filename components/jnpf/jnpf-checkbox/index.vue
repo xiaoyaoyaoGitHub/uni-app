@@ -39,6 +39,11 @@
 				newOptions: [],
 			}
 		},
+		watch: {
+			value(val) {
+				this.setDefault()
+			}
+		},
 		created() {
 			this.setColumnData()
 			this.setDefault()

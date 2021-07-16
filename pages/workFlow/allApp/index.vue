@@ -1,7 +1,7 @@
 <template>
-	<view class="allApplications-v">
+	<view class="allApp-v">
 		<view class="usualList">
-			<view class="caption u-m-b-20">常用应用</view>
+			<view class="caption u-m-b-20">常用应用<text class="tip">最多只能添加11个</text></view>
 			<view class="u-flex u-flex-wrap">
 				<view class="item u-flex-col u-col-center" v-for="(item,i) in usualList" :key="i">
 					<text class="u-font-40 item-icon" :class="item.icon"
@@ -145,12 +145,18 @@
 </script>
 
 <style lang="scss">
-	.allApplications-v {
+	.allApp-v {
 
 		.caption {
 			font-size: 36rpx;
 			line-height: 80rpx;
 			padding: 0 32rpx;
+
+			.tip {
+				margin-left: 20rpx;
+				font-size: 24rpx;
+				color: #999;
+			}
 		}
 
 		.usualList {

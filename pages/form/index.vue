@@ -17,7 +17,9 @@
 			</u-form-item>
 			<!-- 开关 -->
 			<u-form-item label="开关" prop="switch">
-				<jnpf-switch v-model="dataForm.switch"></jnpf-switch>
+				<view class="u-flex u-form-item-switch">
+					<jnpf-switch v-model="dataForm.switch"></jnpf-switch>
+				</view>
 			</u-form-item>
 			<!-- 单选框组 -->
 			<u-form-item label="单选框组" prop="radio">
@@ -380,12 +382,9 @@
 				})
 			},
 			submit() {
-				
 				this.$refs.dataForm.validate(valid => {
 					if (valid) {
 						console.log('验证通过');
-						
-
 					} else {
 						console.log('验证失败');
 					}
