@@ -83,8 +83,8 @@
 				</block>
 				<block v-if="childItem.__config__.jnpfKey==='comSelect'">
 					<jnpf-org-select type="organize" v-model="tableFormData[i][cIndex].value"
-						:multiple="childItem.multiple" :placeholder="disabled||childItem.placeholder"
-						:disabled="childItem.disabled">
+						:multiple="childItem.multiple" :placeholder="childItem.placeholder"
+						:disabled="disabled||childItem.disabled">
 					</jnpf-org-select>
 				</block>
 				<block v-if="childItem.__config__.jnpfKey==='depSelect'">
