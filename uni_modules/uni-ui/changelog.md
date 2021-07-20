@@ -1,3 +1,79 @@
+## 1.3.7（2021-07-16）
+- uni-ui 兼容 vue3，如何创建vue3项目，详见 [uni-app 项目支持 vue3 介绍](https://ask.dcloud.net.cn/article/37834)
+- uni-datetime-picker 修复 单选日期类型，初始赋值后不在当前日历的 bug
+- uni-datetime-picker 新增 clearIcon 属性，显示框的清空按钮可配置显示隐藏（仅 pc 有效）
+- uni-datetime-picker 优化 移动端移除显示框的清空按钮，无实际用途
+- uni-datetime-picker 修复 组件赋值为空，界面未更新的 bug
+- uni-datetime-picker 修复 start 和 end 不能动态赋值的 bug
+- uni-datetime-picker 修复 范围选类型，用户选择后再次选择右侧日历（结束日期）显示不正确的 bug
+## 1.3.6（2021-07-09）
+- uni-data-checkbox 优化 删除无用日志
+- uni-data-checkbox 修复 由 0.1.9 引起的非 nvue 端图标不显示的问题
+- uni-data-checkbox 修复 nvue 黑框样式问题
+- uni-datetime-picker 修复 范围选择不能动态赋值的 bug
+- uni-datetime-picker 修复 范围选择的初始时间在一个月内时，造成无法选择的bug
+- uni-datetime-picker 优化 弹出层在超出视窗边缘定位不准确的问题
+- uni-datetime-picker 修复 范围起始点样式的背景色与今日样式的字体前景色融合，导致日期字体看不清的 bug
+- uni-datetime-picker 优化 弹出层在超出视窗边缘被遮盖的问题
+- uni-datetime-picker 新增 maskClick 事件
+- uni-datetime-picker 修复 特殊情况日历 rpx 布局错误的 bug，rpx -> px
+- uni-datetime-picker 修复 范围选择时清空返回值不合理的bug，['', ''] -> []
+- uni-datetime-picker 新增 日期时间显示框支持插槽
+- uni-file-picker 修复 sourceType 缺少默认值导致 ios 无法选择文件
+- uni-file-picker 优化 解耦与uniCloud的强绑定关系 ，如不绑定服务空间，默认autoUpload为false且不可更改
+- uni-table 新增 uni-th 支持 date 日期筛选范围
+- uni-table 新增 uni-th 支持 range 筛选范围
+- uni-table 新增 uni-th 筛选功能
+## 1.3.5（2021-07-02）
+- uni-card 优化 图文卡片无图片加载时，提供占位图标
+- uni-card 新增 header 插槽，自定义卡片头部（ 图文卡片 mode="style" 时，不支持）
+- uni-card 修复 thumbnail 不存在仍然占位的 bug
+- uni-data-checkbox 修复 selectedTextColor 属性不生效的Bug
+- uni-datetime-picker 优化 添加 uni-icons 依赖
+- uni-easyinput 修复 confirmType 属性（仅 type="text" 生效）导致多行文本框无法换行的 bug
+- uni-file-picker 修复 由 0.0.10 版本引发的 returnType 属性失效的问题
+- uni-file-picker 优化 文件上传后进度条消失时机
+- uni-file-picker 修复 在uni-forms 中，删除文件 ，获取的值不对的Bug
+- uni-forms 修复 pattern 属性在微信小程序平台无效的问题
+## 1.3.4（2021-06-25）
+- uni-badge 优化 示例项目
+- uni-countdown 修复 uni-countdown 重复赋值跳两秒的 bug
+- uni-easyinput 修复 passwordIcon 属性拼写错误的 bug
+- uni-forms 修复 validate-trigger属性为submit且err-show-type属性为toast时不能弹出的Bug
+- uni-forms 修复 只写setRules方法而导致校验不生效的Bug
+- uni-forms 修复 由上个办法引发的错误提示文字错位的Bug
+- uni-forms 修复 不设置 label 属性 ，无法设置label插槽的问题
+- uni-forms 修复 不设置label属性，label-width属性不生效的bug
+- uni-forms 修复 setRules 方法与rules属性冲突的问题
+- uni-link 新增 download 属性，H5平台下载文件名
+- uni-popup 新增 mask-click 遮罩层点击事件
+- uni-popup 修复 nvue 平台中间弹出后，点击内容，再点击遮罩无法关闭的Bug
+- uni-tag 修复 uni-tag 在字节跳动小程序上 css 类名编译错误的 bug
+## 1.3.3（2021-06-18）
+- uni-easyinput 新增 passwordIcon 属性，当type=password时是否显示小眼睛图标
+- uni-easyinput 修复 confirmType 属性不生效的问题
+- uni-easyinput 修复 disabled 状态可清出内容的 bug
+- uni-file-picker 修复 删除文件时无法触发 v-model 的Bug
+- uni-popup 修复 H5平台中间弹出后，点击内容，再点击遮罩无法关闭的Bug
+- uni-popup 修复 错误的 watch 字段
+- uni-popup 修复 safeArea 属性不生效的问题
+- uni-popup 修复 点击内容，再点击遮罩无法关闭的Bug
+## 1.3.2（2021-06-04）
+- uni-data-checkbox 新增 map 属性，可以方便映射text/value属性
+- uni-data-checkbox 修复 不关联服务空间的情况下组件报错的Bug
+- uni-data-picker 修复 上个版本引出的本地数据无法选择带有children的2级节点
+- uni-forms 修复 动态删减数据导致报错的问题
+- uni-forms 新增 modelValue 属性 ，value 即将废弃
+- uni-forms 新增 uni-forms-item 可以设置单独的 rules
+- uni-forms 新增 validate 事件增加 keepitem 参数，可以选择那些字段不过滤
+- uni-forms 优化 submit 事件重命名为 validate
+- uni-data-picker 修复 无法加载云端数据的问题
+- uni-data-picker 修复 v-model无效问题
+- uni-data-picker 修复 loaddata 为空数据组时加载时间过长问题
+- uni-datetime-picker 修复 图标在小程序上不显示的 bug
+- uni-datetime-picker 优化 重命名引用组件，避免潜在组件命名冲突
+- uni-datetime-picker 优化 代码目录扁平化
+- uni-tag 修复 未定义 sass 变量 "$uni-color-royal" 的bug
 ## 1.3.1（2021-05-14）
 - uni-badge 新增 uni-badge 的 absolute 属性，支持定位
 - uni-badge 新增 uni-badge 的 offset 属性，支持定位偏移

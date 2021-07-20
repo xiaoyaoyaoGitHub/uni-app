@@ -58,16 +58,16 @@
 			<view v-if="!insert && !range && typeHasTime" class="uni-date-changed uni-calendar--fixed-top"
 				style="padding: 0 40px;">
 				<text class="uni-date-changed--time-date">{{tempSingleDate ? tempSingleDate : '选择日期'}}</text>
-				<time-picker type="time" :start="reactStartTime" :end="reactEndTime" v-model="time" :disabled="!tempSingleDate"
-					:border="false" class="time-picker-style">
+				<time-picker type="time" :start="reactStartTime" :end="reactEndTime" v-model="time"
+					:disabled="!tempSingleDate" :border="false" class="time-picker-style">
 				</time-picker>
 			</view>
 
 			<view v-if="!insert && range && typeHasTime" class="uni-date-changed uni-calendar--fixed-top">
 				<view class="uni-date-changed--time-start">
 					<text class="uni-date-changed--time-date">{{tempRange.before ? tempRange.before : '开始日期'}}</text>
-					<time-picker type="time" :start="reactStartTime" v-model="timeRange.startTime"
-						:border="false" :disabled="!tempRange.before" class="time-picker-style">
+					<time-picker type="time" :start="reactStartTime" v-model="timeRange.startTime" :border="false"
+						:disabled="!tempRange.before" class="time-picker-style">
 					</time-picker>
 				</view>
 				<uni-icons type="arrowthinright" color="#999" style="line-height: 50px;"></uni-icons>
@@ -218,28 +218,28 @@
 			}
 		},
 		watch: {
-			date(newVal, oldVal) {
-				// this.cale.setDate(newVal)
-				this.init(newVal)
+			date: {
+				immediate: true,
+				handler(newVal, oldVal) {
+					setTimeout(() => {
+						this.init(newVal)
+					}, 100)
+				}
 			},
 			startDate(val) {
 				this.cale.resetSatrtDate(val)
+				this.cale.setDate(this.nowDate.fullDate)
+				this.weeks = this.cale.weeks
 			},
 			endDate(val) {
 				this.cale.resetEndDate(val)
+				this.cale.setDate(this.nowDate.fullDate)
+				this.weeks = this.cale.weeks
 			},
 			selected(newVal) {
 				this.cale.setSelectInfo(this.nowDate.fullDate, newVal)
 				this.weeks = this.cale.weeks
 			},
-			// tempRange: {
-			// 	immediate: true,
-			// 	handler(newVal, oldVal) {debugger
-			// 		if (!oldVal) return
-			// 		if (!newVal.before) this.timeRange.startTime = ''
-			// 		if (!newVal.after) this.timeRange.endTime = ''
-			// 	}
-			// },
 			pleStatus: {
 				immediate: true,
 				handler(newVal, oldVal) {
@@ -269,8 +269,10 @@
 							this.cale.setDefaultMultiple(before, after)
 							if (which === 'left') {
 								this.setDate(before)
+								this.weeks = this.cale.weeks
 							} else {
 								this.setDate(after)
+								this.weeks = this.cale.weeks
 							}
 							this.cale.lastHover = true
 						}
@@ -354,6 +356,17 @@
 				this.weeks = this.cale.weeks
 				this.nowDate = this.calendar = this.cale.getInfo(date)
 			},
+			// choiceDate(weeks) {
+			// 	if (weeks.disable) return
+			// 	this.calendar = weeks
+			// 	// 设置多选
+			// 	this.cale.setMultiple(this.calendar.fullDate, true)
+			// 	this.weeks = this.cale.weeks
+			// 	this.tempSingleDate = this.calendar.fullDate
+			// 	this.tempRange.before = this.cale.multipleStatus.before
+			// 	this.tempRange.after = this.cale.multipleStatus.after
+			// 	this.change()
+			// },
 			/**
 			 * 打开日历弹窗
 			 */
@@ -609,7 +622,9 @@
 		width: 100px;
 		font-size: $uni-font-size-base;
 		color: #007aff;
+		/* #ifndef APP-NVUE */
 		letter-spacing: 3px;
+		/* #endif */
 	}
 
 	.uni-calendar__header-btn-box {
@@ -709,36 +724,21 @@
 		border-top-color: $uni-border-color;
 		border-top-style: solid;
 		border-top-width: 1px;
-	}
-
-
-	.uni-date-changed--time text {
-		// padding: 0 20px;
-		// height: 50px;
-		line-height: 50px;
-	}
-
-	.uni-date-changed {
-		flex: 1;
-	}
-
-	.uni-date-changed--time {
-		display: flex;
 		flex: 1;
 	}
 
 	.uni-date-changed--time-start {
+		/* #ifndef APP-NVUE */
 		display: flex;
-		justify-content: right;
+		/* #endif */
 		align-items: center;
-		// flex: 1;
 	}
 
 	.uni-date-changed--time-end {
+		/* #ifndef APP-NVUE */
 		display: flex;
-		justify-content: left;
+		/* #endif */
 		align-items: center;
-		// flex: 1;
 	}
 
 	.uni-date-changed--time-date {
@@ -749,7 +749,9 @@
 
 	.time-picker-style {
 		width: 62px;
+		/* #ifndef APP-NVUE */
 		display: flex;
+		/* #endif */
 		justify-content: center;
 		align-items: center
 	}

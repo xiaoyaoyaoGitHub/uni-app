@@ -5,16 +5,16 @@
 			<uni-icons v-if="prefixIcon" class="content-clear-icon" :type="prefixIcon" color="#c0c4cc" @click="onClickIcon('prefix')"></uni-icons>
 			<textarea v-if="type === 'textarea'" class="uni-easyinput__content-textarea" :class="{'input-padding':inputBorder}"
 			 :name="name" :value="val" :placeholder="placeholder" :placeholderStyle="placeholderStyle" :disabled="disabled"
-			 :maxlength="inputMaxlength" :focus="focused" :autoHeight="autoHeight" @input="onInput" @blur="onBlur" @focus="onFocus"
+			 :maxlength="inputMaxlength" :focus="focused" :autoHeight="autoHeight" @input="onInput" @blur="onBlur"  @focus="onFocus"
 			 @confirm="onConfirm"></textarea>
 			<input v-else :type="type === 'password'?'text':type" class="uni-easyinput__content-input" :style="{
 				 'padding-right':type === 'password' ||clearable || prefixIcon?'':'10px',
 				 'padding-left':prefixIcon?'':'10px'
 			 }"
 			 :name="name" :value="val" :password="!showPassword && type === 'password'" :placeholder="placeholder"
-			 :placeholderStyle="placeholderStyle" :disabled="disabled" :maxlength="inputMaxlength" :focus="focused" @focus="onFocus"
+			 :placeholderStyle="placeholderStyle" :disabled="disabled" :maxlength="inputMaxlength" :focus="focused" :confirmType="confirmType" @focus="onFocus"
 			 @blur="onBlur" @input="onInput" @confirm="onConfirm" />
-			<template v-if="type === 'password'">
+			<template v-if="type === 'password' && passwordIcon" >
 				<uni-icons v-if="val != '' " class="content-clear-icon" :class="{'is-textarea-icon':type==='textarea'}" :type="showPassword?'eye-slash-filled':'eye-filled'"
 				 :size="18" color="#c0c4cc" @click="onEyes"></uni-icons>
 			</template>
@@ -23,7 +23,7 @@
 			</template>
 			<template v-else>
 				<uni-icons class="content-clear-icon" :class="{'is-textarea-icon':type==='textarea'}" type="clear" :size="clearSize"
-				 v-if="clearable && val " color="#c0c4cc" @click="onClear"></uni-icons>
+				 v-if="clearable && val && !disabled" color="#c0c4cc" @click="onClear"></uni-icons>
 			</template>
 			<slot name="right"></slot>
 		</view>
@@ -47,12 +47,12 @@
 	 * 	@value number		数字输入键盘，注意iOS上app-vue弹出的数字键盘并非9宫格方式
 	 * 	@value idcard		身份证输入键盘，信、支付宝、百度、QQ小程序
 	 * 	@value digit		带小数点的数字键盘	，App的nvue页面、微信、支付宝、百度、头条、QQ小程序支持
-	 * @property {Boolean}	clearable	是否显示右侧清空内容的图标控件(输入框有内容，且获得焦点时才显示)，点击可清空输入框内容（默认true）
+	 * @property {Boolean}	clearable	是否显示右侧清空内容的图标控件，点击可清空输入框内容（默认true）
 	 * @property {Boolean}	autoHeight	是否自动增高输入区域，type为textarea时有效（默认true）
 	 * @property {String }	placeholder	输入框的提示文字
 	 * @property {String }	placeholderStyle	placeholder的样式(内联样式，字符串)，如"color: #ddd"
 	 * @property {Boolean}	focus	是否自动获得焦点（默认false）
-	 * @property {Boolean}	disabled	是否不可输入（默认false）
+	 * @property {Boolean}	disabled	是否禁用（默认false）
 	 * @property {Number }	maxlength	最大输入长度，设置为 -1 的时候不限制最大长度（默认140）
 	 * @property {String }	confirmType	设置键盘右下角按钮的文字，仅在type="text"时生效（默认done）
 	 * @property {Number }	clearSize	清除图标的大小，单位px（默认15）
@@ -67,6 +67,7 @@
 	 * @value all		去除全部空格
 	 * @value none	不去除空格
 	 * @property {Boolean}	inputBorder	是否显示input输入框的边框（默认true）
+	 * @property {Boolean}	passwordIcon	type=password时是否显示小眼睛图标
 	 * @property {Object}	styles	自定义颜色
 	 * @event {Function}	input	输入框内容发生变化时触发
 	 * @event {Function}	focus	输入框获得焦点时触发
@@ -78,9 +79,14 @@
 
 	export default {
 		name: 'uni-easyinput',
+		model:{
+			prop:'modelValue',
+			event:'update:modelValue'
+		},
 		props: {
 			name: String,
 			value: [Number, String],
+			modelValue: [Number, String],
 			type: {
 				type: String,
 				default: 'text'
@@ -111,12 +117,10 @@
 				type: String,
 				default: 'done'
 			},
-			// 清除按钮的大小
 			clearSize: {
 				type: [Number, String],
 				default: 15
 			},
-			// 是否显示 input 边框
 			inputBorder: {
 				type: Boolean,
 				default: true
@@ -129,12 +133,14 @@
 				type: String,
 				default: ''
 			},
-			// 是否自动去除两端的空格
 			trim: {
 				type: [Boolean, String],
 				default: true
 			},
-			// 自定义样式
+			passwordIcon:{
+				type: Boolean,
+				default: true
+			},
 			styles: {
 				type: Object,
 				default () {
@@ -144,6 +150,10 @@
 						borderColor: '#e5e5e5'
 					}
 				}
+			},
+			errorMessage:{
+				type:String,
+				default:''
 			}
 		},
 		data() {
@@ -175,6 +185,13 @@
 					this.formItem.setValue(newVal)
 				}
 			},
+			modelValue(newVal) {
+				if (this.errMsg) this.errMsg = ''
+				this.val = newVal
+				if (this.form && this.formItem) {
+					this.formItem.setValue(newVal)
+				}
+			},
 			focus(newVal) {
 				this.$nextTick(() => {
 					this.focused = this.focus
@@ -182,7 +199,12 @@
 			}
 		},
 		created() {
-			this.val = this.value
+			if(!this.value){
+				this.val = this.modelValue
+			}
+			if(!this.modelValue){
+				this.val = this.value
+			}
 			this.form = this.getForm('uniForms')
 			this.formItem = this.getForm('uniFormsItem')
 			if (this.form && this.formItem) {
@@ -240,7 +262,10 @@
 				};
 				if (this.errMsg) this.errMsg = ''
 				this.val = value
+				// TODO 兼容 vue2
 				this.$emit('input', value);
+				// TODO　兼容　vue3
+				this.$emit('update:modelValue',value)
 			},
 
 			onFocus(event) {
@@ -259,7 +284,11 @@
 			},
 			onClear(event) {
 				this.val = '';
+				// TODO 兼容 vue2
 				this.$emit('input', '');
+				// TODO 兼容 vue2
+				// TODO　兼容　vue3
+				this.$emit('update:modelValue','')
 			},
 			fieldClick() {
 				this.$emit('click');
@@ -304,8 +333,8 @@
 		width: 100%;
 		display: flex;
 		box-sizing: border-box;
-		/* #endif */
 		min-height: 36px;
+		/* #endif */
 		flex-direction: row;
 		align-items: center;
 	}
