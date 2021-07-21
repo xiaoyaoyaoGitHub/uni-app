@@ -14,6 +14,7 @@
 			<jnpf-editor v-model="value"></jnpf-editor>
 		</u-form-item> -->
 	<view class="jnpf-card" v-else-if="itemCopy.__config__.jnpfKey==='card'||itemCopy.__config__.jnpfKey==='row'">
+		<view class="jnpf-card-cap u-line-1" v-if="itemCopy.header">{{itemCopy.header}}</view>
 		<item v-for="(child, index) in itemCopy.__config__.children" :key="index" :item="child" :formConf="formConf"
 			@input="setValue" />
 	</view>
