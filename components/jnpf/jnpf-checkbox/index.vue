@@ -59,6 +59,7 @@
 				}))
 			},
 			setDefault() {
+				if (!this.value.length) return this.setColumnData()
 				outer: for (let i = 0; i < this.value.length; i++) {
 					inner: for (let j = 0; j < this.newOptions.length; j++) {
 						if (this.value[i] === this.newOptions[j][this.props.value]) {
