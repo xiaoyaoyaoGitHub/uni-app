@@ -85,7 +85,7 @@ const Socket = {
 						break;
 					case "logout":
 						uni.showToast({
-							title: '登录已过期',
+							title: data.msg || '登录已过期',
 							icon: 'none',
 							complete: () => {
 								setTimeout(() => {
