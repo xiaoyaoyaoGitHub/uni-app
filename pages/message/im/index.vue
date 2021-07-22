@@ -22,7 +22,7 @@
 								<!-- 图片消息 -->
 								<view v-if="msg.contentType=='image'" class="msg-img"
 									@click="showPic(msg.msgContent.path)">
-									<image lazy-load="true" :src="urlPrefix+'T'+msg.msgContent.path"
+									<image lazy-load="true" :src="baseURL+msg.msgContent.path"
 										:style="{'width': msg.msgContent.width+'px','height': msg.msgContent.height+'px'}">
 									</image>
 								</view>
@@ -56,7 +56,7 @@
 								<!-- 图片消息 -->
 								<view v-if="msg.contentType=='image'" class="msg-img"
 									@click="showPic(msg.msgContent.path)">
-									<image lazy-load="true" :src="urlPrefix+'T'+msg.msgContent.path"
+									<image lazy-load="true" :src="baseURL+msg.msgContent.path"
 										:style="{'width': msg.msgContent.width+'px','height': msg.msgContent.height+'px'}">
 									</image>
 								</view>
@@ -188,8 +188,7 @@
 				recordTimer: null,
 				recordLength: 0,
 				textMsg: '',
-				msgImageList: [],
-				urlPrefix: this.define.baseURL + '/api/file/Image/IM/'
+				msgImageList: []
 			}
 		},
 		computed: {
@@ -256,7 +255,7 @@
 							} else {
 								content = o.content
 							}
-							msgImageList.push(this.urlPrefix + content.path)
+							msgImageList.push(this.baseURL + content.path)
 						}
 					}
 					return this.dealMsg(o)
@@ -342,51 +341,70 @@
 					success: res => {
 						this.hideDrawer();
 						for (let i = 0; i < res.tempFilePaths.length; i++) {
-							uni.getImageInfo({
-								src: res.tempFilePaths[i],
-								success: (image) => {
-									// #ifdef MP-WEIXIN
-									wx.getFileSystemManager().readFile({
-										filePath: image.path,
-										encoding: "base64",
-										success: (data) => {
-											let msg = {
-												base64: data.data,
-												width: image.width,
-												height: image.height,
-											};
-											this.sendMessage(msg, 'image');
-										},
+							uni.uploadFile({
+								url: this.define.comUploadUrl + 'IM',
+								filePath: res.tempFilePaths[i],
+								name: 'file',
+								header: {
+									Authorization: uni.getStorageSync('token') || ''
+								},
+								success: (uploadFileRes) => {
+									const response = uploadFileRes.data ? JSON.parse(uploadFileRes
+										.data) : {}
+									if (uploadFileRes.statusCode !== 200) return this.$u.toast(
+										response.msg)
+									if (!response.data || !response.data.name) return
+									const name = response.data.name
+									uni.getImageInfo({
+										src: res.tempFilePaths[i],
+										success: (image) => {
+											// #ifdef MP-WEIXIN
+											wx.getFileSystemManager().readFile({
+												filePath: image.path,
+												encoding: "base64",
+												success: (data) => {
+													let msg = {
+														name,
+														width: image
+															.width,
+														height: image
+															.height,
+													};
+													this.sendMessage(msg,
+														'image');
+												},
+											});
+											// #endif
+											// #ifdef APP-PLUS
+											let path = plus.io
+												.convertLocalFileSystemURL(image.path);
+											let fileReader = new plus.io.FileReader();
+											fileReader.readAsDataURL(path);
+											fileReader.onloadend = (evt) => {
+												let msg = {
+													name,
+													width: image.width,
+													height: image.height,
+												};
+												this.sendMessage(msg, 'image');
+											}
+											// #endif
+											// #ifdef H5
+											let file = document.getElementsByTagName(
+												"input")[0].files[0];
+											let reader = new FileReader();
+											reader.readAsDataURL(file);
+											reader.onload = (e) => {
+												let msg = {
+													name,
+													width: image.width,
+													height: image.height,
+												};
+												this.sendMessage(msg, 'image');
+											}
+											// #endif
+										}
 									});
-									// #endif
-									// #ifdef APP-PLUS
-									let path = plus.io.convertLocalFileSystemURL(image.path);
-									let fileReader = new plus.io.FileReader();
-									fileReader.readAsDataURL(path);
-									fileReader.onloadend = (evt) => {
-										let msg = {
-											base64: evt.target.result.replace(
-												/data:image\/.*;base64,/, ''),
-											width: image.width,
-											height: image.height,
-										};
-										this.sendMessage(msg, 'image');
-									}
-									// #endif
-									// #ifdef H5
-									let file = document.getElementsByTagName("input")[0].files[0];
-									let reader = new FileReader();
-									reader.readAsDataURL(file);
-									reader.onload = (e) => {
-										let msg = {
-											base64: e.target.result.replace(
-												/data:image\/.*;base64,/, ''),
-											width: image.width,
-											height: image.height,
-										};
-										this.sendMessage(msg, 'image');
-									}
-									// #endif
 								}
 							});
 						}
@@ -407,7 +425,7 @@
 					data.msgContent = this.replaceEmoji(data.content)
 				}
 				if (data.contentType === "image") {
-					this.msgImageList.push(this.urlPrefix + data.content.path)
+					this.msgImageList.push(this.baseURL + data.content.path)
 					data.msgContent = this.setPicSize(data.content)
 				}
 				if (data.contentType === "voice") {
@@ -580,13 +598,13 @@
 			showPic(path) { // 预览图片
 				uni.previewImage({
 					indicator: "none",
-					current: this.urlPrefix + path,
+					current: this.baseURL + path,
 					urls: this.msgImageList
 				});
 			},
 			playVoice(msg) { // 播放语音
 				this.AUDIO.stop();
-				this.AUDIO.src = this.urlPrefix + msg.msgContent.path;
+				this.AUDIO.src = this.baseURL + msg.msgContent.path;
 				if (this.playMsgid != null && this.playMsgid == msg.id) {
 					this.$nextTick(() => {
 						this.AUDIO.stop();
