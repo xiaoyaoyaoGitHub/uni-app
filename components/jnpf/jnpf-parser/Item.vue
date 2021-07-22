@@ -68,7 +68,7 @@
 			</jnpf-date-time>
 		</block>
 		<block v-if="itemCopy.__config__.jnpfKey==='date'">
-			<jnpf-date-time type="datetime" v-model="value" :placeholder="itemCopy.placeholder"
+			<jnpf-date-time :type="itemCopy.type" v-model="value" :placeholder="itemCopy.placeholder"
 				:disabled="itemCopy.disabled">
 			</jnpf-date-time>
 		</block>
