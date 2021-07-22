@@ -347,40 +347,4 @@
 		width: 100%;
 		/* #endif */
 	}
-
-	.dynamicModel-list-v {
-		height: 100%;
-		display: flex;
-		flex-direction: column;
-
-		.head-warp {
-			background-color: #fff;
-		}
-
-		.list-warp {
-			flex: 1;
-			min-width: 0;
-			min-height: 0;
-		}
-
-		.list {
-
-			.list-box {
-				width: 100%;
-				margin-bottom: 20rpx;
-
-				.item {
-					background-color: #fff;
-					padding: 0 32rpx;
-
-					.item-cell {
-						height: 90rpx;
-						line-height: 90rpx;
-						font-size: 28rpx;
-						color: #333333;
-					}
-				}
-			}
-		}
-	}
 </style>
