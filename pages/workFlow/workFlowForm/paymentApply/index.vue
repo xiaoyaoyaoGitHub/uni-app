@@ -117,7 +117,7 @@
 						message: '流程编码不能为空',
 						trigger: 'blur',
 					}],
-					beneficiaryAccount: [{
+					settlementMethod: [{
 						required: true,
 						message: '结算方式不能为空',
 						trigger: 'blur',
@@ -125,8 +125,9 @@
 					paymentType: [{
 						required: true,
 						message: '付款类型不能为空',
-						trigger: 'blur',
+						trigger: 'blur'
 					}]
+					
 				},
 				paymentTypeList: [{
 						fullName: '订金',
