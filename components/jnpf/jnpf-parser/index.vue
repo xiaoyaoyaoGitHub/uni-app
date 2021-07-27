@@ -53,7 +53,7 @@
 					if (config.children && cur.__config__.jnpfKey !== 'table') {
 						this.initFormData(config.children, formData)
 					}
-					if (cur.__config__.jnpfKey == 'table') {
+					if (cur.__config__.jnpfKey == 'table' && !cur.__config__.noShow) {
 						tableRefs[cur.__vModel__] = cur
 					}
 				})
