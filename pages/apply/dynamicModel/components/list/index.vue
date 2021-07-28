@@ -165,10 +165,7 @@
 				}
 				this.sortOptions = sortOptions
 				this.showParser = true
-				if (this.isPreview == '1') return
-				this.initData()
 			},
-			initData() {},
 			setDefaultQuery() {
 				this.listQuery.sort = this.columnData.sort
 				this.listQuery.sidx = this.columnData.defaultSidx
@@ -311,7 +308,13 @@
 				})
 			},
 			reset() {
-				this.$refs.searchForm && this.$refs.searchForm.resetForm()
+				this.$nextTick(() => {
+					this.showParser = false
+					this.$nextTick(() => {
+						this.showParser = true
+						this.$refs.searchForm && this.$refs.searchForm.resetForm()
+					})
+				})
 			},
 			closeDropdown() {
 				if (this.isPreview == '1') {

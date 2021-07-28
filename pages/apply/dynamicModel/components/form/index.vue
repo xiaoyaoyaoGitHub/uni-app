@@ -68,8 +68,12 @@
 				this.$refs.dynamicForm && this.$refs.dynamicForm.submitForm()
 			},
 			resetForm() {
+				this.loading = true
 				this.key = +new Date()
-				this.$refs.dynamicForm && this.$refs.dynamicForm.resetForm()
+				this.$nextTick(() => {
+					this.loading = false
+					this.$refs.dynamicForm && this.$refs.dynamicForm.resetForm()
+				})
 			}
 		}
 	}
