@@ -54,7 +54,7 @@
 					style: {
 						backgroundColor: '#dd524d'
 					}
-				}],
+				}]
 			}
 		},
 		methods: {
@@ -144,6 +144,7 @@
 					this.scheduleList[index].show = false;
 					this.$u.toast('删除成功')
 					this.scheduleList.splice(index, 1);
+					this.$router.go(0)
 				})
 			},
 		}
