@@ -13,7 +13,7 @@
 							:class="['steps-title',item.type=='0'?'u-type-success':item.type=='1'?'u-type-primary':'u-type-info']">
 							{{item.nodeName}}
 						</view>
-						<view class="steps-desc">{{item.userName}}</view>
+						<view class="steps-desc" v-if="item.nodeCode!=='end'">{{item.userName}}</view>
 					</view>
 				</template>
 			</u-time-line-item>

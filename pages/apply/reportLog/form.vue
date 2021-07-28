@@ -16,7 +16,7 @@
 				<u-input v-model="dataForm.question" type="textarea" placeholder="请输入遇到问题" :disabled="disabled" />
 			</u-form-item>
 			<u-form-item label="发送给谁" prop="userIds" required>
-				<jnpf-org-select v-model="dataForm.userIds" :disabled="disabled"></jnpf-org-select>
+				<jnpf-org-select v-model="dataForm.userIds" multiple :disabled="disabled"></jnpf-org-select>
 			</u-form-item>
 		</u-form>
 		<view class="com-saveBox" v-if="!disabled">

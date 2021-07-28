@@ -5,9 +5,7 @@
 				<u-input v-model="formData[item.__vModel__]" :placeholder="'请输入'+item.__config__.label" />
 			</block>
 			<block v-if="item.__config__.jnpfKey==='numInput'">
-				<u-number-box v-model="formData[item.__vModel__]" :input-width="120" :input-height="60"
-					:positive-integer="false">
-				</u-number-box>
+				<jnpf-num-range v-model="formData[item.__vModel__]" />
 			</block>
 			<view v-if="item.__config__.jnpfKey==='switch'" class="u-flex u-form-item-switch">
 				<jnpf-switch v-model="formData[item.__vModel__]"></jnpf-switch>
@@ -35,14 +33,10 @@
 				</jnpf-cascader>
 			</block>
 			<block v-if="item.__config__.jnpfKey==='time'">
-				<jnpf-date-time type="time" v-model="formData[item.__vModel__]"
-					:placeholder="'请选择'+item.__config__.label">
-				</jnpf-date-time>
+				<jnpf-time-range v-model="formData[item.__vModel__]" />
 			</block>
-			<block v-if="item.__config__.jnpfKey==='date'">
-				<jnpf-date-time type="datetime" v-model="formData[item.__vModel__]"
-					:placeholder="'请选择'+item.__config__.label">
-				</jnpf-date-time>
+			<block v-if="useDateList.indexOf(item.__config__.jnpfKey) > -1">
+				<jnpf-date-range v-model="formData[item.__vModel__]" />
 			</block>
 			<block v-if="item.__config__.jnpfKey==='rate'">
 				<u-rate v-model="formData[item.__vModel__]" size="40" :count="item.max">
@@ -95,8 +89,8 @@
 	const useInputList = ['comInput', 'textarea', 'JNPFText', 'billRule', 'createUser', 'modifyUser', 'currOrganize',
 		'currDept', 'currPosition', 'calculate'
 	]
-	const useDateList = ['createTime', 'modifyTime']
-	const useArrList = ['cascader', 'address']
+	const useDateList = ['date', 'createTime', 'modifyTime']
+	const useArrList = ['cascader', 'address', 'numInput', ...useDateList]
 
 	export default {
 		props: ['formConf'],
