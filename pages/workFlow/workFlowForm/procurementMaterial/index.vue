@@ -39,7 +39,7 @@
 						:disabled="judgeWrite('deliveryAddress')"></u-input>
 				</u-form-item>
 				<u-form-item label="结算方式" prop="paymentMethod" v-if="judgeShow('paymentMethod')" required>
-					<jnpf-select v-model="dataForm.paymentMethod" placeholder="请选择结算方式" :options="paymentMethodOptions"
+					<jnpf-select v-model="dataForm.paymentMethod" :props="payProps" placeholder="请选择结算方式" :options="paymentMethodOptions"
 						:disabled="judgeWrite('paymentMethod')"></jnpf-select>
 				</u-form-item>
 				<u-form-item label="付款金额" prop="paymentMoney" v-if="judgeShow('paymentMoney')">

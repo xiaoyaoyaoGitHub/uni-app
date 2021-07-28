@@ -54,7 +54,7 @@
 						:disabled="judgeWrite('beneficiaryAccount')"></u-input>
 				</u-form-item>
 				<u-form-item label="结算方式" prop="settlementMethod" v-if="judgeShow('settlementMethod')" required>
-					<jnpf-select v-model="dataForm.settlementMethod" placeholder="请选择结算方式"
+					<jnpf-select v-model="dataForm.settlementMethod" placeholder="请选择结算方式" :props="payProps"
 						:options="paymentMethodOptions" :disabled="judgeWrite('settlementMethod')"></jnpf-select>
 				</u-form-item>
 				<u-form-item label="付款类型" prop="paymentType" v-if="judgeShow('paymentType')" required>
