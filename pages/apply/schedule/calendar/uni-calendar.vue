@@ -210,7 +210,8 @@
 					date,
 					fulldate: fullDate,
 					lunar,
-					extraInfo: extraInfo || {}
+					extraInfo: extraInfo || {},
+					cale:this.cale
 				})
 			},
 			choiceDate(weeks) {

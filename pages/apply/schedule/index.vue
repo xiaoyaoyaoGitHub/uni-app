@@ -62,12 +62,6 @@
 			initdate(cale, nowDate) {
 				let canlender = cale.canlender;
 				let weeks = cale.weeks;
-				let startTime = this.startDate = canlender[0].lunar.cYear + '-' + canlender[0].lunar.cMonth + '-' +
-					canlender[0].lunar
-					.cDay;
-				let endTime = this.endDate = canlender[canlender.length - 1].lunar.cYear + '-' + canlender[canlender
-						.length - 1].lunar
-					.cMonth + '-' + canlender[canlender.length - 1].lunar.cDay;
 				for (let i = 0; i < canlender.length; i++) {
 					if (canlender[i].fullDate === nowDate.fullDate) {
 						this.changedate = '农历  ' + canlender[i].lunar.IMonthCn + canlender[i].lunar.IDayCn;
@@ -75,19 +69,35 @@
 					}
 				}
 				this.scheduleList.splice(0);
-
+				let data = {
+					weeks:weeks,
+					canlender:canlender
+				}
+				this.handleScheduleList(data)
+			},
+			
+			handleScheduleList(data){
+				let canlender = data.canlender
+				let startTime = this.startDate = canlender[0].lunar.cYear + '-' + canlender[0].lunar.cMonth + '-' +
+					canlender[0].lunar
+					.cDay;
+				let endTime = this.endDate = canlender[canlender.length - 1].lunar.cYear + '-' + canlender[canlender
+						.length - 1].lunar
+					.cMonth + '-' + canlender[canlender.length - 1].lunar.cDay;
+					
 				let query = {
 					startTime: startTime,
 					endTime: endTime,
+					dateTime: data.fulldate
 				}
 				getScheduleList(query).then(res => {
 					let signList = res.data.signList;
 					let todayList = res.data.todayList;
 					for (let i = 0; i < 6; i++) {
-						for (let j = 0; j < weeks[i].length; j++) {
-							let date = this.$u.date(weeks[i][j].lunar.cYear + '-' + weeks[i][j].lunar.cMonth +
-								'-' + weeks[i][j].lunar.cDay, 'yyyymmdd')
-							weeks[i][j].isSign = signList[date] == 0 ? false : true;
+						for (let j = 0; j < data.weeks[i].length; j++) {
+							let date = this.$u.date(data.weeks[i][j].lunar.cYear + '-' + data.weeks[i][j].lunar.cMonth +
+								'-' + data.weeks[i][j].lunar.cDay, 'yyyymmdd')
+							data.weeks[i][j].isSign = signList[date] == 0 ? false : true;
 						}
 					}
 					if (todayList && todayList.length) {
@@ -97,24 +107,22 @@
 					}
 				})
 			},
+			
 			change(e) {
+				let weeks = e.cale.weeks;
+				let canlender = e.cale.canlender;
 				let lunar = e.lunar;
 				this.changedate = '农历  ' + lunar.IMonthCn + lunar.IDayCn;
 				this.scheduleList.splice(0);
-				let query = {
-					startTime: this.startDate,
-					endTime: this.endDate,
-					dateTime: e.fulldate
+				let data = {
+					weeks:weeks,
+					canlender:canlender,
+					lunar:lunar,
+					fulldate:e.fulldate
 				}
-				getScheduleList(query).then(res => {
-					let todayList = res.data.todayList;
-					if (todayList && todayList.length) {
-						for (let i = 0; i < todayList.length; i++) {
-							this.scheduleList.push(todayList[i])
-						}
-					}
-				})
+				this.handleScheduleList(data)
 			},
+			
 			monthSwitch(e) {
 
 			},
