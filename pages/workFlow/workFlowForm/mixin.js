@@ -18,6 +18,10 @@ export default {
 				id: 3,
 				fullName: '紧急'
 			}],
+			payProps: {
+				label: 'fullName',
+				value: 'enCode'
+			},
 			fileList: [],
 			setting: {},
 			userInfo: {},
