@@ -31,9 +31,13 @@
 					<u-input v-model="dataForm.warehouse" placeholder="请输入仓库" type="number"
 						:disabled="judgeWrite('warehouse')"></u-input>
 				</u-form-item>
+				<u-form-item label="备注" prop="description" v-if="judgeShow('description')">
+					<u-input v-model="dataForm.description" placeholder="请输入备注" type="textarea"
+						:disabled="judgeWrite('description')"></u-input>
+				</u-form-item>
 			</view>
 
-			<view class="jnpf-table">
+			<view class="jnpf-table" v-if="judgeShow('entryList')">
 				<view class="jnpf-table-item" v-for="(item,i) in dataForm.entryList" :key="i">
 					<view class="jnpf-table-item-title u-flex u-row-between">
 						<text class="jnpf-table-item-title-num">商品添购({{i+1}})</text>
@@ -53,13 +57,13 @@
 						<u-input v-model="dataForm.entryList[i].unit" placeholder="单位"
 							:disabled="judgeWrite('entryList')"></u-input>
 					</u-form-item>
-					<u-form-item label="需数量" prop="dataForm.entryList[i].needQty">
-						<u-number-box v-model="dataForm.entryList[i].needQty" :min="0" :max="100" :step="1"
+					<u-form-item label="需数量" prop="dataForm.entryList[i].materialDemand">
+						<u-number-box v-model="dataForm.entryList[i].materialDemand" :min="0" :max="100" :step="1"
 							:input-width="120" :positive-integer="false" :input-height="60"
 							:disabled="judgeWrite('entryList')"></u-number-box>
 					</u-form-item>
-					<u-form-item label="配数量" prop="dataForm.entryList[i].matchQty">
-						<u-number-box v-model="dataForm.entryList[i].matchQty" :min="0" :max="100" :step="1"
+					<u-form-item label="配数量" prop="dataForm.entryList[i].proportioning">
+						<u-number-box v-model="dataForm.entryList[i].proportioning" :min="0" :max="100" :step="1"
 							:input-width="120" :positive-integer="false" :input-height="60"
 							@change="count(dataForm.entryList[i])" :disabled="judgeWrite('entryList')"></u-number-box>
 					</u-form-item>
@@ -99,12 +103,13 @@
 					warehouse: '',
 					leadDate: '',
 					leadDepartment: '',
+					description:'',
 					entryList: [{
 						goodsName: '',
 						specifications: '',
 						unit: '',
-						matchQty: 0,
-						needQty: 0,
+						proportioning: 0,
+						materialDemand: 0,
 						price: '',
 						amount: '',
 						description: ''
@@ -156,8 +161,8 @@
 					goodsName: '',
 					specifications: '',
 					unit: '',
-					matchQty: 0,
-					needQty: 0,
+					proportioning: 0,
+					materialDemand: 0,
 					price: '',
 					amount: '',
 					description: ''
@@ -172,7 +177,7 @@
 			/* 计算价格 */
 			count(row) {
 				//金额 = 数量*单价
-				row.amount = this.jnpf.toDecimal(parseFloat(row.price) * parseFloat(row.matchQty))
+				row.amount = this.jnpf.toDecimal(parseFloat(row.price) * parseFloat(row.proportioning))
 				//折扣价 = (单价*折扣)
 				var discountPrice = row.price * (row.discount / 100);
 				//实际单价 = 折扣价 * (1 + (税率 / 100))

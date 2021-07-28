@@ -13,7 +13,6 @@
 					:disabled="judgeWrite('flowUrgent')">
 				</jnpf-select>
 			</u-form-item>
-
 			<view class="jnpf-card">
 				<u-form-item label="客户名称" prop="customerName" v-if="judgeShow('customerName')" required>
 					<u-input v-model="dataForm.customerName" placeholder="客户名称" :disabled="judgeWrite('customerName')">
@@ -32,7 +31,6 @@
 						:disabled="judgeWrite('customerAddres')"></u-input>
 				</u-form-item>
 			</view>
-
 			<u-form-item label="货品所属" prop="goodsBelonged" v-if="judgeShow('goodsBelonged')">
 				<u-input v-model="dataForm.goodsBelonged" placeholder="货品所属" :disabled="judgeWrite('goodsBelonged')">
 				</u-input>
@@ -69,7 +67,6 @@
 				<u-input v-model="dataForm.description" placeholder="备注" type="textarea"
 					:disabled="judgeWrite('description')"></u-input>
 			</u-form-item>
-
 			<view class="jnpf-table" v-if="judgeShow('entryList')">
 				<view class="jnpf-table-item" v-for="(item,i) in dataForm.entryList" :key="i">
 					<view class="jnpf-table-item-title u-flex u-row-between">

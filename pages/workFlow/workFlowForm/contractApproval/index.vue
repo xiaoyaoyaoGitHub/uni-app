@@ -13,13 +13,11 @@
 					:disabled="judgeWrite('flowUrgent')">
 				</jnpf-select>
 			</u-form-item>
-
 			<view class="jnpf-card">
 				<u-form-item label="甲方单位" prop="firstPartyUnit" v-if="judgeShow('firstPartyUnit')">
 					<u-input v-model="dataForm.firstPartyUnit" placeholder="请输入甲方单位"
 						:disabled="judgeWrite('firstPartyUnit')"></u-input>
 				</u-form-item>
-
 				<u-form-item label="甲方负责人" prop="firstPartyPerson" v-if="judgeShow('firstPartyPerson')">
 					<u-input v-model="dataForm.firstPartyPerson" placeholder="请输入甲方负责人"
 						:disabled="judgeWrite('firstPartyPerson')"></u-input>
@@ -36,7 +34,6 @@
 					<u-input v-model="dataForm.secondPartyPerson" placeholder="请输入乙方负责人"
 						:disabled="judgeWrite('secondPartyPerson')"></u-input>
 				</u-form-item>
-
 				<u-form-item label="乙方联系方式" prop="secondPartyContact" v-if="judgeShow('secondPartyContact')">
 					<u-input v-model="dataForm.secondPartyContact" placeholder="请输入乙方联系方式"
 						:disabled="judgeWrite('secondPartyContact')"></u-input>
@@ -72,6 +69,11 @@
 				<u-form-item label="结束时间" prop="endDate" v-if="judgeShow('endDate')" required>
 					<jnpf-date-time type="datetime" v-model="dataForm.endDate" placeholder="结束时间"
 						:disabled="judgeWrite('endDate')"></jnpf-date-time>
+				</u-form-item>
+				<u-form-item label="收入金额" prop="incomeAmount" v-if="judgeShow('incomeAmount')">
+					<u-number-box v-model="dataForm.incomeAmount" :min="0" :max="100" :step="1"
+						:input-width="120" :positive-integer="false" :input-height="60"
+						:disabled="judgeWrite('incomeAmount')"></u-number-box>
 				</u-form-item>
 				<u-form-item label="填写人员" prop="inputPerson" v-if="judgeShow('inputPerson')">
 					<u-input v-model="dataForm.inputPerson" placeholder="请输入填写人员" :disabled="judgeWrite('inputPerson')">
@@ -122,7 +124,8 @@
 					startDate: '',
 					endDate: '',
 					businessPerson: '',
-					secondPartyPerson: ''
+					secondPartyPerson: '',
+					incomeAmount:0
 				},
 				rules: {
 					flowTitle: [{

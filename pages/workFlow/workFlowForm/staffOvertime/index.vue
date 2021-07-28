@@ -13,7 +13,6 @@
 					:disabled="judgeWrite('flowUrgent')">
 				</jnpf-select>
 			</u-form-item>
-
 			<view class="jnpf-card">
 				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
 					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员" :disabled="judgeWrite('applyUser')">
@@ -116,12 +115,12 @@
 				},
 				categoryList: [{
 						fullName: "记入调休",
-						id: "1",
+						id: "记入调休",
 						checked: false
 					},
 					{
 						fullName: "加班费",
-						id: "2",
+						id: "加班费",
 						checked: false
 					}
 				],

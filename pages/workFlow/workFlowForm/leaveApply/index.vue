@@ -137,42 +137,42 @@
 				},
 				leaveTypeList: [{
 						fullName: '事假',
-						id: '1',
+						id: '事假',
 						checked: false
 					},
 					{
 						fullName: '病假',
-						id: '2',
+						id: '病假',
 						checked: false
 					},
 					{
 						fullName: '婚假',
-						id: '3',
+						id: '婚假',
 						checked: false
 					},
 					{
 						fullName: '产假',
-						id: '4',
+						id: '产假',
 						checked: false
 					},
 					{
 						fullName: '丧假',
-						id: '5',
+						id: '丧假',
 						checked: false
 					},
 					{
 						fullName: '年假',
-						id: '6',
+						id: '年假',
 						checked: false
 					},
 					{
 						fullName: '调休',
-						id: '6',
+						id: '调休',
 						checked: false
 					},
 					{
 						fullName: '其他',
-						id: '6',
+						id: '其他',
 						checked: false
 					},
 

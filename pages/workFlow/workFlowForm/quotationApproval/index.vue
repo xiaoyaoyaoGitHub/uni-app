@@ -13,7 +13,6 @@
 					:disabled="judgeWrite('flowUrgent')">
 				</jnpf-select>
 			</u-form-item>
-
 			<view class="jnpf-card">
 				<u-form-item label="填报人" prop="writer" v-if="judgeShow('writer')" required>
 					<u-input v-model="dataForm.writer" placeholder="请输入填报人" :disabled="judgeWrite('writer')"></u-input>
@@ -102,22 +101,22 @@
 				},
 				quotationTypeList: [{
 						fullName: "SL-I型报价",
-						id: "0",
+						id: "SL-I型报价",
 						checked: false
 					},
 					{
 						fullName: "SL-II型报价",
-						id: "1",
+						id: "SL-II型报价",
 						checked: false
 					},
 					{
 						fullName: "SL-III型报价",
-						id: "2",
+						id: "SL-III型报价",
 						checked: false
 					},
 					{
 						fullName: "SL-IIh型报价",
-						id: "3",
+						id: "SL-IIh型报价",
 						checked: false
 					}
 				],

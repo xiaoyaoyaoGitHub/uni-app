@@ -13,7 +13,6 @@
 					:disabled="judgeWrite('flowUrgent')">
 				</jnpf-select>
 			</u-form-item>
-
 			<view class="jnpf-card">
 				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
 					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员" :disabled="judgeWrite('applyUser')">
@@ -39,8 +38,6 @@
 					<u-input v-model="dataForm.contractId" placeholder="请输入合同编号" :disabled="judgeWrite('contractId')">
 					</u-input>
 				</u-form-item>
-
-
 				<u-form-item label="签署方(甲方)" prop="firstParty" v-if="judgeShow('firstParty')">
 					<u-input v-model="dataForm.firstParty" placeholder="请输入签署方(甲方)"
 						:disabled="judgeWrite('firstParty')"></u-input>
@@ -63,7 +60,6 @@
 					<u-input v-model="dataForm.signArea" placeholder="请输入签订地区" :disabled="judgeWrite('signArea')">
 					</u-input>
 				</u-form-item>
-
 				<u-form-item label="收入金额" prop="incomeAmount" v-if="judgeShow('incomeAmount')">
 					<u-input v-model="dataForm.incomeAmount" placeholder="请输入收入金额"
 						:disabled="judgeWrite('incomeAmount')"></u-input>
@@ -72,23 +68,18 @@
 					<u-input v-model="dataForm.totalExpenditure" placeholder="请输入支出总额"
 						:disabled="judgeWrite('totalExpenditure')"></u-input>
 				</u-form-item>
-
-
 				<u-form-item label="合同期限" prop="contractPeriod" v-if="judgeShow('contractPeriod')">
 					<u-input v-model="dataForm.contractPeriod" placeholder="请输入合同期限"
 						:disabled="judgeWrite('contractPeriod')"></u-input>
 				</u-form-item>
-
 				<u-form-item label="结算方式" prop="paymentMethod" v-if="judgeShow('paymentMethod')">
 					<jnpf-select v-model="dataForm.paymentMethod" placeholder="请选择结算方式" :options="paymentMethodOptions"
-						:disabled="judgeWrite('paymentMethod')"></jnpf-select>
+						:props="payProps" :disabled="judgeWrite('paymentMethod')"></jnpf-select>
 				</u-form-item>
-
 				<u-form-item label="预算批付" prop="budgetaryApproval" v-if="judgeShow('budgetaryApproval')">
 					<u-input v-model="dataForm.budgetaryApproval" placeholder="请输入预算批付"
 						:disabled="judgeWrite('budgetaryApproval')"></u-input>
 				</u-form-item>
-
 				<u-form-item label="开始时间" prop="startContractDate" v-if="judgeShow('startContractDate')" required>
 					<jnpf-date-time type="datetime" v-model="dataForm.startContractDate" placeholder="开始时间"
 						:disabled="judgeWrite('startContractDate')"></jnpf-date-time>

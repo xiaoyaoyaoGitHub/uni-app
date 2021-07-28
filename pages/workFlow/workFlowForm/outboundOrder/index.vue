@@ -13,7 +13,6 @@
 					:disabled="judgeWrite('flowUrgent')">
 				</jnpf-select>
 			</u-form-item>
-
 			<view class="jnpf-card">
 				<u-form-item label="客户名称" prop="customerName" v-if="judgeShow('customerName')">
 					<u-input v-model="dataForm.customerName" placeholder="请输入客户名称"
@@ -44,8 +43,7 @@
 						:disabled="judgeWrite('description')"></u-input>
 				</u-form-item>
 			</view>
-
-			<view class="jnpf-table">
+			<view class="jnpf-table" v-if="judgeShow('entryList')">
 				<view class="jnpf-table-item" v-for="(item,i) in dataForm.entryList" :key="i">
 					<view class="jnpf-table-item-title u-flex u-row-between">
 						<text class="jnpf-table-item-title-num">商品添购({{i+1}})</text>
