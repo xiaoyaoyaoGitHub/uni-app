@@ -4,7 +4,9 @@
 			<view class="banner">
 				<u-swiper :list="bannerList" height="300"></u-swiper>
 			</view>
-			<u-notice-bar :list="['你好朋友，感谢使用JNPF快速开发平台新版本']" type="none"></u-notice-bar>
+			<view class="notice-bar">
+				<u-notice-bar :list="['你好朋友，感谢使用JNPF快速开发平台新版本']" type="none"></u-notice-bar>
+			</view>
 			<view class="workFlow-list">
 				<view class="part">
 					<view class="caption">常用应用</view>
@@ -176,6 +178,12 @@
 			.u-indicator-item-round.u-indicator-item-round-active {
 				background-color: $u-type-primary;
 			}
+		}
+
+		.notice-bar {
+			margin: 0 20rpx;
+			background: #fff;
+			border-radius: 8rpx;
 		}
 
 		.workFlow-list {
