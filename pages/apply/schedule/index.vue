@@ -68,15 +68,13 @@
 						break;
 					}
 				}
-				this.scheduleList.splice(0);
 				let data = {
-					weeks:weeks,
-					canlender:canlender
+					weeks: weeks,
+					canlender: canlender
 				}
 				this.handleScheduleList(data)
 			},
-			
-			handleScheduleList(data){
+			handleScheduleList(data) {
 				let canlender = data.canlender
 				let startTime = this.startDate = canlender[0].lunar.cYear + '-' + canlender[0].lunar.cMonth + '-' +
 					canlender[0].lunar
@@ -84,7 +82,6 @@
 				let endTime = this.endDate = canlender[canlender.length - 1].lunar.cYear + '-' + canlender[canlender
 						.length - 1].lunar
 					.cMonth + '-' + canlender[canlender.length - 1].lunar.cDay;
-					
 				let query = {
 					startTime: startTime,
 					endTime: endTime,
@@ -92,40 +89,33 @@
 				}
 				getScheduleList(query).then(res => {
 					let signList = res.data.signList;
-					let todayList = res.data.todayList;
+					this.scheduleList = res.data.todayList.map(o => ({
+						...o,
+						show: false
+					}));
 					for (let i = 0; i < 6; i++) {
 						for (let j = 0; j < data.weeks[i].length; j++) {
-							let date = this.$u.date(data.weeks[i][j].lunar.cYear + '-' + data.weeks[i][j].lunar.cMonth +
-								'-' + data.weeks[i][j].lunar.cDay, 'yyyymmdd')
+							let date = this.$u.date(data.weeks[i][j].lunar.cYear + '-' + data.weeks[i][j].lunar
+								.cMonth + '-' + data.weeks[i][j].lunar.cDay, 'yyyymmdd')
 							data.weeks[i][j].isSign = signList[date] == 0 ? false : true;
-						}
-					}
-					if (todayList && todayList.length) {
-						for (let i = 0; i < todayList.length; i++) {
-							this.scheduleList.push(todayList[i])
 						}
 					}
 				})
 			},
-			
 			change(e) {
 				let weeks = e.cale.weeks;
 				let canlender = e.cale.canlender;
 				let lunar = e.lunar;
 				this.changedate = '农历  ' + lunar.IMonthCn + lunar.IDayCn;
-				this.scheduleList.splice(0);
 				let data = {
-					weeks:weeks,
-					canlender:canlender,
-					lunar:lunar,
-					fulldate:e.fulldate
+					weeks: weeks,
+					canlender: canlender,
+					lunar: lunar,
+					fulldate: e.fulldate
 				}
 				this.handleScheduleList(data)
 			},
-			
-			monthSwitch(e) {
-
-			},
+			monthSwitch(e) {},
 			goDetail(id) {
 				const url = './form' + (id ? '?id=' + id : '')
 				uni.navigateTo({
