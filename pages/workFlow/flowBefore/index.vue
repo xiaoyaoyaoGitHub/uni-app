@@ -246,7 +246,7 @@
 						case 3: //审核驳回
 							this.flowStatus = resources.status.reviewRefuse
 							break;
-						case 4: //审核撤回
+						case 4: //流程撤回
 							this.flowStatus = resources.status.reviewUndo
 							break;
 						case 5: //审核终止

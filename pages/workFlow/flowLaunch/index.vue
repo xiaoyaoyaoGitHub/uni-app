@@ -101,7 +101,7 @@
 			},
 			handleClick(index, index1) {
 				const item = this.list[index]
-				if ([1, 2, 5].includes(item.status)) {
+				if ([1, 2, 3, 5].includes(item.status)) {
 					this.$u.toast("流程正在审核,请勿删除")
 					this.list[index].show = false
 					return
@@ -127,7 +127,7 @@
 			},
 			goDetail(item) {
 				let opType = '-1'
-				if ([1, 2, 5].includes(item.status)) opType = 0
+				if ([1, 2, 3, 5].includes(item.status)) opType = 0
 				const config = {
 					id: item.id,
 					enCode: item.flowCode,
@@ -171,8 +171,8 @@
 						break;
 					case 4:
 						status = {
-							text: '审核撤回',
-							statusCss: 'u-type-error'
+							text: '流程撤回',
+							statusCss: 'u-type-warning'
 						}
 						break;
 					case 5:

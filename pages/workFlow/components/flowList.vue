@@ -96,8 +96,8 @@
 						break;
 					case 4:
 						status = {
-							text: '审核撤回',
-							statusCss: 'u-type-error'
+							text: '流程撤回',
+							statusCss: 'u-type-warning'
 						}
 						break;
 					case 5:
