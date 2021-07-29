@@ -25,7 +25,7 @@
 					<text class="icon-ym icon-ym-lianxi u-m-r-16 u-font-36 u-type-primary" slot="icon" />
 				</u-cell-item>
 				<u-cell-item title="应用介绍" @click="openPage('/pages/my/abouts/index')">
-					<text class="icon-ym icon-ym-yingyong u-m-r-16 u-font-36 u-type-success" slot="icon" />
+					<text class="icon-ym icon-ym-yingyong u-m-r-16 u-font-36 u-type-primary" slot="icon" />
 				</u-cell-item>
 			</u-cell-group>
 		</view>
@@ -33,7 +33,7 @@
 		<view class="u-m-t-20">
 			<u-cell-group>
 				<u-cell-item title="账号安全" @click="openPage('/pages/my/accountSecurity/index')">
-					<text class="icon-ym icon-ym-zhanghao u-m-r-16 u-font-36 u-type-warning" slot="icon" />
+					<text class="icon-ym icon-ym-zhanghao u-m-r-16 u-font-36 u-type-primary" slot="icon" />
 				</u-cell-item>
 			</u-cell-group>
 		</view>
