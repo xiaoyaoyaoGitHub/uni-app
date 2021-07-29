@@ -77,7 +77,7 @@
 		methods: {
 			getUsualList() {
 				getUsualList(2).then(res => {
-					this.usualList = res.data.map(o => {
+					this.usualList = res.data.list.map(o => {
 						const objectData = o.objectData ? JSON.parse(o.objectData) : {}
 						return {
 							...o,
@@ -89,7 +89,7 @@
 			downCallback() {
 				this.getUsualList()
 				getMenuList().then(res => {
-					let list = res.data
+					let list = res.data.list
 					for (let i = 0; i < list.length; i++) {
 						let children = list[i].children
 						if (Array.isArray(children) && children.length) {
@@ -107,7 +107,7 @@
 						}
 					}
 					this.menuList = list
-					this.mescroll.endSuccess(res.data.length, false);
+					this.mescroll.endSuccess(list.length, false);
 				}).catch(() => {
 					this.mescroll.endErr();
 				})

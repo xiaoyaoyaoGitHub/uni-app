@@ -88,8 +88,7 @@
 		methods: {
 			getUsualList() {
 				getUsualList(1).then(res => {
-					let list = res.data
-					this.usualList = res.data.map(o => {
+					this.usualList = res.data.list.map(o => {
 						const objectData = o.objectData ? JSON.parse(o.objectData) : {}
 						return {
 							...o,

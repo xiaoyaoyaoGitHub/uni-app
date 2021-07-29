@@ -68,7 +68,7 @@
 		methods: {
 			getUsualList() {
 				getUsualList(this.type).then(res => {
-					this.usualList = res.data.map(o => {
+					this.usualList = res.data.list.map(o => {
 						const objectData = o.objectData ? JSON.parse(o.objectData) : {}
 						return {
 							...o,
@@ -80,11 +80,11 @@
 			getAllList() {
 				if (this.type == '1') {
 					getFlowList().then(res => {
-						this.allList = res.data;
+						this.allList = res.data.list;
 					})
 				} else {
 					getDataList().then(res => {
-						let list = res.data
+						let list = res.data.list
 						for (let i = 0; i < list.length; i++) {
 							let children = list[i].children
 							if (Array.isArray(children) && children.length) {
