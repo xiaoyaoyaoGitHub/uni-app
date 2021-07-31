@@ -24,8 +24,9 @@
 	<u-form-item :label="label" :prop="itemCopy.__vModel__" :required="itemCopy.__config__.required"
 		:label-width="labelWidth" v-else>
 		<block v-if="itemCopy.__config__.jnpfKey==='comInput'">
-			<u-input v-model="value" :placeholder="itemCopy.placeholder"
-				:maxlength="itemCopy.maxlength?itemCopy.maxlength:140" :disabled="itemCopy.disabled"></u-input>
+			<u-input :type="itemCopy['show-password']?'password':'text'" v-model="value"
+				:placeholder="itemCopy.placeholder" :maxlength="itemCopy.maxlength?itemCopy.maxlength:140"
+				:disabled="itemCopy.disabled"></u-input>
 		</block>
 		<block v-if="itemCopy.__config__.jnpfKey==='textarea'">
 			<u-input v-model="value" type="textarea" :placeholder="itemCopy.placeholder"
