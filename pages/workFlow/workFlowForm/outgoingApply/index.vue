@@ -113,7 +113,7 @@
 		methods: {
 			selfInit(data) {
 				this.dataForm.applyDate = new Date().getTime()
-				this.dataForm.flowTitle = this.userInfo.userName + "的请假申请"
+				this.dataForm.flowTitle = this.userInfo.userName + "的外出申请"
 				this.dataForm.applyUser = this.userInfo.userName + '/' + this.userInfo.userAccount
 				this.dataForm.department = this.userInfo.departmentName
 				if (this.userInfo.positionIds && this.userInfo.positionIds.length) {
