@@ -2,19 +2,10 @@
 	<view class="launch-v">
 		<!-- #ifdef APP-PLUS -->
 		<view class="launch-box">
-			<view class="u-flex u-col-top u-row-between">
-				<image :src="startup.topLeft" class="launch-img" mode="widthFix"></image>
-				<image :src="startup.topRight" class="launch-img" mode="widthFix"></image>
-			</view>
-			<view class="u-flex u-row-center">
-				<image :src="startup.main" class="launch-img" mode="widthFix"></image>
-			</view>
-			<view class="launch-logo u-flex u-row-center">
-				<image :src="loginlogo.logo" class="launch-img" mode="widthFix"></image>
-			</view>
-			<view class="launch-foot">
-				<image :src="startup.bottomRight" class="launch-img" mode="widthFix"></image>
-			</view>
+			<view class="title">全新模式 为你而来</view>
+			<view class="version">VERSION3.2</view>
+			<image :src="startup" class="launch-img" mode="widthFix"></image>
+			<view class="copyright">Copyright © 2021 引迈信息技术有限公司出品</view>
 		</view>
 		<!-- #endif -->
 	</view>
@@ -25,8 +16,7 @@
 	export default {
 		data() {
 			return {
-				startup: resources.startup,
-				loginlogo: resources.login
+				startup: resources.startup.main
 			}
 		},
 		onLoad() {
@@ -67,21 +57,36 @@
 <style lang="scss">
 	.launch-v {
 		.launch-box {
-			.launch-img {
-				width: 164rpx;
+			padding-top: 170rpx;
+
+			.title {
+				font-size: 50rpx;
+				line-height: 70rpx;
+				color: #5098FA;
+				text-align: center;
+				margin-bottom: 10rpx;
 			}
 
-			.launch-logo {
-				position: fixed;
-				width: 100%;
-				bottom: 240rpx;
-				right: 0;
+			.version {
+				width: 250rpx;
+				margin: 0 auto;
+				text-align: center;
+				height: 50rpx;
+				border: 1px solid #5098FA;
+				border-radius: 25rpx;
+				line-height: 48rpx;
+				color: #5098FA;
+				letter-spacing: 2rpx;
 			}
 
-			.launch-foot {
+			.copyright {
 				position: fixed;
-				bottom: -10rpx;
+				bottom: 120rpx;
 				right: 0;
+				left: 0;
+				text-align: center;
+				color: #999999;
+				font-size: 24rpx;
 			}
 		}
 	}
