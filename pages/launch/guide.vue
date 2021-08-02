@@ -7,44 +7,40 @@
 			<swiper class="swiper" @change="onChange">
 				<swiper-item>
 					<view class="swiper-item">
-						<view class="swiper-item-text">
-							<view class="swiper-item-title">版本新升级</view>
-							<view class="swiper-item-content">降低成本，提高质量</view>
-						</view>
 						<view class="swiper-item-img">
 							<image class="itemImg" :src="guide1" mode="aspectFit"></image>
 						</view>
+						<view class="swiper-item-text">
+							<view class="swiper-item-title">可视化流程</view>
+							<view class="swiper-item-content">流程节点可视化配置，实现自动流转</view>
+						</view>
 					</view>
 				</swiper-item>
 				<swiper-item>
 					<view class="swiper-item">
-						<view class="swiper-item-text">
-							<view class="swiper-item-title">服务新入口</view>
-							<view class="swiper-item-content">零代码/低代码个性化开发</view>
-						</view>
 						<view class="swiper-item-img">
 							<image class="itemImg" :src="guide2" mode="aspectFit"></image>
 						</view>
+						<view class="swiper-item-text">
+							<view class="swiper-item-title">可视化视图</view>
+							<view class="swiper-item-content">数据的增删改查皆可自由设定给不同角色</view>
+						</view>
 					</view>
 				</swiper-item>
 				<swiper-item>
 					<view class="swiper-item">
-						<view class="swiper-item-text">
-							<view class="swiper-item-title">采用新技术</view>
-							<view class="swiper-item-content">控制开发成本，解决团队困难</view>
-						</view>
 						<view class="swiper-item-img">
 							<image class="itemImg" :src="guide3" mode="aspectFit"></image>
 						</view>
-						<view class="swiper-item-btn">
-							<u-button type="primary" shape="circle" @click="setLaunchFlag()">立即开启</u-button>
+						<view class="swiper-item-text">
+							<view class="swiper-item-title">低代码可视化</view>
+							<view class="swiper-item-content">通过可视化方式，无需或少量编写代码完成应用</view>
 						</view>
+						<view class="swiper-item-btn" @click="setLaunchFlag()">立即体验</view>
 					</view>
 				</swiper-item>
 			</swiper>
-			<view class="jump-over" @click="setLaunchFlag()">
-				<u-icon name="arrow-right" label="跳过" label-pos="left" label-size="32" color="#606266"></u-icon>
-			</view>
+			<view class="jump-over" @click="setLaunchFlag()">跳过</view>
 			<view class="bannerDots" v-if="currenTab!=3">
 				<view class="banner-dot" v-for="(item,index) in bannerDot" :key="index"
 					:class="{'active':index===currenTab}">
@@ -120,7 +116,8 @@
 		}
 
 		.itemImg {
-			width: 554rpx;
+			width: 500rpx;
+			height: 519rpx;
 		}
 
 		.swiper-item {
@@ -130,6 +127,7 @@
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
+			padding-top: 260rpx;
 		}
 
 		.swiper-item-img {
@@ -137,32 +135,21 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			/* #ifndef APP-PLUS */
-			padding-top: 4.6vh
-				/* #endif */
+			margin-bottom: 56rpx;
 		}
 
-		/* #ifdef APP-PLUS */
-		.swiper-item-img {
-			padding-top: 13.49vh
-		}
-
-		/* #endif */
 		.swiper-item-text {
-			padding-top: 7.5vh;
-		}
+			.swiper-item-title {
+				line-height: 130rpx;
+				font-size: 87rpx;
+				color: $u-type-primary;
+				font-weight: 500;
+			}
 
-		.swiper-item-title {
-			line-height: 2em;
-			font-size: 48upx;
-			color: $u-type-primary;
-			font-weight: 500;
-		}
-
-		.swiper-item-content {
-			font-size: 34upx;
-			color: #999999;
-			padding-top: 2.2vh;
+			.swiper-item-content {
+				font-size: 28rpx;
+				color: #666666;
+			}
 		}
 
 		.bannerDots {
@@ -196,13 +183,27 @@
 		.jump-over {
 			position: absolute;
 			z-index: 999;
-			right: 32rpx;
-			top: 20rpx;
+			right: 46rpx;
+			top: 86rpx;
+			width: 128rpx;
+			height: 54rpx;
+			line-height: 54rpx;
+			color: #fff;
+			border-radius: 27rpx;
+			text-align: center;
+			font-size: 32rpx;
+			background: rgba(123, 123, 123, 0.42);
 		}
 
 		.swiper-item-btn {
-			margin-top: 8.2vh;
-			width: 260rpx;
+			margin-top: 80rpx;
+			width: 278rpx;
+			border: 1rpx solid #2979ff;
+			opacity: 1;
+			border-radius: 28rpx;
+			line-height: 54rpx;
+			color: #2979ff;
+			font-size: 32rpx;
 			z-index: 100;
 		}
 	}

@@ -4,7 +4,7 @@
 			<block v-if="useInputList.indexOf(item.__config__.jnpfKey) > -1">
 				<u-input v-model="formData[item.__vModel__]" :placeholder="'请输入'+item.__config__.label" />
 			</block>
-			<block v-if="item.__config__.jnpfKey==='numInput'">
+			<block v-if="item.__config__.jnpfKey==='numInput'||item.__config__.jnpfKey==='calculate'">
 				<jnpf-num-range v-model="formData[item.__vModel__]" />
 			</block>
 			<view v-if="item.__config__.jnpfKey==='switch'" class="u-flex u-form-item-switch">
@@ -48,22 +48,22 @@
 					<view class="slider-badge-button">{{formData[item.__vModel__]}}</view>
 				</u-slider>
 			</block>
-			<block v-if="item.__config__.jnpfKey==='comSelect'">
+			<block v-if="item.__config__.jnpfKey==='comSelect'||item.__config__.jnpfKey==='currOrganize'">
 				<jnpf-org-select type="organize" v-model="formData[item.__vModel__]"
 					:placeholder="'请选择'+item.__config__.label">
 				</jnpf-org-select>
 			</block>
-			<block v-if="item.__config__.jnpfKey==='depSelect'">
+			<block v-if="item.__config__.jnpfKey==='depSelect'||item.__config__.jnpfKey==='currDept'">
 				<jnpf-org-select type="department" v-model="formData[item.__vModel__]"
 					:placeholder="'请选择'+item.__config__.label">
 				</jnpf-org-select>
 			</block>
-			<block v-if="item.__config__.jnpfKey==='posSelect'">
+			<block v-if="item.__config__.jnpfKey==='posSelect'||item.__config__.jnpfKey==='currPosition'">
 				<jnpf-org-select type="position" v-model="formData[item.__vModel__]"
 					:placeholder="'请选择'+item.__config__.label">
 				</jnpf-org-select>
 			</block>
-			<block v-if="item.__config__.jnpfKey==='userSelect'">
+			<block v-if="['userSelect','createUser', 'modifyUser'].indexOf(item.__config__.jnpfKey) > -1">
 				<jnpf-org-select v-model="formData[item.__vModel__]" :placeholder="'请选择'+item.__config__.label">
 				</jnpf-org-select>
 			</block>
@@ -86,11 +86,9 @@
 		previewDataInterface
 	} from '@/api/common'
 	const dyOptionsList = ['radio', 'checkbox', 'select', 'cascader', 'treeSelect']
-	const useInputList = ['comInput', 'textarea', 'JNPFText', 'billRule', 'createUser', 'modifyUser', 'currOrganize',
-		'currDept', 'currPosition', 'calculate'
-	]
+	const useInputList = ['comInput', 'textarea', 'JNPFText', 'billRule']
 	const useDateList = ['date', 'createTime', 'modifyTime']
-	const useArrList = ['cascader', 'address', 'numInput', ...useDateList]
+	const useArrList = ['cascader', 'address', 'numInput', 'calculate', ...useDateList]
 
 	export default {
 		props: ['formConf'],

@@ -1,21 +1,16 @@
 const resources = {
 	startup: {
-		main: "https://app.cdn.jnpfsoft.com/image/3.0/startup/startup-main.png",
-		bottomRight: "https://app.cdn.jnpfsoft.com/image/3.0/startup/startup-bottom-right.png",
-		topLeft: "https://app.cdn.jnpfsoft.com/image/3.0/startup/startup-top-left.png",
-		topRight: "https://app.cdn.jnpfsoft.com/image/3.0/startup/startup-top-right.png",
+		main: "https://app.cdn.jnpfsoft.com/image/3.2/startup@2x.png",
 	},
 	login: {
 		banner: "https://app.cdn.jnpfsoft.com/image/3.0/login/top.png",
 		logo: "https://app.cdn.jnpfsoft.com/image/banner/logo.png",
 	},
 	banner: {
-		home1Url: "https://app.cdn.jnpfsoft.com/image/banner/ym-home-1.png",
-		home2Url: "https://app.cdn.jnpfsoft.com/image/banner/ym-home-2.png",
-		home3Url: "https://app.cdn.jnpfsoft.com/image/banner/ym-home-3.png",
-		workarea: "https://app.cdn.jnpfsoft.com/image/banner/workarea.png",
+		home1Url: "https://app.cdn.jnpfsoft.com/image/3.2/banner1.png",
+		home2Url: "https://app.cdn.jnpfsoft.com/image/3.2/banner2.png",
+		home3Url: "https://app.cdn.jnpfsoft.com/image/3.2/banner4.png",
 		contactus: "https://app.cdn.jnpfsoft.com/image/banner/contactus.png",
-		loginbanner: "https://app.cdn.jnpfsoft.com/image/banner/loginbanner.png",
 		loginlogo: "https://app.cdn.jnpfsoft.com/image/banner/logo.png",
 		accountSecurity: "https://app.cdn.jnpfsoft.com/image/banner/accountSecurity.png"
 	},
@@ -25,9 +20,9 @@ const resources = {
 	},
 	//引导页
 	guide: {
-		guide1: "https://app.cdn.jnpfsoft.com/image/guide/3.0/1.png",
-		guide2: "https://app.cdn.jnpfsoft.com/image/guide/3.0/2.png",
-		guide3: "https://app.cdn.jnpfsoft.com/image/guide/3.0/3.png",
+		guide1: "https://app.cdn.jnpfsoft.com/image/3.2/guide1@2x.png",
+		guide2: "https://app.cdn.jnpfsoft.com/image/3.2/guide2@2x.png",
+		guide3: "https://app.cdn.jnpfsoft.com/image/3.2/guide3@2x.png",
 	},
 	extend: {
 		againlocation: "https://app.cdn.jnpfsoft.com/image/extend/againlocation.png",
