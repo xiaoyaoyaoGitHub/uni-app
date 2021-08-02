@@ -54,7 +54,7 @@
 				</u-form-item>
 				<u-form-item label="支付方式" prop="paymentMethod" v-if="judgeShow('paymentMethod')" required>
 					<jnpf-select v-model="dataForm.paymentMethod" placeholder="请选择支付方式" :options="paymentMethodOptions"
-						:disabled="judgeWrite('paymentMethod')"></jnpf-select>
+						:disabled="judgeWrite('paymentMethod')" :props="payProps"></jnpf-select>
 				</u-form-item>
 				<u-form-item label="支付金额" prop="amountPayment" v-if="judgeShow('amountPayment')">
 					<u-input v-model="dataForm.amountPayment" placeholder="请输入支付金额"

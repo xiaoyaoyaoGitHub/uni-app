@@ -47,7 +47,7 @@
 				</u-form-item>
 				<u-form-item label="支付方式" prop="paymentMethod" v-if="judgeShow('paymentMethod')" required>
 					<jnpf-select v-model="dataForm.paymentMethod" placeholder="请选择支付方式" :options="paymentMethodOptions"
-						:disabled="judgeWrite('paymentMethod')"></jnpf-select>
+						:disabled="judgeWrite('paymentMethod')" :props="payProps"></jnpf-select>
 				</u-form-item>
 				<u-form-item label="借支金额" prop="amountDebit" v-if="judgeShow('amountDebit')">
 					<u-input v-model="dataForm.amountDebit" placeholder="请输入借支金额" :disabled="judgeWrite('amountDebit')">

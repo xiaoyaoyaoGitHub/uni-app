@@ -53,13 +53,21 @@
 					<u-input v-model="dataForm.beneficiaryAccount" placeholder="请输入收款人账号" type="number"
 						:disabled="judgeWrite('beneficiaryAccount')"></u-input>
 				</u-form-item>
+				<u-form-item label="联系方式" prop="receivableContact" v-if="judgeShow('receivableContact')">
+					<u-input v-model="dataForm.receivableContact" placeholder="请输入联系方式" type="number"
+						:disabled="judgeWrite('receivableContact')"></u-input>
+				</u-form-item>
+				<u-form-item label="申请金额" prop="applyAmount" v-if="judgeShow('applyAmount')">
+					<u-input v-model="dataForm.applyAmount" placeholder="请输入申请金额" type="number"
+						:disabled="judgeWrite('applyAmount')"></u-input>
+				</u-form-item>
 				<u-form-item label="结算方式" prop="settlementMethod" v-if="judgeShow('settlementMethod')" required>
 					<jnpf-select v-model="dataForm.settlementMethod" placeholder="请选择结算方式" :props="payProps"
 						:options="paymentMethodOptions" :disabled="judgeWrite('settlementMethod')"></jnpf-select>
 				</u-form-item>
 				<u-form-item label="付款类型" prop="paymentType" v-if="judgeShow('paymentType')" required>
 					<jnpf-select v-model="dataForm.paymentType" placeholder="请选择付款类型" :options="paymentTypeList"
-						:disabled="judgeWrite('paymentType')">
+						:disabled="judgeWrite('paymentType')" :props="payProps">
 					</jnpf-select>
 				</u-form-item>
 				<u-form-item label="付款金额" prop="amountPaid" v-if="judgeShow('amountPaid')">
@@ -98,7 +106,9 @@
 					beneficiaryAccount: '',
 					openingBank: '',
 					paymentType: '',
-					settlementMethod: ''
+					settlementMethod: '',
+					applyAmount:'',
+					receivableContact:''
 				},
 				rules: {
 					flowTitle: [{
