@@ -63,7 +63,7 @@
 				</u-form-item>
 				<u-form-item label="结算方式" prop="settlementMethod" v-if="judgeShow('settlementMethod')" required>
 					<jnpf-select v-model="dataForm.settlementMethod" placeholder="请选择结算方式"
-						:options="paymentMethodOptions" :disabled="judgeWrite('settlementMethod')"></jnpf-select>
+						:options="paymentMethodOptions" :disabled="judgeWrite('settlementMethod')" :props="payProps"></jnpf-select>
 				</u-form-item>
 				<u-form-item label="付款类型" prop="paymentType" v-if="judgeShow('paymentType')" required>
 					<jnpf-select v-model="dataForm.paymentType" placeholder="请选择付款类型" :options="paymentTypeList"
@@ -141,22 +141,22 @@
 				},
 				paymentTypeList: [{
 						fullName: '订金',
-						id: '1',
+						id: '订金',
 						checked: false
 					},
 					{
 						fullName: '首付',
-						id: '2',
+						id: '首付',
 						checked: false
 					},
 					{
 						fullName: '尾款',
-						id: '3',
+						id: '尾款',
 						checked: false
 					},
 					{
 						fullName: '全额',
-						id: '4',
+						id: '全额',
 						checked: false
 					}
 				],
