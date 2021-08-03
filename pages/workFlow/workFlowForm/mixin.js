@@ -67,7 +67,6 @@ export default {
 				sort: 'WFSettlementMethod'
 			}).then(res => {
 				this.paymentMethodOptions = res
-				console.log(res)
 			})
 		},
 		/* 提交 */
