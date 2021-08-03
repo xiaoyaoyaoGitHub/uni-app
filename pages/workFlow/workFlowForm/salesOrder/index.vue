@@ -156,9 +156,9 @@
 						message: '流程编码不能为空',
 						trigger: 'blur',
 					}],
-					paymentMethod: [{
+					customerName: [{
 						required: true,
-						message: '结算方式不能为空',
+						message: '客户名称不能为空',
 						trigger: 'blur',
 					}],
 					salesDate: [{

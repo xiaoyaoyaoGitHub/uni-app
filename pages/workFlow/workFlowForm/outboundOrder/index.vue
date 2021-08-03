@@ -43,6 +43,7 @@
 						:disabled="judgeWrite('description')"></u-input>
 				</u-form-item>
 			</view>
+			
 			<view class="jnpf-table" v-if="judgeShow('entryList')">
 				<view class="jnpf-table-item" v-for="(item,i) in dataForm.entryList" :key="i">
 					<view class="jnpf-table-item-title u-flex u-row-between">

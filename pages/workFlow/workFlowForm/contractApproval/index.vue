@@ -167,7 +167,12 @@
 						message: '合同编号不能为空',
 						trigger: 'change',
 						type: 'number'
-					}]
+					}],
+					contractName: [{
+						required: true,
+						message: '合同名称不能为空',
+						trigger: 'change'
+					}],
 				}
 			}
 		},

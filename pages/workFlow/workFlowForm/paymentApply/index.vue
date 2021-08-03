@@ -62,12 +62,12 @@
 						:disabled="judgeWrite('applyAmount')"></u-input>
 				</u-form-item>
 				<u-form-item label="结算方式" prop="settlementMethod" v-if="judgeShow('settlementMethod')" required>
-					<jnpf-select v-model="dataForm.settlementMethod" placeholder="请选择结算方式" :props="payProps"
+					<jnpf-select v-model="dataForm.settlementMethod" placeholder="请选择结算方式"
 						:options="paymentMethodOptions" :disabled="judgeWrite('settlementMethod')"></jnpf-select>
 				</u-form-item>
 				<u-form-item label="付款类型" prop="paymentType" v-if="judgeShow('paymentType')" required>
 					<jnpf-select v-model="dataForm.paymentType" placeholder="请选择付款类型" :options="paymentTypeList"
-						:disabled="judgeWrite('paymentType')" :props="payProps">
+						:disabled="judgeWrite('paymentType')">
 					</jnpf-select>
 				</u-form-item>
 				<u-form-item label="付款金额" prop="amountPaid" v-if="judgeShow('amountPaid')">

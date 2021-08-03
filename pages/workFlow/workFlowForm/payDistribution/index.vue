@@ -30,40 +30,40 @@
 					<u-input v-model="dataForm.position" placeholder="请输入员工职位" :disabled="judgeWrite('position')">
 					</u-input>
 				</u-form-item>
-				<u-form-item label="出勤天数" prop="actualAttendance" v-if="judgeShow('actualAttendance')">
+				<u-form-item label="出勤天数" prop="actualAttendance" v-if="judgeShow('actualAttendance')" required>
 					<u-input v-model="dataForm.actualAttendance" placeholder="请输入出勤天数" type="number"
 						:disabled="judgeWrite('actualAttendance')"></u-input>
 				</u-form-item>
 			</view>
-			<u-form-item label="基本薪资" prop="baseSalary" v-if="judgeShow('baseSalary')">
+			<u-form-item label="基本薪资" prop="baseSalary" v-if="judgeShow('baseSalary')" required>
 				<u-input v-model="dataForm.baseSalary" placeholder="请输入基本薪资" type="number"
 					:disabled="judgeWrite('baseSalary')"></u-input>
 			</u-form-item>
-			<u-form-item label="员工津贴" prop="allowance" v-if="judgeShow('allowance')">
+			<u-form-item label="员工津贴" prop="allowance" v-if="judgeShow('allowance')" required>
 				<u-input v-model="dataForm.allowance" placeholder="请输入员工津贴" type="number"
 					:disabled="judgeWrite('allowance')"></u-input>
 			</u-form-item>
-			<u-form-item label="员工保险" prop="insurance" v-if="judgeShow('insurance')">
+			<u-form-item label="员工保险" prop="insurance" v-if="judgeShow('insurance')" required>
 				<u-input v-model="dataForm.insurance" placeholder="请输入员工保险" type="number"
 					:disabled="judgeWrite('insurance')"></u-input>
 			</u-form-item>
-			<u-form-item label="所得税" prop="incomeTax" v-if="judgeShow('incomeTax')">
+			<u-form-item label="所得税" prop="incomeTax" v-if="judgeShow('incomeTax')" required>
 				<u-input v-model="dataForm.incomeTax" placeholder="请输入所得税" type="number"
 					:disabled="judgeWrite('incomeTax')"></u-input>
 			</u-form-item>
-			<u-form-item label="员工绩效" prop="performance" v-if="judgeShow('performance')">
+			<u-form-item label="员工绩效" prop="performance" v-if="judgeShow('performance')" required>
 				<u-input v-model="dataForm.performance" placeholder="请输入员工绩效" type="number"
 					:disabled="judgeWrite('performance')"></u-input>
 			</u-form-item>
-			<u-form-item label="加班费用" prop="overtimePay" v-if="judgeShow('overtimePay')">
+			<u-form-item label="加班费用" prop="overtimePay" v-if="judgeShow('overtimePay')" required>
 				<u-input v-model="dataForm.overtimePay" placeholder="请输入加班费用" type="number"
 					:disabled="judgeWrite('overtimePay')"></u-input>
 			</u-form-item>
-			<u-form-item label="应发工资" prop="grossPay" v-if="judgeShow('grossPay')">
+			<u-form-item label="应发工资" prop="grossPay" v-if="judgeShow('grossPay')" required>
 				<u-input v-model="dataForm.grossPay" placeholder="请输入应发工资" type="number"
 					:disabled="judgeWrite('grossPay')"></u-input>
 			</u-form-item>
-			<u-form-item label="实发工资" prop="payroll" v-if="judgeShow('payroll')">
+			<u-form-item label="实发工资" prop="payroll" v-if="judgeShow('payroll')" required>
 				<u-input v-model="dataForm.payroll" placeholder="请输入实发工资" type="number"
 					:disabled="judgeWrite('payroll')"></u-input>
 			</u-form-item>

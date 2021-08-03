@@ -98,13 +98,13 @@
 					borrowMode: [{
 						required: true,
 						message: '借阅方式不能为空',
-						trigger: 'change',
+						trigger: 'change'
 
 					}],
 					archivalAttributes: [{
 						required: true,
 						message: '档案属性不能为空',
-						trigger: 'change',
+						trigger: 'change'
 
 					}],
 					archivesName: [{
@@ -132,38 +132,38 @@
 				},
 				borrowModeList: [{
 						fullName: '查阅',
-						id: '1',
+						id: '查阅',
 						checked: false
 					},
 					{
 						fullName: '复印',
-						id: '2',
+						id: '复印',
 						checked: false
 					},
 					{
 						fullName: '外借',
-						id: '3',
+						id: '外借',
 						checked: false
 					},
 					{
 						fullName: '其他',
-						id: '4',
+						id: '其他',
 						checked: false
 					}
 				],
 				attributeList: [{
 						fullName: '原件',
-						id: '1',
+						id: '原件',
 						checked: false
 					},
 					{
 						fullName: '复印件',
-						id: '2',
+						id: '复印件',
 						checked: false
 					},
 					{
 						fullName: '其他',
-						id: '3',
+						id: '其他',
 						checked: false
 					}
 				]
