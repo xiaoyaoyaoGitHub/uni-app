@@ -10,7 +10,8 @@
 					<view class="reply-item-txt u-flex-1">
 						<view class="reply-item-cell reply-item-title u-flex u-row-between">
 							<text class="title">通知公告</text>
-							<text class="u-font-24">{{$u.timeFormat(msgInfo.noticeDate, 'mm-dd hh:MM')}}</text>
+							<text
+								class="u-font-24">{{msgInfo.noticeText?$u.timeFormat(msgInfo.noticeDate, 'mm-dd hh:MM'):''}}</text>
 						</view>
 						<view class="reply-item-cell u-flex u-row-between">
 							<text class="reply-item-txt-msg u-line-1">{{msgInfo.noticeText}}</text>
@@ -27,7 +28,8 @@
 					<view class="reply-item-txt u-flex-1">
 						<view class="reply-item-cell reply-item-title u-flex u-row-between">
 							<text class="title">系统消息</text>
-							<text class="u-font-24">{{$u.timeFormat(msgInfo.messageDate, 'mm-dd hh:MM')}}</text>
+							<text
+								class="u-font-24">{{msgInfo.messageText?$u.timeFormat(msgInfo.messageDate, 'mm-dd hh:MM'):''}}</text>
 						</view>
 						<view class="reply-item-cell u-flex u-row-between">
 							<text class="reply-item-txt-msg u-line-1">{{msgInfo.messageText}}</text>
