@@ -21,6 +21,13 @@
 	<block v-else-if="itemCopy.__config__.jnpfKey==='table'">
 		<child-table v-model="value" :config="itemCopy" :ref="itemCopy.__vModel__"></child-table>
 	</block>
+	<view v-else-if="itemCopy.__config__.jnpfKey==='tab'||itemCopy.__config__.jnpfKey==='collapse'">
+		<view class="jnpf-card" v-for="(item,i) in itemCopy.__config__.children" :key="i">
+			<view class="jnpf-card-cap u-line-1" v-if="item.title">{{item.title}}</view>
+			<item v-for="(child, index) in item.__config__.children" :key="index" :item="child" :formConf="formConf"
+				@input="setValue" />
+		</view>
+	</view>
 	<u-form-item :label="label" :prop="itemCopy.__vModel__" :required="itemCopy.__config__.required"
 		:label-width="labelWidth" v-else>
 		<block v-if="itemCopy.__config__.jnpfKey==='comInput'">
