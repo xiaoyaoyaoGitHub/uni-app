@@ -13,7 +13,6 @@
 					:disabled="judgeWrite('flowUrgent')">
 				</jnpf-select>
 			</u-form-item>
-
 			<view class="jnpf-card">
 				<u-form-item label="员工姓名" prop="fullName" v-if="judgeShow('fullName')">
 					<u-input v-model="dataForm.fullName" placeholder="请输入员工姓名" :disabled="judgeWrite('fullName')">
@@ -47,7 +46,7 @@
 					<jnpf-date-time type="datetime" v-model="dataForm.endTime" placeholder="请输入结束时间"
 						:disabled="judgeWrite('endTime')"></jnpf-date-time>
 				</u-form-item>
-				<u-form-item label="备注" prop="description" v-if="judgeShow('description')">
+				<u-form-item label="备注" prop="description" v-if="judgeShow('description')" required>
 					<u-input v-model="dataForm.description" placeholder="请输入备注" type="textarea"
 						:disabled="judgeWrite('description')"></u-input>
 				</u-form-item>
@@ -109,8 +108,7 @@
 						required: true,
 						message: '备注不能为空',
 						trigger: 'blur'
-					}],
-
+					}]
 				}
 			}
 		},
@@ -124,12 +122,7 @@
 					let list = this.userInfo.positionIds.map(o => o.name)
 					this.dataForm.position = list.join(',')
 				}
-			},
-
+			}
 		}
 	}
 </script>
-
-<style>
-
-</style>

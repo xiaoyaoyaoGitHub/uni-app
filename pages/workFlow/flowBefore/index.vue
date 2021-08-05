@@ -49,6 +49,11 @@
 					<u-button class="buttom-btn" type="error" @click="operate('revoke','撤回')">撤回</u-button>
 					<u-button class="buttom-btn" type="primary" @click="handlePress()">催办</u-button>
 				</template>
+				<template v-else-if="config.status == 3">
+					<u-button class="buttom-btn" @click="eventLancher('save')" :loading="btnLoading">保存
+					</u-button>
+					<u-button class="buttom-btn" type="primary" @click="eventLancher('submit')">提交</u-button>
+				</template>
 				<u-button class="buttom-btn" @click="jnpf.goBack()" v-else>返回</u-button>
 			</template>
 			<template v-if="config.opType == 1">
@@ -222,6 +227,7 @@
 					this.endTime = this.flowTaskInfo.completion == 100 ? this.flowTaskInfo.endTime : 0
 					data.formConf = res.data.flowFormInfo
 					if (data.opType != 1) data.readonly = true
+					if (data.opType == 0 && data.status == 3) data.readonly = false
 					data.formOperates = []
 					if (data.opType == 0) {
 						if (flowTemplateJson && flowTemplateJson.properties && flowTemplateJson.properties

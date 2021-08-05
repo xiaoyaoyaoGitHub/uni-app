@@ -13,7 +13,6 @@
 					:disabled="judgeWrite('flowUrgent')">
 				</jnpf-select>
 			</u-form-item>
-
 			<view class="jnpf-card">
 				<u-form-item label="出差人员" prop="travelMan" v-if="judgeShow('travelMan')">
 					<u-input v-model="dataForm.travelMan" placeholder="请输入出差人员" :disabled="judgeWrite('travelMan')">
@@ -39,11 +38,11 @@
 					<jnpf-date-time type="datetime" v-model="dataForm.endDate" placeholder="请输入结束时间"
 						:disabled="judgeWrite('endDate')"></jnpf-date-time>
 				</u-form-item>
-				<u-form-item label="起始地点" prop="startPlace" v-if="judgeShow('startPlace')">
+				<u-form-item label="起始地点" prop="startPlace" v-if="judgeShow('startPlace')" required>
 					<u-input v-model="dataForm.startPlace" placeholder="请输入起始地点" :disabled="judgeWrite('startPlace')">
 					</u-input>
 				</u-form-item>
-				<u-form-item label="目的地" prop="destination" v-if="judgeShow('destination')">
+				<u-form-item label="目的地" prop="destination" v-if="judgeShow('destination')" required>
 					<u-input v-model="dataForm.destination" placeholder="请输入目的地" :disabled="judgeWrite('destination')">
 					</u-input>
 				</u-form-item>
@@ -116,14 +115,12 @@
 						required: true,
 						message: '起始地点不能为空',
 						trigger: 'blur',
-
 					}],
 					destination: [{
 						required: true,
 						message: '目的地不能为空',
 						trigger: 'blur',
-
-					}],
+					}]
 				}
 			}
 		},
@@ -137,12 +134,7 @@
 					let list = this.userInfo.positionIds.map(o => o.name)
 					this.dataForm.position = list.join(',')
 				}
-			},
-
+			}
 		}
 	}
 </script>
-
-<style>
-
-</style>
