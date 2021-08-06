@@ -1,11 +1,11 @@
 <template>
 	<view class="logo-v">
 		<view class="login-bg">
-			<image src="../../static/login-bg.png" mode="widthFix"></image>
+			<image src="/static/login-bg.png" mode="widthFix"></image>
 		</view>
 		<view class="logo-hd u-flex-col" style="">
 			<view class="logoImg">
-				<image src="../../static/logo.png" mode="widthFix"></image>
+				<image src="/static/logo.png" mode="widthFix"></image>
 			</view>
 			<view class="u-flex-col introduce u-m-t-30">
 				<text class="u-font-36 text-one" style="">JNPF快速开发平台</text>
@@ -26,7 +26,6 @@
 						<u-button @click="login" type="primary" :loading="loading">{{ loading ? "登录中...":"登录"}}
 						</u-button>
 					</view>
-
 				</view>
 			</view>
 		</view>
