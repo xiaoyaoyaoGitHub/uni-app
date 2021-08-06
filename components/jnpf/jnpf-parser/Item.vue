@@ -135,6 +135,7 @@
 
 <script>
 	import childTable from './childTable.vue'
+	import Item from './Item'
 	const systemList = ['createUser', 'createTime', 'modifyUser', 'modifyTime', 'currOrganize', 'currDept', 'currPosition',
 		'billRule'
 	]
@@ -145,7 +146,8 @@
 			event: 'input'
 		},
 		components: {
-			childTable
+			childTable,
+			Item
 		},
 		props: {
 			item: {
@@ -189,8 +191,22 @@
 			const jnpfKey = this.itemCopy.__config__.jnpfKey
 			if (jnpfKey === 'switch') {
 				this.value = this.itemCopy.__config__.defaultValue ? 1 : 0
-			} else if (jnpfKey === 'numInput' || jnpfKey === 'rate') {
+			} else if (jnpfKey === 'rate') {
 				this.value = this.itemCopy.__config__.defaultValue || 0
+			} else if (jnpfKey === 'numInput') {
+				let value = 0
+				if (this.itemCopy.min) {
+					if (this.itemCopy.__config__.defaultValue && this.itemCopy.__config__.defaultValue > this.itemCopy
+						.min) {
+						value = this.itemCopy.__config__.defaultValue
+					} else {
+						value = this.itemCopy.min
+					}
+					if (this.itemCopy.max && this.itemCopy.min > this.itemCopy.max) {
+						this.itemCopy.max = this.itemCopy.min
+					}
+				}
+				this.value = value
 			} else {
 				this.value = this.itemCopy.__config__.defaultValue
 			}
