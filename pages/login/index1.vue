@@ -1,11 +1,11 @@
 <template>
 	<view class="logo-v">
 		<view class="login-bg">
-			<image src="../../static/login-bg.png" mode="widthFix"></image>
+			<image src="/static/login-bg.png" mode="widthFix"></image>
 		</view>
 		<view class="logo-hd u-flex-col">
 			<view class="logoImg">
-				<image src="../../static/logo.png" mode="widthFix"></image>
+				<image src="/static/logo.png" mode="widthFix"></image>
 			</view>
 			<view class="loginSwitch u-flex-col">
 				<view class="tabs" :class="{'active2': loginMethod == 'password'}">
@@ -23,9 +23,8 @@
 						<u-form-item prop="password" v-if="loginMethod == 'password'">
 							<u-input v-model="formData.password" type="password" placeholder="请输入密码"></u-input>
 						</u-form-item>
-						<u-form-item :label-position="labelPosition" prop="smsCode" label-width="150"
-							v-if="loginMethod == 'verification'">
-							<u-input :border="border" placeholder="请输入验证码" v-model="formData.smsCode" type="text">
+						<u-form-item prop="smsCode" v-if="loginMethod == 'verification'">
+							<u-input placeholder="请输入验证码" v-model="formData.smsCode" type="text">
 							</u-input>
 							<u-button slot="right" type="primary" size="mini" @click="getCode">{{codeTips}}</u-button>
 						</u-form-item>
@@ -63,8 +62,6 @@
 		data() {
 			return {
 				codeTips: '',
-				border: false,
-				labelPosition: 'left',
 				loading: false,
 				loginMethod: 'verification',
 				mode: 1,
@@ -76,7 +73,6 @@
 					smsCode: ''
 				},
 				isFirstLogin: false,
-				code: '获取验证码',
 				rules: {
 					account: [{
 						required: true,
@@ -115,9 +111,6 @@
 		onReady() {
 			this.$refs.dataForm.setRules(this.rules);
 		},
-		onLoad() {
-
-		},
 		methods: {
 			changeTab(loginMethod) {
 				this.formData.password = '';
@@ -139,35 +132,27 @@
 						title: '正在获取验证码',
 						mask: true
 					})
-					setTimeout(() => {
+					clickSms(this.formData.account).then(res => {
 						uni.hideLoading();
-						clickSms(this.formData.account).then(res => {
-							this.$u.toast('验证码已发送');
-
-							if (res.data == 0) this.isFirstLogin = true;
-						}).catch(() => {
-
-						})
+						this.$u.toast('验证码已发送');
 						this.$refs.uCode.start();
-					}, 2000);
+						if (res.data == 0) this.isFirstLogin = true;
+					}).catch(() => {
+						uni.hideLoading();
+					})
 				} else {
 					this.$u.toast('倒计时结束后再发送');
 				}
 			},
-
 			/* 点击登录 */
 			defaultLogin() {
-
 				let _this = this
 				if (this.loginMethod == 'verification') {
 					this.loginSms()
-
 				} else {
-
 					this.login(this.formData.account, this.formData.password)
 				}
 			},
-
 			//验证码登录
 			loginSms() {
 				this.$refs.dataForm.validate(valid => {
@@ -180,18 +165,11 @@
 							company: this.formData.companyName //公司名字
 						}
 						loginSms(data).then(res => {
-
 							this.login(this.formData.account, res.data)
-						}).catch(() => {
-
-						})
-					} else {
-
+						}).catch(() => {})
 					}
 				});
 			},
-
-
 			//公共登录
 			login(account, password) {
 				this.$refs.dataForm.validate(valid => {
