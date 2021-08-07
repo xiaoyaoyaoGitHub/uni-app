@@ -72,7 +72,7 @@
 					<u-input v-model="dataForm.contractPeriod" placeholder="请输入合同期限"
 						:disabled="judgeWrite('contractPeriod')"></u-input>
 				</u-form-item>
-				<u-form-item label="结算方式" prop="paymentMethod" v-if="judgeShow('paymentMethod')">
+				<u-form-item label="结算方式" prop="paymentMethod" v-if="judgeShow('paymentMethod')" required>
 					<jnpf-select v-model="dataForm.paymentMethod" placeholder="请选择结算方式" :options="paymentMethodOptions"
 						:props="payProps" :disabled="judgeWrite('paymentMethod')"></jnpf-select>
 				</u-form-item>
@@ -130,7 +130,8 @@
 					totalExpenditure: '',
 					personCharge: '',
 					budgetaryApproval: '',
-					applyDate: ''
+					applyDate: '',
+					paymentMethod:''
 				},
 				rules: {
 					flowTitle: [{
@@ -166,6 +167,16 @@
 						message: '结束时间不能为空',
 						trigger: 'change',
 						type: 'number'
+					}],
+					contractName: [{
+						required: true,
+						message: '合同名称不能为空',
+						trigger: 'change',
+					}],
+					paymentMethod:[{
+						required: true,
+						message: '结算方式不能为空',
+						trigger: 'change'
 					}],
 					contractId: [{
 						required: true,
