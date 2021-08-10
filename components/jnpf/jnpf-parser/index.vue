@@ -104,6 +104,7 @@
 				})
 			},
 			setValue(item) {
+				if (!item.__vModel__) return
 				this.$set(this.formData, item.__vModel__, item.__config__.defaultValue)
 			},
 			checkTableData() {
