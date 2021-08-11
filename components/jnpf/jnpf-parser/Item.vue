@@ -205,6 +205,8 @@
 					if (this.itemCopy.max && this.itemCopy.min > this.itemCopy.max) {
 						this.itemCopy.max = this.itemCopy.min
 					}
+				} else {
+					value = this.itemCopy.__config__.defaultValue || 0
 				}
 				this.value = value
 			} else {

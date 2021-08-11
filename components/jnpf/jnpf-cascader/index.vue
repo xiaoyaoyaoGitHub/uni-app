@@ -49,6 +49,9 @@
 			}
 		},
 		watch: {
+			options() {
+				this.setDefault(this.value)
+			},
 			value(val) {
 				this.setDefault(val)
 			}
