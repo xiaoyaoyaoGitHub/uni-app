@@ -1,6 +1,22 @@
 <template>
 	<view class="index-v">
 		<mescroll-body ref="mescrollRef" @down="downCallback" :sticky="true" :up="upOption" :bottombar="false">
+			<view class="search-box_sticky">
+				<view class="head-tabs u-flex u-row-around">
+					<view class="head-tabs-item" @click="openPage('/pages/message/message/index?type=2')">
+						<text class="icon-ym icon-ym-xitong u-m-r-4 u-font-30" />
+						<text>系统</text>
+					</view>
+					<view class="head-tabs-item" @click="openPage('/pages/message/message/index?type=1')">
+						<text class="icon-ym icon-ym-gonggao u-m-r-4 u-font-30" />
+						<text>公告</text>
+					</view>
+					<view class="head-tabs-item" @click="openPage('/pages/workFlow/flowTodo/index')">
+						<text class="icon-ym icon-ym-daiban1 u-m-r-4 u-font-30" />
+						<text>待办</text>
+					</view>
+				</view>
+			</view>
 			<view class="replyList">
 				<view class="reply-item u-border-bottom u-flex"
 					@click="openPage('/pages/message/message/index?type=1')">
@@ -211,9 +227,12 @@
 	}
 
 	.index-v {
+		.search-box_sticky {
+			margin-bottom: 20rpx;
+		}
+
 		.head-tabs {
 			height: 104rpx;
-			margin-top: -20rpx;
 
 			.head-tabs-item {
 				font-size: 28rpx;
