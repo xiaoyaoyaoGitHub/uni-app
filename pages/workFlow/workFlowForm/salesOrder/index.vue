@@ -43,12 +43,12 @@
 					</u-input>
 				</u-form-item>
 				<u-form-item label="发票类型" prop="invoiceType" v-if="judgeShow('invoiceType')">
-					<jnpf-select v-model="dataForm.invoiceType" placeholder="请选择结算方式" :props="payProps" :options="invoiceTypeList"
+					<jnpf-select v-model="dataForm.invoiceType" placeholder="请选择发票类型" :options="invoiceTypeList"
 						:disabled="judgeWrite('invoiceType')"></jnpf-select>
 				</u-form-item>
 				<u-form-item label="付款方式" prop="paymentMethod" v-if="judgeShow('paymentMethod')">
-					<jnpf-select v-model="dataForm.paymentMethod" placeholder="请选择付款方式" :options="paymentMethodOptions"
-						:disabled="judgeWrite('paymentMethod')"></jnpf-select>
+					<u-input v-model="dataForm.paymentMethod" placeholder="请输入付款方式" :disabled="judgeWrite('paymentMethod')">
+					</u-input>
 				</u-form-item>
 				<u-form-item label="付款金额" prop="paymentMoney" v-if="judgeShow('paymentMoney')">
 					<u-input v-model="dataForm.paymentMoney" placeholder="输入付款金额"
@@ -176,17 +176,17 @@
 				},
 				invoiceTypeList: [{
 						fullName: "普通发票",
-						id: "0",
+						id: "普通发票",
 						checked: false
 					},
 					{
 						fullName: "专业发票",
-						id: "1",
+						id: "专业发票",
 						checked: false
 					},
 					{
 						fullName: "其他",
-						id: "2",
+						id: "其他",
 						checked: false
 					}
 				],
@@ -227,9 +227,6 @@
 					.qty))
 				this.$forceUpdate()
 			},
-			beforeInit() {
-				this.getPaymentMethodOptions()
-			}
 		}
 	}
 </script>
