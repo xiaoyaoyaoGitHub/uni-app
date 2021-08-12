@@ -60,8 +60,8 @@
 				this.selectShow = true
 			},
 			change(e) {
-				const startDate = Date.parse(e.startDate)
-				const endDate = Date.parse(e.endDate)
+				const startDate = Date.parse(e.startDate + ' 00:00:00')
+				const endDate = Date.parse(e.endDate + ' 00:00:00')
 				this.$emit('input', [startDate, endDate])
 			}
 		}
