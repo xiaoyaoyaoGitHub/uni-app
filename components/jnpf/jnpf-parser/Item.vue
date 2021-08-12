@@ -191,6 +191,8 @@
 			const jnpfKey = this.itemCopy.__config__.jnpfKey
 			if (jnpfKey === 'switch') {
 				this.value = this.itemCopy.__config__.defaultValue ? 1 : 0
+			} else if (jnpfKey === 'cascader') {
+				this.value = this.itemCopy.__config__.defaultValue || []
 			} else if (jnpfKey === 'rate') {
 				this.value = this.itemCopy.__config__.defaultValue || 0
 			} else if (jnpfKey === 'numInput') {
