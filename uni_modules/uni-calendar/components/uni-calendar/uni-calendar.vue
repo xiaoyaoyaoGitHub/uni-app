@@ -87,6 +87,7 @@
 		components: {
 			calendarItem
 		},
+		emits:['close','confirm','change','monthSwitch'],
 		props: {
 			date: {
 				type: String,
@@ -343,7 +344,7 @@
 
 	.uni-calendar--fixed {
 		position: fixed;
-		bottom: 0;
+		bottom: calc(var(--window-bottom));
 		left: 0;
 		right: 0;
 		transition-property: transform;

@@ -250,7 +250,7 @@ rules: {
 |minimum|Number|-|-| 校验最小值(小于)		|
 |maxLength|Number|-|-| 校验数据最大长度		|
 |errorMessage|String|-|-|校验失败提示信息语，可添加属性占位符，当前表格内属性都可用作占位符|
-|trigger|String|blur| blur/change/submit|校验触发时机|
+|trigger|String|bind| bind/submit|校验触发时机|
 |validateFunction|Function|-|-|自定义校验规则	|
 
 
@@ -605,8 +605,8 @@ export default {
 
 |属性名|类型|默认值|可选值|说明|
 |:-:|:-:|:-:|:-:|:-:|
-|v-model/value [即将废弃]|Object|-|-| 表单数据|
-|v-model/modelValue|Object|-|-| 表单数据|
+|value [即将废弃]|Object|-|-| 表单数据|
+|modelValue|Object|-|-| 表单数据|
 |rules|Object|-|-|表单校验规则|
 |validate-trigger|String|submit|bind/submit| 表单校验时机|
 |label-position|String|left|top/left|label 位置|

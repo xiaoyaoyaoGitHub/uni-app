@@ -42,6 +42,9 @@
 		watch: {
 			value(val) {
 				this.setDefault()
+			},
+			options(val){
+				this.setColumnData()
 			}
 		},
 		created() {
