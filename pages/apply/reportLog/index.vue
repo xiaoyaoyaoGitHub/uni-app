@@ -124,6 +124,7 @@
 				delLog(item.id).then(res => {
 					this.$u.toast(res.msg)
 					this.list.splice(index, 1)
+					if (!this.list.length) this.mescroll.showEmpty()
 				})
 			},
 			goDetail(id) {
