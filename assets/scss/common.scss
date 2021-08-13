@@ -346,6 +346,10 @@
 			.list-box {
 				width: 100%;
 				margin-bottom: 20rpx;
+				
+				.u-swipe-content{
+					width: calc(100% - 180rpx);
+				}
 
 				.item {
 					background-color: #fff;
