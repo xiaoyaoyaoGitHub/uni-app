@@ -32,11 +32,17 @@ const Socket = {
 					Socket.contime += 1
 					if (Socket.contime <= 10) {
 						if (Socket.contime >= 3) {
-							$u.toast('IM通讯正在连接:' + '连接第' + Socket.contime + '次！稍后...')
+							uni.showToast({
+								title: 'IM通讯正在连接:' + '连接第' + Socket.contime + '次！稍后...',
+								icon: 'none'
+							})
 						}
 						Socket.reConnect();
 					} else {
-						$u.toast('IM通讯连接失败，联系服务器管理员')
+						uni.showToast({
+							title: 'IM通讯连接失败，联系服务器管理员',
+							icon: 'none'
+						})
 					}
 				}, 10)
 			});
