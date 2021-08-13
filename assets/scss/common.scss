@@ -199,6 +199,9 @@
 }
 
 .flow-list {
+	.u-swipe-content{
+		width: calc(100% - 180rpx);
+	}
   .item {
     background-color: #fff;
     padding: 0 32rpx;
