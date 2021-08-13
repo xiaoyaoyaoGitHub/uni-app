@@ -138,7 +138,7 @@
 						title: res.msg,
 						complete: () => {
 							setTimeout(() => {
-								if (this.formData.id) uni.$emit('refresh')
+								uni.$emit('refresh')
 								if (this.eventType === 'save') this.$emit('setBtnLoad', false)
 								uni.navigateBack()
 							}, 1500)
