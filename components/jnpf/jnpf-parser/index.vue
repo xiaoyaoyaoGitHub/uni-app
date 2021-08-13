@@ -69,7 +69,6 @@
 							getDictionaryDataSelector(config.dictionaryType).then(res => {
 								isTreeSelect ? cur.options = res.data.list : cur.__slot__.options = res
 									.data.list
-								console.log(cur.__slot__.options);
 							})
 						}
 						if (config.dataType === 'dynamic') {
@@ -77,7 +76,6 @@
 							isTreeSelect ? cur.options = [] : cur.__slot__.options = []
 							previewDataInterface(config.propsUrl).then(res => {
 								isTreeSelect ? cur.options = res.data : cur.__slot__.options = res.data
-								console.log(cur.__slot__.options);
 							})
 						}
 					}

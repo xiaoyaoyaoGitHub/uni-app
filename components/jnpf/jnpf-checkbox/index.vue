@@ -43,13 +43,12 @@
 			value(val) {
 				this.setDefault()
 			},
-			options(val){
+			options(val) {
 				this.setColumnData()
 			}
 		},
 		created() {
 			this.setColumnData()
-			this.setDefault()
 		},
 		methods: {
 			onChange(value) {
@@ -60,9 +59,10 @@
 					...o,
 					checked: false
 				}))
+				this.setDefault()
 			},
 			setDefault() {
-				if (!this.value.length) return this.setColumnData()
+				if (!this.value.length) return
 				outer: for (let i = 0; i < this.value.length; i++) {
 					inner: for (let j = 0; j < this.newOptions.length; j++) {
 						if (this.value[i] === this.newOptions[j][this.props.value]) {

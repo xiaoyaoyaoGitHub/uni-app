@@ -163,9 +163,6 @@
 			value(val) {
 				this.itemCopy.__config__.defaultValue = this.value
 				this.$emit('input', this.itemCopy)
-			},
-			itemCopy(val){
-				console.log(val);
 			}
 		},
 		computed: {
@@ -198,9 +195,6 @@
 				this.value = this.itemCopy.__config__.defaultValue || []
 			} else if (jnpfKey === 'rate') {
 				this.value = this.itemCopy.__config__.defaultValue || 0
-			} else if (jnpfKey === 'checkbox') {
-				console.log(this.itemCopy);
-				this.value = this.itemCopy.__config__.defaultValue
 			} else if (jnpfKey === 'numInput') {
 				let value = 0
 				if (this.itemCopy.min) {
