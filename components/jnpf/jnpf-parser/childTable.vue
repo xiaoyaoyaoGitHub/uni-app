@@ -115,6 +115,9 @@
 						:level="childItem.level" :disabled="disabled||childItem.disabled">
 					</jnpf-city-select>
 				</block>
+				<block v-if="childItem.__config__.jnpfKey==='billRule'">
+					<u-input v-model="tableFormData[i][cIndex].value" placeholder="系统自动生成" disabled></u-input>
+				</block>
 			</u-form-item>
 		</view>
 		<view class="jnpf-table-addBtn" v-if="!disabled" @click="addItem()">
