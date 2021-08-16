@@ -130,6 +130,7 @@
 				this.$refs.dataForm.validate(valid => {
 					if (!valid) return
 					for (let key in this.formData) {
+						if (!this.formData[key]) this.formData[key] = undefined
 						if (this.formData[key] && Array.isArray(this.formData[key]) && !this.formData[key]
 							.length) {
 							this.formData[key] = undefined

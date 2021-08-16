@@ -62,6 +62,9 @@
 			change(e) {
 				const startDate = Date.parse(e.startDate + ' 00:00:00')
 				const endDate = Date.parse(e.endDate + ' 00:00:00')
+				// #ifdef MP-WEIXIN
+				this.innerValue = e.startDate + '至' + e.endDate
+				// #endif
 				this.$emit('input', [startDate, endDate])
 			}
 		}
