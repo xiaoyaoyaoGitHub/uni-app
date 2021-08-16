@@ -67,6 +67,7 @@
 					serviceDepartment: '',
 					drawPeople: '',
 					toDate: '',
+					collectionDate:'',
 					fileJson: '',
 					recipients: ''
 				},
