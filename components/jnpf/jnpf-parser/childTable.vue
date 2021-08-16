@@ -127,6 +127,11 @@
 </template>
 
 <script>
+	import {
+		getDictionaryDataSelector,
+		previewDataInterface
+	} from '@/api/common'
+	const dyOptionsList = ['radio', 'checkbox', 'select', 'cascader', 'treeSelect']
 	export default {
 		name: 'jnpf-table',
 		model: {
@@ -160,6 +165,7 @@
 		},
 		created() {
 			this.tableData = this.config.__config__.children
+			this.buildOptions()
 			if (this.value && this.value.length) {
 				this.value.forEach(t => this.addItem(t))
 			} else {
@@ -167,6 +173,29 @@
 			}
 		},
 		methods: {
+			buildOptions() {
+				this.tableData.forEach(cur => {
+					const config = cur.__config__
+					if (dyOptionsList.indexOf(config.jnpfKey) > -1) {
+						let isTreeSelect = config.jnpfKey === 'treeSelect' || config.jnpfKey === 'cascader'
+						if (config.dataType === 'dictionary') {
+							if (!config.dictionaryType) return
+							isTreeSelect ? cur.options = [] : cur.__slot__.options = []
+							getDictionaryDataSelector(config.dictionaryType).then(res => {
+								isTreeSelect ? cur.options = res.data.list : cur.__slot__.options = res
+									.data.list
+							})
+						}
+						if (config.dataType === 'dynamic') {
+							if (!config.propsUrl) return
+							isTreeSelect ? cur.options = [] : cur.__slot__.options = []
+							previewDataInterface(config.propsUrl).then(res => {
+								isTreeSelect ? cur.options = res.data : cur.__slot__.options = res.data
+							})
+						}
+					}
+				})
+			},
 			addItem(val) {
 				this.tableFormData.push(this.getEmptyItem(val))
 			},

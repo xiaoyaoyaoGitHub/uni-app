@@ -79,7 +79,7 @@
 							})
 						}
 					}
-					if (config.children) this.buildOptions(config.children)
+					if (config.children && config.jnpfKey !== 'table') this.buildOptions(config.children)
 				})
 			},
 			buildRules(componentList, rules) {
