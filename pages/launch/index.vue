@@ -4,7 +4,9 @@
 		<view class="launch-box">
 			<view class="title">全新模式 为你而来</view>
 			<view class="version">VERSION3.2</view>
-			<image :src="startup" class="launch-img" mode="widthFix"></image>
+			<view class="launch-img">
+				<image :src="startup" mode="widthFix"></image>
+			</view>
 			<view class="copyright">Copyright © 2021 引迈信息技术有限公司出品</view>
 		</view>
 		<!-- #endif -->
@@ -77,6 +79,15 @@
 				line-height: 48rpx;
 				color: #5098FA;
 				letter-spacing: 2rpx;
+			}
+
+			.launch-img {
+				margin: 0 auto;
+				width: 680rpx;
+
+				image {
+					width: 100%;
+				}
 			}
 
 			.copyright {
