@@ -62,6 +62,9 @@
 				this.selectShow = true
 			},
 			selectConfirm(e) {
+				// #ifdef MP-WEIXIN
+				this.innerValue = e[0] + '-' + e[1]
+				// #endif
 				this.$emit('input', e)
 			}
 		}
