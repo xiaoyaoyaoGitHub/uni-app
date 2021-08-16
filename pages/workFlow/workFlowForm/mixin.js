@@ -52,6 +52,7 @@ export default {
 				} else {
 					this.dataForm.flowId = data.flowId
 					if (this.selfInit) this.selfInit(data)
+					if (!this.billEnCode) return
 					getBillNumber(this.billEnCode).then(res => {
 						if (data.enCode === 'crmOrder') {
 							this.dataForm.orderCode = res.data
