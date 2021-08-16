@@ -22,7 +22,7 @@
 								<!-- 图片消息 -->
 								<view v-if="msg.contentType=='image'" class="msg-img"
 									@click="showPic(msg.msgContent.path)">
-									<image lazy-load="true" :src="baseURL+msg.msgContent.path"
+									<image lazy-load="true" :src="msg.msgContent.path"
 										:style="{'width': msg.msgContent.width+'px','height': msg.msgContent.height+'px'}">
 									</image>
 								</view>
@@ -56,7 +56,7 @@
 								<!-- 图片消息 -->
 								<view v-if="msg.contentType=='image'" class="msg-img"
 									@click="showPic(msg.msgContent.path)">
-									<image lazy-load="true" :src="baseURL+msg.msgContent.path"
+									<image lazy-load="true" :src="msg.msgContent.path"
 										:style="{'width': msg.msgContent.width+'px','height': msg.msgContent.height+'px'}">
 									</image>
 								</view>
@@ -427,6 +427,7 @@
 				if (data.contentType === "image") {
 					this.msgImageList.push(this.baseURL + data.content.path)
 					data.msgContent = this.setPicSize(data.content)
+					data.msgContent.path = this.baseURL + data.content.path
 				}
 				if (data.contentType === "voice") {
 					data.msgContent = data.content
@@ -442,6 +443,7 @@
 				}
 				if (item.contentType === "image") {
 					item.msgContent = this.setPicSize(JSON.parse(item.content))
+					item.msgContent.path = this.baseURL + item.msgContent.path
 				}
 				if (item.contentType === "voice") {
 					item.msgContent = JSON.parse(item.content)
@@ -598,7 +600,7 @@
 			showPic(path) { // 预览图片
 				uni.previewImage({
 					indicator: "none",
-					current: this.baseURL + path,
+					current: path,
 					urls: this.msgImageList
 				});
 			},
