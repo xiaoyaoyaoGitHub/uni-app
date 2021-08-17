@@ -33,11 +33,12 @@
 					</view>
 				</u-dropdown-item>
 			</u-dropdown>
-			<view class="search-box">
+			<view class="u-border-bottom"></view>
+			<!-- 			<view class="search-box">
 				<u-search placeholder="请输入关键词搜索" v-model="listQuery.keyword" height="72" :show-action="false"
 					@change="search" bg-color="#f0f2f6" shape="square">
 				</u-search>
-			</view>
+			</view> -->
 		</view>
 		<view class="list-warp">
 			<mescroll-uni ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :fixed="false"
