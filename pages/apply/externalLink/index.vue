@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<web-view src="https://www.jnpfsoft.com"></web-view>
+		<web-view :src="url"></web-view>
 	</view>
 </template>
 
