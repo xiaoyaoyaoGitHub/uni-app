@@ -111,7 +111,6 @@
 					if (valid) {
 						const formMethod = this.dataForm.id ? update : create;
 						formMethod(this.dataForm).then(res => {
-							console.log(this.dataForm)
 							uni.showToast({
 								title: res.msg,
 								complete: () => {
