@@ -101,7 +101,7 @@
 				if (this.dataForm.startTime > this.dataForm.endTime) {
 					this.$refs.uToast.show({
 						title: '开始时间不能大于结束时间',
-						type: 'warning'
+						type: 'error'
 					})
 					this.dataForm.startTime = '';
 					this.dataForm.endTime = '';
