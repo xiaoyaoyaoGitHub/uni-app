@@ -1,5 +1,6 @@
 <template>
 	<view class="scheduleForm-v jnpf-wrap">
+		<u-toast ref="uToast" />
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<u-form-item label="开始时间" prop="startTime" required>
@@ -97,10 +98,20 @@
 		},
 		methods: {
 			save() {
+				if (this.dataForm.startTime > this.dataForm.endTime) {
+					this.$refs.uToast.show({
+						title: '开始时间不能大于结束时间',
+						type: 'warning'
+					})
+					this.dataForm.startTime = '';
+					this.dataForm.endTime = '';
+					return
+				}
 				this.$refs.dataForm.validate((valid) => {
 					if (valid) {
 						const formMethod = this.dataForm.id ? update : create;
 						formMethod(this.dataForm).then(res => {
+							console.log(this.dataForm)
 							uni.showToast({
 								title: res.msg,
 								complete: () => {
