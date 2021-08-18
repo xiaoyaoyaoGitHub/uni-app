@@ -10,19 +10,7 @@
 			<view v-if="item.__config__.jnpfKey==='switch'" class="u-flex u-form-item-switch">
 				<jnpf-switch v-model="formData[item.__vModel__]"></jnpf-switch>
 			</view>
-			<block v-if="item.__config__.jnpfKey==='radio'">
-				<u-radio-group v-model="formData[item.__vModel__]">
-					<u-radio v-for="(option, index) in item.__slot__.options" :key="index"
-						:name="option[item.__config__.props.value]">{{ option[item.__config__.props.label] }}
-					</u-radio>
-				</u-radio-group>
-			</block>
-			<block v-if="item.__config__.jnpfKey==='checkbox'">
-				<jnpf-checkbox v-model="formData[item.__vModel__]" :options="item.__slot__.options"
-					:props="item.__config__.props">
-				</jnpf-checkbox>
-			</block>
-			<block v-if="item.__config__.jnpfKey==='select'">
+			<block v-if="['select','radio','checkbox'].indexOf(item.__config__.jnpfKey) > -1">
 				<jnpf-select v-model="formData[item.__vModel__]" :placeholder="'请选择'+item.__config__.label"
 					:options="item.__slot__.options" :props="item.__config__.props">
 				</jnpf-select>
