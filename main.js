@@ -5,6 +5,11 @@ import store from './store'
 import uView from '@/uview-ui'
 Vue.use(uView)
 
+import * as filters from '@/filters'
+Object.keys(filters).forEach(key => {
+	Vue.filter(key, filters[key])
+})
+
 // 添加实例属性
 Object.assign(Vue.prototype, {
 	define: require("./utils/define").default,
