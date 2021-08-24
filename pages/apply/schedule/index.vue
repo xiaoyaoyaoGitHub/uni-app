@@ -89,10 +89,13 @@
 				}
 				getScheduleList(query).then(res => {
 					let signList = res.data.signList;
-					this.scheduleList = res.data.todayList.map(o => ({
-						...o,
-						show: false
-					}));
+					if(res.data.todayList){
+						this.scheduleList = res.data.todayList.map(o => ({
+							...o,
+							show: false
+						}));
+					}
+					
 					for (let i = 0; i < 6; i++) {
 						for (let j = 0; j < data.weeks[i].length; j++) {
 							let date = this.$u.date(data.weeks[i][j].lunar.cYear + '-' + data.weeks[i][j].lunar
@@ -103,6 +106,7 @@
 				})
 			},
 			change(e) {
+				console.log(e)
 				let weeks = e.cale.weeks;
 				let canlender = e.cale.canlender;
 				let lunar = e.lunar;
