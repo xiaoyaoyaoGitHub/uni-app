@@ -60,6 +60,10 @@
 		},
 		methods: {
 			setDefault() {
+				if (!Array.isArray(this.value) || (Array.isArray(this.value) && !this.value.length)) {
+					this.innerValue = ''
+					return
+				}
 				this.defaultValue = this.value
 			},
 			openSelect() {

@@ -32,8 +32,8 @@
 		watch: {
 			value(val) {
 				if (Array.isArray(val) && val.length === 2) {
-					this.min = val[0] ? val[0].toString() : ''
-					this.max = val[1] ? val[1].toString() : ''
+					this.min = val[0]
+					this.max = val[1]
 				} else {
 					this.min = ''
 					this.max = ''
@@ -49,9 +49,7 @@
 		methods: {
 			onChange() {
 				if ((!this.min && this.min !== 0) && (!this.max && this.max !== 0)) return this.$emit('input', [])
-				const min = this.min ? Number(this.min) : null
-				const max = this.max ? Number(this.max) : null
-				this.$emit('input', [min, max])
+				this.$emit('input', [this.min, this.max])
 			}
 		}
 	}
