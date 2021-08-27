@@ -48,11 +48,11 @@
 			</view>
 			<view class="jnpf-card">
 				<u-form-item label="出发日期" prop="setOutDate" v-if="judgeShow('setOutDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.setOutDate" placeholder="请选择出发日期"
+					<jnpf-date-time type="datetime" v-model="dataForm.setOutDate" placeholder="请选择出发日期"
 						:disabled="judgeWrite('setOutDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="回程日期" prop="returnDate" v-if="judgeShow('returnDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.returnDate" placeholder="请选择回程日期"
+					<jnpf-date-time type="datetime" v-model="dataForm.returnDate" placeholder="请选择回程日期"
 						:disabled="judgeWrite('returnDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="目的地" prop="destination" v-if="judgeShow('destination')" required>
