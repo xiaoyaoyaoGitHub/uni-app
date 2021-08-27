@@ -44,7 +44,7 @@
 						:disabled="judgeWrite('npworkMatter')"></u-input>
 				</u-form-item>
 				<u-form-item label="次月时间" prop="npfinishTime" v-if="judgeShow('npfinishTime')">
-					<jnpf-date-time type="date" v-model="dataForm.npfinishTime" placeholder="请输入次月时间"
+					<jnpf-date-time type="datetime" v-model="dataForm.npfinishTime" placeholder="请输入次月时间"
 						:disabled="judgeWrite('npfinishTime')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="次月目标" prop="nfinishMethod" v-if="judgeShow('nfinishMethod')">

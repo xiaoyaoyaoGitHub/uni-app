@@ -27,7 +27,7 @@
 					<u-input v-model="dataForm.writingNum" placeholder="请输入发文编号" :disabled="judgeWrite('writingNum')"></u-input>
 				</u-form-item>
 				<u-form-item label="发文日期" prop="writingDate" v-if="judgeShow('writingDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.writingDate" placeholder="请输入发文日期" :disabled="judgeWrite('writingDate')"></jnpf-date-time>
+					<jnpf-date-time type="datetime" v-model="dataForm.writingDate" placeholder="请输入发文日期" :disabled="judgeWrite('writingDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="份数" prop="shareNum" v-if="judgeShow('shareNum')">
 					<u-input v-model="dataForm.shareNum" placeholder="请输入份数" type="number" :disabled="judgeWrite('shareNum')"></u-input>

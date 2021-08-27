@@ -24,7 +24,7 @@
 						:disabled="judgeWrite('issuingDepartment')"></u-input>
 				</u-form-item>
 				<u-form-item label="发件日期" prop="toDate" v-if="judgeShow('toDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.toDate" placeholder="请输入发件日期"
+					<jnpf-date-time type="datetime" v-model="dataForm.toDate" placeholder="请输入发件日期"
 						:disabled="judgeWrite('toDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="收件部门" prop="serviceDepartment" v-if="judgeShow('serviceDepartment')">
@@ -36,7 +36,7 @@
 					</u-input>
 				</u-form-item>
 				<u-form-item label="收件日期" prop="collectionDate" v-if="judgeShow('collectionDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.collectionDate" placeholder="请输入收件日期"
+					<jnpf-date-time type="datetime" v-model="dataForm.collectionDate" placeholder="请输入收件日期"
 						:disabled="judgeWrite('collectionDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="协调事项" prop="coordination" v-if="judgeShow('coordination')">

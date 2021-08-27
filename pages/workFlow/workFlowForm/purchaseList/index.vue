@@ -30,7 +30,7 @@
 					<u-input v-model="dataForm.buyer" placeholder="输入采购人员" :disabled="judgeWrite('buyer')"></u-input>
 				</u-form-item>
 				<u-form-item label="采购日期" prop="purchaseDate" v-if="judgeShow('purchaseDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.purchaseDate" placeholder="请输入采购日期"
+					<jnpf-date-time type="datetime" v-model="dataForm.purchaseDate" placeholder="请输入采购日期"
 						:disabled="judgeWrite('purchaseDate')"></jnpf-date-time>
 				</u-form-item>
 

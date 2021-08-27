@@ -28,7 +28,7 @@
 					</u-input>
 				</u-form-item>
 				<u-form-item label="编制日期" prop="compactorDate" v-if="judgeShow('compactorDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.compactorDate" placeholder="请输入编制日期"
+					<jnpf-date-time type="datetime" v-model="dataForm.compactorDate" placeholder="请输入编制日期"
 						:disabled="judgeWrite('compactorDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="产品规格" prop="standard" v-if="judgeShow('standard')">
@@ -44,7 +44,7 @@
 						:disabled="judgeWrite('productionQuty')"></u-input>
 				</u-form-item>
 				<u-form-item label="操作日期" prop="operationDate" v-if="judgeShow('operationDate')">
-					<jnpf-date-time type="date" v-model="dataForm.operationDate" placeholder="请输入操作日期"
+					<jnpf-date-time type="datetime" v-model="dataForm.operationDate" placeholder="请输入操作日期"
 						:disabled="judgeWrite('operationDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="工艺规程" prop="regulations" v-if="judgeShow('regulations')">

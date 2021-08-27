@@ -18,7 +18,7 @@
 					<u-input v-model="dataForm.writer" placeholder="请输入填报人" :disabled="judgeWrite('writer')"></u-input>
 				</u-form-item>
 				<u-form-item label="填报日期" prop="writeDate" v-if="judgeShow('writeDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.writeDate" placeholder="请输入填报日期"
+					<jnpf-date-time type="datetime" v-model="dataForm.writeDate" placeholder="请输入填报日期"
 						:disabled="judgeWrite('writeDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="客户名称" prop="customerName" v-if="judgeShow('customerName')">

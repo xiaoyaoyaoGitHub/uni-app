@@ -36,7 +36,7 @@
 					</u-input>
 				</u-form-item>
 				<u-form-item label="收文日期" prop="receiptDate" v-if="judgeShow('receiptDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.receiptDate" placeholder="请输入收文日期"
+					<jnpf-date-time type="datetime" v-model="dataForm.receiptDate" placeholder="请输入收文日期"
 						:disabled="judgeWrite('receiptDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">

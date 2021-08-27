@@ -39,7 +39,7 @@
 						:disabled="judgeWrite('checkDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="发稿日期" prop="publicationDate" v-if="judgeShow('publicationDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.publicationDate" placeholder="请输入发稿日期"
+					<jnpf-date-time type="datetime" v-model="dataForm.publicationDate" placeholder="请输入发稿日期"
 						:disabled="judgeWrite('publicationDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">

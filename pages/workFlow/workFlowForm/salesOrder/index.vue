@@ -23,7 +23,7 @@
 					</u-input>
 				</u-form-item>
 				<u-form-item label="开单日期" prop="salesDate" v-if="judgeShow('salesDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.salesDate" placeholder="请输入开单日期"
+					<jnpf-date-time type="datetime" v-model="dataForm.salesDate" placeholder="请输入开单日期"
 						:disabled="judgeWrite('salesDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="联系电话" prop="contactPhone" v-if="judgeShow('contactPhone')">

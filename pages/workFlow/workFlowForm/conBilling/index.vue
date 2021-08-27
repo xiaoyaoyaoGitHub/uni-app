@@ -19,7 +19,7 @@
 					<u-input v-model="dataForm.drawer" placeholder="请输入开票人" :disabled="judgeWrite('drawer')"></u-input>
 				</u-form-item>
 				<u-form-item label="开票日期" prop="billDate" v-if="judgeShow('billDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.billDate" placeholder="请输入开票日期"
+					<jnpf-date-time type="datetime" v-model="dataForm.billDate" placeholder="请输入开票日期"
 						:disabled="judgeWrite('billDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="公司名称" prop="companyName" v-if="judgeShow('companyName')">
