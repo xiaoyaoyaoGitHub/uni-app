@@ -35,7 +35,7 @@
 						:disabled="judgeWrite('businessType')"></u-input>
 				</u-form-item>
 				<u-form-item label="出库日期" prop="outboundDate" v-if="judgeShow('outboundDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.outboundDate" placeholder="请输入出库日期"
+					<jnpf-date-time type="datetime" v-model="dataForm.outboundDate" placeholder="请输入出库日期"
 						:disabled="judgeWrite('outboundDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="备注" prop="description">
