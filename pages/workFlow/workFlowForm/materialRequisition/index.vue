@@ -24,7 +24,7 @@
 						:disabled="judgeWrite('leadDepartment')"></u-input>
 				</u-form-item>
 				<u-form-item label="领料日期" prop="leadDate" v-if="judgeShow('leadDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.leadDate" placeholder="请输入领料日期"
+					<jnpf-date-time type="datetime" v-model="dataForm.leadDate" placeholder="请输入领料日期"
 						:disabled="judgeWrite('leadDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="仓库" prop="warehouse" v-if="judgeShow('warehouse')">
