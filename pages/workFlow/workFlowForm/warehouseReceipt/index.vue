@@ -44,7 +44,7 @@
 						:disabled="judgeWrite('warehouseNo')"></u-input>
 				</u-form-item>
 				<u-form-item label="入库日期" prop="warehousDate" v-if="judgeShow('warehousDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.warehousDate" placeholder="请输入入库日期"
+					<jnpf-date-time type="datetime" v-model="dataForm.warehousDate" placeholder="请输入入库日期"
 						:disabled="judgeWrite('warehousDate')"></jnpf-date-time>
 				</u-form-item>
 
