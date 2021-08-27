@@ -27,15 +27,15 @@
 						:disabled="judgeWrite('leadingOfficial')"></u-input>
 				</u-form-item>
 				<u-form-item label="违章日期" prop="peccancyDate" v-if="judgeShow('peccancyDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.peccancyDate" placeholder="请输入违章日期"
+					<jnpf-date-time type="datetime" v-model="dataForm.peccancyDate" placeholder="请输入违章日期"
 						:disabled="judgeWrite('peccancyDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="通知日期" prop="noticeDate" v-if="judgeShow('noticeDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.noticeDate" placeholder="请输入通知日期"
+					<jnpf-date-time type="datetime" v-model="dataForm.noticeDate" placeholder="请输入通知日期"
 						:disabled="judgeWrite('noticeDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="限处理日期" prop="limitDate" v-if="judgeShow('limitDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.limitDate" placeholder="请输入限处理日期"
+					<jnpf-date-time type="datetime" v-model="dataForm.limitDate" placeholder="请输入限处理日期"
 						:disabled="judgeWrite('limitDate')"></jnpf-date-time>
 				</u-form-item>
 			</view>
