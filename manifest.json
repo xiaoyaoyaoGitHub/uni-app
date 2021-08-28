@@ -1,9 +1,9 @@
 {
-    "name" : "jnpf dotnet版",
-    "appid" : "__UNI__87A0C66",
+    "name" : "jnpf java版",
+    "appid" : "__UNI__663111E",
     "description" : "专注信息化平台、软件开发、app开发",
     "versionName" : "3.2.0",
-    "versionCode" : 125,
+    "versionCode" : 126,
     "transformPx" : false,
     "app-plus" : {
         /* 5+App特有相关 */
@@ -148,7 +148,7 @@
     /* 快应用特有相关 */
     "mp-weixin" : {
         /* 小程序特有相关 */
-        "appid" : "wx20c9d6ad4727acf6",
+        "appid" : "wx8f5cb90d8ff960a3",
         "setting" : {
             "urlCheck" : true,
             "es6" : true,
