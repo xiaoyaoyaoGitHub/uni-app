@@ -1,9 +1,9 @@
 {
-    "name" : "jnpf 3.2版",
-    "appid" : "__UNI__663111E",
+    "name" : "jnpf dotnet版",
+    "appid" : "__UNI__87A0C66",
     "description" : "专注信息化平台、软件开发、app开发",
-    "versionName" : "3.2",
-    "versionCode" : 122,
+    "versionName" : "3.2.0",
+    "versionCode" : 125,
     "transformPx" : false,
     "app-plus" : {
         /* 5+App特有相关 */
@@ -148,7 +148,7 @@
     /* 快应用特有相关 */
     "mp-weixin" : {
         /* 小程序特有相关 */
-        "appid" : "wx22e4941742205a12",
+        "appid" : "wx20c9d6ad4727acf6",
         "setting" : {
             "urlCheck" : true,
             "es6" : true,
@@ -172,9 +172,9 @@
         "sdkConfigs" : {
             "maps" : {}
         },
-        "title" : "jnpf 3.2版",
+        "title" : "jnpf dotnet版",
         "template" : "main.html",
-        "domain" : "",
+        "domain" : "https://app.dotnet.jnpfsoft.com",
         "router" : {
             "mode" : "history"
         }
