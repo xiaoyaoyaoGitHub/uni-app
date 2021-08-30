@@ -11,6 +11,7 @@ export default {
 			}
 		}
 	},
+	//#ifdef MP-WEIXIN
 	onShareAppMessage(res) {
 		return {
 			title: this.share.title,
@@ -31,4 +32,5 @@ export default {
 			}
 		}
 	}
+	//#endif
 }
