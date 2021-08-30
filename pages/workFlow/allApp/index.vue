@@ -13,8 +13,11 @@
 		<view class="caption">全部应用</view>
 		<view class="allList">
 			<u-sticky>
-				<u-tabs :list="allList" :current="current" @change="change" name='fullName' inactive-color="#999999">
-				</u-tabs>
+				<view class="sticky ">
+					<u-tabs :list="allList" :current="current" @change="change" name='fullName'
+						inactive-color="#999999">
+					</u-tabs>
+				</view>
 			</u-sticky>
 			<view class="u-m-t-20" v-for="(item,i) in allList" :key="i">
 				<template v-if="i==current">
@@ -186,14 +189,19 @@
 
 		.allList {
 			padding: 0 32rpx;
-
+			//#ifdef MP-WEIXIN
+			.sticky {
+				width: 750rpx;
+				height: 120rpx;
+				color: #fff;
+				padding-right: 32rpx;
+			}
+			//#endif
 			.childList-item {
 				align-items: center;
-
 				.item-text {
 					width: calc(100% - 216rpx);
 				}
-
 				.item-icon {
 					width: 88rpx;
 					height: 88rpx;
