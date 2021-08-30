@@ -94,6 +94,13 @@
 				upOption: {
 					use: false
 				},
+				share: {
+					title: 'jnpf快速开放平台',
+					path: '/pages/index/index',
+					imageUrl: '',
+					desc: '',
+					content: ''
+				}
 			}
 		},
 		watch: {

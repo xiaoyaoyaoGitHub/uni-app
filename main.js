@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import App from './App'
 import store from './store'
-
+import share from '@/utils/share.js'
 import uView from '@/uview-ui'
 Vue.use(uView)
-
+Vue.mixin(share)
 import * as filters from '@/filters'
 Object.keys(filters).forEach(key => {
 	Vue.filter(key, filters[key])
