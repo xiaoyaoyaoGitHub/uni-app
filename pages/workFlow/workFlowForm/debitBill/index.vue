@@ -58,7 +58,7 @@
 						:disabled="judgeWrite('repaymentBill')"></u-input>
 				</u-form-item>
 				<u-form-item label="还款日期" prop="teachingDate" v-if="judgeShow('teachingDate')">
-					<jnpf-date-time type="date" v-model="dataForm.teachingDate" placeholder="还款日期"
+					<jnpf-date-time type="datetime" v-model="dataForm.teachingDate" placeholder="还款日期"
 						:disabled="judgeWrite('teachingDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="借款原因" prop="reason" v-if="judgeShow('reason')">

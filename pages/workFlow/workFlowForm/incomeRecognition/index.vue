@@ -42,7 +42,7 @@
 						:disabled="judgeWrite('actualAmount')"></u-input>
 				</u-form-item>
 				<u-form-item label="到款日期" prop="paymentDate" v-if="judgeShow('paymentDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.paymentDate" placeholder="请输入到款日期"
+					<jnpf-date-time type="datetime" v-model="dataForm.paymentDate" placeholder="请输入到款日期"
 						:disabled="judgeWrite('paymentDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="联系人姓名" prop="contactName" v-if="judgeShow('contactName')" required>

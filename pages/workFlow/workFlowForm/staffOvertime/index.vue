@@ -23,7 +23,7 @@
 					</u-input>
 				</u-form-item>
 				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')">
-					<jnpf-date-time type="datetime" v-model="dataForm.applyDate" placeholder="请输入申请日期"
+					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"
 						:disabled="judgeWrite('applyDate')"></jnpf-date-time>
 				</u-form-item>
 				<u-form-item label="总计时间" prop="totleTime" v-if="judgeShow('totleTime')">
