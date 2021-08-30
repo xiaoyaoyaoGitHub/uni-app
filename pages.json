@@ -83,8 +83,7 @@
 		{
 			"path": "pages/index/my",
 			"style": {
-				"navigationBarTitleText": "我的",
-				"navigationBarTextStyle": "white",
+				"navigationBarTitleText": "",
 				"app-plus": {
 					"bounce": "none"
 				}
