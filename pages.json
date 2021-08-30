@@ -71,7 +71,7 @@
 		{
 			"path": "pages/index/apply",
 			"style": {
-				"navigationBarTitleText": "办公"
+				"navigationBarTitleText": "应用"
 			}
 		},
 		{
@@ -336,7 +336,7 @@
 			},
 			{
 				"pagePath": "pages/index/apply",
-				"text": "办公",
+				"text": "应用",
 				"iconPath": "static/image/tabbar/apply.png",
 				"selectedIconPath": "static/image/tabbar/applyHL.png"
 			},
