@@ -172,9 +172,9 @@
         "sdkConfigs" : {
             "maps" : {}
         },
-        "title" : "jnpf dotnet版",
-        "template" : "main.html",
-        "domain" : "https://app.dotnet.jnpfsoft.com",
+        "title" : "jnpf java版",
+        "template" : "template.h5.html",
+        "domain" : "https://app.java.jnpfsoft.com",
         "router" : {
             "mode" : "history"
         }
