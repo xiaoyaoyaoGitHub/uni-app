@@ -1,7 +1,7 @@
 <template>
 	<view class="jnpf-wrap jnpf-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
-			label-width="150" label-align="left">
+			label-width="150" label-align="left" v-show="hide">
 			<u-form-item label="订单编码" prop="orderCode" v-if="judgeShow('orderCode')">
 				<u-input v-model="dataForm.orderCode" placeholder="订单编码" disabled></u-input>
 			</u-form-item>
@@ -166,6 +166,7 @@
 		mixins: [comMixin],
 		data() {
 			return {
+				hide:false,
 				billEnCode: 'OrderNumber',
 				dataForm: {
 					id: '',
@@ -243,7 +244,15 @@
 			}
 		},
 		created() {
-			this.initData()
+			uni.showLoading({
+				title: '正在加载.....',
+				mask: true
+			});
+			setTimeout(()=>{
+				this.hide = true
+				this.initData()
+				uni.hideLoading()
+			},800)
 		},
 		methods: {
 			selfGetInfo() {
