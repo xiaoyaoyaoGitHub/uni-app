@@ -1,5 +1,13 @@
 import request from '@/utils/request'
 
+
+//app版本升级
+export function versionUpgrade(appName){
+	return request({
+		url: `/api/file/AppStartInfo/${appName}`,
+	})
+}
+
 // 获取数据字典数据
 export function getDictionaryDataAll() {
 	return request({
