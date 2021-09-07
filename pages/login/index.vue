@@ -87,7 +87,7 @@
 							this.$store.commit('user/SET_TOKEN', token)
 							uni.setStorageSync('token', token)
 							uni.switchTab({
-								url: '/pages/index/index'
+								url: '/pages/index/apply'
 							});
 						}).catch(() => {
 							this.loading = false

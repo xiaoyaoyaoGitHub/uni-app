@@ -76,7 +76,6 @@
 </template>
 
 <script>
-	import chat from '@/libs/chat.js'
 	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
 	import IndexMixin from './mixin.js'
 	import {
@@ -93,13 +92,6 @@
 				list: [],
 				upOption: {
 					use: false
-				},
-				share: {
-					title: 'jnpf快速开放平台',
-					path: '/pages/index/index',
-					imageUrl: '',
-					desc: '',
-					content: ''
 				}
 			}
 		},
@@ -115,8 +107,6 @@
 			}
 		},
 		onLoad() {
-			if (!this.$store.state.chat.socket) chat.initSocket()
-			this.$store.dispatch('user/getCurrentUser')
 			uni.$on('updateList', data => {
 				this.updateReply(data)
 			})

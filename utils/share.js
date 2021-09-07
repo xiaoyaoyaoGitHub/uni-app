@@ -4,7 +4,7 @@ export default {
 			//设置默认的分享参数
 			share: {
 				title: 'jnpf快速开放平台',
-				path: '/pages/index/index',
+				path: '/pages/index/apply',
 				imageUrl: '',
 				desc: '',
 				content: ''

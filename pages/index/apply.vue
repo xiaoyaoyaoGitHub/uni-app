@@ -44,6 +44,7 @@
 		getMenuList,
 		getUsualList
 	} from '@/api/apply/apply.js'
+	import chat from '@/libs/chat.js'
 	import resources from '@/libs/resources.js'
 	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js"
 	import IndexMixin from './mixin.js'
@@ -69,6 +70,8 @@
 			};
 		},
 		onLoad() {
+			if (!this.$store.state.chat.socket) chat.initSocket()
+			this.$store.dispatch('user/getCurrentUser')
 			uni.$on('updateUsualList', data => {
 				this.getUsualList()
 			})
