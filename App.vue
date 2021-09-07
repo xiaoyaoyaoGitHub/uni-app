@@ -16,7 +16,7 @@
 			let dotNetApk = 'https://cdn.jnpfsoft.com/apk/NET-Android3.2.1.apk';
 			plus.runtime.getProperty(plus.runtime.appid, (wgtinfo) => {
 				// let version = wgtinfo.version
-				let devLanguage = wgtinfo.name.includes('java');
+				let devLanguage = wgtinfo.name.toLowerCase().includes('java');
 				versionUpgrade(appName).then(res => {
 					let AppVersion = res.data.AppVersion ? res.data.AppVersion : '';
 					if (AppVersion == '' || AppVersion === appName) return;
