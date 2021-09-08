@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 
 //app版本升级
-export function versionUpgrade(appName){
+export function versionUpgrade(appName) {
 	return request({
 		url: `/api/file/AppStartInfo/${appName}`,
 	})
@@ -26,7 +26,7 @@ export function getDictionaryDataSelector(dictionaryTypeId) {
 // 获取行政区划下拉框数据
 export function getProvinceSelector(id) {
 	return request({
-		url: `/api/system/Area/${id}/Selector`,
+		url: `/api/system/Area/${id}/Selector/0`,
 		options: {
 			load: false
 		}
@@ -35,7 +35,7 @@ export function getProvinceSelector(id) {
 // 获取组织/公司下拉框列表
 export function getOrganizeSelector() {
 	return request({
-		url: '/api/permission/Organize/Selector',
+		url: '/api/permission/Organize/Selector/0',
 		options: {
 			load: false
 		}
@@ -44,7 +44,7 @@ export function getOrganizeSelector() {
 // 获取部门下拉框列表(公司+部门)
 export function getDepartmentSelector() {
 	return request({
-		url: '/api/permission/Organize/Department/Selector',
+		url: '/api/permission/Organize/Department/Selector/0',
 		options: {
 			load: false
 		}
