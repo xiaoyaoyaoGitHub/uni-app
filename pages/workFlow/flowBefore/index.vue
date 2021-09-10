@@ -40,19 +40,31 @@
 		</view>
 		<view class="flowBefore-actions">
 			<template v-if="config.opType=='-1'">
-				<u-button class="buttom-btn" @click="eventLancher('save')" :loading="btnLoading">保存
+				<u-button class="buttom-btn" @click="eventLancher('save')" :loading="btnLoading">
+					{{properties.saveBtnText||'保存'}}
 				</u-button>
-				<u-button class="buttom-btn" type="primary" @click="eventLancher('submit')">提交</u-button>
+				<u-button class="buttom-btn" type="primary" @click="eventLancher('submit')">
+					{{properties.submitBtnText||'提交'}}
+				</u-button>
 			</template>
 			<template v-if="config.opType == 0">
 				<template v-if="config.status == 1">
-					<u-button class="buttom-btn" type="error" @click="operate('revoke','撤回')">撤回</u-button>
-					<u-button class="buttom-btn" type="primary" @click="handlePress()">催办</u-button>
+					<u-button class="buttom-btn" type="error" @click="operate('revoke','撤回')"
+						v-if="properties.hasRevokeBtn || properties.hasRevokeBtn===undefined">
+						{{properties.revokeBtnText||'撤回'}}
+					</u-button>
+					<u-button class="buttom-btn" type="primary" @click="handlePress()"
+						v-if="properties.hasPressBtn || properties.hasPressBtn===undefined">
+						{{properties.pressBtnText||'催办'}}
+					</u-button>
 				</template>
 				<template v-else-if="config.status == 3">
-					<u-button class="buttom-btn" @click="eventLancher('save')" :loading="btnLoading">保存
+					<u-button class="buttom-btn" @click="eventLancher('save')" :loading="btnLoading">
+						{{properties.saveBtnText||'保存'}}
 					</u-button>
-					<u-button class="buttom-btn" type="primary" @click="eventLancher('submit')">提交</u-button>
+					<u-button class="buttom-btn" type="primary" @click="eventLancher('submit')">
+						{{properties.submitBtnText||'提交'}}
+					</u-button>
 				</template>
 				<u-button class="buttom-btn" @click="jnpf.goBack()" v-else>返回</u-button>
 			</template>
@@ -187,6 +199,7 @@
 					const flowTemplateJson = res.data.flowTemplateJson ? JSON.parse(res.data.flowTemplateJson) :
 						null
 					data.formOperates = []
+					this.properties = this.flowTemplateJson && this.flowTemplateJson.properties || {}
 					if (flowTemplateJson && flowTemplateJson.properties && flowTemplateJson.properties
 						.formOperates) {
 						data.formOperates = flowTemplateJson.properties.formOperates || []
@@ -230,6 +243,7 @@
 					if (data.opType == 0 && data.status == 3) data.readonly = false
 					data.formOperates = []
 					if (data.opType == 0) {
+						this.properties = this.flowTemplateJson && this.flowTemplateJson.properties || {}
 						if (flowTemplateJson && flowTemplateJson.properties && flowTemplateJson.properties
 							.formOperates) {
 							data.formOperates = flowTemplateJson.properties.formOperates || []
