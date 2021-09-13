@@ -16,7 +16,8 @@
         },
         "modules" : {
             "Push" : {},
-            "Maps" : {}
+            "Maps" : {},
+            "OAuth" : {}
         },
         /* 模块配置 */
         "distribute" : {
@@ -81,7 +82,14 @@
                         "appkey_android" : "1vlnkDFaZz4GxAHMMk6kwGRcZr1OfBau"
                     }
                 },
-                "ad" : {}
+                "ad" : {},
+                "oauth" : {
+                    "weixin" : {
+                        "appid" : "wx8f5cb90d8ff960a3",
+                        "appsecret" : "",
+                        "UniversalLinks" : ""
+                    }
+                }
             },
             "icons" : {
                 "android" : {
