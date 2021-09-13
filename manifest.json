@@ -16,8 +16,7 @@
         },
         "modules" : {
             "Push" : {},
-            "Maps" : {},
-            "OAuth" : {}
+            "Maps" : {}
         },
         /* 模块配置 */
         "distribute" : {
