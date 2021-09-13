@@ -2,7 +2,7 @@
 	<view class="abouts-v">
 		<view class="abouts-hd u-flex-col">
 			<image :src="logoSrc" mode="widthFix"></image>
-			<text>V {{version}}</text>
+			<text>{{version}}</text>
 		</view>
 		<view class="content u-p-l-32 u-p-r-32 u-p-t-30 u-font-28">
 			<text>引迈信息技术有限公司是一家做快速开发平台的企业，针对软件传统开发遇到招人难、留人难、用人成本高、技术更新换代快等一系列问题，只需要一套JNPF平台、您遇到的一系列问题就依然而解。
