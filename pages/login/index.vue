@@ -27,6 +27,12 @@
 						</u-button>
 					</view>
 				</view>
+				<!-- #ifdef APP-PLUS -->
+				<view class="u-m-t-64 weChatBox" @click="weixinLogin">
+					<view class="icon-ym icon-ym-weChat"></view>
+					<view class="weChatTxt">微信登录</view>
+				</view>
+				<!-- #endif -->
 			</view>
 		</view>
 		<view class="copyright">Copyright © 2021 引迈信息技术有限公司出品</view>
@@ -69,6 +75,33 @@
 			this.formData.password = ''
 		},
 		methods: {
+			weixinLogin() {
+				uni.getProvider({
+					service: 'oauth',
+					success: function(res) {
+						console.log(res.provider);
+						//支持微信、qq和微博等
+						if (~res.provider.indexOf('weixin')) {
+							uni.login({
+								provider: 'weixin',
+								success: function(loginRes) {
+									console.log('-------获取openid(unionid)-----');
+									console.log(JSON.stringify(loginRes));
+									// 获取用户信息
+									uni.getUserInfo({
+										provider: 'weixin',
+										success: function(infoRes) {
+											console.log('-------获取微信用户所有-----');
+											console.log(JSON.stringify(infoRes
+												.userInfo));
+										}
+									});
+								}
+							});
+						}
+					}
+				});
+			},
 			login() {
 				this.$refs.dataForm.validate(valid => {
 					if (valid) {
@@ -197,6 +230,23 @@
 
 				.loginBtnBox {}
 			}
+
+			.weChatBox {
+				.icon-ym-weChat {
+					padding: 15rpx;
+					color: #19BE6B;
+					font-size: 70rpx;
+					border: 1px solid rgba($color: #19BE6B, $alpha: 0.2);
+					border-radius: 50%;
+					margin-bottom: 10rpx;
+					text-align: center;
+				}
+
+				.weChatTxt {
+					color: #9A9A9A;
+				}
+			}
+
 		}
 	}
 </style>
