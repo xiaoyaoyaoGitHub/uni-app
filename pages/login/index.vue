@@ -21,6 +21,12 @@
 						<u-form-item prop="password">
 							<u-input v-model="formData.password" type="password" placeholder="请输入密码"></u-input>
 						</u-form-item>
+						<u-form-item prop="code">
+							<u-input v-model="formData.code" placeholder="请输入验证码"></u-input>
+							<div class="login-code">
+							    <img :src="codeUrl" @click="getCode">
+							</div>
+						</u-form-item>
 					</u-form>
 					<view class="loginBtnBox u-m-t-64">
 						<u-button @click="login" type="primary" :loading="loading">{{ loading ? "登录中...":"登录"}}
@@ -35,7 +41,7 @@
 
 <script>
 	import {
-		login
+		login, getCodeImg
 	} from '@/api/common.js'
 	import md5Libs from "uview-ui/libs/function/md5";
 	import resources from '@/libs/resources'
@@ -44,9 +50,12 @@
 		data() {
 			return {
 				loading: false,
+				codeUrl: '',
 				formData: {
 					account: "",
 					password: "",
+					code: "",
+					uuid: ''
 				},
 				rules: {
 					account: [{
@@ -59,6 +68,11 @@
 						message: '请输入密码',
 						trigger: 'blur',
 					}],
+					code: [{
+						required: true,
+						message: '请输入验证码',
+						trigger: 'blur',
+					}],
 				}
 			}
 		},
@@ -66,16 +80,27 @@
 			this.$refs.dataForm.setRules(this.rules);
 		},
 		onLoad() {
+			// 获取验证码
+			this.getCode()
 			this.formData.password = ''
 		},
 		methods: {
+			getCode() {
+			      getCodeImg().then(res => {
+			        this.codeUrl = res.data.img
+			        this.formData.uuid = res.data.uuid
+			        console.log(res.data.uuid)
+			      })
+			    },
 			login() {
 				this.$refs.dataForm.validate(valid => {
 					if (valid) {
 						this.loading = true
 						let query = {
 							account: this.formData.account,
-							password: md5Libs.md5(this.formData.password)
+							password: md5Libs.md5(this.formData.password),
+							code: this.formData.code,
+							uuid: this.formData.uuid
 						}
 						// #ifdef  APP-PLUS
 						const clientId = plus.push.getClientInfo().clientid;

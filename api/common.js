@@ -115,6 +115,14 @@ export function login(data) {
 	})
 }
 
+//获取验证码图片
+export function getCodeImg() {
+  return request({
+    url: '/api/oauth/code',
+    method: 'get'
+  })
+}
+
 //获取验证码
 export function clickSms(account) {
 	return request({
