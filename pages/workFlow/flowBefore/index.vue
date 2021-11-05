@@ -66,7 +66,7 @@
 						{{properties.submitBtnText||'提交'}}
 					</u-button>
 				</template>
-				<u-button class="buttom-btn" @click="jnpf.goBack()" v-else>返回</u-button>
+				<u-button class="buttom-btn" @click="cudt.goBack()" v-else>返回</u-button>
 			</template>
 			<template v-if="config.opType == 1">
 				<u-button class="buttom-btn" type="error" v-if="properties.hasRejectBtn"
@@ -86,7 +86,7 @@
 				@click="operate('recall',properties.revokeBtnText)">
 				{{properties.revokeBtnText||'撤回'}}
 			</u-button>
-			<u-button class="buttom-btn" @click="jnpf.goBack()" v-if="config.opType == 3">返回</u-button>
+			<u-button class="buttom-btn" @click="cudt.goBack()" v-if="config.opType == 3">返回</u-button>
 		</view>
 		<tree-select v-model="userSelectShow" @confirm="selectConfirm" :options="userOptions" lastLevel
 			lastLevelKey="type" lastLevelValue="user" title="请选择审批人" />
@@ -116,7 +116,7 @@
 		Press
 	} from '@/api/workFlow/flowLaunch'
 	import resources from '@/libs/resources.js'
-	import treeSelect from '@/components/jnpf/jnpf-tree-select/tree-select';
+	import treeSelect from '@/components/cudt/cudt-tree-select/tree-select';
 	import childForm from './form.vue'
 	import steps from '../components/steps.vue'
 	import records from '../components/records.vue'
@@ -155,7 +155,7 @@
 		},
 		onLoad(option) {
 			const config = JSON.parse(decodeURIComponent(option.config))
-			if (!config) return this.jnpf.goBack()
+			if (!config) return this.cudt.goBack()
 			this.config = config
 			this.init()
 			uni.$on('operate', data => {

@@ -8,7 +8,7 @@
 				<image src="/static/logo.png" mode="widthFix"></image>
 			</view>
 			<view class="u-flex-col introduce u-m-t-30">
-				<text class="u-font-36 text-one" style="">JNPF快速开发平台</text>
+				<text class="u-font-36 text-one" style="">cudt快速开发平台</text>
 				<text class="u-font-24 text-two">低代码，企业数字化好帮手</text>
 			</view>
 			<view class="loginSwitch u-flex-col">
@@ -35,7 +35,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="copyright">Copyright © 2021 引迈信息技术有限公司出品</view>
+		<view class="copyright">Copyright © 2021 联通数科出品</view>
 	</view>
 </template>
 

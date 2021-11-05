@@ -1,5 +1,5 @@
 <template>
-	<view class="jnpf-wrap jnpf-wrap-workflow">
+	<view class="cudt-wrap cudt-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<u-form-item label="流程标题" prop="flowTitle" required v-if="judgeShow('flowTitle')">
@@ -9,11 +9,11 @@
 				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" required v-if="judgeShow('flowUrgent')">
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+				<cudt-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
 					:disabled="judgeWrite('flowUrgent')">
-				</jnpf-select>
+				</cudt-select>
 			</u-form-item>
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="客户名称" prop="customerName" v-if="judgeShow('customerName')" required>
 					<u-input v-model="dataForm.customerName" placeholder="客户名称" :disabled="judgeWrite('customerName')">
 					</u-input>
@@ -36,8 +36,8 @@
 				</u-input>
 			</u-form-item>
 			<u-form-item label="发货日期" prop="invoiceDate" v-if="judgeShow('invoiceDate')">
-				<jnpf-date-time type="datetime" v-model="dataForm.invoiceDate" placeholder="请选择发货日期"
-					:disabled="judgeWrite('invoiceDate')"></jnpf-date-time>
+				<cudt-date-time type="datetime" v-model="dataForm.invoiceDate" placeholder="请选择发货日期"
+					:disabled="judgeWrite('invoiceDate')"></cudt-date-time>
 			</u-form-item>
 			<u-form-item label="货运公司" prop="freightCompany" v-if="judgeShow('freightCompany')">
 				<u-input v-model="dataForm.freightCompany" placeholder="货运公司" :disabled="judgeWrite('freightCompany')">
@@ -67,11 +67,11 @@
 				<u-input v-model="dataForm.description" placeholder="备注" type="textarea"
 					:disabled="judgeWrite('description')"></u-input>
 			</u-form-item>
-			<view class="jnpf-table" v-if="judgeShow('entryList')">
-				<view class="jnpf-table-item" v-for="(item,i) in dataForm.entryList" :key="i">
-					<view class="jnpf-table-item-title u-flex u-row-between">
-						<text class="jnpf-table-item-title-num">商品添购({{i+1}})</text>
-						<view class="jnpf-table-item-title-action" v-if="dataForm.entryList.length>1"
+			<view class="cudt-table" v-if="judgeShow('entryList')">
+				<view class="cudt-table-item" v-for="(item,i) in dataForm.entryList" :key="i">
+					<view class="cudt-table-item-title u-flex u-row-between">
+						<text class="cudt-table-item-title-num">商品添购({{i+1}})</text>
+						<view class="cudt-table-item-title-action" v-if="dataForm.entryList.length>1"
 							@click="delItem(i)">删除
 						</view>
 					</view>
@@ -100,7 +100,7 @@
 							:disabled="judgeWrite('entryList')"></u-input>
 					</u-form-item>
 				</view>
-				<view class="jnpf-table-addBtn" @click="addItem">
+				<view class="cudt-table-addBtn" @click="addItem">
 					<u-icon name="plus" color="#2979ff"></u-icon>添加
 				</view>
 			</view>
@@ -206,13 +206,13 @@
 			/* 计算价格 */
 			count(row) {
 				//金额 = 数量*单价
-				row.amount = this.jnpf.toDecimal(parseFloat(row.price) * parseFloat(row.qty))
+				row.amount = this.cudt.toDecimal(parseFloat(row.price) * parseFloat(row.qty))
 				//折扣价 = (单价*折扣)
 				var discountPrice = row.price * (row.discount / 100);
 				//实际单价 = 折扣价 * (1 + (税率 / 100))
-				row.actualPrice = this.jnpf.toDecimal(discountPrice * (1 + (row.cess / 100)));
+				row.actualPrice = this.cudt.toDecimal(discountPrice * (1 + (row.cess / 100)));
 				//实际金额
-				row.actualAmount = this.jnpf.toDecimal(parseFloat(row.actualPrice) * parseFloat(row
+				row.actualAmount = this.cudt.toDecimal(parseFloat(row.actualPrice) * parseFloat(row
 					.qty))
 				this.$forceUpdate()
 			}

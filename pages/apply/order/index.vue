@@ -23,10 +23,10 @@
 							<view class="u-p-l-32 u-p-r-32">
 								<u-form label-position="left" label-width="150" label-align="left">
 									<u-form-item label="起始日期" prop="startTime">
-										<jnpf-date-time type="date" v-model="listQuery.startTime"></jnpf-date-time>
+										<cudt-date-time type="date" v-model="listQuery.startTime"></cudt-date-time>
 									</u-form-item>
 									<u-form-item label="结束日期" prop="endTime">
-										<jnpf-date-time type="date" v-model="listQuery.endTime"></jnpf-date-time>
+										<cudt-date-time type="date" v-model="listQuery.endTime"></cudt-date-time>
 									</u-form-item>
 								</u-form>
 							</view>

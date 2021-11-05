@@ -1,5 +1,5 @@
 <template>
-	<view class="jnpf-wrap jnpf-wrap-workflow">
+	<view class="cudt-wrap cudt-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<u-form-item label="流程标题" prop="flowTitle" v-if="judgeShow('flowTitle')" required>
@@ -9,12 +9,12 @@
 				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')" required>
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+				<cudt-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
 					:disabled="judgeWrite('flowUrgent')">
-				</jnpf-select>
+				</cudt-select>
 			</u-form-item>
 
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="产品名称" prop="productName" v-if="judgeShow('productName')">
 					<u-input v-model="dataForm.productName" placeholder="请输入产品名称" :disabled="judgeWrite('productName')">
 					</u-input>
@@ -28,8 +28,8 @@
 					</u-input>
 				</u-form-item>
 				<u-form-item label="编制日期" prop="compactorDate" v-if="judgeShow('compactorDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.compactorDate" placeholder="请输入编制日期"
-						:disabled="judgeWrite('compactorDate')"></jnpf-date-time>
+					<cudt-date-time type="datetime" v-model="dataForm.compactorDate" placeholder="请输入编制日期"
+						:disabled="judgeWrite('compactorDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="产品规格" prop="standard" v-if="judgeShow('standard')">
 					<u-input v-model="dataForm.standard" placeholder="请输入产品规格" :disabled="judgeWrite('standard')">
@@ -44,8 +44,8 @@
 						:disabled="judgeWrite('productionQuty')"></u-input>
 				</u-form-item>
 				<u-form-item label="操作日期" prop="operationDate" v-if="judgeShow('operationDate')">
-					<jnpf-date-time type="datetime" v-model="dataForm.operationDate" placeholder="请输入操作日期"
-						:disabled="judgeWrite('operationDate')"></jnpf-date-time>
+					<cudt-date-time type="datetime" v-model="dataForm.operationDate" placeholder="请输入操作日期"
+						:disabled="judgeWrite('operationDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="工艺规程" prop="regulations" v-if="judgeShow('regulations')">
 					<u-input v-model="dataForm.regulations" placeholder="请输入工艺规程" :disabled="judgeWrite('regulations')">

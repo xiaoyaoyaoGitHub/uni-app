@@ -1,33 +1,33 @@
 <template>
-	<view class="scheduleForm-v jnpf-wrap">
+	<view class="scheduleForm-v cudt-wrap">
 		<u-toast ref="uToast" />
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<u-form-item label="开始时间" prop="startTime" required>
-				<jnpf-date-time type="date" v-model="dataForm.startTime" placeholder="开始时间">
-				</jnpf-date-time>
+				<cudt-date-time type="date" v-model="dataForm.startTime" placeholder="开始时间">
+				</cudt-date-time>
 			</u-form-item>
 			<u-form-item label="结束时间" prop="endTime" required>
-				<jnpf-date-time type="date" v-model="dataForm.endTime" placeholder="结束时间"></jnpf-date-time>
+				<cudt-date-time type="date" v-model="dataForm.endTime" placeholder="结束时间"></cudt-date-time>
 			</u-form-item>
 			<u-form-item label="记录内容" prop="content" required>
 				<u-input v-model="dataForm.content" type="textarea" placeholder="请输入记录内容" />
 			</u-form-item>
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="提醒设置" prop="early">
 					<u-input v-model="dataForm.early" type="number" placeholder="默认一小时提醒我" />
 				</u-form-item>
 				<u-form-item label="APP提醒" prop="appAlert">
-					<jnpf-switch v-model="dataForm.appAlert"></jnpf-switch>
+					<cudt-switch v-model="dataForm.appAlert"></cudt-switch>
 				</u-form-item>
 				<u-form-item label="微信提醒" prop="weChatAlert">
-					<jnpf-switch v-model="dataForm.weChatAlert"></jnpf-switch>
+					<cudt-switch v-model="dataForm.weChatAlert"></cudt-switch>
 				</u-form-item>
 				<u-form-item label="邮件提醒" prop="mailAlert">
-					<jnpf-switch v-model="dataForm.mailAlert"></jnpf-switch>
+					<cudt-switch v-model="dataForm.mailAlert"></cudt-switch>
 				</u-form-item>
 				<u-form-item label="短信提醒" prop="mobileAlert">
-					<jnpf-switch v-model="dataForm.mobileAlert"></jnpf-switch>
+					<cudt-switch v-model="dataForm.mobileAlert"></cudt-switch>
 				</u-form-item>
 			</view>
 		</u-form>

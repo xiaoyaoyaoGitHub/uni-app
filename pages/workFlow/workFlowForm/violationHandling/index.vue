@@ -1,5 +1,5 @@
 <template>
-	<view class="jnpf-wrap jnpf-wrap-workflow">
+	<view class="cudt-wrap cudt-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<u-form-item label="流程标题" prop="flowTitle" v-if="judgeShow('flowTitle')" required>
@@ -9,12 +9,12 @@
 				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')" required>
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+				<cudt-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
 					:disabled="judgeWrite('flowUrgent')">
-				</jnpf-select>
+				</cudt-select>
 			</u-form-item>
 
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="车牌号" prop="plateNum" v-if="judgeShow('plateNum')">
 					<u-input v-model="dataForm.plateNum" placeholder="请输入车牌号" :disabled="judgeWrite('plateNum')">
 					</u-input>
@@ -27,19 +27,19 @@
 						:disabled="judgeWrite('leadingOfficial')"></u-input>
 				</u-form-item>
 				<u-form-item label="违章日期" prop="peccancyDate" v-if="judgeShow('peccancyDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.peccancyDate" placeholder="请输入违章日期"
-						:disabled="judgeWrite('peccancyDate')"></jnpf-date-time>
+					<cudt-date-time type="datetime" v-model="dataForm.peccancyDate" placeholder="请输入违章日期"
+						:disabled="judgeWrite('peccancyDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="通知日期" prop="noticeDate" v-if="judgeShow('noticeDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.noticeDate" placeholder="请输入通知日期"
-						:disabled="judgeWrite('noticeDate')"></jnpf-date-time>
+					<cudt-date-time type="datetime" v-model="dataForm.noticeDate" placeholder="请输入通知日期"
+						:disabled="judgeWrite('noticeDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="限处理日期" prop="limitDate" v-if="judgeShow('limitDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.limitDate" placeholder="请输入限处理日期"
-						:disabled="judgeWrite('limitDate')"></jnpf-date-time>
+					<cudt-date-time type="datetime" v-model="dataForm.limitDate" placeholder="请输入限处理日期"
+						:disabled="judgeWrite('limitDate')"></cudt-date-time>
 				</u-form-item>
 			</view>
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="违章地点" prop="violationSite" v-if="judgeShow('violationSite')">
 					<u-input v-model="dataForm.violationSite" placeholder="请输入违章地点"
 						:disabled="judgeWrite('violationSite')"></u-input>

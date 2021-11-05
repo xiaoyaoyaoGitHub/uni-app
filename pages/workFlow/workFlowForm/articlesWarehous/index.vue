@@ -1,5 +1,5 @@
 <template>
-	<view class="jnpf-wrap jnpf-wrap-workflow">
+	<view class="cudt-wrap cudt-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<u-form-item label="流程标题" prop="flowTitle" v-if="judgeShow('flowTitle')" required>
@@ -9,12 +9,12 @@
 				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')" required>
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+				<cudt-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
 					:disabled="judgeWrite('flowUrgent')">
-				</jnpf-select>
+				</cudt-select>
 			</u-form-item>
 
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
 					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员" :disabled="judgeWrite('applyUser')">
 					</u-input>
@@ -24,8 +24,8 @@
 					</u-input>
 				</u-form-item>
 				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')">
-					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"
-						:disabled="judgeWrite('applyDate')"></jnpf-date-time>
+					<cudt-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"
+						:disabled="judgeWrite('applyDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="用品库存" prop="articles" v-if="judgeShow('articles')">
 					<u-input v-model="dataForm.articles" placeholder="请输入用品库存" :disabled="judgeWrite('articles')">

@@ -1,5 +1,5 @@
 <template>
-	<view class="jnpf-wrap jnpf-wrap-workflow">
+	<view class="cudt-wrap cudt-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<u-form-item label="流程标题" prop="flowTitle" v-if="judgeShow('flowTitle')" required>
@@ -9,18 +9,18 @@
 				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')" required>
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+				<cudt-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
 					:disabled="judgeWrite('flowUrgent')">
-				</jnpf-select>
+				</cudt-select>
 			</u-form-item>
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
 					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员" :disabled="judgeWrite('applyUser')">
 					</u-input>
 				</u-form-item>
 				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')" required>
-					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"
-						:disabled="judgeWrite('applyDate')"></jnpf-date-time>
+					<cudt-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"
+						:disabled="judgeWrite('applyDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="合同名称" prop="contractName" v-if="judgeShow('contractName')" required>
 					<u-input v-model="dataForm.contractName" placeholder="请输入合同名称"
@@ -73,23 +73,23 @@
 						:disabled="judgeWrite('contractPeriod')"></u-input>
 				</u-form-item>
 				<u-form-item label="结算方式" prop="paymentMethod" v-if="judgeShow('paymentMethod')" required>
-					<jnpf-select v-model="dataForm.paymentMethod" placeholder="请选择结算方式" :options="paymentMethodOptions"
-						:props="payProps" :disabled="judgeWrite('paymentMethod')"></jnpf-select>
+					<cudt-select v-model="dataForm.paymentMethod" placeholder="请选择结算方式" :options="paymentMethodOptions"
+						:props="payProps" :disabled="judgeWrite('paymentMethod')"></cudt-select>
 				</u-form-item>
 				<u-form-item label="预算批付" prop="budgetaryApproval" v-if="judgeShow('budgetaryApproval')">
 					<u-input v-model="dataForm.budgetaryApproval" placeholder="请输入预算批付"
 						:disabled="judgeWrite('budgetaryApproval')"></u-input>
 				</u-form-item>
 				<u-form-item label="开始时间" prop="startContractDate" v-if="judgeShow('startContractDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.startContractDate" placeholder="开始时间"
-						:disabled="judgeWrite('startContractDate')"></jnpf-date-time>
+					<cudt-date-time type="datetime" v-model="dataForm.startContractDate" placeholder="开始时间"
+						:disabled="judgeWrite('startContractDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="结束时间" prop="endContractDate" v-if="judgeShow('endContractDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.endContractDate" placeholder="结束时间"
-						:disabled="judgeWrite('endContractDate')"></jnpf-date-time>
+					<cudt-date-time type="datetime" v-model="dataForm.endContractDate" placeholder="结束时间"
+						:disabled="judgeWrite('endContractDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
-					<jnpf-file :list="fileList" :disabled="judgeWrite('fileJson')" />
+					<cudt-file :list="fileList" :disabled="judgeWrite('fileJson')" />
 				</u-form-item>
 				<u-form-item label="内容简要" prop="contractContent" v-if="judgeShow('contractContent')">
 					<u-input v-model="dataForm.contractContent" placeholder="请输入内容简要" type="textarea"

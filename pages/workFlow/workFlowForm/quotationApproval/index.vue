@@ -1,5 +1,5 @@
 <template>
-	<view class="jnpf-wrap jnpf-wrap-workflow">
+	<view class="cudt-wrap cudt-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<u-form-item label="流程标题" prop="flowTitle" v-if="judgeShow('flowTitle')" required>
@@ -9,17 +9,17 @@
 				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')" required>
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+				<cudt-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
 					:disabled="judgeWrite('flowUrgent')">
-				</jnpf-select>
+				</cudt-select>
 			</u-form-item>
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="填报人" prop="writer" v-if="judgeShow('writer')" required>
 					<u-input v-model="dataForm.writer" placeholder="请输入填报人" :disabled="judgeWrite('writer')"></u-input>
 				</u-form-item>
 				<u-form-item label="填报日期" prop="writeDate" v-if="judgeShow('writeDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.writeDate" placeholder="请输入填报日期"
-						:disabled="judgeWrite('writeDate')"></jnpf-date-time>
+					<cudt-date-time type="datetime" v-model="dataForm.writeDate" placeholder="请输入填报日期"
+						:disabled="judgeWrite('writeDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="客户名称" prop="customerName" v-if="judgeShow('customerName')">
 					<u-input v-model="dataForm.customerName" placeholder="请输入客户名称"
@@ -34,11 +34,11 @@
 						:disabled="judgeWrite('standardFile')"></u-input>
 				</u-form-item>
 				<u-form-item label="报价类型" prop="quotationType" v-if="judgeShow('quotationType')">
-					<jnpf-select v-model="dataForm.quotationType" placeholder="请选择报价类型" :options="quotationTypeList"
-						:disabled="judgeWrite('quotationType')"></jnpf-select>
+					<cudt-select v-model="dataForm.quotationType" placeholder="请选择报价类型" :options="quotationTypeList"
+						:disabled="judgeWrite('quotationType')"></cudt-select>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
-					<jnpf-file :list="fileList" :disabled="judgeWrite('fileJson')" />
+					<cudt-file :list="fileList" :disabled="judgeWrite('fileJson')" />
 				</u-form-item>
 				<u-form-item label="情况描述" prop="custSituation" v-if="judgeShow('custSituation')">
 					<u-input v-model="dataForm.custSituation" placeholder="请输入情况描述"

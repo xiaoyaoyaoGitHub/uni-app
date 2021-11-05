@@ -565,8 +565,8 @@
 				return content;
 			},
 			replaceEmoji(str) { //替换表情符号为图片
-				let replacedStr = str.replace(/\[([^(\]|\[)]*)\]/g, item => 'jnpfjnpf' + item + 'jnpfjnpf');
-				let strArr = replacedStr.split(/jnpfjnpfjnpfjnpf|jnpfjnpf/g)
+				let replacedStr = str.replace(/\[([^(\]|\[)]*)\]/g, item => 'cudtcudt' + item + 'cudtcudt');
+				let strArr = replacedStr.split(/cudtcudtcudtcudt|cudtcudt/g)
 				strArr = strArr.filter(o => o)
 				let contentList = []
 				for (let i = 0; i < strArr.length; i++) {

@@ -1,5 +1,5 @@
 <template>
-	<view class="jnpf-wrap jnpf-wrap-workflow">
+	<view class="cudt-wrap cudt-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<u-form-item label="流程标题" prop="flowTitle" required v-if="judgeShow('flowTitle')">
@@ -9,12 +9,12 @@
 				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" required v-if="judgeShow('flowUrgent')">
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+				<cudt-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
 					:disabled="judgeWrite('flowUrgent')">
-				</jnpf-select>
+				</cudt-select>
 			</u-form-item>
 
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
 					<u-input v-model="dataForm.applyUser" placeholder="申请人员" :disabled="judgeWrite('applyUser')">
 					</u-input>
@@ -64,7 +64,7 @@
 				</u-form-item>
 			</view>
 
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="预计金额" prop="estimatedAmount" v-if="judgeShow('estimatedAmount')">
 					<u-input v-model="dataForm.estimatedAmount" placeholder="预计金额"
 						:disabled="judgeWrite('estimatedAmount')"></u-input>
@@ -74,15 +74,15 @@
 						:disabled="judgeWrite('otherAttendee')"></u-input>
 				</u-form-item>
 				<u-form-item label="开始时间" prop="startDate" v-if="judgeShow('startDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.startDate" placeholder="开始时间"
-						:disabled="judgeWrite('startDate')"></jnpf-date-time>
+					<cudt-date-time type="datetime" v-model="dataForm.startDate" placeholder="开始时间"
+						:disabled="judgeWrite('startDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="结束时间" prop="endDate" v-if="judgeShow('endDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.endDate" placeholder="结束时间"
-						:disabled="judgeWrite('endDate')"></jnpf-date-time>
+					<cudt-date-time type="datetime" v-model="dataForm.endDate" placeholder="结束时间"
+						:disabled="judgeWrite('endDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
-					<jnpf-file :list="fileList" />
+					<cudt-file :list="fileList" />
 				</u-form-item>
 				<u-form-item label="会议描述" prop="describe" v-if="judgeShow('describe')">
 					<u-input v-model="dataForm.describe" placeholder="会议描述" type="textarea"

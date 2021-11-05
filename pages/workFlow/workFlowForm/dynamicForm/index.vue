@@ -1,6 +1,6 @@
 <template>
-	<view class="jnpf-wrap jnpf-wrap-workflow">
-		<jnpf-parser :formConf="formConf" ref="dynamicForm" v-if="!loading" @submit="sumbitForm" :key="key" />
+	<view class="cudt-wrap cudt-wrap-workflow">
+		<cudt-parser :formConf="formConf" ref="dynamicForm" v-if="!loading" @submit="sumbitForm" :key="key" />
 	</view>
 </template>
 
@@ -95,7 +95,7 @@
 							this.$set(item, 'disabled', isDisabled)
 							this.$set(item.__config__, 'noShow', noShow)
 						}
-						if (item.__config__ && item.__config__.jnpfKey !== 'table' && item.__config__.children && Array
+						if (item.__config__ && item.__config__.cudtKey !== 'table' && item.__config__.children && Array
 							.isArray(item.__config__.children)) {
 							loop(item.__config__.children)
 						}

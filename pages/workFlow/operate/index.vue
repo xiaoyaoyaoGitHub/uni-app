@@ -5,18 +5,18 @@
 				v-if="config.eventType === 'revoke' || config.eventType === 'recall'">
 				<u-input v-model="dataForm.handleOpinion" type="textarea" placeholder="请输入撤回原因" height="500" />
 			</view>
-			<view class="jnpf-wrap">
-				<u-form :model="dataForm" label-position="left" label-width="150" class="jnpf-form"
+			<view class="cudt-wrap">
+				<u-form :model="dataForm" label-position="left" label-width="150" class="cudt-form"
 					v-if="config.eventType === 'audit' || config.eventType === 'reject'">
 					<u-form-item label="审批意见" prop="handleOpinion">
 						<u-input v-model="dataForm.handleOpinion" type="textarea" placeholder="请输入审批意见" />
 					</u-form-item>
 					<u-form-item label="加签人员" prop="freeApproverUserId"
 						v-if="config.eventType === 'audit' && config.hasFreeApprover">
-						<jnpf-org-select v-model="dataForm.freeApproverUserId" />
+						<cudt-org-select v-model="dataForm.freeApproverUserId" />
 					</u-form-item>
 					<u-form-item label="抄送人员" prop="copyIds" v-if="config.isCustomCopy">
-						<jnpf-org-select v-model="dataForm.copyIds" multiple />
+						<cudt-org-select v-model="dataForm.copyIds" multiple />
 					</u-form-item>
 					<u-form-item label="审批签名" prop="signImg" v-if="config.hasSign">
 						<Signature ref="sig" v-model="dataForm.signImg"></Signature>

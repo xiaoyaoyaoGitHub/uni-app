@@ -41,7 +41,7 @@
 				holidayWorkingHours: '9:30-12:00 ，13:30-17:30',
 				workingHours: '8:30-12:00 ，13:00-20:00',
 				tell: '400-6868-969',
-				url: 'https://www.jnpfsoft.com',
+				url: 'https://www.cudtsoft.com',
 				showPopup: false,
 				list: [{
 						name: '微信公众号',
@@ -57,7 +57,7 @@
 					},
 					{
 						name: '官方网站',
-						title: 'www.jnpfsoft.com',
+						title: 'www.cudtsoft.com',
 						icon: 'ie',
 						bcg: 'u-type-primary-bg'
 					}

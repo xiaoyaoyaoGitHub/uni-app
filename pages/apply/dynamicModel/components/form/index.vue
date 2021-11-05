@@ -1,6 +1,6 @@
 <template>
-	<view class="jnpf-wrap jnpf-wrap-form">
-		<jnpf-parser :formConf="formData" ref="dynamicForm" v-if="!loading" @submit="sumbitForm" :key="key" />
+	<view class="cudt-wrap cudt-wrap-form">
+		<cudt-parser :formConf="formData" ref="dynamicForm" v-if="!loading" @submit="sumbitForm" :key="key" />
 		<view class="buttom-actions">
 			<u-button class="buttom-btn" @click="resetForm">重置</u-button>
 			<u-button class="buttom-btn" type="primary" @click="submit" :loading="btnLoading">

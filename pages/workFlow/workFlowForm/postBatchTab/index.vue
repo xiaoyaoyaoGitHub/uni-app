@@ -1,5 +1,5 @@
 <template>
-	<view class="jnpf-wrap jnpf-wrap-workflow">
+	<view class="cudt-wrap cudt-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<u-form-item label="流程标题" prop="flowTitle" v-if="judgeShow('flowTitle')" required>
@@ -9,11 +9,11 @@
 				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')" required>
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions" :disabled="judgeWrite('flowUrgent')">
-				</jnpf-select>
+				<cudt-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions" :disabled="judgeWrite('flowUrgent')">
+				</cudt-select>
 			</u-form-item>
 			
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="文件标题" prop="fileTitle" v-if="judgeShow('fileTitle')">
 					<u-input v-model="dataForm.fileTitle" placeholder="请输入文件标题" :disabled="judgeWrite('fileTitle')"></u-input>
 				</u-form-item>
@@ -27,13 +27,13 @@
 					<u-input v-model="dataForm.writingNum" placeholder="请输入发文编号" :disabled="judgeWrite('writingNum')"></u-input>
 				</u-form-item>
 				<u-form-item label="发文日期" prop="writingDate" v-if="judgeShow('writingDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.writingDate" placeholder="请输入发文日期" :disabled="judgeWrite('writingDate')"></jnpf-date-time>
+					<cudt-date-time type="datetime" v-model="dataForm.writingDate" placeholder="请输入发文日期" :disabled="judgeWrite('writingDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="份数" prop="shareNum" v-if="judgeShow('shareNum')">
 					<u-input v-model="dataForm.shareNum" placeholder="请输入份数" type="number" :disabled="judgeWrite('shareNum')"></u-input>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
-					<jnpf-file :list="fileList" :disabled="judgeWrite('fileJson')"/>
+					<cudt-file :list="fileList" :disabled="judgeWrite('fileJson')"/>
 				</u-form-item>
 				<u-form-item label="备注" prop="description" v-if="judgeShow('description')">
 					<u-input v-model="dataForm.description" placeholder="请输入备注" :disabled="judgeWrite('description')"></u-input>

@@ -1,7 +1,7 @@
 {
 	"easycom": {
 		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue",
-		"^jnpf-(.*)": "@/components/jnpf/jnpf-$1/index.vue"
+		"^cudt-(.*)": "@/components/cudt/cudt-$1/index.vue"
 	},
 	"pages": [{
 			"path": "pages/launch/index",
@@ -355,7 +355,7 @@
 		]
 	},
 	"globalStyle": {
-		"navigationBarTitleText": "JNPF快速开发平台",
+		"navigationBarTitleText": "cudt快速开发平台",
 		"navigationBarTextStyle": "black",
 		"navigationBarBackgroundColor": "#ffffff",
 		"backgroundColor": "#f0f2f6",

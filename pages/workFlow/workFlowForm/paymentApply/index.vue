@@ -1,5 +1,5 @@
 <template>
-	<view class="jnpf-wrap jnpf-wrap-workflow">
+	<view class="cudt-wrap cudt-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<u-form-item label="流程标题" prop="flowTitle" v-if="judgeShow('flowTitle')" required>
@@ -9,12 +9,12 @@
 				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')" required>
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+				<cudt-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
 					:disabled="judgeWrite('flowUrgent')">
-				</jnpf-select>
+				</cudt-select>
 			</u-form-item>
 
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
 					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员" :disabled="judgeWrite('applyUser')">
 					</u-input>
@@ -24,8 +24,8 @@
 						:disabled="judgeWrite('departmental')"></u-input>
 				</u-form-item>
 				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')">
-					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"
-						:disabled="judgeWrite('applyDate')"></jnpf-date-time>
+					<cudt-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"
+						:disabled="judgeWrite('applyDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="付款单位" prop="paymentUnit" v-if="judgeShow('paymentUnit')">
 					<u-input v-model="dataForm.paymentUnit" placeholder="请输入付款单位" :disabled="judgeWrite('paymentUnit')">
@@ -44,7 +44,7 @@
 						:disabled="judgeWrite('projectLeader')"></u-input>
 				</u-form-item>
 			</view>
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="开户银行" prop="openingBank" v-if="judgeShow('openingBank')">
 					<u-input v-model="dataForm.openingBank" placeholder="请输入开户银行" type="number"
 						:disabled="judgeWrite('openingBank')"></u-input>
@@ -62,13 +62,13 @@
 						:disabled="judgeWrite('applyAmount')"></u-input>
 				</u-form-item>
 				<u-form-item label="结算方式" prop="settlementMethod" v-if="judgeShow('settlementMethod')" required>
-					<jnpf-select v-model="dataForm.settlementMethod" placeholder="请选择结算方式"
-						:options="paymentMethodOptions" :disabled="judgeWrite('settlementMethod')" :props="payProps"></jnpf-select>
+					<cudt-select v-model="dataForm.settlementMethod" placeholder="请选择结算方式"
+						:options="paymentMethodOptions" :disabled="judgeWrite('settlementMethod')" :props="payProps"></cudt-select>
 				</u-form-item>
 				<u-form-item label="付款类型" prop="paymentType" v-if="judgeShow('paymentType')" required>
-					<jnpf-select v-model="dataForm.paymentType" placeholder="请选择付款类型" :options="paymentTypeList"
+					<cudt-select v-model="dataForm.paymentType" placeholder="请选择付款类型" :options="paymentTypeList"
 						:disabled="judgeWrite('paymentType')">
-					</jnpf-select>
+					</cudt-select>
 				</u-form-item>
 				<u-form-item label="付款金额" prop="amountPaid" v-if="judgeShow('amountPaid')">
 					<u-input v-model="dataForm.amountPaid" placeholder="请输入收付款金额" type="number"

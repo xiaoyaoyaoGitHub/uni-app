@@ -12,8 +12,8 @@
 			// #endif
 			//#ifdef APP-PLUS  
 			let appName = this.define.version;
-			let javaApk = 'https://cdn.jnpfsoft.com/apk/java-Android3.2.1.apk';
-			let dotNetApk = 'https://cdn.jnpfsoft.com/apk/NET-Android3.2.1.apk';
+			let javaApk = 'https://cdn.cudtsoft.com/apk/java-Android3.2.1.apk';
+			let dotNetApk = 'https://cdn.cudtsoft.com/apk/NET-Android3.2.1.apk';
 			plus.runtime.getProperty(plus.runtime.appid, (wgtinfo) => {
 				// let version = wgtinfo.version
 				let devLanguage = wgtinfo.name.toLowerCase().includes('java');

@@ -10,7 +10,7 @@
 				<view class="list u-flex-col u-font-26">
 					<text class="item">企业组织架构和员工信息</text>
 					<text class="item">所有数据和聊天记录</text>
-					<text class="item">删除和永久注销JNPF账户</text>
+					<text class="item">删除和永久注销cudt账户</text>
 				</view>
 			</view>
 			<view class="btn">
@@ -32,7 +32,7 @@
 			handleClick() {
 				uni.showModal({
 					title: '提示',
-					content: '您的JNPF账号将被删除，您确定要注销JNPF账号么？',
+					content: '您的cudt账号将被删除，您确定要注销cudt账号么？',
 					success: res => {
 						if (res.confirm) {
 							

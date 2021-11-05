@@ -1,5 +1,5 @@
 <template>
-	<view class="jnpf-wrap jnpf-wrap-workflow">
+	<view class="cudt-wrap cudt-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<u-form-item label="流程标题" prop="flowTitle" v-if="judgeShow('flowTitle')" required>
@@ -9,15 +9,15 @@
 				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')" required>
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+				<cudt-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
 					:disabled="judgeWrite('flowUrgent')">
-				</jnpf-select>
+				</cudt-select>
 			</u-form-item>
 
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="填表日期" prop="fillFromDate" v-if="judgeShow('fillFromDate')">
-					<jnpf-date-time type="date" v-model="dataForm.fillFromDate" placeholder="请输入填表日期"
-						:disabled="judgeWrite('fillFromDate')"></jnpf-date-time>
+					<cudt-date-time type="date" v-model="dataForm.fillFromDate" placeholder="请输入填表日期"
+						:disabled="judgeWrite('fillFromDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="员工姓名" prop="fullName" v-if="judgeShow('fullName')">
 					<u-input v-model="dataForm.fullName" placeholder="请输入员工姓名" :disabled="judgeWrite('fullName')">

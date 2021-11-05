@@ -1,5 +1,5 @@
 <template>
-	<view class="jnpf-wrap jnpf-wrap-workflow">
+	<view class="cudt-wrap cudt-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<u-form-item label="流程标题" prop="flowTitle" v-if="judgeShow('flowTitle')" required>
@@ -9,19 +9,19 @@
 				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')" required>
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+				<cudt-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
 					:disabled="judgeWrite('flowUrgent')">
-				</jnpf-select>
+				</cudt-select>
 			</u-form-item>
 
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="所属部门" prop="departmental" v-if="judgeShow('departmental')">
 					<u-input v-model="dataForm.departmental" placeholder="请输入所属部门"
 						:disabled="judgeWrite('departmental')"></u-input>
 				</u-form-item>
 				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')">
-					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"
-						:disabled="judgeWrite('applyDate')"></jnpf-date-time>
+					<cudt-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"
+						:disabled="judgeWrite('applyDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="员工姓名" prop="staffName" v-if="judgeShow('staffName')">
 					<u-input v-model="dataForm.staffName" placeholder="请输入员工姓名" :disabled="judgeWrite('staffName')">
@@ -36,7 +36,7 @@
 					</u-input>
 				</u-form-item>
 			</view>
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="借款方式" prop="loanMode" v-if="judgeShow('loanMode')" required>
 					<u-input v-model="dataForm.loanMode" placeholder="请输入借款方式" :disabled="judgeWrite('loanMode')">
 					</u-input>
@@ -46,8 +46,8 @@
 						:disabled="judgeWrite('transferAccount')"></u-input>
 				</u-form-item>
 				<u-form-item label="支付方式" prop="paymentMethod" v-if="judgeShow('paymentMethod')" required>
-					<jnpf-select v-model="dataForm.paymentMethod" placeholder="请选择支付方式" :options="paymentMethodOptions"
-						:disabled="judgeWrite('paymentMethod')" :props="payProps"></jnpf-select>
+					<cudt-select v-model="dataForm.paymentMethod" placeholder="请选择支付方式" :options="paymentMethodOptions"
+						:disabled="judgeWrite('paymentMethod')" :props="payProps"></cudt-select>
 				</u-form-item>
 				<u-form-item label="借支金额" prop="amountDebit" v-if="judgeShow('amountDebit')">
 					<u-input v-model="dataForm.amountDebit" placeholder="请输入借支金额" :disabled="judgeWrite('amountDebit')">
@@ -58,8 +58,8 @@
 						:disabled="judgeWrite('repaymentBill')"></u-input>
 				</u-form-item>
 				<u-form-item label="还款日期" prop="teachingDate" v-if="judgeShow('teachingDate')">
-					<jnpf-date-time type="datetime" v-model="dataForm.teachingDate" placeholder="还款日期"
-						:disabled="judgeWrite('teachingDate')"></jnpf-date-time>
+					<cudt-date-time type="datetime" v-model="dataForm.teachingDate" placeholder="还款日期"
+						:disabled="judgeWrite('teachingDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="借款原因" prop="reason" v-if="judgeShow('reason')">
 					<u-input v-model="dataForm.reason" placeholder="请输入借款原因" type="textarea"

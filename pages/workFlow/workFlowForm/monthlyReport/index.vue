@@ -1,5 +1,5 @@
 <template>
-	<view class="jnpf-wrap jnpf-wrap-workflow">
+	<view class="cudt-wrap cudt-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<u-form-item label="流程标题" prop="flowTitle" v-if="judgeShow('flowTitle')" required>
@@ -9,12 +9,12 @@
 				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')" required>
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+				<cudt-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
 					:disabled="judgeWrite('flowUrgent')">
-				</jnpf-select>
+				</cudt-select>
 			</u-form-item>
 
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="创建人员" prop="applyUser" v-if="judgeShow('applyUser')">
 					<u-input v-model="dataForm.applyUser" placeholder="请输入创建人员" :disabled="judgeWrite('applyUser')">
 					</u-input>
@@ -28,12 +28,12 @@
 					</u-input>
 				</u-form-item>
 				<u-form-item label="创建日期" prop="applyDate" v-if="judgeShow('applyDate')">
-					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入创建日期"
-						:disabled="judgeWrite('applyDate')"></jnpf-date-time>
+					<cudt-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入创建日期"
+						:disabled="judgeWrite('applyDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="完成时间" prop="planEndTime" v-if="judgeShow('planEndTime')">
-					<jnpf-date-time type="datetime" v-model="dataForm.planEndTime" placeholder="请输入完成时间"
-						:disabled="judgeWrite('planEndTime')"></jnpf-date-time>
+					<cudt-date-time type="datetime" v-model="dataForm.planEndTime" placeholder="请输入完成时间"
+						:disabled="judgeWrite('planEndTime')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="总体评价" prop="overalEvaluat" v-if="judgeShow('overalEvaluat')">
 					<u-input v-model="dataForm.overalEvaluat" placeholder="请输入总体评价"
@@ -44,15 +44,15 @@
 						:disabled="judgeWrite('npworkMatter')"></u-input>
 				</u-form-item>
 				<u-form-item label="次月时间" prop="npfinishTime" v-if="judgeShow('npfinishTime')">
-					<jnpf-date-time type="datetime" v-model="dataForm.npfinishTime" placeholder="请输入次月时间"
-						:disabled="judgeWrite('npfinishTime')"></jnpf-date-time>
+					<cudt-date-time type="datetime" v-model="dataForm.npfinishTime" placeholder="请输入次月时间"
+						:disabled="judgeWrite('npfinishTime')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="次月目标" prop="nfinishMethod" v-if="judgeShow('nfinishMethod')">
 					<u-input v-model="dataForm.nfinishMethod" placeholder="请输入份数" type="number"
 						:disabled="judgeWrite('nfinishMethod')"></u-input>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
-					<jnpf-file :list="fileList" :disabled="judgeWrite('fileJson')" />
+					<cudt-file :list="fileList" :disabled="judgeWrite('fileJson')" />
 				</u-form-item>
 			</view>
 		</u-form>

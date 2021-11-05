@@ -29,7 +29,7 @@
   }
 }
 
-.jnpf-city-select {
+.cudt-city-select {
   .u-close {
     line-height: 1;
   }
@@ -68,24 +68,24 @@
   }
 }
 
-.jnpf-table {
+.cudt-table {
   margin-bottom: 20rpx;
 
-  &+.jnpf-table {
+  &+.cudt-table {
     margin-top: -20rpx;
   }
 
-  .jnpf-table-item-title {
+  .cudt-table-item-title {
     height: 60rpx;
     font-size: 26rpx;
     padding: 0 32rpx;
 
-    .jnpf-table-item-title-action {
+    .cudt-table-item-title-action {
       color: #2979ff;
     }
   }
 
-  .jnpf-table-addBtn {
+  .cudt-table-addBtn {
     color: #2979ff;
     height: 88rpx;
     text-align: center;
@@ -95,11 +95,11 @@
   }
 }
 
-.jnpf-wrap {
+.cudt-wrap {
   background-color: #f0f2f6;
 
   // height: 100vh;
-  &.jnpf-wrap-form {
+  &.cudt-wrap-form {
     padding-bottom: 88rpx;
   }
 
@@ -112,7 +112,7 @@
     }
   }
 
-  &.jnpf-wrap-workflow {
+  &.cudt-wrap-workflow {
     padding-bottom: 1rpx;
 
     .u-form {
@@ -120,13 +120,13 @@
     }
   }
 
-  .jnpf-card {
+  .cudt-card {
     margin: 20rpx 0;
 
-    &+.jnpf-table {
+    &+.cudt-table {
       margin-top: -20rpx;
     }
-		.jnpf-card-cap{
+		.cudt-card-cap{
 			margin-top: -20rpx;
 			line-height: 60rpx;
 			font-size: 26rpx;
@@ -134,7 +134,7 @@
 		}
   }
 
-  .jnpf-group+.jnpf-card {
+  .cudt-group+.cudt-card {
     margin-top: 0;
   }
 }

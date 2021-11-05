@@ -5,7 +5,7 @@
 				<u-swiper :list="bannerList" height="300"></u-swiper>
 			</view>
 			<view class="notice-bar">
-				<u-notice-bar :list="['你好朋友，感谢使用JNPF快速开发平台新版本']" type="none"></u-notice-bar>
+				<u-notice-bar :list="['你好朋友，感谢使用cudt快速开发平台新版本']" type="none"></u-notice-bar>
 			</view>
 			<view class="workFlow-list">
 				<view class="part">

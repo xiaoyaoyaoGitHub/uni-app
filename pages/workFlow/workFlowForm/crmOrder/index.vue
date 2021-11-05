@@ -1,29 +1,29 @@
 <template>
-	<view class="jnpf-wrap jnpf-wrap-workflow">
+	<view class="cudt-wrap cudt-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left" v-show="hide">
 			<u-form-item label="订单编码" prop="orderCode" v-if="judgeShow('orderCode')">
 				<u-input v-model="dataForm.orderCode" placeholder="订单编码" disabled></u-input>
 			</u-form-item>
 			<u-form-item label="客户名称" prop="customerId" required v-if="judgeShow('customerName')">
-				<jnpf-tree-select v-model="dataForm.customerId" placeholder="请选择客户名称" :options="customerOptions"
+				<cudt-tree-select v-model="dataForm.customerId" placeholder="请选择客户名称" :options="customerOptions"
 					@change="onCustomerChange" :props="props" :disabled="judgeWrite('customerName')">
-				</jnpf-tree-select>
+				</cudt-tree-select>
 			</u-form-item>
 			<u-form-item label="业务人员" prop="salesmanId" required v-if="judgeShow('salesmanId')">
-				<jnpf-org-select v-model="dataForm.salesmanId" placeholder="请选择业务人员" @change="onChange"
+				<cudt-org-select v-model="dataForm.salesmanId" placeholder="请选择业务人员" @change="onChange"
 					:disabled="judgeWrite('salesmanId')">
-				</jnpf-org-select>
+				</cudt-org-select>
 			</u-form-item>
 			<u-form-item label="订单日期" prop="orderDate" required v-if="judgeShow('orderDate')">
-				<jnpf-date-time type="date" placeholder="请选择订单日期" v-model="dataForm.orderDate"
-					:disabled="judgeWrite('orderDate')"></jnpf-date-time>
+				<cudt-date-time type="date" placeholder="请选择订单日期" v-model="dataForm.orderDate"
+					:disabled="judgeWrite('orderDate')"></cudt-date-time>
 			</u-form-item>
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="付款方式" prop="paymentMode" required v-if="judgeShow('paymentMode')">
-					<jnpf-select v-model="dataForm.paymentMode" placeholder="请选择付款方式" :options="options"
+					<cudt-select v-model="dataForm.paymentMode" placeholder="请选择付款方式" :options="options"
 						:disabled="judgeWrite('paymentMode')">
-					</jnpf-select>
+					</cudt-select>
 				</u-form-item>
 				<u-form-item label="付款金额" prop="receivableMoney" v-if="judgeShow('receivableMoney')">
 					<u-input v-model="dataForm.receivableMoney" type="number" placeholder="付款金额"
@@ -38,13 +38,13 @@
 						:disabled="judgeWrite('prepayEarnest')"></u-input>
 				</u-form-item>
 				<u-form-item label="运输方式" prop="transportMode" v-if="judgeShow('transportMode')">
-					<jnpf-select v-model="dataForm.transportMode" placeholder="请选择付款方式" :options="transportOptions"
+					<cudt-select v-model="dataForm.transportMode" placeholder="请选择付款方式" :options="transportOptions"
 						:disabled="judgeWrite('transportMode')">
-					</jnpf-select>
+					</cudt-select>
 				</u-form-item>
 				<u-form-item label="发货日期" prop="deliveryDate" v-if="judgeShow('deliveryDate')">
-					<jnpf-date-time type="date" placeholder="请选择发货日期" v-model="dataForm.deliveryDate"
-						:disabled="judgeWrite('deliveryDate')"></jnpf-date-time>
+					<cudt-date-time type="date" placeholder="请选择发货日期" v-model="dataForm.deliveryDate"
+						:disabled="judgeWrite('deliveryDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="发货地址" prop="deliveryAddress" v-if="judgeShow('deliveryAddress')">
 					<u-input v-model="dataForm.deliveryAddress" type="textarea" placeholder="请输入发货地址"
@@ -55,22 +55,22 @@
 						:disabled="judgeWrite('description')"></u-input>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileJson">
-					<jnpf-file :list="fileList" />
+					<cudt-file :list="fileList" />
 				</u-form-item>
 			</view>
-			<view class="jnpf-table" v-if="judgeShow('goodsList')">
-				<view class="jnpf-table-item" v-for="(item,i) in dataForm.goodsList" :key="i">
-					<view class="jnpf-table-item-title u-flex u-row-between">
-						<text class="jnpf-table-item-title-num">商品添购({{i+1}})</text>
-						<view class="jnpf-table-item-title-action" v-if="dataForm.goodsList.length>1"
+			<view class="cudt-table" v-if="judgeShow('goodsList')">
+				<view class="cudt-table-item" v-for="(item,i) in dataForm.goodsList" :key="i">
+					<view class="cudt-table-item-title u-flex u-row-between">
+						<text class="cudt-table-item-title-num">商品添购({{i+1}})</text>
+						<view class="cudt-table-item-title-action" v-if="dataForm.goodsList.length>1"
 							@click="delGoods(i)">删除
 						</view>
 					</view>
 					<u-form-item label="商品名称" prop="dataForm.goodsList[i].goodsId">
-						<jnpf-tree-select v-model="dataForm.goodsList[i].goodsId" placeholder="请选择商品名称"
+						<cudt-tree-select v-model="dataForm.goodsList[i].goodsId" placeholder="请选择商品名称"
 							:options="goodsOptions" @change="onGoodsChange($event,i)" :props="props"
 							:disabled="judgeWrite('goodsList')">
-						</jnpf-tree-select>
+						</cudt-tree-select>
 					</u-form-item>
 					<u-form-item label="规格型号" prop="dataForm.goodsList[i].specifications">
 						<u-input v-model="dataForm.goodsList[i].specifications" placeholder="规格型号" disabled></u-input>
@@ -108,22 +108,22 @@
 							:disabled="judgeWrite('goodsList')"></u-input>
 					</u-form-item>
 				</view>
-				<view class="jnpf-table-addBtn" @click="addGoods">
+				<view class="cudt-table-addBtn" @click="addGoods">
 					<u-icon name="plus" color="#2979ff"></u-icon>商品添购
 				</view>
 			</view>
-			<view class="jnpf-table" v-if="judgeShow('collectionPlanList')">
-				<view class="jnpf-table-item" v-for="(item,i) in dataForm.collectionPlanList" :key="i">
-					<view class="jnpf-table-item-title u-flex u-row-between">
-						<text class="jnpf-table-item-title-num">收款计划({{i+1}})</text>
-						<view class="jnpf-table-item-title-action" v-if="dataForm.collectionPlanList.length>1"
+			<view class="cudt-table" v-if="judgeShow('collectionPlanList')">
+				<view class="cudt-table-item" v-for="(item,i) in dataForm.collectionPlanList" :key="i">
+					<view class="cudt-table-item-title u-flex u-row-between">
+						<text class="cudt-table-item-title-num">收款计划({{i+1}})</text>
+						<view class="cudt-table-item-title-action" v-if="dataForm.collectionPlanList.length>1"
 							@click="delPlan(i)">删除
 						</view>
 					</view>
 					<u-form-item label="收款日期" prop="dataForm.collectionPlanList[i].receivableDate">
-						<jnpf-date-time type="date" placeholder="请选择收款日期"
+						<cudt-date-time type="date" placeholder="请选择收款日期"
 							v-model="dataForm.collectionPlanList[i].receivableDate"
-							:disabled="judgeWrite('collectionPlanList')"></jnpf-date-time>
+							:disabled="judgeWrite('collectionPlanList')"></cudt-date-time>
 					</u-form-item>
 					<u-form-item label="收款比率%" prop="dataForm.collectionPlanList[i].receivableRate">
 						<u-input v-model="dataForm.collectionPlanList[i].receivableRate" placeholder="收款比率"
@@ -134,9 +134,9 @@
 							type="number" :disabled="judgeWrite('collectionPlanList')"></u-input>
 					</u-form-item>
 					<u-form-item label="收款方式" prop="dataForm.collectionPlanList[i].receivableMode">
-						<jnpf-select v-model="dataForm.collectionPlanList[i].receivableMode" placeholder="请选择收款方式"
+						<cudt-select v-model="dataForm.collectionPlanList[i].receivableMode" placeholder="请选择收款方式"
 							:options="options" :disabled="judgeWrite('collectionPlanList')">
-						</jnpf-select>
+						</cudt-select>
 					</u-form-item>
 					<u-form-item label="收款摘要" prop="dataForm.collectionPlanList[i].abstract">
 						<u-input v-model="dataForm.collectionPlanList[i].abstract" placeholder="收款摘要" type="textarea"
@@ -144,7 +144,7 @@
 						</u-input>
 					</u-form-item>
 				</view>
-				<view class="jnpf-table-addBtn" @click="addPlan">
+				<view class="cudt-table-addBtn" @click="addPlan">
 					<u-icon name="plus" color="#2979ff"></u-icon>收款计划
 				</view>
 			</view>
@@ -363,13 +363,13 @@
 			},
 			count(row) {
 				//金额 = 数量*单价
-				row.amount = this.jnpf.toDecimal(parseFloat(row.price) * parseFloat(row.qty))
+				row.amount = this.cudt.toDecimal(parseFloat(row.price) * parseFloat(row.qty))
 				//折扣价 = (单价*折扣)
 				var discountPrice = row.price * (row.discount / 100);
 				//实际单价 = 折扣价 * (1 + (税率 / 100))
-				row.actualPrice = this.jnpf.toDecimal(discountPrice * (1 + (row.cess / 100)));
+				row.actualPrice = this.cudt.toDecimal(discountPrice * (1 + (row.cess / 100)));
 				//实际金额
-				row.actualAmount = this.jnpf.toDecimal(parseFloat(row.actualPrice) * parseFloat(row
+				row.actualAmount = this.cudt.toDecimal(parseFloat(row.actualPrice) * parseFloat(row
 					.qty))
 				this.$forceUpdate()
 			}

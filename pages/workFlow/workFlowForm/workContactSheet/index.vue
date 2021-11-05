@@ -1,5 +1,5 @@
 <template>
-	<view class="jnpf-wrap jnpf-wrap-workflow">
+	<view class="cudt-wrap cudt-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<u-form-item label="流程标题" prop="flowTitle" v-if="judgeShow('flowTitle')" required>
@@ -9,12 +9,12 @@
 				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')" required>
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+				<cudt-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
 					:disabled="judgeWrite('flowUrgent')">
-				</jnpf-select>
+				</cudt-select>
 			</u-form-item>
 
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="发件人" prop="drawPeople" v-if="judgeShow('drawPeople')">
 					<u-input v-model="dataForm.drawPeople" placeholder="请输入发件人" :disabled="judgeWrite('drawPeople')">
 					</u-input>
@@ -24,8 +24,8 @@
 						:disabled="judgeWrite('issuingDepartment')"></u-input>
 				</u-form-item>
 				<u-form-item label="发件日期" prop="toDate" v-if="judgeShow('toDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.toDate" placeholder="请输入发件日期"
-						:disabled="judgeWrite('toDate')"></jnpf-date-time>
+					<cudt-date-time type="datetime" v-model="dataForm.toDate" placeholder="请输入发件日期"
+						:disabled="judgeWrite('toDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="收件部门" prop="serviceDepartment" v-if="judgeShow('serviceDepartment')">
 					<u-input v-model="dataForm.serviceDepartment" placeholder="请输入收件部门"
@@ -36,15 +36,15 @@
 					</u-input>
 				</u-form-item>
 				<u-form-item label="收件日期" prop="collectionDate" v-if="judgeShow('collectionDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.collectionDate" placeholder="请输入收件日期"
-						:disabled="judgeWrite('collectionDate')"></jnpf-date-time>
+					<cudt-date-time type="datetime" v-model="dataForm.collectionDate" placeholder="请输入收件日期"
+						:disabled="judgeWrite('collectionDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="协调事项" prop="coordination" v-if="judgeShow('coordination')">
 					<u-input v-model="dataForm.coordination" placeholder="请输入协调事项" type="textarea"
 						:disabled="judgeWrite('coordination')"></u-input>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
-					<jnpf-file :list="fileList" :disabled="judgeWrite('fileJson')" />
+					<cudt-file :list="fileList" :disabled="judgeWrite('fileJson')" />
 				</u-form-item>
 			</view>
 		</u-form>

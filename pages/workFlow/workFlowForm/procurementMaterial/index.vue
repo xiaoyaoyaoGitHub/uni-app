@@ -1,5 +1,5 @@
 <template>
-	<view class="jnpf-wrap jnpf-wrap-workflow">
+	<view class="cudt-wrap cudt-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<u-form-item label="流程标题" prop="flowTitle" v-if="judgeShow('flowTitle')" required>
@@ -9,11 +9,11 @@
 				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')" required>
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+				<cudt-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
 					:disabled="judgeWrite('flowUrgent')">
-				</jnpf-select>
+				</cudt-select>
 			</u-form-item>
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
 					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员" :disabled="judgeWrite('applyUser')">
 					</u-input>
@@ -23,8 +23,8 @@
 						:disabled="judgeWrite('departmental')"></u-input>
 				</u-form-item>
 				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')">
-					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"
-						:disabled="judgeWrite('applyDate')"></jnpf-date-time>
+					<cudt-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"
+						:disabled="judgeWrite('applyDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="采购单位" prop="purchaseUnit" v-if="judgeShow('purchaseUnit')">
 					<u-input v-model="dataForm.purchaseUnit" placeholder="请输入采购单位"
@@ -39,26 +39,26 @@
 						:disabled="judgeWrite('deliveryAddress')"></u-input>
 				</u-form-item>
 				<u-form-item label="结算方式" prop="paymentMethod" v-if="judgeShow('paymentMethod')" required>
-					<jnpf-select v-model="dataForm.paymentMethod" :props="payProps" placeholder="请选择结算方式" :options="paymentMethodOptions"
-						:disabled="judgeWrite('paymentMethod')"></jnpf-select>
+					<cudt-select v-model="dataForm.paymentMethod" :props="payProps" placeholder="请选择结算方式" :options="paymentMethodOptions"
+						:disabled="judgeWrite('paymentMethod')"></cudt-select>
 				</u-form-item>
 				<u-form-item label="付款金额" prop="paymentMoney" v-if="judgeShow('paymentMoney')">
 					<u-input v-model="dataForm.paymentMoney" placeholder="请输入付款金额"
 						:disabled="judgeWrite('paymentMoney')"></u-input>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
-					<jnpf-file :list="fileList" :disabled="judgeWrite('applyDate')" />
+					<cudt-file :list="fileList" :disabled="judgeWrite('applyDate')" />
 				</u-form-item>
 				<u-form-item label="用途原因" prop="reason" v-if="judgeShow('reason')">
 					<u-input v-model="dataForm.reason" placeholder="请输入用途原因" type="textarea"
 						:disabled="judgeWrite('reason')"></u-input>
 				</u-form-item>
 			</view>
-			<view class="jnpf-table" v-if="judgeShow('entryList')">
-				<view class="jnpf-table-item" v-for="(item,i) in dataForm.entryList" :key="i">
-					<view class="jnpf-table-item-title u-flex u-row-between">
-						<text class="jnpf-table-item-title-num">采购明细({{i+1}})</text>
-						<view class="jnpf-table-item-title-action" v-if="dataForm.entryList.length>1"
+			<view class="cudt-table" v-if="judgeShow('entryList')">
+				<view class="cudt-table-item" v-for="(item,i) in dataForm.entryList" :key="i">
+					<view class="cudt-table-item-title u-flex u-row-between">
+						<text class="cudt-table-item-title-num">采购明细({{i+1}})</text>
+						<view class="cudt-table-item-title-action" v-if="dataForm.entryList.length>1"
 							@click="delItem(i)">删除
 						</view>
 					</view>
@@ -90,7 +90,7 @@
 							:disabled="judgeWrite('entryList')"></u-input>
 					</u-form-item>
 				</view>
-				<view class="jnpf-table-addBtn" @click="addItem">
+				<view class="cudt-table-addBtn" @click="addItem">
 					<u-icon name="plus" color="#2979ff"></u-icon>添加
 				</view>
 			</view>
@@ -187,13 +187,13 @@
 			/* 计算价格 */
 			count(row) {
 				//金额 = 数量*单价
-				row.amount = this.jnpf.toDecimal(parseFloat(row.price) * parseFloat(row.qty))
+				row.amount = this.cudt.toDecimal(parseFloat(row.price) * parseFloat(row.qty))
 				//折扣价 = (单价*折扣)
 				var discountPrice = row.price * (row.discount / 100);
 				//实际单价 = 折扣价 * (1 + (税率 / 100))
-				row.actualPrice = this.jnpf.toDecimal(discountPrice * (1 + (row.cess / 100)));
+				row.actualPrice = this.cudt.toDecimal(discountPrice * (1 + (row.cess / 100)));
 				//实际金额
-				row.actualAmount = this.jnpf.toDecimal(parseFloat(row.actualPrice) * parseFloat(row
+				row.actualAmount = this.cudt.toDecimal(parseFloat(row.actualPrice) * parseFloat(row
 					.qty))
 				this.$forceUpdate()
 			},

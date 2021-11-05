@@ -1,5 +1,5 @@
 <template>
-	<view class="jnpf-wrap jnpf-wrap-workflow">
+	<view class="cudt-wrap cudt-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<u-form-item label="流程标题" prop="flowTitle" v-if="judgeShow('flowTitle')" required>
@@ -9,12 +9,12 @@
 				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')" required>
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+				<cudt-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
 					:disabled="judgeWrite('flowUrgent')">
-				</jnpf-select>
+				</cudt-select>
 			</u-form-item>
 
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="文件名称" prop="fileName" v-if="judgeShow('fileName')">
 					<u-input v-model="dataForm.fileName" placeholder="请输入文件名称" :disabled="judgeWrite('fileName')">
 					</u-input>
@@ -35,15 +35,15 @@
 						:disabled="judgeWrite('fillPreparation')"></u-input>
 				</u-form-item>
 				<u-form-item label="签阅时间" prop="checkDate" v-if="judgeShow('checkDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.checkDate" placeholder="请输入签阅时间"
-						:disabled="judgeWrite('checkDate')"></jnpf-date-time>
+					<cudt-date-time type="datetime" v-model="dataForm.checkDate" placeholder="请输入签阅时间"
+						:disabled="judgeWrite('checkDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="发稿日期" prop="publicationDate" v-if="judgeShow('publicationDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.publicationDate" placeholder="请输入发稿日期"
-						:disabled="judgeWrite('publicationDate')"></jnpf-date-time>
+					<cudt-date-time type="datetime" v-model="dataForm.publicationDate" placeholder="请输入发稿日期"
+						:disabled="judgeWrite('publicationDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
-					<jnpf-file :list="fileList" :disabled="judgeWrite('fileJson')" />
+					<cudt-file :list="fileList" :disabled="judgeWrite('fileJson')" />
 				</u-form-item>
 				<u-form-item label="文件内容" prop="documentContent" v-if="judgeShow('documentContent')">
 					<u-input v-model="dataForm.documentContent" placeholder="请输入文件内容" type="textarea"

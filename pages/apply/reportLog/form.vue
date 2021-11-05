@@ -1,5 +1,5 @@
 <template>
-	<view class="logForm-v jnpf-wrap">
+	<view class="logForm-v cudt-wrap">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<u-form-item label="日志标题" prop="title" required>
@@ -16,7 +16,7 @@
 				<u-input v-model="dataForm.question" type="textarea" placeholder="请输入遇到问题" :disabled="disabled" />
 			</u-form-item>
 			<u-form-item label="发送给谁" prop="userIds" required>
-				<jnpf-org-select v-model="dataForm.userIds" multiple :disabled="disabled"></jnpf-org-select>
+				<cudt-org-select v-model="dataForm.userIds" multiple :disabled="disabled"></cudt-org-select>
 			</u-form-item>
 		</u-form>
 		<view class="com-saveBox" v-if="!disabled">

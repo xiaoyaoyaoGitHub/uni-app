@@ -1,8 +1,8 @@
 <template>
-	<view class="dynamicModel-form-v jnpf-wrap jnpf-wrap-form" v-if="showPage">
-		<jnpf-parser :formConf="formConf" ref="dynamicForm" v-if="!loading" @submit="sumbitForm" :key="key" />
+	<view class="dynamicModel-form-v cudt-wrap cudt-wrap-form" v-if="showPage">
+		<cudt-parser :formConf="formConf" ref="dynamicForm" v-if="!loading" @submit="sumbitForm" :key="key" />
 		<view class="buttom-actions">
-			<u-button class="buttom-btn" @click="jnpf.goBack">{{formConf.cancelButtonText||'取消'}}</u-button>
+			<u-button class="buttom-btn" @click="cudt.goBack">{{formConf.cancelButtonText||'取消'}}</u-button>
 			<u-button class="buttom-btn" type="primary" @click="submit" :loading="btnLoading">
 				{{formConf.confirmButtonText||'确定'}}
 			</u-button>
@@ -90,7 +90,7 @@
 							const val = data[item.__vModel__]
 							if (val) item.__config__.defaultValue = val
 						}
-						if (item.__config__ && item.__config__.jnpfKey !== 'table' && item.__config__.children && Array
+						if (item.__config__ && item.__config__.cudtKey !== 'table' && item.__config__.children && Array
 							.isArray(item.__config__.children)) {
 							loop(item.__config__.children)
 						}

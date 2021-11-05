@@ -14,7 +14,7 @@ Object.keys(filters).forEach(key => {
 Object.assign(Vue.prototype, {
 	define: require("./utils/define").default,
 	request: require("./utils/request").default,
-	jnpf: require("./utils/jnpf").default,
+	cudt: require("./utils/cudt").default,
 	$store: store
 })
 

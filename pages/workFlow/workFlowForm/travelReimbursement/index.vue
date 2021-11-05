@@ -1,5 +1,5 @@
 <template>
-	<view class="jnpf-wrap jnpf-wrap-workflow">
+	<view class="cudt-wrap cudt-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<u-form-item label="流程标题" prop="flowTitle" v-if="judgeShow('flowTitle')" required>
@@ -9,26 +9,26 @@
 				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')" required>
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+				<cudt-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
 					:disabled="judgeWrite('flowUrgent')">
-				</jnpf-select>
+				</cudt-select>
 			</u-form-item>
 
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
 					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员" :disabled="judgeWrite('applyUser')">
 					</u-input>
 				</u-form-item>
 				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')">
-					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"
-						:disabled="judgeWrite('applyDate')"></jnpf-date-time>
+					<cudt-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"
+						:disabled="judgeWrite('applyDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="所属部门" prop="departmental" v-if="judgeShow('departmental')">
 					<u-input v-model="dataForm.departmental" placeholder="请输入所属部门"
 						:disabled="judgeWrite('departmental')"></u-input>
 				</u-form-item>
 			</view>
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="报销编号" prop="reimbursementId" v-if="judgeShow('reimbursementId')">
 					<u-input v-model="dataForm.reimbursementId" placeholder="请输入报销编号"
 						:disabled="judgeWrite('reimbursementId')"></u-input>
@@ -46,14 +46,14 @@
 						:disabled="judgeWrite('businessMission')"></u-input>
 				</u-form-item>
 			</view>
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="出发日期" prop="setOutDate" v-if="judgeShow('setOutDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.setOutDate" placeholder="请选择出发日期"
-						:disabled="judgeWrite('setOutDate')"></jnpf-date-time>
+					<cudt-date-time type="datetime" v-model="dataForm.setOutDate" placeholder="请选择出发日期"
+						:disabled="judgeWrite('setOutDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="回程日期" prop="returnDate" v-if="judgeShow('returnDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.returnDate" placeholder="请选择回程日期"
-						:disabled="judgeWrite('returnDate')"></jnpf-date-time>
+					<cudt-date-time type="datetime" v-model="dataForm.returnDate" placeholder="请选择回程日期"
+						:disabled="judgeWrite('returnDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="目的地" prop="destination" v-if="judgeShow('destination')" required>
 					<u-input v-model="dataForm.destination" placeholder="请输入目的地" :disabled="judgeWrite('destination')">
@@ -64,7 +64,7 @@
 						:disabled="judgeWrite('vehicleMileage')"></u-input>
 				</u-form-item>
 			</view>
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="过路费" prop="roadFee" v-if="judgeShow('roadFee')">
 					<u-input v-model="dataForm.roadFee" placeholder="请输入过路费" type="number"
 						:disabled="judgeWrite('roadFee')"></u-input>
@@ -102,7 +102,7 @@
 						:disabled="judgeWrite('travelAllowance')"></u-input>
 				</u-form-item>
 			</view>
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="其他费用" prop="other" v-if="judgeShow('other')">
 					<u-input v-model="dataForm.other" placeholder="请输入其他费用" type="number"
 						:disabled="judgeWrite('other')"></u-input>

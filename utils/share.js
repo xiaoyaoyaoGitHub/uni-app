@@ -3,7 +3,7 @@ export default {
 		return {
 			//设置默认的分享参数
 			share: {
-				title: 'jnpf快速开放平台',
+				title: 'cudt快速开放平台',
 				path: '/pages/index/apply',
 				imageUrl: '',
 				desc: '',

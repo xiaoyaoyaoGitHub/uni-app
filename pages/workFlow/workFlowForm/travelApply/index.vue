@@ -1,5 +1,5 @@
 <template>
-	<view class="jnpf-wrap jnpf-wrap-workflow">
+	<view class="cudt-wrap cudt-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<u-form-item label="流程标题" prop="flowTitle" v-if="judgeShow('flowTitle')" required>
@@ -9,18 +9,18 @@
 				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')" required>
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+				<cudt-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
 					:disabled="judgeWrite('flowUrgent')">
-				</jnpf-select>
+				</cudt-select>
 			</u-form-item>
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="出差人员" prop="travelMan" v-if="judgeShow('travelMan')">
 					<u-input v-model="dataForm.travelMan" placeholder="请输入出差人员" :disabled="judgeWrite('travelMan')">
 					</u-input>
 				</u-form-item>
 				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')">
-					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"
-						:disabled="judgeWrite('applyDate')"></jnpf-date-time>
+					<cudt-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"
+						:disabled="judgeWrite('applyDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="所属部门" prop="departmental" v-if="judgeShow('departmental')">
 					<u-input v-model="dataForm.departmental" placeholder="请输入所属部门"
@@ -31,12 +31,12 @@
 					</u-input>
 				</u-form-item>
 				<u-form-item label="开始时间" prop="startDate" v-if="judgeShow('startDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.startDate" placeholder="请输入开始时间"
-						:disabled="judgeWrite('startDate')"></jnpf-date-time>
+					<cudt-date-time type="datetime" v-model="dataForm.startDate" placeholder="请输入开始时间"
+						:disabled="judgeWrite('startDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="结束时间" prop="endDate" v-if="judgeShow('endDate')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.endDate" placeholder="请输入结束时间"
-						:disabled="judgeWrite('endDate')"></jnpf-date-time>
+					<cudt-date-time type="datetime" v-model="dataForm.endDate" placeholder="请输入结束时间"
+						:disabled="judgeWrite('endDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="起始地点" prop="startPlace" v-if="judgeShow('startPlace')" required>
 					<u-input v-model="dataForm.startPlace" placeholder="请输入起始地点" :disabled="judgeWrite('startPlace')">

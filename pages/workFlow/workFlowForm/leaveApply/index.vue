@@ -1,5 +1,5 @@
 <template>
-	<view class="jnpf-wrap jnpf-wrap-workflow">
+	<view class="cudt-wrap cudt-wrap-workflow">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 			label-width="150" label-align="left">
 			<u-form-item label="流程标题" prop="flowTitle" v-if="judgeShow('flowTitle')" required>
@@ -9,12 +9,12 @@
 				<u-input v-model="dataForm.billNo" placeholder="流程编码" disabled></u-input>
 			</u-form-item>
 			<u-form-item label="紧急程度" prop="flowUrgent" v-if="judgeShow('flowUrgent')" required>
-				<jnpf-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
+				<cudt-select v-model="dataForm.flowUrgent" placeholder="请选择紧急程度" :options="flowUrgentOptions"
 					:disabled="judgeWrite('flowUrgent')">
-				</jnpf-select>
+				</cudt-select>
 			</u-form-item>
 
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<u-form-item label="申请人员" prop="applyUser" v-if="judgeShow('applyUser')">
 					<u-input v-model="dataForm.applyUser" placeholder="请输入申请人员" :disabled="judgeWrite('applyUser')">
 					</u-input>
@@ -28,24 +28,24 @@
 					</u-input>
 				</u-form-item>
 				<u-form-item label="申请日期" prop="applyDate" v-if="judgeShow('applyDate')">
-					<jnpf-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"
-						:disabled="judgeWrite('applyDate')"></jnpf-date-time>
+					<cudt-date-time type="date" v-model="dataForm.applyDate" placeholder="请输入申请日期"
+						:disabled="judgeWrite('applyDate')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="请假类别" prop="leaveType" v-if="judgeShow('leaveType')" required>
-					<jnpf-select v-model="dataForm.leaveType" placeholder="请选择下拉框组" :options="leaveTypeList"
-						:disabled="judgeWrite('leaveType')"></jnpf-select>
+					<cudt-select v-model="dataForm.leaveType" placeholder="请选择下拉框组" :options="leaveTypeList"
+						:disabled="judgeWrite('leaveType')"></cudt-select>
 				</u-form-item>
 				<u-form-item label="请假原因" prop="leaveReason" v-if="judgeShow('leaveReason')" required>
 					<u-input v-model="dataForm.leaveReason" placeholder="请输入请假原因" type="textarea"
 						:disabled="judgeWrite('leaveReason')"></u-input>
 				</u-form-item>
 				<u-form-item label="起始时间" prop="leaveStartTime" v-if="judgeShow('leaveStartTime')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.leaveStartTime" placeholder="请输入起始时间"
-						:disabled="judgeWrite('leaveStartTime')"></jnpf-date-time>
+					<cudt-date-time type="datetime" v-model="dataForm.leaveStartTime" placeholder="请输入起始时间"
+						:disabled="judgeWrite('leaveStartTime')"></cudt-date-time>
 				</u-form-item>
 				<u-form-item label="结束时间" prop="leaveEndTime" v-if="judgeShow('leaveEndTime')" required>
-					<jnpf-date-time type="datetime" v-model="dataForm.leaveEndTime" placeholder="请输入结束时间"
-						:disabled="judgeWrite('leaveEndTime')"></jnpf-date-time>
+					<cudt-date-time type="datetime" v-model="dataForm.leaveEndTime" placeholder="请输入结束时间"
+						:disabled="judgeWrite('leaveEndTime')"></cudt-date-time>
 				</u-form-item>
 
 				<u-form-item label="请假天数" prop="leaveDayCount" v-if="judgeShow('leaveDayCount')" required>
@@ -57,7 +57,7 @@
 						:disabled="judgeWrite('leaveHour')"></u-input>
 				</u-form-item>
 				<u-form-item label="相关附件" prop="fileJson" v-if="judgeShow('fileJson')">
-					<jnpf-file :list="fileList" :disabled="judgeWrite('fileJson')" />
+					<cudt-file :list="fileList" :disabled="judgeWrite('fileJson')" />
 				</u-form-item>
 
 			</view>

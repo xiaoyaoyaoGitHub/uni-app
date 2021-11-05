@@ -2,7 +2,7 @@
 	<view class="calendar-v">
 		<calendar :lunar="true" :showMonth="true" @change="change" @monthSwitch="monthSwitch" @initdate="initdate" />
 		<view class="calendar-b">
-			<view class="lunar jnpf-card u-m-t-20">
+			<view class="lunar cudt-card u-m-t-20">
 				{{changedate}}
 			</view>
 			<view v-for="(item,index) in scheduleList" :key="index" class="schedule-item">

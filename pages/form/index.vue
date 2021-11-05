@@ -1,7 +1,7 @@
 <template>
-	<view class="jnpf-wrap jnpf-wrap-form">
+	<view class="cudt-wrap cudt-wrap-form">
 		<u-form :model="dataForm" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
-			label-width="150" label-align="left" class="jnpf-form">
+			label-width="150" label-align="left" class="cudt-form">
 			<!-- 单行输入 -->
 			<u-form-item label="单行输入" prop="comInput" required label-width="150">
 				<u-input v-model="dataForm.comInput" placeholder="请输入"></u-input>
@@ -18,7 +18,7 @@
 			<!-- 开关 -->
 			<u-form-item label="开关" prop="switch">
 				<view class="u-flex u-form-item-switch">
-					<jnpf-switch v-model="dataForm.switch"></jnpf-switch>
+					<cudt-switch v-model="dataForm.switch"></cudt-switch>
 				</view>
 			</u-form-item>
 			<!-- 单选框组 -->
@@ -30,41 +30,41 @@
 			</u-form-item>
 			<!-- 多选框组 -->
 			<u-form-item label="多选框组" prop="checkbox">
-				<jnpf-checkbox v-model="dataForm.checkbox" :options="checkboxList"></jnpf-checkbox>
+				<cudt-checkbox v-model="dataForm.checkbox" :options="checkboxList"></cudt-checkbox>
 			</u-form-item>
 			<!-- 下拉框组 -->
 			<u-form-item label="下拉框组" prop="select">
-				<jnpf-select v-model="dataForm.select" placeholder="请选择下拉框组" :options="checkboxList"></jnpf-select>
+				<cudt-select v-model="dataForm.select" placeholder="请选择下拉框组" :options="checkboxList"></cudt-select>
 			</u-form-item>
 			<!-- 下拉多选 -->
 			<u-form-item label="下拉多选" prop="select1">
-				<jnpf-select v-model="dataForm.select1" placeholder="请选择下拉框组" :options="checkboxList" multiple>
-				</jnpf-select>
+				<cudt-select v-model="dataForm.select1" placeholder="请选择下拉框组" :options="checkboxList" multiple>
+				</cudt-select>
 			</u-form-item>
 			<!-- 级联选择 -->
 			<u-form-item label="级联选择" prop="cascader">
-				<jnpf-cascader v-model="dataForm.cascader" placeholder="请选择级联选择" :options="cascaderList">
-				</jnpf-cascader>
+				<cudt-cascader v-model="dataForm.cascader" placeholder="请选择级联选择" :options="cascaderList">
+				</cudt-cascader>
 			</u-form-item>
 			<!-- 省市区 -->
 			<u-form-item label="省市区" prop="address">
-				<jnpf-city-select v-model="dataForm.address" placeholder="请选择省市区" :level="2">
-				</jnpf-city-select>
+				<cudt-city-select v-model="dataForm.address" placeholder="请选择省市区" :level="2">
+				</cudt-city-select>
 			</u-form-item>
 			<!-- 树形选择 -->
 			<u-form-item label="树形选择" prop="treeSelect">
-				<jnpf-tree-select v-model="dataForm.treeSelect" placeholder="请选择树形选择" :options="treeData">
-				</jnpf-tree-select>
+				<cudt-tree-select v-model="dataForm.treeSelect" placeholder="请选择树形选择" :options="treeData">
+				</cudt-tree-select>
 			</u-form-item>
 			<!-- 文本 -->
-			<jnpf-text v-model="text"></jnpf-text>
+			<cudt-text v-model="text"></cudt-text>
 			<!-- 上传图片 -->
 			<u-form-item label="上传图片" prop="uploadImg">
-				<jnpf-upload v-model="dataForm.uploadImg"></jnpf-upload>
+				<cudt-upload v-model="dataForm.uploadImg"></cudt-upload>
 			</u-form-item>
 			<!-- 富文本 -->
 			<!-- <u-form-item label-width="0" prop="editor">
-				<jnpf-editor v-model="dataForm.editor" disabled></jnpf-editor>
+				<cudt-editor v-model="dataForm.editor" disabled></cudt-editor>
 			</u-form-item> -->
 			<!-- 评分 -->
 			<u-form-item label="评分" prop="rate">
@@ -74,66 +74,66 @@
 			<u-form-item label="滑块" prop="slider">
 				<u-slider v-model="dataForm.slider" step="1" min="1" max="100" style="width: 100%;"></u-slider>
 			</u-form-item>
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<!-- 时间选择 -->
 				<u-form-item label="时间选择" prop="time">
-					<jnpf-date-time type="time" v-model="dataForm.time"></jnpf-date-time>
+					<cudt-date-time type="time" v-model="dataForm.time"></cudt-date-time>
 				</u-form-item>
 				<!-- 日期选择 -->
 				<u-form-item label="日期选择" prop="date">
-					<jnpf-date-time type="date" v-model="dataForm.date"></jnpf-date-time>
+					<cudt-date-time type="date" v-model="dataForm.date"></cudt-date-time>
 				</u-form-item>
 			</view>
-			<view class="jnpf-card">
+			<view class="cudt-card">
 				<!-- 时间选择 -->
 				<u-form-item label="时间选择" prop="time">
-					<jnpf-date-time type="time" v-model="dataForm.time"></jnpf-date-time>
+					<cudt-date-time type="time" v-model="dataForm.time"></cudt-date-time>
 				</u-form-item>
 				<!-- 日期选择 -->
 				<u-form-item label="日期选择" prop="date">
-					<jnpf-date-time type="datetime" v-model="dataForm.date"></jnpf-date-time>
+					<cudt-date-time type="datetime" v-model="dataForm.date"></cudt-date-time>
 				</u-form-item>
 			</view>
 			<!-- 公司组件 -->
 			<u-form-item label="公司组件" prop="comSelect">
-				<jnpf-org-select type="organize" v-model="dataForm.comSelect" disabled></jnpf-org-select>
+				<cudt-org-select type="organize" v-model="dataForm.comSelect" disabled></cudt-org-select>
 			</u-form-item>
 			<!-- 部门组件 -->
 			<u-form-item label="部门组件" prop="depSelect">
-				<jnpf-org-select type="department" v-model="dataForm.depSelect"></jnpf-org-select>
+				<cudt-org-select type="department" v-model="dataForm.depSelect"></cudt-org-select>
 			</u-form-item>
 			<!-- 岗位组件 -->
 			<u-form-item label="岗位组件" prop="posSelect">
-				<jnpf-org-select type="position" v-model="dataForm.posSelect"></jnpf-org-select>
+				<cudt-org-select type="position" v-model="dataForm.posSelect"></cudt-org-select>
 			</u-form-item>
 			<!-- 用户组件 -->
 			<u-form-item label="用户组件" prop="userSelect">
-				<jnpf-org-select v-model="dataForm.userSelect"></jnpf-org-select>
+				<cudt-org-select v-model="dataForm.userSelect"></cudt-org-select>
 			</u-form-item>
 			<!-- 分组标题 -->
-			<jnpf-group content="分组标题" content-position="right"></jnpf-group>
+			<cudt-group content="分组标题" content-position="right"></cudt-group>
 			<!-- 系统控件(7个) + 单据组件 -->
 			<u-form-item label="系统控件" prop="createUser">
 				<u-input v-model="dataForm.createUser" placeholder="系统自动生成" disabled></u-input>
 			</u-form-item>
-			<view class="jnpf-table">
-				<view class="jnpf-table-item" v-for="(item,i) in dataForm.table" :key="i">
-					<view class="jnpf-table-item-title u-flex u-row-between">
-						<text class="jnpf-table-item-title-num">设计子表({{i+1}})</text>
-						<view class="jnpf-table-item-title-action" v-if="dataForm.table.length>1" @click="delItem(i)">删除
+			<view class="cudt-table">
+				<view class="cudt-table-item" v-for="(item,i) in dataForm.table" :key="i">
+					<view class="cudt-table-item-title u-flex u-row-between">
+						<text class="cudt-table-item-title-num">设计子表({{i+1}})</text>
+						<view class="cudt-table-item-title-action" v-if="dataForm.table.length>1" @click="delItem(i)">删除
 						</view>
 					</view>
 					<u-form-item label="单行输入" prop="dataForm.table[i].comInput">
 						<u-input v-model="dataForm.table[i].comInput" placeholder="请输入"></u-input>
 					</u-form-item>
 				</view>
-				<view class="jnpf-table-addBtn" @click="addItem">
+				<view class="cudt-table-addBtn" @click="addItem">
 					<u-icon name="plus" color="#2979ff"></u-icon>添加
 				</view>
 			</view>
 		</u-form>
 		<view class="buttom-actions">
-			<u-button class="buttom-btn" @click="jnpf.goBack">取消</u-button>
+			<u-button class="buttom-btn" @click="cudt.goBack">取消</u-button>
 			<u-button class="buttom-btn" type="primary" @click="submit">保存</u-button>
 			<!-- <u-button class="buttom-btn" type="warning" @click="submit">保存草稿</u-button> -->
 		</view>
