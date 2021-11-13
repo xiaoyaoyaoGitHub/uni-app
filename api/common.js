@@ -187,3 +187,40 @@ export function getDownloadUrl(type, fileId) {
 		method: 'GET'
 	})
 }
+
+export const moduleCodes = {
+  // 储备项目
+  StorePhaseProject: 'newstoreproject',
+  // 在建项目
+  BuildingPhaseProject: 'newongoingproject',
+  // 运营项目
+  OperationPhaseProject: 'newliveproject',
+  // 注销项目
+  CancelPhaseProject: '',
+  //收藏项目
+  favoriteproject: 'favoriteproject',
+  //储备进度
+  storeProcessCode: 'storeprogress',
+  //在建进度
+  buildProgressCode: 'BuildProgress',
+  buildPrgressTemplateCode: 'BuildProgressTemplate',
+  buildProgressLogCode: 'BuildProgressLog',
+  projectIssuesCode: 'ProjectIssues',
+  projectOperationCode: 'ProjectOperation',
+  preAuditCode: 'preaudit',
+  preAuditTemplateCode: 'PreAuditTemplate',
+  preAuditLogCode: 'preAuditLog',
+  customizedDetails: '储备项目,在建项目,运营项目,收藏项目',
+  myFavoriteModules: '收藏项目',
+  ProjectOperationIssue: 'ProjectOperationIssue',
+  OperationIssueList: 'OperationIssueList',
+  ProjectSpanYearAdjust: 'ProjectSpanYearAdjust',
+  ProjectYearHistory: 'ProjectYearHistory',
+  ProjectMap: 'ProjectMap',
+  ProjectProcessReview: 'ProjectProcessReview',	
+  ProcessReviewProjectItems: 'ProcessReviewProjectItems',
+  //通知公告
+  notification: 'notification',
+  //首页幻灯片
+  AppHomeSwiper: 'AppHomeSwiper'
+}
