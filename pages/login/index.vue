@@ -107,14 +107,21 @@
 						query.clientId = clientId
 						// #endif
 						login(query).then(res => {
-							this.loading = false
+							
 							let token = res.data.token
 							this.$store.commit('user/SET_TOKEN', token)
 							uni.setStorageSync('token', token)
-							uni.switchTab({
-								url: '/pages/index/index'
-							});
-						}).catch(() => {
+							this.$store.dispatch('user/getCurrentUser').then(() => {
+								this.loading = false
+								uni.reLaunch({
+									url: '/pages/index/index'
+								})
+							}).catch((e) => {
+								console.log(e)
+								this.loading = false
+							})
+						}).catch((e) => {
+							console.log(e)
 							this.loading = false
 						})
 					}

@@ -65,7 +65,7 @@
 	import {
 		getModelListViaCode
 	} from '@/api/apply/visualDev'
-	import { moduleCodes, formatNumber } from '@/api/common'
+	import { moduleCodes, formatNumber, getCurrentUser } from '@/api/common'
 	export default {
 		mixins: [MescrollMixin, IndexMixin],
 		data() {
@@ -123,7 +123,7 @@
 							invest[2] += parseFloat(item.pj_fund_invest_currentyear)
 						}
 						if(item.concerns && item.concerns.includes(this.userInfo.userAccount + ',')) {
-							this.list.push(itm)
+							this.list.push(item)
 						}
 					}
 					this.totalPlan = formatNumber(invest[0])
