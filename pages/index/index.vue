@@ -67,14 +67,14 @@
 					}
 				],
 				actionList: [
-					{name:"储备项目",icon:"bag", code:"newstoreproject"},
-					{name:"在建项目",icon:"play-circle", code:"newongoingproject"},
-					{name:"运营项目",icon:"rmb-circle", code:"newliveproject"},
-					{name:"关注项目",icon:"star", code:"favoriteproject"},
-					{name:"项目地图",icon:"map", code:"ProjectMap"},
-					{name:"待审核项目",icon:"order", code:"ProjectReview"},
-					{name:"待审核调度",icon:"lock", code:"ProcessReviewProjectItems"},
-					{name:"关注问题",icon:"warning", code:"ProjectIssues"}
+					{name:"储备项目",icon:"bag", code:moduleCodes.StorePhaseProject},
+					{name:"在建项目",icon:"play-circle", code:moduleCodes.BuildingPhaseProject},
+					{name:"运营项目",icon:"rmb-circle", code:moduleCodes.OperationPhaseProject},
+					{name:"关注项目",icon:"star", code:moduleCodes.favoriteproject},
+					{name:"项目地图",icon:"map", code:moduleCodes.ProjectMap},
+					{name:"待审核项目",icon:"order", code:moduleCodes.ProjectReview},
+					{name:"待审核调度",icon:"lock", code:moduleCodes.ProcessReviewProjectItems},
+					{name:"关注问题",icon:"warning", code:moduleCodes.ProjectIssues}
 				],
 				userInfo: {},
 				notificationCount: 0
@@ -161,11 +161,16 @@
 					this.mescroll.resetUpScroll();
 				}, 300)
 			},
-			openPage(path) {
-				if (!path) return
-				uni.navigateTo({
-					url: path
-				})
+			handleClick(item) {
+				let path = ""
+				if(item.code === moduleCodes.StorePhaseProject || item.code === moduleCodes.BuildingPhaseProject || item.code === moduleCodes.OperationPhaseProject ) {
+					path = "/pages/project/list/index?phase=" + item.code
+				}
+				if(path) {
+					uni.navigateTo({
+						url: path
+					})
+				}
 			}
 		}
 	}

@@ -199,26 +199,35 @@ export const moduleCodes = {
 	CancelPhaseProject: '',
 	//收藏项目
 	favoriteproject: 'favoriteproject',
-	//储备进度
+	//项目详情 - 储备进度
 	storeProcessCode: 'storeprogress',
-	//在建进度
+	//项目详情 - 在建进度
 	buildProgressCode: 'BuildProgress',
 	buildPrgressTemplateCode: 'BuildProgressTemplate',
+	//项目详情 - 在建进度日志
 	buildProgressLogCode: 'BuildProgressLog',
+	//项目详情 - 项目问题
 	projectIssuesCode: 'ProjectIssues',
+	//项目详情 - 项目运营
 	projectOperationCode: 'ProjectOperation',
+	//项目详情 - 前期手续
 	preAuditCode: 'preaudit',
 	preAuditTemplateCode: 'PreAuditTemplate',
+	//项目详情 - 前期手续日志
 	preAuditLogCode: 'preAuditLog',
 	customizedDetails: '储备项目,在建项目,运营项目,收藏项目',
 	myFavoriteModules: '收藏项目',
+	//营商问题
 	ProjectOperationIssue: 'ProjectOperationIssue',
 	OperationIssueList: 'OperationIssueList',
 	ProjectSpanYearAdjust: 'ProjectSpanYearAdjust',
 	ProjectYearHistory: 'ProjectYearHistory',
 	ProjectMap: 'ProjectMap',
+	//项目详情 - 在建项目调度
 	ProjectProcessReview: 'ProjectProcessReview',
 	ProcessReviewProjectItems: 'ProcessReviewProjectItems',
+	//项目审核
+	ProjectReview: 'ProjectReview',
 	//通知公告
 	notification: 'notification',
 	//首页幻灯片

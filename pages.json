@@ -87,19 +87,34 @@
 			"path": "pages/form/index"
 		}
 	],
-	"subPackages": [
-    {
-      "root": "pages/reportTable",
-      "pages": [
-        {
-          "path": "storeReport/index",
-          "style": {
-            "navigationBarTitleText": "储备报表"
-          }
-        }
-      ]
-    },
-    {
+	"subPackages": [{
+		  "root": "pages/reportTable",
+		  "pages": [
+			{
+			  "path": "storeReport/index",
+			  "style": {
+				"navigationBarTitleText": "储备报表"
+			  }
+			}
+		  ]
+		},
+		{
+			"root": "pages/project",
+			"pages": [{
+					"path": "list/index",
+					"style": {
+						"navigationBarTitleText": "项目列表"
+					}
+				},
+				{
+					"path": "detail/index",
+					"style": {
+						"navigationBarTitleText": "项目详情"
+					}
+				}
+			]
+		},
+		{
 			"root": "pages/workFlow",
 			"pages": [{
 					"path": "flowBefore/index",

@@ -1,0 +1,129 @@
+<template>
+	<view class="contacts-v">
+		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :sticky="true"
+			:down="downOption" :up="upOption" :bottombar="false">
+			<view class="search-box search-box_sticky">
+				<u-search placeholder="请输入部分项目名称搜索" v-model="keyword" height="72" :show-action="false" @change="search"
+					bg-color="#f0f2f6" shape="square">
+				</u-search>
+			</view>
+			<view class="list-cell u-border-bottom" v-for="(item, i) in list" :key="i" @click="detail(item.id)">
+				<u-avatar :src="baseURL+item.headIcon"></u-avatar>
+				<view class="list-cell-txt">
+					<view class="u-font-30">{{item.realName}}/{{item.account}}</view>
+					<view class="u-font-24 department">{{item.department}}</view>
+				</view>
+			</view>
+		</mescroll-body>
+	</view>
+</template>
+
+<script>
+	import { getImUser, moduleCodes } from '@/api/common.js'
+	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
+	export default {
+		mixins: [MescrollMixin],
+		data() {
+			return {
+				downOption: {
+					use: true,
+					auto: true
+				},
+				upOption: {
+					page: {
+						num: 0,
+						size: 20,
+						time: null
+					},
+					empty: {
+						use: true,
+						icon: "static/nodata.png",
+						tip: "暂无数据",
+						fixed: true,
+						top: "200rpx",
+					},
+					textNoMore: '没有更多数据',
+				},
+				keyword: '',
+				list: []
+			}
+		},
+		onLoad(param) {
+			this.userInfo = uni.getStorageSync('userInfo') || {}
+			this.dicList = uni.getStorageSync('dictionaryList') || []
+			let title = "项目列表"
+			let phase = param.phase
+			if(phase === moduleCodes.StorePhaseProject) {
+				title = "储备项目列表"
+			} else if (phase === moduleCodes.BuildingPhaseProject) {
+				title = "在建项目列表"
+			} else if (phase === moduleCodes.OperationPhaseProject) {
+				title = "运营项目列表"
+			}
+			uni.setNavigationBarTitle({
+				title: title
+			})
+		},
+		computed: {
+			baseURL() {
+				return this.define.baseURL
+			}
+		},
+		methods: {
+			upCallback(page) {
+				let query = {
+					currentPage: page.num,
+					pageSize: page.size,
+					keyword: this.keyword
+				}
+				getImUser(query, {
+					load: page.num == 1
+				}).then(res => {
+					this.mescroll.endSuccess(0);
+					// if (page.num == 1) this.list = [];
+					// const list = res.data.list;
+					// this.list = this.list.concat(list);
+				}).catch(() => {
+					this.mescroll.endErr();
+				})
+			},
+			search() {
+				// 节流,避免输入过快多次请求
+				this.searchTimer && clearTimeout(this.searchTimer)
+				this.searchTimer = setTimeout(() => {
+					this.list = [];
+					this.mescroll.resetUpScroll();
+				}, 300)
+			},
+			detail(id) {
+				uni.navigateTo({
+					url: '/pages/message/userDetail/index?userId=' + id,
+				})
+			}
+		}
+	}
+</script>
+
+<style lang="scss">
+	.contacts-v {
+		.list-cell {
+			display: flex;
+			box-sizing: border-box;
+			width: 100%;
+			padding: 20rpx 32rpx;
+			overflow: hidden;
+			color: $u-content-color;
+			font-size: 28rpx;
+			line-height: 24px;
+			background-color: #fff;
+
+			.list-cell-txt {
+				margin-left: 20rpx;
+
+				.department {
+					color: #9A9A9A;
+				}
+			}
+		}
+	}
+</style>

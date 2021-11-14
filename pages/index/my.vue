@@ -24,9 +24,6 @@
 				<u-cell-item title="联系我们" @click="openPage('/pages/my/contactUs/index')">
 					<text class="icon-ym icon-ym-lianxi u-m-r-16 u-font-36" slot="icon" />
 				</u-cell-item>
-				<u-cell-item title="应用介绍" @click="openPage('/pages/my/abouts/index')">
-					<text class="icon-ym icon-ym-yingyong u-m-r-16 u-font-36" slot="icon" />
-				</u-cell-item>
 			</u-cell-group>
 		</view>
 		<!-- #ifdef APP-NVUE -->

@@ -29,7 +29,7 @@
 			</view>
 			<view style="margin-top: 20rpx;">
 				<u-grid :col="3" :border="false">
-					<u-grid-item v-for="(item, index) in actionList" :key="index" @click="handleClick(item)">
+					<u-grid-item v-for="(item, index) in actionList" :key="index" @click="toDetail(item)">
 						<u-badge :count="item.count" :offset="[20, 30]"></u-badge>
 						<u-icon :name="item.icon" :size="36"></u-icon>
 						<view class="grid-text">{{item.name}}</view>
@@ -129,19 +129,16 @@
 					this.totalPlan = formatNumber(invest[0])
 					this.totalActual = formatNumber(invest[1])
 					this.yearPlan = formatNumber(invest[2])
-					let storeAction = {name:"储备项目",icon:"bag", count: count[0], code:"newstoreproject"}
+					let storeAction = {name:"储备项目",icon:"bag", count: count[0], code: moduleCodes.StorePhaseProject}
 					this.actionList.push(storeAction)
-					let buildingAction = {name:"在建项目",icon:"play-circle", count: count[1], code:"newongoingproject"}
+					let buildingAction = {name:"在建项目",icon:"play-circle", count: count[1], code: moduleCodes.BuildingPhaseProject}
 					this.actionList.push(buildingAction)
-					let operaAction = {name:"运营项目",icon:"rmb-circle", count: count[2], code:"newliveproject"}
+					let operaAction = {name:"运营项目",icon:"rmb-circle", count: count[2], code: moduleCodes.OperationPhaseProject}
 					this.actionList.push(operaAction)
 				}).catch(err => {})
 			},
 			toDetail(item) {
-				alert(item)
-			},
-			openPage(path) {
-				if (!path) return
+				const path = "/pages/project/list/index?phase=" + item.code
 				uni.navigateTo({
 					url: path
 				})
