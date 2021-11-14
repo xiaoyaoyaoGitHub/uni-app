@@ -6,14 +6,6 @@ const resources = {
 		banner: "https://app.cdn.cudtsoft.com/image/3.0/login/top.png",
 		logo: "https://app.cdn.cudtsoft.com/image/banner/logo.png",
 	},
-	banner: {
-		home1Url: "https://app.cdn.cudtsoft.com/image/3.2/banner1.png",
-		home2Url: "https://app.cdn.cudtsoft.com/image/3.2/banner2.png",
-		home3Url: "https://app.cdn.cudtsoft.com/image/3.2/banner4.png",
-		contactus: "https://app.cdn.cudtsoft.com/image/banner/contactus.png",
-		loginlogo: "https://app.cdn.cudtsoft.com/image/banner/logo.png",
-		accountSecurity: "https://app.cdn.cudtsoft.com/image/banner/accountSecurity.png"
-	},
 	message: {
 		nocontent: "https://app.cdn.cudtsoft.com/image/message/nocontent.png",
 		nodata: "https://app.cdn.cudtsoft.com/image/message/nodata.png",

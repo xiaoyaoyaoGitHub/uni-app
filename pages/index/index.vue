@@ -80,17 +80,6 @@
 				notificationCount: 0
 			}
 		},
-		watch: {
-			badgeNum(val) {
-				this.setTabBarBadge()
-			}
-		},
-		computed: {
-			...mapGetters(['msgInfo']),
-			baseURL() {
-				return this.define.baseURL
-			}
-		},
 		onLoad() {
 			this.userInfo = uni.getStorageSync('userInfo') || {}
 			uni.$on('updateList', data => {})
@@ -193,17 +182,6 @@
 	}
 	.u-icon {
 		color: blue;
-	}
-	.list-cell {
-		display: flex;
-		box-sizing: border-box;
-		width: 100%;
-		padding: 10px 24rpx;
-		overflow: hidden;
-		color: #323233;
-		font-size: 14px;
-		line-height: 24px;
-		background-color: #fff;
 	}
 	.index-v {
 		.search-box_sticky {

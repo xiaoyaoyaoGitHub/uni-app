@@ -117,10 +117,10 @@ export function login(data) {
 
 //获取验证码图片
 export function getCodeImg() {
-  return request({
-    url: '/api/oauth/code',
-    method: 'get'
-  })
+	return request({
+		url: '/api/oauth/code',
+		method: 'get'
+	})
 }
 
 //获取验证码
@@ -189,38 +189,69 @@ export function getDownloadUrl(type, fileId) {
 }
 
 export const moduleCodes = {
-  // 储备项目
-  StorePhaseProject: 'newstoreproject',
-  // 在建项目
-  BuildingPhaseProject: 'newongoingproject',
-  // 运营项目
-  OperationPhaseProject: 'newliveproject',
-  // 注销项目
-  CancelPhaseProject: '',
-  //收藏项目
-  favoriteproject: 'favoriteproject',
-  //储备进度
-  storeProcessCode: 'storeprogress',
-  //在建进度
-  buildProgressCode: 'BuildProgress',
-  buildPrgressTemplateCode: 'BuildProgressTemplate',
-  buildProgressLogCode: 'BuildProgressLog',
-  projectIssuesCode: 'ProjectIssues',
-  projectOperationCode: 'ProjectOperation',
-  preAuditCode: 'preaudit',
-  preAuditTemplateCode: 'PreAuditTemplate',
-  preAuditLogCode: 'preAuditLog',
-  customizedDetails: '储备项目,在建项目,运营项目,收藏项目',
-  myFavoriteModules: '收藏项目',
-  ProjectOperationIssue: 'ProjectOperationIssue',
-  OperationIssueList: 'OperationIssueList',
-  ProjectSpanYearAdjust: 'ProjectSpanYearAdjust',
-  ProjectYearHistory: 'ProjectYearHistory',
-  ProjectMap: 'ProjectMap',
-  ProjectProcessReview: 'ProjectProcessReview',	
-  ProcessReviewProjectItems: 'ProcessReviewProjectItems',
-  //通知公告
-  notification: 'notification',
-  //首页幻灯片
-  AppHomeSwiper: 'AppHomeSwiper'
+	// 储备项目
+	StorePhaseProject: 'newstoreproject',
+	// 在建项目
+	BuildingPhaseProject: 'newongoingproject',
+	// 运营项目
+	OperationPhaseProject: 'newliveproject',
+	// 注销项目
+	CancelPhaseProject: '',
+	//收藏项目
+	favoriteproject: 'favoriteproject',
+	//储备进度
+	storeProcessCode: 'storeprogress',
+	//在建进度
+	buildProgressCode: 'BuildProgress',
+	buildPrgressTemplateCode: 'BuildProgressTemplate',
+	buildProgressLogCode: 'BuildProgressLog',
+	projectIssuesCode: 'ProjectIssues',
+	projectOperationCode: 'ProjectOperation',
+	preAuditCode: 'preaudit',
+	preAuditTemplateCode: 'PreAuditTemplate',
+	preAuditLogCode: 'preAuditLog',
+	customizedDetails: '储备项目,在建项目,运营项目,收藏项目',
+	myFavoriteModules: '收藏项目',
+	ProjectOperationIssue: 'ProjectOperationIssue',
+	OperationIssueList: 'OperationIssueList',
+	ProjectSpanYearAdjust: 'ProjectSpanYearAdjust',
+	ProjectYearHistory: 'ProjectYearHistory',
+	ProjectMap: 'ProjectMap',
+	ProjectProcessReview: 'ProjectProcessReview',
+	ProcessReviewProjectItems: 'ProcessReviewProjectItems',
+	//通知公告
+	notification: 'notification',
+	//首页幻灯片
+	AppHomeSwiper: 'AppHomeSwiper',
+	//项目列表
+	AppProjectList: 'AppProjectList'
+}
+
+export const reviewOptions = [
+  {key: "0", name: '未提交'},
+  {key: "1", name: '等待审核'},
+  {key: "2", name: '审核通过'},
+  {key: "3", name: '审核驳回'},
+  {key: "4", name: '流程撤回'},
+  {key: "5", name: '审核终止'}
+]
+
+export function formatNumber(value) {
+	if (!value) return '0.00'
+	value = value.toFixed(2)
+	var intPart = Math.trunc(value) // 获取整数部分
+	var intPartFormat = intPart.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,')
+	var floatPart = '.00' // 预定义小数部分
+	var value2Array = value.split('.')
+	// =2表示数据有小数位
+	if (value2Array.length === 2) {
+		floatPart = value2Array[1].toString() // 拿到小数部分
+		if (floatPart.length === 1) { // 补0,实际上用不着
+			return intPartFormat + '.' + floatPart + '0'
+		} else {
+			return intPartFormat + '.' + floatPart
+		}
+	} else {
+		return intPartFormat + floatPart
+	}
 }

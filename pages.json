@@ -37,19 +37,7 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "首 页",
-				"app-plus": {
-					//#ifdef APP-PLUS
-					"titleNView": {
-						"buttons": [{
-							"fontSize": "22px",
-							"color": "#a0a0a0",
-							"fontSrc": "/static/iconfont.ttf",
-							"text": "\ue6bd"
-						}]
-					}
-					//#endif
-				}
+				"navigationBarTitleText": "首 页"
 			}
 		},
 		{
@@ -63,9 +51,9 @@
 			}
 		},
 		{
-			"path": "pages/index/workFlow",
+			"path": "pages/index/projects",
 			"style": {
-				"navigationBarTitleText": "协同"
+				"navigationBarTitleText": "项 目"
 			}
 		},
 		{
@@ -94,36 +82,6 @@
 		}
 	],
 	"subPackages": [{
-			"root": "pages/message",
-			"pages": [{
-					"path": "userDetail/index",
-					"style": {
-						"navigationBarTitleText": "",
-						"navigationBarTextStyle": "white",
-						"navigationBarBackgroundColor": "#D8D8D8"
-					}
-				},
-				{
-					"path": "message/index",
-					"style": {
-						"navigationBarTitleText": ""
-					}
-				},
-				{
-					"path": "messageDetail/index",
-					"style": {
-						"navigationBarTitleText": ""
-					}
-				},
-				{
-					"path": "im/index",
-					"style": {
-						"navigationBarTitleText": ""
-					}
-				}
-			]
-		},
-		{
 			"root": "pages/workFlow",
 			"pages": [{
 					"path": "flowBefore/index",
@@ -305,9 +263,9 @@
 			"network": "all",
 			"packages": ["pages/message"]
 		},
-		"pages/index/workFlow": {
+		"pages/index/projects": {
 			"network": "all",
-			"packages": ["pages/workFlow"]
+			"packages": ["pages/projects"]
 		},
 		"pages/index/apply": {
 			"network": "all",
@@ -325,14 +283,14 @@
 		"list": [{
 				"pagePath": "pages/index/index",
 				"text": "首页",
-				"iconPath": "static/image/tabbar/message.png",
-				"selectedIconPath": "static/image/tabbar/messageHL.png"
+				"iconPath": "static/image/tabbar/home.png",
+				"selectedIconPath": "static/image/tabbar/homeHL.png"
 			},
 			{
-				"pagePath": "pages/index/workFlow",
+				"pagePath": "pages/index/projects",
 				"text": "项目",
-				"iconPath": "static/image/tabbar/workFlow.png",
-				"selectedIconPath": "static/image/tabbar/workFlowHL.png"
+				"iconPath": "static/image/tabbar/project.png",
+				"selectedIconPath": "static/image/tabbar/projectHL.png"
 			},
 			{
 				"pagePath": "pages/index/apply",

@@ -8,8 +8,8 @@
 				<image src="/static/logo.png" mode="widthFix"></image>
 			</view>
 			<view class="u-flex-col introduce u-m-t-30">
-				<text class="u-font-36 text-one" style="">cudt快速开发平台</text>
-				<text class="u-font-24 text-two">低代码，企业数字化好帮手</text>
+				<text class="u-font-36 text-one" style="">云创APP</text>
+				<text class="u-font-24 text-two">倾心打造数字化平台</text>
 			</view>
 			<view class="loginSwitch u-flex-col">
 				<view class="loginInputBox u-flex-col">
@@ -112,7 +112,7 @@
 							this.$store.commit('user/SET_TOKEN', token)
 							uni.setStorageSync('token', token)
 							uni.switchTab({
-								url: '/pages/index/apply'
+								url: '/pages/index/index'
 							});
 						}).catch(() => {
 							this.loading = false
