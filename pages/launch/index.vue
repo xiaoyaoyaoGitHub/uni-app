@@ -27,7 +27,7 @@
 			if (launchFlag) {
 				if (token) {
 					uni.switchTab({
-						url: '/pages/index/apply'
+						url: '/pages/index/index'
 					})
 				} else {
 					uni.redirectTo({
@@ -43,7 +43,7 @@
 				// #ifndef APP-PLUS
 				if (token) {
 					uni.switchTab({
-						url: '/pages/index/apply'
+						url: '/pages/index/index'
 					})
 				} else {
 					uni.redirectTo({
