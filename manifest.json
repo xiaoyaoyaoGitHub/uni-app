@@ -155,9 +155,9 @@
     /* 快应用特有相关 */
     "mp-weixin" : {
         /* 小程序特有相关 */
-        "appid" : "wx8f5cb90d8ff960a3",
+        "appid" : "wxa8a657708a2ae8dd",
         "setting" : {
-            "urlCheck" : true,
+            "urlCheck" : false,
             "es6" : true,
             "postcss" : true,
             "minified" : true

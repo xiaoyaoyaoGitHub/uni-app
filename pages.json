@@ -56,6 +56,12 @@
 				"navigationBarTitleText": "项 目"
 			}
 		},
+    {
+      "path": "pages/index/reportTable",
+      "style": {
+        "navigationBarTitleText": "报表"
+      }
+    },
 		{
 			"path": "pages/index/apply",
 			"style": {
@@ -63,9 +69,9 @@
 			}
 		},
 		{
-			"path": "pages/index/contacts",
+			"path": "pages/index/reportTable",
 			"style": {
-				"navigationBarTitleText": "通讯录"
+				"navigationBarTitleText": "报表"
 			}
 		},
 		{
@@ -81,7 +87,19 @@
 			"path": "pages/form/index"
 		}
 	],
-	"subPackages": [{
+	"subPackages": [
+    {
+      "root": "pages/reportTable",
+      "pages": [
+        {
+          "path": "storeReport/index",
+          "style": {
+            "navigationBarTitleText": "储备报表"
+          }
+        }
+      ]
+    },
+    {
 			"root": "pages/workFlow",
 			"pages": [{
 					"path": "flowBefore/index",
@@ -294,13 +312,13 @@
 			},
 			{
 				"pagePath": "pages/index/apply",
-				"text": "报表",
+				"text": "营商",
 				"iconPath": "static/image/tabbar/apply.png",
 				"selectedIconPath": "static/image/tabbar/applyHL.png"
 			},
 			{
-				"pagePath": "pages/index/contacts",
-				"text": "营商",
+				"pagePath": "pages/index/reportTable",
+				"text": "报表",
 				"iconPath": "static/image/tabbar/contacts.png",
 				"selectedIconPath": "static/image/tabbar/contactsHL.png"
 			},
