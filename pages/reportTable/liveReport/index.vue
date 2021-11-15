@@ -10,24 +10,17 @@
       <u-popup v-model="popupShow" mode="bottom" height = "60%">
         <view style="margin: 10px 20px 10px 20px">
           <u-form ref="uForm">
-
-            <u-form-item label="资金规模" label-position = "top"	>
-              <u-number-box :min="1" v-model="listQuery.startMoney"></u-number-box>
-              <text class="separator">-</text>
-              <u-number-box :min="1" v-model="listQuery.endMoney"></u-number-box>
-            </u-form-item>
-
-            <u-form-item label="项目分类" label-position = "top"	>
-              <cudt-checkbox v-model="listQuery.projectCategory" :options="queryConditionData.categoryList">
-              </cudt-checkbox>
-            </u-form-item>
-
 <!--            <u-form-item label="区域" label-position = "left"	label-width = "130rpx">-->
 <!--              <cudt-city-select></cudt-city-select>-->
 <!--            </u-form-item>-->
 
             <u-form-item label="行业" label-position = "left"	label-width = "130rpx">
               <cudt-select v-model="listQuery.business" placeholder="请选择" :options="queryConditionData.businessList">
+              </cudt-select>
+            </u-form-item>
+
+            <u-form-item v-if="reportType === 0" label="展示方式" label-position = "left"	label-width = "130rpx">
+              <cudt-select v-model="listQuery.way" placeholder="请选择" :options="wayList">
               </cudt-select>
             </u-form-item>
 
@@ -41,36 +34,33 @@
       <view v-if="reportType === 0">
         <u-table v-if = "listQuery.way ===1">
           <u-tr class="u-tr" >
-            <u-th  class="u-td" width="100px">项目名称</u-th>
-            <u-th  >
-              <u-th  class="u-td" >在建项目合计</u-th>
-              <u-tr width="670px">
-                <u-th  class="u-td" width="110px">个数（个）</u-th>
-                <u-th  class="u-td" width="130px">总投资（万元）</u-th>
-                <u-th  class="u-td" width="140px">累计完成（万元）</u-th>
-                <u-th  class="u-td" width="160px">今年计划总投资（万元）</u-th>
-                <u-th  class="u-td" width="140px">今年完成（万元）</u-th>
-              </u-tr>
-            </u-th>
+            <u-th  class="u-th" v-for="(item, index) in tableHead" :prop = item.id :key = index >{{item.name}}</u-th>
           </u-tr>
-
-          <u-tr>
-            <u-td>1</u-td>
-            <u-td>1</u-td>
-            <u-td>1</u-td>
-            <u-td>1</u-td>
-            <u-td>1</u-td>
-            <u-td>1</u-td>
-
+          <u-tr class="u-tr" v-for="(item, index) in list" :key = index>
+            <u-td  class="u-td" v-for="(value,index) in tableHead" :key = index >{{item[value.id]}}</u-td>
           </u-tr>
-
-
+        </u-table>
+        <u-table v-if = "listQuery.way ===2">
+          <u-tr class="u-tr" >
+            <u-th width="30%" class="u-th" v-for="(item, index) in tableHead" :prop = item.id :key = index >{{item.name}}</u-th>
+          </u-tr>
+          <u-tr class="u-tr" v-for="(item, index) in list" :key = index>
+            <u-td width="30%" class="u-td" v-for="(value,index) in tableHead" :key = index >{{item[value.id]}}</u-td>
+          </u-tr>
+        </u-table>
+        <u-table v-if = "listQuery.way ===3">
+          <u-tr class="u-tr" >
+            <u-th width="50%" class="u-th" v-for="(item, index) in tableHead" :prop = item.id :key = index >{{item.name}}</u-th>
+          </u-tr>
+          <u-tr class="u-tr" v-for="(item, index) in list" :key = index>
+            <u-td width="50%" class="u-td" v-for="(value,index) in tableHead" :key = index >{{item[value.id]}}</u-td>
+          </u-tr>
         </u-table>
       </view>
       <view v-if="reportType === 1 && detailList.length  > 0">
         <u-table >
           <u-tr class="u-tr" >
-            <u-td width="30%" class="u-td" v-for="(item, index) in detailTableHead" :prop = item.prop :key = index >{{item.label}}</u-td>
+            <u-th width="30%" class="u-th" v-for="(item, index) in detailTableHead" :prop = item.prop :key = index >{{item.label}}</u-th>
           </u-tr>
           <u-tr class="u-tr" v-for="(item, index) in detailList" :key = index>
             <u-td width="30%" class="u-td" v-for="(value,index) in detailTableHead" :key = index >{{item[value.prop]}}</u-td>
@@ -92,9 +82,8 @@
   import CitySelect from "../../../components/cudt/cudt-city-select/city-select";
   import CudtNumRange from "../../../components/cudt/cudt-num-range";
   import CudtSelect from "../../../components/cudt/cudt-select";
-  import UTr from "../../../uview-ui/components/u-tr/u-tr";
 	export default {
-    components: {UTr, CudtSelect, CudtNumRange, CitySelect},
+    components: {CudtSelect, CudtNumRange, CitySelect},
     mixins: [MescrollMixin],
     data() {
       return {
@@ -103,6 +92,20 @@
           borderColor: 'black'
         },
         tabIndex: 0,
+        wayList: [
+          {
+            id: 1,
+            fullName: '按区域'
+          },
+          {
+            id: 2,
+            fullName: '按行业'
+          },
+          {
+            id: 3,
+            fullName: '按投资规模'
+          }
+        ],
         selectList: [
           {
             value: 0,
@@ -134,10 +137,10 @@
           subBusiness: '',
           business: '',
           way: 1,
-          category: 'build',
+          category: 'live'
         },
-        projectPhase: '6bfa51249e2e4d31a8128b50c3b33877', //在建项目id
-        modelId: 'b094ad34716143b5a13e291572ab1af3',
+        projectPhase: 'c412b1ee888d4b179a055acea74b36ac', //运营项目id
+        modelId: '1a0d97c689c84f2599e6fffd29f9efc6',
         queryConditionData: {},
       }
     },
@@ -228,23 +231,6 @@
     width: 200%;
     display: flex;
     flex-wrap: nowrap;
-  }
-  .table_box{
-    .box_bt{
-      border-bottom: unset !important;
-    }
-    .box_pd{
-      padding: unset !important;
-    }
-    .box_br{
-      border-right: unset !important;
-    }
-    .box_cus{
-      padding: 10px 3px !important;
-    }
-    /deep/ .u-td[data-v-35ace0c0]{
-      height: auto;
-    }
   }
 
 </style>

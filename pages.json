@@ -87,34 +87,47 @@
 			"path": "pages/form/index"
 		}
 	],
-	"subPackages": [{
-		  "root": "pages/reportTable",
-		  "pages": [
-			{
-			  "path": "storeReport/index",
-			  "style": {
-				"navigationBarTitleText": "储备报表"
-			  }
-			}
-		  ]
-		},
-		{
-			"root": "pages/project",
-			"pages": [{
-					"path": "list/index",
-					"style": {
-						"navigationBarTitleText": "项目列表"
-					}
-				},
-				{
-					"path": "detail/index",
-					"style": {
-						"navigationBarTitleText": "项目详情"
-					}
-				}
-			]
-		},
-		{
+	"subPackages": [
+    {
+      "root": "pages/reportTable",
+      "pages": [
+        {
+          "path": "storeReport/index",
+          "style": {
+            "navigationBarTitleText": "储备报表"
+          }
+        },
+        {
+          "path": "buildReport/index",
+          "style": {
+            "navigationBarTitleText": "在建报表"
+          }
+        },
+        {
+          "path": "liveReport/index",
+          "style": {
+            "navigationBarTitleText": "运营报表"
+          }
+        }
+      ]
+    },
+    {
+      "root": "pages/project",
+      "pages": [{
+        "path": "list/index",
+        "style": {
+          "navigationBarTitleText": "项目列表"
+        }
+      },
+        {
+          "path": "detail/index",
+          "style": {
+            "navigationBarTitleText": "项目详情"
+          }
+        }
+      ]
+    },
+    {
 			"root": "pages/workFlow",
 			"pages": [{
 					"path": "flowBefore/index",
@@ -328,8 +341,8 @@
 			{
 				"pagePath": "pages/index/apply",
 				"text": "营商",
-				"iconPath": "static/image/tabbar/operation.png",
-				"selectedIconPath": "static/image/tabbar/operationHL.png"
+				"iconPath": "static/image/tabbar/apply.png",
+				"selectedIconPath": "static/image/tabbar/applyHL.png"
 			},
 			{
 				"pagePath": "pages/index/reportTable",

@@ -8,12 +8,12 @@
 						<text class="icon-ym icon-ym-flowLaunch-app u-font-40 tabs-icon launch" />
 						<text class="u-font-24">储备报表</text>
 					</navigator>
-					<navigator url="/pages/workFlow/flowTodo/index" hover-class="none"
+					<navigator url="/pages/reportTable/buildReport/index" hover-class="none"
 						class="tabs-item u-flex-col u-col-center">
 						<text class="icon-ym icon-ym-flowTodo-app u-font-40 tabs-icon todo" />
 						<text class="u-font-24">在建报表</text>
 					</navigator>
-					<navigator url="/pages/workFlow/flowDone/index" hover-class="none"
+					<navigator url="/pages/reportTable/liveReport/index" hover-class="none"
 						class="tabs-item u-flex-col u-col-center">
 						<text class="icon-ym icon-ym-flowDone-app u-font-40 tabs-icon done" />
 						<text class="u-font-24">运营报表</text>
