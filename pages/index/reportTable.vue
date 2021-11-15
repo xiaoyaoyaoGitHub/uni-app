@@ -18,7 +18,7 @@
 						<text class="icon-ym icon-ym-flowDone-app u-font-40 tabs-icon done" />
 						<text class="u-font-24">运营报表</text>
 					</navigator>
-					<navigator url="/pages/workFlow/flowCopy/index" hover-class="none"
+					<navigator url="/pages/reportTable/projectMap/index" hover-class="none"
 						class="tabs-item u-flex-col u-col-center">
 						<text class="icon-ym icon-ym-flowCopy-app u-font-40 tabs-icon copy" />
 						<text class="u-font-24">项目地图</text>

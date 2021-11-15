@@ -67,7 +67,7 @@
                     "NSFaceIDUsageDescription" : "以便于使用快捷登录等功能"
                 },
                 "idfa" : false,
-                "urltypes" : "jnpf"
+                "urltypes" : "cudt"
             },
             /* ios打包配置 */
             "sdkConfigs" : {
@@ -76,9 +76,9 @@
                 },
                 "payment" : {},
                 "maps" : {
-                    "baidu" : {
-                        "appkey_ios" : "CA6mx9NZ9DhTYxjVKB7Bkgr6KxpzMfO4",
-                        "appkey_android" : "1vlnkDFaZz4GxAHMMk6kwGRcZr1OfBau"
+                    "amap" : {
+                        "appkey_ios" : "111",
+                        "appkey_android" : "1111"
                     }
                 },
                 "ad" : {},
@@ -177,9 +177,16 @@
     },
     "h5" : {
         "sdkConfigs" : {
-            "maps" : {}
+            "maps" : {
+                "amap" : {
+                    "key" : "7ab53b28352e55dc5754699add0ad862"
+                },
+                "qqmap" : {
+                    "key" : "7JPBZ-JZOWF-JD3JZ-JTWRE-G5IC6-HSFFT"
+                }
+            }
         },
-        "title" : "jnpf java版",
+        "title" : "cudt java版",
         "template" : "template.h5.html",
         "domain" : "https://app.java.jnpfsoft.com",
         "router" : {

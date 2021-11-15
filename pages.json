@@ -108,6 +108,12 @@
           "style": {
             "navigationBarTitleText": "运营报表"
           }
+        },
+        {
+          "path": "projectMap/index",
+          "style": {
+            "navigationBarTitleText": "项目地图"
+          }
         }
       ]
     },

@@ -61,10 +61,7 @@
             <u-td>1</u-td>
             <u-td>1</u-td>
             <u-td>1</u-td>
-
           </u-tr>
-
-
         </u-table>
       </view>
       <view v-if="reportType === 1 && detailList.length  > 0">
