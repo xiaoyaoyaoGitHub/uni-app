@@ -26,6 +26,15 @@ export function getDetailReportList(data) {
   })
 }
 
+// 获取地图列表
+export function getMapInfoList(data) {
+  return request({
+    url: `/api/visualdev/code/OnlineDev/ProjectMap/List`,
+    method: 'post',
+    data
+  })
+}
+
 // 获取汇总报表EXCEL
 export function ExportSummationExcel(data) {
   return request({

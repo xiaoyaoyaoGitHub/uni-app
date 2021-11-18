@@ -56,12 +56,6 @@
 				"navigationBarTitleText": "项 目"
 			}
 		},
-    {
-      "path": "pages/index/reportTable",
-      "style": {
-        "navigationBarTitleText": "报表"
-      }
-    },
 		{
 			"path": "pages/index/apply",
 			"style": {
@@ -311,14 +305,6 @@
 		}
 	],
 	"preloadRule": {
-		"pages/index/index": {
-			"network": "all",
-			"packages": ["pages/message"]
-		},
-		"pages/index/projects": {
-			"network": "all",
-			"packages": ["pages/projects"]
-		},
 		"pages/index/apply": {
 			"network": "all",
 			"packages": ["pages/apply"]

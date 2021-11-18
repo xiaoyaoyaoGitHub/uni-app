@@ -39,40 +39,80 @@
       </u-popup>
     <scroll-view scroll-x="true" style="width: 100%;overflow: hidden;white-space: nowrap;">
       <view v-if="reportType === 0">
-        <u-table v-if = "listQuery.way ===1">
-          <u-tr class="u-tr" >
-            <u-th  class="u-td" width="100px">项目名称</u-th>
-            <u-th  >
-              <u-th  class="u-td" >在建项目合计</u-th>
-              <u-tr width="670px">
-                <u-th  class="u-td" width="110px">个数（个）</u-th>
-                <u-th  class="u-td" width="130px">总投资（万元）</u-th>
-                <u-th  class="u-td" width="140px">累计完成（万元）</u-th>
-                <u-th  class="u-td" width="160px">今年计划总投资（万元）</u-th>
-                <u-th  class="u-td" width="140px">今年完成（万元）</u-th>
-              </u-tr>
-            </u-th>
-          </u-tr>
+        <uni-table border stripe emptyText="暂无更多数据" v-if="listQuery.way ===1">
+          <uni-tr >
+            <uni-th>项目名称</uni-th>
+            <uni-th  >
+              <uni-th >在建项目合计</uni-th>
+              <uni-tr>
+                <uni-th>个数（个）</uni-th>
+                <uni-th>总投资（万元）</uni-th>
+                <uni-th>累计完成（万元）</uni-th>
+                <uni-th>今年计划总投资（万元）</uni-th>
+                <uni-th>今年完成（万元）</uni-th>
+              </uni-tr>
+            </uni-th>
+          </uni-tr>
 
-          <u-tr>
-            <u-td>1</u-td>
-            <u-td>1</u-td>
-            <u-td>1</u-td>
-            <u-td>1</u-td>
-            <u-td>1</u-td>
-            <u-td>1</u-td>
-          </u-tr>
-        </u-table>
+          <uni-tr>
+            <uni-td>1</uni-td>
+            <uni-td>1</uni-td>
+            <uni-td>1</uni-td>
+            <uni-td>1</uni-td>
+            <uni-td>1</uni-td>
+            <uni-td>1</uni-td>
+          </uni-tr>
+        </uni-table>
       </view>
       <view v-if="reportType === 1 && detailList.length  > 0">
-        <u-table >
-          <u-tr class="u-tr" >
-            <u-td width="30%" class="u-td" v-for="(item, index) in detailTableHead" :prop = item.prop :key = index >{{item.label}}</u-td>
-          </u-tr>
-          <u-tr class="u-tr" v-for="(item, index) in detailList" :key = index>
-            <u-td width="30%" class="u-td" v-for="(value,index) in detailTableHead" :key = index >{{item[value.prop]}}</u-td>
-          </u-tr>
-        </u-table>
+<!--        <uni-table >-->
+<!--          <uni-tr class="uni-tr" >-->
+<!--            <uni-td width="30%" class="uni-td" v-for="(item, index) in detailTableHead" :prop = item.prop :key = index >{{item.label}}</uni-td>-->
+<!--          </uni-tr>-->
+<!--          <uni-tr class="uni-tr" v-for="(item, index) in detailList" :key = index>-->
+<!--            <uni-td width="30%" class="uni-td" v-for="(value,index) in detailTableHead" :key = index >{{item[value.prop]}}</uni-td>-->
+<!--          </uni-tr>-->
+<!--        </uni-table>-->
+
+        <uni-table border stripe emptyText="暂无更多数据">
+          <uni-tr  >
+            <uni-th v-for="(item, index) in detailTableHead" :prop = item.prop :key = index >{{item.label}}</uni-th>
+          </uni-tr>
+          <uni-tr class="uni-tr" v-for="(item, index) in detailList" :key = index>
+            <uni-td  v-for="value in detailTableHead" :key = value.prop >{{item[value.prop]}}</uni-td>
+          </uni-tr>
+        </uni-table>
+      </view>
+      <view>
+        <uni-table border stripe emptyText="暂无更多数据" >
+          <!-- 表头行 -->
+          <uni-tr>
+            <uni-th align="center">日期</uni-th>
+            <uni-th align="center">姓名</uni-th>
+            <uni-th align="left">地址</uni-th>
+          </uni-tr>
+          <!-- 表格数据行 -->
+          <uni-tr>
+            <uni-td>2020-10-20</uni-td>
+            <uni-td>Jeson</uni-td>
+            <uni-td>北京市海淀区</uni-td>
+          </uni-tr>
+          <uni-tr>
+            <uni-td>2020-10-21</uni-td>
+            <uni-td>HanMeiMei</uni-td>
+            <uni-td>北京市海淀区</uni-td>
+          </uni-tr>
+          <uni-tr>
+            <uni-td>2020-10-22</uni-td>
+            <uni-td>LiLei</uni-td>
+            <uni-td>北京市海淀区</uni-td>
+          </uni-tr>
+          <uni-tr>
+            <uni-td>2020-10-23</uni-td>
+            <uni-td>Danner</uni-td>
+            <uni-td>北京市海淀区</uni-td>
+          </uni-tr>
+        </uni-table>
       </view>
     </scroll-view>
 	</view>
@@ -89,9 +129,8 @@
   import CitySelect from "../../../components/cudt/cudt-city-select/city-select";
   import CudtNumRange from "../../../components/cudt/cudt-num-range";
   import CudtSelect from "../../../components/cudt/cudt-select";
-  import UTr from "../../../uview-ui/components/u-tr/u-tr";
 	export default {
-    components: {UTr, CudtSelect, CudtNumRange, CitySelect},
+    components: { CudtSelect, CudtNumRange, CitySelect},
     mixins: [MescrollMixin],
     data() {
       return {
@@ -239,7 +278,7 @@
     .box_cus{
       padding: 10px 3px !important;
     }
-    /deep/ .u-td[data-v-35ace0c0]{
+    /deep/ .uni-td[data-v-35ace0c0]{
       height: auto;
     }
   }

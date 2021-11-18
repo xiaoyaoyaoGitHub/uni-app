@@ -53,7 +53,7 @@
             <u-th  class="u-th" v-for="(item, index) in tableHead" :prop = item.id :key = index >{{item.name}}</u-th>
           </u-tr>
           <u-tr class="u-tr" v-for="(item, index) in list" :key = index>
-            <u-td  class="u-td" v-for="(value,index) in tableHead" :key = index >{{item[value.id]}}</u-td>
+            <u-td  class="u-td" v-for="value in tableHead" :key = value.id >{{item[value.id]}}</u-td>
           </u-tr>
         </u-table>
         <u-table v-if = "listQuery.way ===2">
@@ -61,7 +61,7 @@
             <u-th width="30%" class="u-th" v-for="(item, index) in tableHead" :prop = item.id :key = index >{{item.name}}</u-th>
           </u-tr>
           <u-tr class="u-tr" v-for="(item, index) in list" :key = index>
-            <u-td width="30%" class="u-td" v-for="(value,index) in tableHead" :key = index >{{item[value.id]}}</u-td>
+            <u-td width="30%" class="u-td" v-for="value in tableHead" :key = value.id >{{item[value.id]}}</u-td>
           </u-tr>
         </u-table>
         <u-table v-if = "listQuery.way ===3">
@@ -69,7 +69,7 @@
             <u-th width="50%" class="u-th" v-for="(item, index) in tableHead" :prop = item.id :key = index >{{item.name}}</u-th>
           </u-tr>
           <u-tr class="u-tr" v-for="(item, index) in list" :key = index>
-            <u-td width="50%" class="u-td" v-for="(value,index) in tableHead" :key = index >{{item[value.id]}}</u-td>
+            <u-td width="50%" class="u-td" v-for="value in tableHead" :key = value.id >{{item[value.id]}}</u-td>
           </u-tr>
         </u-table>
       </view>
@@ -79,7 +79,7 @@
             <u-th width="30%" class="u-th" v-for="(item, index) in detailTableHead" :prop = item.prop :key = index >{{item.label}}</u-th>
           </u-tr>
           <u-tr class="u-tr" v-for="(item, index) in detailList" :key = index>
-            <u-td width="30%" class="u-td" v-for="(value,index) in detailTableHead" :key = index >{{item[value.prop]}}</u-td>
+            <u-td width="30%" class="u-td" v-for="value in detailTableHead" :key = value.propF >{{item[value.prop]}}</u-td>
           </u-tr>
         </u-table>
       </view>

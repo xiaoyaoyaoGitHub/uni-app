@@ -1,86 +1,88 @@
 <template>
 	<view >
 			<view class="search-box search-box_sticky">
-				<u-search placeholder="请输入关键词搜索" v-model="keyword" height="72" :show-action="false" @change="search"
+				<u-search placeholder="请输入关键词搜索" v-model="keyword" height="72"  :show-action="false" @change="search"
 					bg-color="#f0f2f6" shape="square">
 				</u-search>
 			</view>
-        <map style="width: 100%; height: 400px;" :latitude="latitude" :longitude="longitude" :markers="covers">
+        <map style="width: 100%; height: 400px;" :latitude="latitude" :scale="scale" :longitude="longitude" :markers="markers">
         </map>
-<!--			<flowlist :list='list' :opType="opType" />-->
 	</view>
 </template>
-
 <script>
-	import resources from '@/libs/resources.js'
 	import {
-		FlowBeforeList
-	} from '@/api/workFlow/flowBefore'
+    getMapInfoList
+	} from '@/api/projectReport'
 	export default {
 		data() {
 			return {
+        scale: 11,
+        list: [],
+        listLoading: true,
+        listQuery: {
+          currentPage: 1,
+          pageSize: 100,
+          sort: 'desc',
+          sidx: '',
+          json: ''
+        },
+
         id:1, // 使用 marker点击事件 需要填写id
         title: 'map',
-        latitude: 39.909,
-        longitude: 116.39742,
-        covers: [{
-
-          latitude: 39.90,
-          longitude: 116.39,
-          iconPath: '../../../assets/image/map.png'
-        }],
-
-
-				keyword: '',
-				opType: 3,
-				list: [],
-				downOption: {
-					use: true,
-					auto: true
-				},
-				upOption: {
-					page: {
-						num: 0,
-						size: 20,
-						time: null
-					},
-					empty: {
-						use: true,
-						icon: resources.message.nodata,
-						tip: "暂无数据",
-						fixed: true,
-						top: "300rpx",
-					},
-					textNoMore: '没有更多数据',
-				},
+        latitude: 42.028356,
+        longitude: 121.67645,
+        markers: [{
+          id: 0,
+          title: '哈哈哈',
+          latitude: 39.909,
+          longitude: 116.39742,
+          width: 30,
+          height: 30,
+          // label: {
+          //   content: "equipment.code"
+          // },
+          iconPath: '../../../static/map.png'
+        }]
 			}
 		},
+    onLoad() {
+      // uni.$on('refresh', () => {
+      // 	this.list = [];
+      // 	this.mescroll.resetUpScroll();
+      // })
+      this.initData()
+    },
 		methods: {
-			upCallback(page) {
-				let query = {
-					currentPage: page.num,
-					pageSize: page.size,
-					keyword: this.keyword
-				}
-				FlowBeforeList(this.opType, query, {
-					load: page.num == 1
-				}).then(res => {
-					this.mescroll.endSuccess(res.data.list.length);
-					if (page.num == 1) this.list = [];
-					const list = res.data.list;
-					this.list = this.list.concat(list);
-				}).catch(() => {
-					this.mescroll.endErr();
-				})
-			},
-			search() {
-				// 节流,避免输入过快多次请求
-				this.searchTimer && clearTimeout(this.searchTimer)
-				this.searchTimer = setTimeout(() => {
-					this.list = [];
-					this.mescroll.resetUpScroll();
-				}, 300)
-			}
+		  initData(){
+        getMapInfoList(this.listQuery).then(res => {
+          this.list = res.data.list
+          this.queryConditionData = res.data
+          this.addMarkers()
+        })
+      },
+      addMarkers(){
+		    this.markers = this.list.map(item => {
+          let location = JSON.parse(item.pj_base_project_position)
+		      return {
+            id: item.id,
+            title: item.pj_base_project_name,
+            latitude: location.latitude,
+            longitude: location.longitude,
+            width: 30,
+            height: 30,
+            iconPath: '../../../static/map.png',
+            callout:{//自定义标记点上方的气泡窗口 点击有效
+              content:item.pj_base_project_name,//文本
+              color:'#ffffff',//文字颜色
+              fontSize:14,//文本大小
+              borderRadius:2,//边框圆角
+              bgColor:'#00c16f',//背景颜色
+              display:'ALWAYS',//常显
+            }
+          }
+        })
+
+      }
 		}
 	}
 </script>
