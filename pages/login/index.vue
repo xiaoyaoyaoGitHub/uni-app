@@ -1,47 +1,54 @@
 <template>
 	<view class="logo-v">
 		<view class="login-bg">
-			<image src="/static/login-bg.png" mode="widthFix"></image>
+			<image src="/static/bg.webp" mode="widthFix"></image>
 		</view>
 		<view class="logo-hd u-flex-col" style="">
 			<view class="logoImg">
-				<image src="/static/logo.png" mode="widthFix"></image>
+				<image src="/static/logo.webp" mode="widthFix"></image>
 			</view>
-			<view class="u-flex-col introduce u-m-t-30">
-				<text class="u-font-36 text-one" style="">云创APP</text>
-				<text class="u-font-24 text-two">倾心打造数字化平台</text>
+			<view class="u-flex-col introduce">
+				<text class="text-one">欢迎登录</text>
+				<!-- <text class="u-font-24 text-two">倾心打造数字化平台</text> -->
 			</view>
 			<view class="loginSwitch u-flex-col">
-				<view class="loginInputBox u-flex-col">
+				<view class="loginInputsBox u-flex-col">
 					<u-form :model="formData" :rules="rules" ref="dataForm" :errorType="['toast']" label-position="left"
 						label-width="150" label-align="left">
-						<u-form-item prop="account">
-							<u-input v-model="formData.account" placeholder="请输入帐号"></u-input>
+						<!--  -->
+						<u-form-item prop="account" left-icon="account"
+							:left-icon-style="{color:'#5E6472',fontSize:'36rpx'}">
+							<u-input placeholder-style="color:#C8C9CC;font-size:32rpx" :custom-style="{fontSize:'36rpx'}" v-model="formData.account" placeholder="请输入帐号"
+								font-size="32rpx" color="#2566F2">
+							</u-input>
 						</u-form-item>
-						<u-form-item prop="password">
-							<u-input v-model="formData.password" type="password" placeholder="请输入密码"></u-input>
+						<u-form-item prop="password" left-icon="lock"
+							:left-icon-style="{color:'#5E6472',fontSize:'36rpx'}">
+							<u-input placeholder-style="color:#C8C9CC;font-size:32rpx" :custom-style="{fontSize:'36rpx'}" v-model="formData.password" type="password" placeholder="请输入密码"></u-input>
 						</u-form-item>
-						<u-form-item prop="code">
-							<u-input v-model="formData.code" placeholder="请输入验证码"></u-input>
+						<u-form-item prop="code" left-icon="order"
+							:left-icon-style="{color:'#5E6472',fontSize:'36rpx'}">
+							<u-input placeholder-style="color:#C8C9CC;font-size:32rpx" :custom-style="{fontSize:'36rpx'}" v-model="formData.code" placeholder="请输入验证码"></u-input>
 							<div class="login-code">
-							    <img :src="codeUrl" @click="getCode">
+								<img :src="codeUrl" @click="getCode">
 							</div>
 						</u-form-item>
 					</u-form>
-					<view class="loginBtnBox u-m-t-64">
-						<u-button @click="login" type="primary" :loading="loading">{{ loading ? "登录中...":"登录"}}
+					<view class="loginBtnBox">
+						<u-button class="btn" :ripple="true" @click="login" type="primary" :loading="loading">{{ loading ? "登录中...":"登录"}}
 						</u-button>
 					</view>
 				</view>
 			</view>
 		</view>
-		<view class="copyright">Copyright © 2021 联通数科出品</view>
+		<view class="copyright">@2021 智慧云改出品</view>
 	</view>
 </template>
 
 <script>
 	import {
-		login, getCodeImg
+		login,
+		getCodeImg
 	} from '@/api/common.js'
 	import md5Libs from "uview-ui/libs/function/md5";
 	import resources from '@/libs/resources'
@@ -86,12 +93,12 @@
 		},
 		methods: {
 			getCode() {
-			      getCodeImg().then(res => {
-			        this.codeUrl = res.data.img
-			        this.formData.uuid = res.data.uuid
-			        console.log(res.data.uuid)
-			      })
-			    },
+				getCodeImg().then(res => {
+					this.codeUrl = res.data.img
+					this.formData.uuid = res.data.uuid
+					console.log(res.data.uuid)
+				})
+			},
 			login() {
 				this.$refs.dataForm.validate(valid => {
 					if (valid) {
@@ -106,9 +113,10 @@
 						const clientId = plus.push.getClientInfo().clientid;
 						query.clientId = clientId
 						// #endif
+
 						login(query).then(res => {
-							
-							let token = res.data.token
+
+							let token = res?.data?.token
 							this.$store.commit('user/SET_TOKEN', token)
 							uni.setStorageSync('token', token)
 							this.$store.dispatch('user/getCurrentUser').then(() => {
@@ -133,9 +141,11 @@
 
 <style lang="scss">
 	page {}
-
+	
 	.logo-v {
 		.login-bg {
+			// height: 365rpx;
+
 			image {
 				width: 100%;
 				height: 100%;
@@ -145,11 +155,11 @@
 		.logo-hd {
 			width: 100%;
 			position: absolute;
-			top: 200rpx;
+			top: 281rpx;
 
 			.logoImg {
-				width: 160rpx;
-				height: 160rpx;
+				width: 168rpx;
+				height: 168rpx;
 				margin: 0 auto;
 
 				image {
@@ -164,8 +174,11 @@
 				align-items: center;
 
 				.text-one {
-					height: 70rpx;
 					font-weight: 700;
+					font-size: 44rpx;
+					line-height: 44rpx;
+					color: #071127;
+
 				}
 
 				.text-two {
@@ -173,7 +186,9 @@
 				}
 			}
 		}
-
+		.placeholderClass {
+			color: red;
+		}
 		.loginSwitch {
 			margin-top: 40rpx;
 			justify-content: center;
@@ -196,12 +211,6 @@
 					border-radius: 50rpx;
 				}
 
-				// &.active1 {
-				// 	&::after {
-				// 		left: 0;
-				// 	}
-				// }
-
 				&.active2 {
 					&::after {
 						left: 70%;
@@ -222,12 +231,23 @@
 
 			}
 
-			.loginInputBox {
+			.loginInputsBox {
 				width: 100%;
-				margin-top: 80rpx;
-				padding: 0 64rpx;
+				// margin-top: 80rpx;
+				padding: 0 32rpx;
 
-				.loginBtnBox {}
+				.loginBtnBox {
+					width: 602rpx;
+					margin: auto;
+					margin-top: 140rpx;
+					.btn {
+						font-size: 36rpx;
+						line-height: 50rpx;
+						padding: 15rpx 0;
+						background: #2566F2;
+						width: 100%;
+					}
+				}
 			}
 		}
 	}

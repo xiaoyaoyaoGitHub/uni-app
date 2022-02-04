@@ -37,7 +37,7 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "首 页"
+				"navigationBarTitleText": "项目"
 			}
 		},
 		{
@@ -53,7 +53,7 @@
 		{
 			"path": "pages/index/projects",
 			"style": {
-				"navigationBarTitleText": "项 目"
+				"navigationBarTitleText": "图表"
 			}
 		},
 		{
@@ -71,7 +71,7 @@
 		{
 			"path": "pages/index/my",
 			"style": {
-				"navigationBarTitleText": "",
+				"navigationBarTitleText": "我的",
 				"app-plus": {
 					"bounce": "none"
 				}
@@ -81,53 +81,51 @@
 			"path": "pages/form/index"
 		}
 	],
-	"subPackages": [
-    {
-      "root": "pages/reportTable",
-      "pages": [
-        {
-          "path": "storeReport/index",
-          "style": {
-            "navigationBarTitleText": "储备报表"
-          }
-        },
-        {
-          "path": "buildReport/index",
-          "style": {
-            "navigationBarTitleText": "在建报表"
-          }
-        },
-        {
-          "path": "liveReport/index",
-          "style": {
-            "navigationBarTitleText": "运营报表"
-          }
-        },
-        {
-          "path": "projectMap/index",
-          "style": {
-            "navigationBarTitleText": "项目地图"
-          }
-        }
-      ]
-    },
-    {
-      "root": "pages/project",
-      "pages": [{
-        "path": "list/index",
-        "style": {
-          "navigationBarTitleText": "项目列表"
-        }
-      },
-        {
-          "path": "detail/index",
-          "style": {
-            "navigationBarTitleText": "项目详情"
-          }
-        }
-      ]
-    },
-    {
+	"subPackages": [{
+			"root": "pages/reportTable",
+			"pages": [{
+					"path": "storeReport/index",
+					"style": {
+						"navigationBarTitleText": "储备报表"
+					}
+				},
+				{
+					"path": "buildReport/index",
+					"style": {
+						"navigationBarTitleText": "在建报表"
+					}
+				},
+				{
+					"path": "liveReport/index",
+					"style": {
+						"navigationBarTitleText": "运营报表"
+					}
+				},
+				{
+					"path": "projectMap/index",
+					"style": {
+						"navigationBarTitleText": "项目地图"
+					}
+				}
+			]
+		},
+		{
+			"root": "pages/project",
+			"pages": [{
+					"path": "list/index",
+					"style": {
+						"navigationBarTitleText": "项目列表"
+					}
+				},
+				{
+					"path": "detail/index",
+					"style": {
+						"navigationBarTitleText": "项目详情"
+					}
+				}
+			]
+		},
+		{
 			"root": "pages/workFlow",
 			"pages": [{
 					"path": "flowBefore/index",
@@ -316,45 +314,42 @@
 	},
 	"tabBar": {
 		"color": "#666666",
-		"selectedColor": "#3281ff",
+		"selectedColor": "#0060F4",
 		"backgroundColor": "#ffffff",
+		"fontSize":"20rpx",
+		"height":"98rpx",
+		"iconWidth":"44rpx",
 		"list": [{
 				"pagePath": "pages/index/index",
-				"text": "首页",
-				"iconPath": "static/image/tabbar/home.png",
-				"selectedIconPath": "static/image/tabbar/homeHL.png"
+				"text": "项目",
+				"iconPath": "static/image/tabbar/project.webp",
+				"selectedIconPath": "static/image/tabbar/select_project.png"
 			},
 			{
 				"pagePath": "pages/index/projects",
-				"text": "项目",
-				"iconPath": "static/image/tabbar/project.png",
-				"selectedIconPath": "static/image/tabbar/projectHL.png"
-			},
-			{
-				"pagePath": "pages/index/apply",
-				"text": "营商",
-				"iconPath": "static/image/tabbar/apply.png",
-				"selectedIconPath": "static/image/tabbar/applyHL.png"
+				"text": "图表",
+				"iconPath": "static/image/tabbar/chart.png",
+				"selectedIconPath": "static/image/tabbar/select_chart.png"
 			},
 			{
 				"pagePath": "pages/index/reportTable",
 				"text": "报表",
-				"iconPath": "static/image/tabbar/contacts.png",
-				"selectedIconPath": "static/image/tabbar/contactsHL.png"
+				"iconPath": "static/image/tabbar/report.png",
+				"selectedIconPath": "static/image/tabbar/select_report.png"
 			},
 			{
 				"pagePath": "pages/index/my",
 				"text": "我的",
 				"iconPath": "static/image/tabbar/my.png",
-				"selectedIconPath": "static/image/tabbar/myHL.png"
+				"selectedIconPath": "static/image/tabbar/select_my.png"
 			}
 		]
 	},
 	"globalStyle": {
 		"navigationBarTitleText": "cudt快速开发平台",
-		"navigationBarTextStyle": "black",
-		"navigationBarBackgroundColor": "#ffffff",
-		"backgroundColor": "#f0f2f6",
+		"navigationBarTextStyle": "white",
+		"navigationBarBackgroundColor": "#0060F4",
+		"backgroundColor": "#F5F6F7",
 		"usingComponents": {
 			"ly-tree-node": "/components/ly-tree/ly-tree-node"
 		}

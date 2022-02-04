@@ -105,6 +105,9 @@ export function previewDataInterface(id) {
 }
 // 用户登录
 export function login(data) {
+	// return new Promise((resolve, reject) => {
+	// 	resolve()
+	// })
 	return request({
 		url: '/api/oauth/Login',
 		method: 'post',
