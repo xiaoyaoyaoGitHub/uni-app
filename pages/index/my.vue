@@ -110,10 +110,10 @@
 				</template>
 			</uni-list-item>
 		</uni-list>
-		<u-button class="btn" border="none">
+		<u-button class="btn" @click="logout" border="none">
 			退出登录
 		</u-button>
-		
+
 		<!-- <view class="u-flex user-box u-p-l-32 u-p-r-22 u-p-b-30" @click="openPage('/pages/my/personalData/index')">
 			<view class="u-m-r-20">
 				<u-avatar :src="baseURL+userInfo.headIcon" size="140"></u-avatar>
@@ -176,6 +176,22 @@
 			this.userInfo = uni.getStorageSync('userInfo') || {}
 		},
 		methods: {
+			logout() {
+				uni.showModal({
+					title: '提示',
+					content: '确定退出吗',
+					success: function(res) {
+						if (res.confirm) {
+							// console.log('用户点击确定');
+							uni.navigateTo({
+								url:'/pages/login/index'
+							})
+						} else if (res.cancel) {
+							console.log('用户点击取消');
+						}
+					}
+				});
+			},
 			openPage(path) {
 				if (!path) return
 				uni.navigateTo({
@@ -198,20 +214,23 @@
 					line-height: 48rpx;
 					color: #5E6472;
 				}
+
 				.desc {
 					font-size: 32rpx;
 					line-height: 48rpx;
 					color: #071127;
 				}
 			}
+
 			.btn {
-				
+
 				border: none;
 				color: #0060F4;
 				margin-top: 20rpx;
 				font-size: 32rpx;
 				line-height: 48rpx;
 				height: 96rpx;
+
 				&:after {
 					border-color: transparent;
 				}
