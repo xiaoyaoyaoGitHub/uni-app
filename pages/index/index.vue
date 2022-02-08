@@ -68,7 +68,7 @@
 					最近调度
 				</view>
 				<view class="lists">
-					<view class="project-item" v-for="item in [1,2,3]">
+					<view @click="toNotificationDetail()" class="project-item" v-for="item in [1,2,3]">
 
 						<view class="project-name">
 							<span>阜蒙县佛寺水库库区清淤工程项目</span>
@@ -239,7 +239,9 @@
 				}).catch(() => {})
 			},
 			toNotificationDetail(item) {
-				alert(item)
+				uni.navigateTo({
+					url:'/pages/project/detail/index'
+				})
 			},
 			search() {
 				this.searchTimer && clearTimeout(this.searchTimer)

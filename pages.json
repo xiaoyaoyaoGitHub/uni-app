@@ -123,6 +123,16 @@
 						"navigationBarTitleText": "项目详情"
 					}
 				}
+
+
+				, {
+					"path": "upload/index",
+					"style": {
+						"navigationBarTitleText": "上传图片",
+						"enablePullDownRefresh": false
+					}
+
+				}
 			]
 		},
 		{
@@ -316,9 +326,9 @@
 		"color": "#666666",
 		"selectedColor": "#0060F4",
 		"backgroundColor": "#ffffff",
-		"fontSize":"20rpx",
-		"height":"98rpx",
-		"iconWidth":"44rpx",
+		"fontSize": "20rpx",
+		"height": "98rpx",
+		"iconWidth": "44rpx",
 		"list": [{
 				"pagePath": "pages/index/index",
 				"text": "项目",
