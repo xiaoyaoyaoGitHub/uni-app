@@ -4,38 +4,38 @@
 			<view class="select-type">
 				<view class="title">报表类型</view>
 				<view class="types u-flex u-row-left">
-					<span class="active">储备</span>
-					<span>在建</span>
-					<span>竣工</span>
+					<span @click="() => {selectType(0)}" data-type=0 :class="{active: reportType === 0}">储备</span>
+					<span @click="() => {selectType(1)}" data-type=1 :class="{active: reportType === 1}">在建</span>
+					<span @click="() => {selectType(2)}" data-type=2 :class="{active: reportType === 2}">竣工</span>
 				</view>
 			</view>
 			<view class="select-type">
 				<view class="title">项目阶段</view>
 				<view class="types u-flex u-row-left">
-					<span class="active">储备</span>
-					<span>在建</span>
-					<span>储备转在建</span>
-					<span>竣工</span>
+					<span @click="() => {selectStage(0)}" :class="{active: reportStageList.includes(0)}">储备</span>
+					<span @click="() => {selectStage(1)}" :class="{active: reportStageList.includes(1)}">在建</span>
+					<span @click="() => {selectStage(2)}" :class="{active: reportStageList.includes(2)}">储备转在建</span>
+					<span @click="() => {selectStage(3)}" :class="{active: reportStageList.includes(3)}">竣工</span>
 				</view>
 			</view>
 			<view class="select-type">
 				<view class="title">审核状态</view>
 				<view class="types u-flex u-row-left">
-					<span class="active">未提交</span>
-					<span>待审核</span>
-					<span>审核通过</span>
-					<span>审核驳回</span>
+					<span @click="() => {selectStatus(0)}" :class="{active: reportStatusList.includes(0)}">未提交</span>
+					<span @click="() => {selectStatus(1)}" :class="{active: reportStatusList.includes(1)}">待审核</span>
+					<span @click="() => {selectStatus(2)}" :class="{active: reportStatusList.includes(2)}">审核通过</span>
+					<span @click="() => {selectStatus(3)}" :class="{active: reportStatusList.includes(3)}">审核驳回</span>
 				</view>
 			</view>
 			<view class="select-type">
 				<view class="title">统计方式</view>
 				<view class="types u-flex u-row-left">
-					<span class="active">按区域</span>
-					<span>按行业</span>
-					<span>按子行业</span>
-					<span>按投资规模</span>
+					<span @click="() => {selectMode(0)}" data-type=0 :class="{active: reportMode === 0}">按区域</span>
+					<span @click="() => {selectMode(1)}" data-type=1 :class="{active: reportMode === 1}">按行业</span>
+					<span @click="() => {selectMode(2)}" data-type=2 :class="{active: reportMode === 2}">按子行业</span>
+					<span @click="() => {selectMode(3)}" data-type=3 :class="{active: reportMode === 3}">按投资规模</span>
 				</view>
-				<view class="types u-flex u-row-left back-line">
+				<view class="types u-flex u-row-left back-line" v-if="reportMode === 3">
 					<span>
 						<input class="input-number" type="number" placeholder="100" />
 					</span>
@@ -134,7 +134,11 @@
 				flowEngineList: [],
 				upOption: {
 					use: false
-				}
+				},
+				reportType: '', // 报表类型
+				reportStageList: [], // 项目阶段
+				reportStatusList: [], //审核状态
+				reportMode:'', // 统计方式
 			}
 		},
 		onLoad() {
@@ -146,6 +150,32 @@
 			uni.$off('updateUsualList')
 		},
 		methods: {
+			// 选择项目阶段
+			selectStage(stage) {
+				const currentReportStageList = [...this.reportStageList]
+				if (currentReportStageList.includes(stage)) {
+					this.reportStageList = currentReportStageList.filter(item => item !== stage)
+				} else {
+					this.reportStageList = [stage, ...currentReportStageList]
+				}
+			},
+			// 选择审核状态
+			selectStatus(status) {
+				const currentReportStatusList = [...this.reportStatusList]
+				if (currentReportStatusList.includes(status)) {
+					this.reportStatusList = currentReportStatusList.filter(item => item !== status)
+				} else {
+					this.reportStatusList = [status, ...currentReportStatusList]
+				}
+			},
+			// 选择报表类型
+			selectType(type) {
+				// console.log(e)
+				this.reportType = type
+			},
+			selectMode(mode){
+				this.reportMode = mode
+			},
 			getUsualList() {
 				getUsualList(1).then(res => {
 					this.usualList = res.data.list.map(o => {
@@ -261,6 +291,7 @@
 				}
 			}
 		}
+
 		.btn {
 			padding: 30rpx 32rpx 0;
 		}
