@@ -244,6 +244,7 @@
 			<!-- 项目图片 -->
 			<view class="content pictures" v-if="current === 2">
 				<view class="update-pic" @click="upLoadImage">
+						<u-icon color="#DCDEE0" label-color="#DCDEE0" name="camera" label="上传" size="39" label-pos="bottom"></u-icon>
 						
 				</view>
 				<view class="types" v-for="(item) in [1,3,4]">
@@ -533,7 +534,9 @@
 					width: 100rpx;
 					height: 100rpx;
 					border-radius: 50%;
-					background: #333;
+					background: rgba(0, 0, 0, .65);
+					text-align: center;
+					padding-top: 10rpx;
 				}
 				.types {
 					padding-bottom: 32rpx;

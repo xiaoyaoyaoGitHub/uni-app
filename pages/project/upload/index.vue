@@ -8,12 +8,19 @@
 		</view>
 		<view class="parting"></view>
 		<view class="images">
-			<uni-file-picker class="upload" mode="grid" v-model="imageValue" file-mediatype="image"
-				:image-styles="imageStyles">
-				<view>
+			<template v-if="imageType === ''">
+				<view class="selectCamera u-border" @click="chooseType">
 					<u-icon name="camera" color="#DCDEE0"></u-icon>
 				</view>
-			</uni-file-picker>
+			</template>
+			<template v-else>
+				<uni-file-picker class="upload" @select="select" @progress="progress" mode="grid" limit="6"
+					v-model="imageValue" file-mediatype="image" :image-styles="imageStyles">
+					<view>
+						<u-icon name="camera" color="#DCDEE0"></u-icon>
+					</view>
+				</uni-file-picker>
+			</template>
 		</view>
 		<u-input class="textarea" :custom-style="{background:'#F7F8FA'}" maxlength="100" v-model="textareaValue"
 			type="textarea" height="168" />
@@ -35,15 +42,15 @@
 				textareaValue: '',
 				// 这种情况需要指定range-key为cateName，否则组件不知道该显示对象的哪个属性
 				actions: [{
-						label: 'type1',
+						label: '土地征拆',
 						value: '1'
 					},
 					{
-						label: 'type2',
+						label: '厂房建设',
 						value: '2'
 					},
 					{
-						label: 'type3',
+						label: '竣工筹备',
 						value: '3'
 
 					},
@@ -54,6 +61,12 @@
 			actionSheetCallback(e) {
 				console.log(e)
 				this.imageType = e[0].label
+			},
+			chooseType(){
+				uni.showToast({
+					icon:"none",
+					title:'请选择图片类型'
+				})
 			},
 			// 获取上传状态
 			select(e) {
@@ -110,6 +123,17 @@
 
 			.file-picker__box {
 				margin-right: 20rpx;
+			}
+			
+			.selectCamera {
+				width: 140rpx;
+				height: 140rpx;
+				// margin: 10rpx;
+				box-sizing: border-box;
+				text-align: center;
+				padding-top: 55rpx;
+				border-radius: 4rpx;
+				overflow: hidden;
 			}
 		}
 
