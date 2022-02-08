@@ -35,19 +35,16 @@
 					<span @click="() => {selectMode(2)}" data-type=2 :class="{active: reportMode === 2}">按子行业</span>
 					<span @click="() => {selectMode(3)}" data-type=3 :class="{active: reportMode === 3}">按投资规模</span>
 				</view>
-				<view class="types u-flex u-row-left back-line" v-if="reportMode === 3">
-					<span>
-						<input class="input-number" type="number" placeholder="100" />
-					</span>
-					<span>
-						<input class="input-number" type="number" placeholder="1000" />
-					</span>
-					<span>
-						<input class="input-number" type="number" placeholder="10000" />
-					</span>
-					<span>
-						<input class="input-number" type="number" placeholder="100000" />
-					</span>
+				<view class="types u-flex u-row-left back-line amount-mode" v-if="reportMode === 3">
+					<u-input class="amount" :border="true" placeholder="100" height="64" @change="change"></u-input>
+					<u-input class="amount" :border="true" placeholder="100" height="64" @change="change"></u-input>
+					<u-input class="amount" :border="true" placeholder="100" height="64" @change="change"></u-input>
+					<u-input class="amount" :border="true" placeholder="100" height="64" @change="change"></u-input>
+					<view class="add">
+						<view>
+							<!-- <u-icon name="plus" size="48" color="#0060F4"></u-icon> -->
+						</view>
+					</view>
 				</view>
 			</view>
 
@@ -138,7 +135,7 @@
 				reportType: '', // 报表类型
 				reportStageList: [], // 项目阶段
 				reportStatusList: [], //审核状态
-				reportMode:'', // 统计方式
+				reportMode: '', // 统计方式
 			}
 		},
 		onLoad() {
@@ -173,7 +170,7 @@
 				// console.log(e)
 				this.reportType = type
 			},
-			selectMode(mode){
+			selectMode(mode) {
 				this.reportMode = mode
 			},
 			getUsualList() {
@@ -263,7 +260,7 @@
 						top: 0;
 						left: 0;
 						border: 1px solid rgba(193, 195, 201, 0.75);
-						border-radius: 4px;
+						border-radius: 4rpx;
 						-webkit-transform: scale(0.5, 0.5);
 						transform: scale(0.5, 0.5);
 						-webkit-transform-origin: top left;
@@ -286,6 +283,80 @@
 							-webkit-transform: scale(0.5, 0.5);
 							transform: scale(0.5, 0.5);
 							-webkit-transform-origin: top left;
+						}
+					}
+				}
+
+				&>.amount {
+					margin-top: 52rpx;
+					flex: 0 0 144rpx;
+					margin-right: 21rpx;
+					border-radius: 4rpx;
+					border-color: rgba(193, 195, 201, 0.75) !important;
+					
+				}
+			}
+
+			.amount-mode {
+				position: relative;
+				&:after {
+					content: '';
+					position: absolute;
+					left: 0;
+					right: 0;
+					top: 0;
+					bottom: 17rpx;
+					height: 0rpx;
+					border: 1px solid #2C3548;
+					margin: auto;
+				}
+				&>.add {
+					position: absolute;
+					right: 0;
+					bottom: 0;
+					width: 79rpx;
+					height: 68rpx;
+					text-align: right;
+					margin: 0 auto;
+					background: #fff;
+					box-shadow: -5rpx 0px 10rpx rgba(193, 195, 201, 1);
+					&>view {
+						position: absolute;
+						width: 48rpx;
+						height: 48rpx;
+						border: 4rpx solid #0B66F4;
+						top: 0;
+						right: 0;
+						bottom: 0;
+						margin: auto;
+						text-align: center;
+						border-radius: 8rpx;
+						&:after {
+							content: '';
+							position: absolute;
+							display: block;
+							width: 4rpx;
+							height: 27rpx;
+							background: #0B66F4;
+							left: 0;
+							right: 0;
+							top: 0;
+							bottom: 0;
+							margin: auto;
+						}
+						&::before {
+							content: '';
+							position: absolute;
+							display: block;
+							height: 4rpx;
+							width: 27rpx;
+							background: #0B66F4;
+							left: 0;
+							right: 0;
+							bottom: 0;
+							top: 0;
+							bottom: 0;
+							margin: auto;
 						}
 					}
 				}
