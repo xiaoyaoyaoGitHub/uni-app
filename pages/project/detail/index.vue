@@ -373,7 +373,7 @@
 				}, {
 					name: '项目问题',
 				}],
-				current: 2
+				current: 0
 			}
 		},
 		computed: {

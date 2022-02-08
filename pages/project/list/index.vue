@@ -8,36 +8,48 @@
 					bg-color="#F7F8FA" placeholder-color="#C1C3C9" search-icon-color="#C1C3C9" shape="square">
 				</u-search>
 			</view>
-			<view class="u-flex selects u-border-bottom u-row-between">
+			<view class="u-flex selects u-border-bottom u-row-left">
 				<view class="select">
-					<u-button data-index="0" class="selectBtn" :class="{active: selectType === 'audioSelect'}"
-						data-type="audioSelect" @click="showSelect">
-						{{selectAuditStatus.label}}
+					<u-button data-index="0" class="selectBtn" :class="{active: selectType === 'auditSelect'}"
+						data-type="auditSelect" @click="showSelect">
+						{{auditSelectCurrent.label}}
 					</u-button>
-					<u-select v-model="auditStatusShow" @confirm="auditStatusConfirm" :list="auditStatus">审核状态
+					<u-select v-model="auditSelectShow" @confirm="selectConfirm" :list="auditLists">审核状态
 					</u-select>
 				</view>
 				<view class="select">
-					<u-button data-index="1" class="selectBtn" data-type="tradeSelect" @click="showSelect">
-						行业
+					<u-button data-index="1" class="selectBtn" :class="{active: selectType === 'tradeSelect'}"
+						data-type="tradeSelect" @click="showSelect">
+						{{tradeSelectCurrent.label}}
 					</u-button>
-					<u-select :show="false" :list="list">行业</u-select>
+					<u-select v-model="tradeSelectShow" :list="tradelists" @confirm="selectConfirm">行业</u-select>
 				</view>
 				<view class="select">
-					<u-button data-index="2" class="selectBtn" @click="showSelect">
-						总投资
+					<u-button data-index="2" class="selectBtn" data-type="amountSelect"
+						:class="{active: selectType === 'amountSelect'}" @click="showSelect">
+						{{!amount.min && !amount.max ? '总金额' : amount.min + '-' + amount.max}}
 					</u-button>
-					<u-select :show="false" :list="list">总投资</u-select>
+					<u-popup v-model="amountSelectShow" mode="bottom">
+						<view class="amount-scope">
+							<u-field v-model="amount.min" type="number" label="最小值" placeholder="请输入最小金额">
+							</u-field>
+							<u-field v-model="amount.max" type="number" label="最大值" placeholder="请输入最大金额">
+							</u-field>
+							<u-button class="u-m-t-20" type="primary" @click="amountSelectShow = false">确定</u-button>
+						</view>
+					</u-popup>
+					<!-- <u-select v-model="amountSelectShow" @confirm="selectConfirm"> 总投资</u-select> -->
 				</view>
-				<view class="select">
-					<u-button data-index="3" class="selectBtn" data-type="depart" @click="showSelect">
+				<!-- <view class="select">
+					<u-button data-index="3" class="selectBtn" :class="{active: selectType === 'departSelect'}"
+						data-type="departSelect" @click="showSelect">
 						部门
 					</u-button>
-					<u-select :show="false" :list="list"></u-select>
-				</view>
+					<u-select v-model="departSelectShow" :list="list" @confirm="selectConfirm"></u-select>
+				</view> -->
 			</view>
 			<view class="lists">
-				<view class="project-item" v-for="item in [1,2,3]">
+				<view class="project-item" @click="toNotificationDetail" v-for="item in [1,2,3,4,5]">
 
 					<view class="project-name u-border-bottom">
 						<span class="name">阜蒙县佛寺水库库区清淤工程项目</span>
@@ -66,7 +78,8 @@
 <script>
 	import {
 		getImUser,
-		moduleCodes
+		moduleCodes,
+		moduleTitle
 	} from '@/api/common.js'
 	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
 	export default {
@@ -78,6 +91,7 @@
 					auto: true
 				},
 				upOption: {
+					use: true,
 					page: {
 						num: 0,
 						size: 20,
@@ -94,21 +108,85 @@
 				},
 				keyword: '',
 				selectType: '',
-				selectAuditStatus: {
+				auditSelectCurrent: {
 					value: '',
 					label: '审核状态'
 				},
-				auditStatusShow: false,
-				auditStatus: [{
-						value: '1',
+				tradeSelectCurrent: {
+					value: '',
+					label: '行业'
+				},
+				amount: {
+					min: '',
+					max: ''
+				},
+				auditSelectShow: false,
+				tradeSelectShow: false,
+				amountSelectShow: false,
+				departSelectShow: false,
+				auditLists: [{
+						value: 1,
+						label: '未提交'
+					},
+					{
+						value: 1,
+						label: '等待审核'
+					},
+					{
+						value: 2,
 						label: '审核通过'
 					},
 					{
-						value: '2',
-						label: '审核失败'
+						value: 3,
+						label: '审核驳回'
 					}
 				],
-				list: []
+				tradelists: [{
+						value: '1',
+						label: '农林牧鱼'
+					},
+					{
+						value: '1',
+						label: '工业'
+					},
+					{
+						value: '1',
+						label: '基础设施'
+					},
+					{
+						value: '1',
+						label: '服务业'
+					},
+					{
+						value: '1',
+						label: '工业'
+					},
+					{
+						value: '1',
+						label: '基础设施'
+					},
+					{
+						value: '1',
+						label: '服务业'
+					},
+					{
+						value: '1',
+						label: '高新技术'
+					},
+					{
+						value: '1',
+						label: '生态环保'
+					},
+					{
+						value: '1',
+						label: '社会事业'
+					},
+					{
+						value: '1',
+						label: '其他行业'
+					}
+				]
+
 			}
 		},
 		onLoad(param) {
@@ -116,16 +194,20 @@
 			this.dicList = uni.getStorageSync('dictionaryList') || []
 			let title = "项目列表"
 			let phase = param.phase
-			if (phase === moduleCodes.StorePhaseProject) {
-				title = "储备项目"
-			} else if (phase === moduleCodes.BuildingPhaseProject) {
-				title = "在建项目"
-			} else if (phase === moduleCodes.OperationPhaseProject) {
-				title = "运营项目"
-			}
 			uni.setNavigationBarTitle({
-				title: title
+				title: moduleTitle[phase]
 			})
+			// switch (phase) {
+			// 	title: ''
+			// }
+			// if (phase === moduleCodes.StorePhaseProject) {
+			// 	title = "储备项目"
+			// } else if (phase === moduleCodes.BuildingPhaseProject) {
+			// 	title = "在建项目"
+			// } else if (phase === moduleCodes.OperationPhaseProject) {
+			// 	title = "竣工项目"
+			// } else if ()
+
 		},
 		computed: {
 			baseURL() {
@@ -134,6 +216,7 @@
 		},
 		methods: {
 			upCallback(page) {
+				console.log('up')
 				let query = {
 					currentPage: page.num,
 					pageSize: page.size,
@@ -142,12 +225,22 @@
 				getImUser(query, {
 					load: page.num == 1
 				}).then(res => {
-					this.mescroll.endSuccess(0);
+					// this.mescroll.endSuccess(0);
 					// if (page.num == 1) this.list = [];
 					// const list = res.data.list;
 					// this.list = this.list.concat(list);
+					this.mescroll.endSuccess(20, true)
 				}).catch(() => {
 					this.mescroll.endErr();
+				})
+			},
+			downCallback() {
+				console.log('down')
+				this.mescroll.endSuccess(0);
+			},
+			toNotificationDetail(item) {
+				uni.navigateTo({
+					url: '/pages/project/detail/index'
 				})
 			},
 			search() {
@@ -163,14 +256,23 @@
 					url: '/pages/message/userDetail/index?userId=' + id,
 				})
 			},
-			auditStatusConfirm(e) {
-				// console.log(e)
-				this.selectAuditStatus = e[0]
+
+			selectConfirm(e) {
+				// console.log(this.selectType + 'Current')
+				this[this.selectType + 'Current'] = e[0]
 			},
 			showSelect(e) {
 				console.log('click')
-				console.log(e)
-				this.auditStatusShow = true
+				console.log(e);
+				const {
+					dataset: {
+						type
+					} = {}
+				} = e.currentTarget || {}
+				this.selectType = type;
+				const typeName = type + 'Show';
+				console.log(typeName)
+				this[typeName] = true
 			},
 		}
 	}
@@ -203,6 +305,8 @@
 				padding: 20rpx 32rpx;
 
 				.select {
+					margin-right: 19rpx;
+
 					.selectBtn {
 						background: #F7F6F6;
 						position: relative;
@@ -235,6 +339,7 @@
 
 						&.active {
 							background: #F2F6FF;
+							position: relative;
 
 							&:before {
 								border: 8rpx solid #2566F2;
@@ -353,6 +458,9 @@
 				}
 			}
 
+			.amount-scope {
+				padding: 20rpx;
+			}
 
 		}
 	}

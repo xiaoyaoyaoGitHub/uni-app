@@ -46,20 +46,25 @@
 			<view class="project-types">
 				<u-grid :col="3" :border="false">
 					<u-grid-item :custom-style="{padding:'25rpx 0 20rpx'}">
-						<!-- <u-icon name="photo" :size="46"></u-icon> -->
-						<u-image :showLoading="true" src="/static/video_project.png" width="52rpx" height="39rpx">
-						</u-image>
-						<view class="grid-text">视频项目</view>
+						<view data-code="VideoPorject" @click="goToProjectLists">
+							<u-image class="image-icon"  :showLoading="true" src="/static/video_project.png" width="52rpx" height="39rpx">
+							</u-image>
+							<view class="grid-text">视频项目</view>
+						</view>
 					</u-grid-item>
 					<u-grid-item :custom-style="{padding:'25rpx 0 20rpx'}">
-						<u-image :showLoading="true" src="/static/collect_project.png" width="48rpx" height="40rpx">
-						</u-image>
-						<view class="grid-text">收藏项目</view>
+						<view data-code="favoriteproject" @click="goToProjectLists">
+							<u-image class="image-icon" :showLoading="true" src="/static/collect_project.png" width="48rpx" height="40rpx">
+							</u-image>
+							<view class="grid-text">收藏项目</view>
+						</view>
 					</u-grid-item>
 					<u-grid-item :custom-style="{padding:'25rpx 0 20rpx'}">
-						<u-image :showLoading="true" src="/static/map_project.png" mode="widthFix" width="48rpx"
-							height="40rpx"></u-image>
-						<view class="grid-text">项目地图</view>
+						<view>
+							<u-image class="image-icon"  :showLoading="true" src="/static/map_project.png" mode="widthFix" width="48rpx"
+								height="40rpx"></u-image>
+							<view class="grid-text">项目地图</view>
+						</view>
 					</u-grid-item>
 				</u-grid>
 			</view>
@@ -284,7 +289,7 @@
 			queryLists() {
 				console.log('加载');
 				// setTimeout(() => {
-					this.mescroll.endByPage(10, 20)
+				this.mescroll.endByPage(10, 20)
 				// }, 3000)
 			},
 			goToProjectLists(e) {
@@ -360,7 +365,9 @@
 			.project-types {
 				padding-top: 20rpx;
 				border-radius: 4rpx;
-
+				.image-icon {
+					margin: 0 auto;
+				}
 				.grid-text {
 					font-size: 28rpx;
 					line-height: 40rpx;

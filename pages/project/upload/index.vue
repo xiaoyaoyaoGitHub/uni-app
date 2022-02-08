@@ -3,18 +3,20 @@
 
 		<view class="selector u-flex" @click="show = true">
 			<view class="label">图片分类</view>
-			<u-input placeholder="请选择" height="96" v-model="value" :type="type" @click="show = true" />
-			<u-action-sheet :list="actions" v-model="show" @click="actionSheetCallback"></u-action-sheet>
+			<u-input placeholder="请选择" height="96" v-model="imageType" disabled type="text" @click="show = true" />
+			<u-select :list="actions" v-model="show" @confirm="actionSheetCallback"></u-select>
 		</view>
 		<view class="parting"></view>
 		<view class="images">
 			<uni-file-picker class="upload" mode="grid" v-model="imageValue" file-mediatype="image"
 				:image-styles="imageStyles">
-				<button class="select-btn"></button>
+				<view>
+					<u-icon name="camera" color="#DCDEE0"></u-icon>
+				</view>
 			</uni-file-picker>
 		</view>
-		<u-input class="textarea" :custom-style="{background:'#F7F8FA'}" maxlength="100" v-model="value" type="textarea"
-			:border="border" height="168" :auto-height="autoHeight" />
+		<u-input class="textarea" :custom-style="{background:'#F7F8FA'}" maxlength="100" v-model="textareaValue"
+			type="textarea" height="168" />
 		</u-picker>
 	</view>
 </template>
@@ -27,24 +29,31 @@
 					width: '160rpx',
 					height: '160rpx',
 				},
-
+				imageType: '',
 				show: false,
+				imageValue: [],
+				textareaValue: '',
 				// 这种情况需要指定range-key为cateName，否则组件不知道该显示对象的哪个属性
 				actions: [{
-						name: '男',
+						label: 'type1',
+						value: '1'
 					},
 					{
-						name: '女',
+						label: 'type2',
+						value: '2'
 					},
 					{
-						name: '保密',
+						label: 'type3',
+						value: '3'
+
 					},
 				],
 			}
 		},
 		methods: {
-			actionSheetCallback(index) {
-				this.value = this.actionSheetList[index].text;
+			actionSheetCallback(e) {
+				console.log(e)
+				this.imageType = e[0].label
 			},
 			// 获取上传状态
 			select(e) {
@@ -99,6 +108,9 @@
 				}
 			}
 
+			.file-picker__box {
+				margin-right: 20rpx;
+			}
 		}
 
 		.textarea {

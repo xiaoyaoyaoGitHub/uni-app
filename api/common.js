@@ -191,6 +191,14 @@ export function getDownloadUrl(type, fileId) {
 	})
 }
 
+export const moduleTitle = {
+	newstoreproject:'储备项目',
+	newongoingproject:'在建项目',
+	newliveproject:"竣工项目",
+	videoProject:"视频项目",
+	favoriteproject:"收藏项目",
+}
+
 export const moduleCodes = {
 	// 储备项目
 	StorePhaseProject: 'newstoreproject',
@@ -200,6 +208,7 @@ export const moduleCodes = {
 	OperationPhaseProject: 'newliveproject',
 	// 注销项目
 	CancelPhaseProject: '',
+	VideoPorject:"videoProject",
 	//收藏项目
 	favoriteproject: 'favoriteproject',
 	//项目详情 - 储备进度
