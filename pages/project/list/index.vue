@@ -8,8 +8,33 @@
 					bg-color="#F7F8FA" placeholder-color="#C1C3C9" search-icon-color="#C1C3C9" shape="square">
 				</u-search>
 			</view>
-			<view class="u-flex selects u-border-bottom">
-				<u-select :list="list">审核状态</u-select>
+			<view class="u-flex selects u-border-bottom u-row-between">
+				<view class="select">
+					<u-button data-index="0" class="selectBtn" :class="{active: selectType === 'audioSelect'}"
+						data-type="audioSelect" @click="showSelect">
+						{{selectAuditStatus.label}}
+					</u-button>
+					<u-select v-model="auditStatusShow" @confirm="auditStatusConfirm" :list="auditStatus">审核状态
+					</u-select>
+				</view>
+				<view class="select">
+					<u-button data-index="1" class="selectBtn" data-type="tradeSelect" @click="showSelect">
+						行业
+					</u-button>
+					<u-select :show="false" :list="list">行业</u-select>
+				</view>
+				<view class="select">
+					<u-button data-index="2" class="selectBtn" @click="showSelect">
+						总投资
+					</u-button>
+					<u-select :show="false" :list="list">总投资</u-select>
+				</view>
+				<view class="select">
+					<u-button data-index="3" class="selectBtn" data-type="depart" @click="showSelect">
+						部门
+					</u-button>
+					<u-select :show="false" :list="list"></u-select>
+				</view>
 			</view>
 			<view class="lists">
 				<view class="project-item" v-for="item in [1,2,3]">
@@ -68,15 +93,22 @@
 					textNoMore: '没有更多数据',
 				},
 				keyword: '',
-				list: [{
+				selectType: '',
+				selectAuditStatus: {
+					value: '',
+					label: '审核状态'
+				},
+				auditStatusShow: false,
+				auditStatus: [{
 						value: '1',
-						label: '江'
+						label: '审核通过'
 					},
 					{
 						value: '2',
-						label: '湖'
+						label: '审核失败'
 					}
-				]
+				],
+				list: []
 			}
 		},
 		onLoad(param) {
@@ -130,7 +162,16 @@
 				uni.navigateTo({
 					url: '/pages/message/userDetail/index?userId=' + id,
 				})
-			}
+			},
+			auditStatusConfirm(e) {
+				// console.log(e)
+				this.selectAuditStatus = e[0]
+			},
+			showSelect(e) {
+				console.log('click')
+				console.log(e)
+				this.auditStatusShow = true
+			},
 		}
 	}
 </script>
@@ -159,7 +200,51 @@
 
 			.selects {
 				background: #fff;
-				padding: 20rpx 0;
+				padding: 20rpx 32rpx;
+
+				.select {
+					.selectBtn {
+						background: #F7F6F6;
+						position: relative;
+						font-size: 28rpx;
+						line-height: 40rpx;
+						color: #2C3548;
+						padding: 12rpx 58rpx 12rpx 28rpx;
+						height: 64rpx;
+						border-radius: 0;
+
+						&:after {
+							border: none;
+						}
+
+						&:before {
+							content: '';
+							position: absolute;
+							right: 28rpx;
+							top: 0;
+							bottom: 0;
+							margin: auto;
+							display: block;
+							width: 0;
+							height: 0;
+							border: 8rpx solid #DCDEE0;
+							border-top-color: transparent;
+							border-right-color: transparent;
+							transform: rotateZ(-45deg) translateY(-50%);
+						}
+
+						&.active {
+							background: #F2F6FF;
+
+							&:before {
+								border: 8rpx solid #2566F2;
+								border-top-color: transparent;
+								border-right-color: transparent;
+								transform: rotateZ(-225deg) translateY(-25%);
+							}
+						}
+					}
+				}
 			}
 
 			.lists {
