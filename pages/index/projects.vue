@@ -51,11 +51,11 @@
 					</view>
 				</view>
 			</view>
-			
+
 			<view class="chart">
-				
+				<qiun-data-charts type="column" :echartsApp="true" :chartData="charts" />
 			</view>
-			
+
 			<!-- <view style="margin-top: 20rpx;">
 				<u-grid :col="3" :border="false">
 					<u-grid-item v-for="(item, index) in actionList" :key="index" @click="toDetail(item)">
@@ -87,6 +87,7 @@
 
 <script>
 	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
+	// import QiunDataCharts from "@/uni_modules/"
 	import IndexMixin from './mixin.js'
 	import {
 		mapGetters
@@ -113,7 +114,20 @@
 				totalPlan: '',
 				totalActual: '',
 				yearPlan: '',
-				dicList: []
+				dicList: [],
+				charts: {
+					"categories": ["2016", "2017", "2018", "2019", "2020", "2021"],
+					"series": [{
+						"name": "目标值",
+						"data": [35, 36, 31, 33, 13, 34]
+					}, {
+						"name": "完成量",
+						"data": [18, 27, 21, 24, 6, 28]
+					}, {
+						"name": "交易量",
+						"data": [18, 27, 21, 24, 6, 28]
+					}]
+				}
 			}
 		},
 		onLoad() {
@@ -211,21 +225,25 @@
 				padding: 20rpx 24rpx 22rpx;
 				background-color: #fff;
 				margin-top: 24rpx;
+
 				&.project-amount {
 					color: #023659;
 					background: url(../../static/char_icon1.png) no-repeat center;
 					background-size: cover;
 				}
+
 				&.plan-amount {
 					color: #DC6800;
 					background: url(../../static/char_icon2.png) no-repeat center;
 					background-size: cover;
 				}
+
 				&.year-plan {
 					color: #001A4B;
 					background: url(../../static/char_icon3.png) no-repeat center;
 					background-size: cover;
 				}
+
 				&>view {
 					line-height: 40rpx;
 					// color: #023659;
@@ -236,6 +254,7 @@
 						margin-top: 18rpx;
 						line-height: 50rpx;
 						font-weight: bolder;
+
 						&>span {
 							font-weight: normal;
 							margin-left: 8rpx;
@@ -244,7 +263,7 @@
 				}
 			}
 		}
-		
+
 		.chart {
 			background: #fff;
 			height: 525rpx;

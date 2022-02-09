@@ -7,7 +7,7 @@
           <u-button class="buttom-btn" @click="popupClick">筛选条件</u-button>
         </view>
       </view> -->
-      <u-popup v-model="popupShow" mode="bottom" height = "60%">
+    <!--  <u-popup v-model="popupShow" mode="bottom" height = "60%">
         <view style="margin: 10px 20px 10px 20px">
           <u-form ref="uForm">
 
@@ -32,7 +32,7 @@
             </u-form-item>
           </u-form>
         </view>
-      </u-popup>
+      </u-popup> -->
     <scroll-view scroll-x="true" style="width: 100%;overflow: hidden;white-space: nowrap;">
       <view v-if="reportType === 0">
         <uni-table border stripe emptyText="暂无更多数据" v-if="listQuery.way ===1">
