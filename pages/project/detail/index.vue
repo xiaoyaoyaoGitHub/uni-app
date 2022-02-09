@@ -30,7 +30,7 @@
 
 			</view>
 			<view class="map">
-
+				<map name="" :latitude="latitude" :longitude="longitude"  :markers="covers"></map>
 			</view>
 			<view class="amount u-flex">
 				<view class="u-text-center u-flex-6">
@@ -244,8 +244,9 @@
 			<!-- 项目图片 -->
 			<view class="content pictures" v-if="current === 2">
 				<view class="update-pic" @click="upLoadImage">
-						<u-icon color="#DCDEE0" label-color="#DCDEE0" name="camera" label="上传" size="39" label-pos="bottom"></u-icon>
-						
+					<u-icon color="#DCDEE0" label-color="#DCDEE0" name="camera" label="上传" size="39" label-pos="bottom">
+					</u-icon>
+
 				</view>
 				<view class="types" v-for="(item) in [1,3,4]">
 					<view class="time">
@@ -268,16 +269,16 @@
 
 							</view>
 							<view class="image">
-							
+
 							</view>
 							<view class="image">
-							
+
 							</view>
 							<view class="image">
-							
+
 							</view>
 							<view class="image">
-							
+
 							</view>
 						</view>
 					</view>
@@ -345,6 +346,19 @@
 		mixins: [MescrollMixin],
 		data() {
 			return {
+				id: 0, // 使用 marker点击事件 需要填写id
+				title: 'map',
+				latitude: 39.909,
+				longitude: 116.39742,
+				covers: [{
+					latitude: 39.909,
+					longitude: 116.39742,
+					iconPath: '../../../static/location.png'
+				}, {
+					latitude: 39.90,
+					longitude: 116.39,
+					iconPath: '../../../static/location.png'
+				}],
 				downOption: {
 					use: true,
 					auto: true
@@ -387,9 +401,9 @@
 				// console.log(index)
 				this.current = index
 			},
-			upLoadImage(){
+			upLoadImage() {
 				uni.navigateTo({
-					url:'/pages/project/upload/index'
+					url: '/pages/project/upload/index'
 				})
 			},
 			upCallback(page) {
@@ -461,6 +475,15 @@
 				}
 			}
 
+			.map {
+
+				// overflow: hidden;
+				map {
+					width: 100%;
+					height: 100%;
+				}
+			}
+
 			.project-time {
 				padding: 20rpx 0 18rpx;
 
@@ -527,6 +550,7 @@
 
 			.pictures {
 				position: relative;
+
 				.update-pic {
 					position: fixed;
 					right: 32rpx;
@@ -538,8 +562,10 @@
 					text-align: center;
 					padding-top: 10rpx;
 				}
+
 				.types {
 					padding-bottom: 32rpx;
+
 					.time {
 						background: #F7F8FA;
 						font-size: 24rpx;
@@ -574,8 +600,9 @@
 						}
 
 						.images {
-								overflow-x: auto;
-								padding-top: 16rpx;
+							overflow-x: auto;
+							padding-top: 16rpx;
+
 							.image {
 								flex: 0 0 160rpx;
 								height: 160rpx;

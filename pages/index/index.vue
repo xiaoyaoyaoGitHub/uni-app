@@ -60,7 +60,7 @@
 						</view>
 					</u-grid-item>
 					<u-grid-item :custom-style="{padding:'25rpx 0 20rpx'}">
-						<view>
+						<view data-code="mapproject" @click="goToMap">
 							<u-image class="image-icon"  :showLoading="true" src="/static/map_project.png" mode="widthFix" width="48rpx"
 								height="40rpx"></u-image>
 							<view class="grid-text">项目地图</view>
@@ -291,6 +291,11 @@
 				// setTimeout(() => {
 				this.mescroll.endByPage(10, 20)
 				// }, 3000)
+			},
+			goToMap(){
+				uni.navigateTo({
+					url:'/pages/reportTable/projectMap/index'
+				})
 			},
 			goToProjectLists(e) {
 				console.log(e)
