@@ -1,12 +1,12 @@
 <template>
 	<view class="flowLaunch-v">
-      <view>
+     <!-- <view>
         <u-select v-model="selectShow" mode="single-column" :list="selectList" @confirm="confirm"></u-select>
         <view class="flowBefore-actions">
           <u-button class="buttom-btn" @click="selectClick">报表类型</u-button>
           <u-button class="buttom-btn" @click="popupClick">筛选条件</u-button>
         </view>
-      </view>
+      </view> -->
       <u-popup v-model="popupShow" mode="bottom" height = "60%">
         <view style="margin: 10px 20px 10px 20px">
           <u-form ref="uForm">
@@ -21,10 +21,6 @@
               <cudt-checkbox v-model="listQuery.projectCategory" :options="queryConditionData.categoryList">
               </cudt-checkbox>
             </u-form-item>
-
-<!--            <u-form-item label="区域" label-position = "left"	label-width = "130rpx">-->
-<!--              <cudt-city-select></cudt-city-select>-->
-<!--            </u-form-item>-->
 
             <u-form-item label="行业" label-position = "left"	label-width = "130rpx">
               <cudt-select v-model="listQuery.business" placeholder="请选择" :options="queryConditionData.businessList">

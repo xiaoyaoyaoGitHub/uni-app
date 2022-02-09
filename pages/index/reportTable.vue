@@ -12,10 +12,14 @@
 			<view class="select-type">
 				<view class="title">项目阶段</view>
 				<view class="types u-flex u-row-left">
-					<span @click="() => {selectStage(0)}" :class="{active: reportStageList.includes(0)}">储备</span>
-					<span @click="() => {selectStage(1)}" :class="{active: reportStageList.includes(1)}">在建</span>
-					<span @click="() => {selectStage(2)}" :class="{active: reportStageList.includes(2)}">储备转在建</span>
-					<span @click="() => {selectStage(3)}" :class="{active: reportStageList.includes(3)}">竣工</span>
+					<span @click="() => {selectStage(0)}"
+						:class="{active: reportStageList.includes(0), disabled : reportType === 1 || reportType === 2}">储备</span>
+					<span @click="() => {selectStage(1)}"
+						:class="{active: reportStageList.includes(1),disabled: reportType === 0 || reportType === 2}">在建</span>
+					<span @click="() => {selectStage(2)}"
+						:class="{active: reportStageList.includes(2), disabled:reportType === 2}">储备转在建</span>
+					<span @click="() => {selectStage(3)}"
+						:class="{active: reportStageList.includes(3),disabled: reportType === 0}">竣工</span>
 				</view>
 			</view>
 			<view class="select-type">
@@ -35,12 +39,17 @@
 					<span @click="() => {selectMode(2)}" data-type=2 :class="{active: reportMode === 2}">按子行业</span>
 					<span @click="() => {selectMode(3)}" data-type=3 :class="{active: reportMode === 3}">按投资规模</span>
 				</view>
-				<view class="types u-flex u-row-left back-line amount-mode" v-if="reportMode === 3">
-					<u-input class="amount" :border="true" placeholder="100" height="64" @change="change"></u-input>
-					<u-input class="amount" :border="true" placeholder="100" height="64" @change="change"></u-input>
-					<u-input class="amount" :border="true" placeholder="100" height="64" @change="change"></u-input>
-					<u-input class="amount" :border="true" placeholder="100" height="64" @change="change"></u-input>
-					<view class="add">
+				<view class="types amount-mode" v-if="reportMode === 3">
+					<view class="u-flex u-row-left back-line ">
+						<u-input class="amount" v-for="(item, index) in reportModeList" :key="index" :border="true"
+							v-model="item.value" height="64" @change="change"></u-input>
+						<!-- 	<u-input class="amount" :border="true" placeholder="100" height="64" @change="change"></u-input>
+						<u-input class="amount" :border="true" placeholder="100" height="64" @change="change"></u-input>
+						<u-input class="amount" :border="true" placeholder="100" height="64" @change="change"></u-input>
+						<u-input class="amount" :border="true" placeholder="100" height="64" @change="change"></u-input>
+						<u-input class="amount" :border="true" placeholder="100" height="64" @change="change"></u-input> -->
+					</view>
+					<view class="add" @click="addReportModeList">
 						<view>
 							<!-- <u-icon name="plus" size="48" color="#0060F4"></u-icon> -->
 						</view>
@@ -49,7 +58,7 @@
 			</view>
 
 			<view class="btn">
-				<u-button type="primary">
+				<u-button type="primary" @click="queryReport">
 					查询
 				</u-button>
 			</view>
@@ -136,6 +145,15 @@
 				reportStageList: [], // 项目阶段
 				reportStatusList: [], //审核状态
 				reportMode: '', // 统计方式
+				reportModeList: [{
+					value: 10
+				}, {
+					value: 1000
+				}, {
+					value: 10000
+				}, {
+					value: 50000
+				}]
 			}
 		},
 		onLoad() {
@@ -147,8 +165,25 @@
 			uni.$off('updateUsualList')
 		},
 		methods: {
+			// 查询结果
+			queryReport() {
+				uni.navigateTo({
+					url: '/pages/reportTable/buildReport/index'
+				})
+			},
+			// 添加投资规模
+			addReportModeList() {
+				const currentReportList = [...this.reportModeList];
+				currentReportList.push({
+					value: 100000
+				})
+				this.reportModeList = currentReportList
+			},
 			// 选择项目阶段
 			selectStage(stage) {
+				if ((this.reportType === 0) && (stage === 1 || stage === 3)) return
+				if (this.reportType === 1 && stage === 0) return
+				if (this.reportType === 2 && (stage === 0 || stage === 1 || stage === 2)) return
 				const currentReportStageList = [...this.reportStageList]
 				if (currentReportStageList.includes(stage)) {
 					this.reportStageList = currentReportStageList.filter(item => item !== stage)
@@ -168,7 +203,12 @@
 			// 选择报表类型
 			selectType(type) {
 				// console.log(e)
-				this.reportType = type
+				const currentType = this.reportType;
+				if (currentType !== type) {
+					this.reportType = type;
+					this.reportStageList = []
+				}
+
 			},
 			selectMode(mode) {
 				this.reportMode = mode
@@ -266,6 +306,10 @@
 						-webkit-transform-origin: top left;
 					}
 
+					&.disabled {
+						color: rgba(7, 17, 39, .4);
+					}
+
 					&.active {
 						border: none;
 						background: #F2F6FF;
@@ -287,31 +331,47 @@
 					}
 				}
 
-				&>.amount {
-					margin-top: 52rpx;
-					flex: 0 0 144rpx;
-					margin-right: 21rpx;
-					border-radius: 4rpx;
-					border-color: rgba(193, 195, 201, 0.75) !important;
-					
-				}
+
 			}
 
 			.amount-mode {
 				position: relative;
+
+				&>view {
+					width: 100%;
+					overflow-x: auto;
+
+					.amount {
+						position: relative;
+						z-index: 1;
+						margin-top: 52rpx;
+						flex: 0 0 144rpx;
+						margin-right: 21rpx;
+						border-radius: 4rpx;
+						background-color: #fff;
+						box-shadow: 0rpx 0rpx 30rpx #fff;
+						border-color: rgba(193, 195, 201, 0.75) !important;
+
+					}
+				}
+
+
+
 				&:after {
 					content: '';
 					position: absolute;
 					left: 0;
 					right: 0;
-					top: 0;
-					bottom: 17rpx;
+					// top: 0;
+					bottom: 32rpx;
 					height: 0rpx;
-					border: 1px solid #2C3548;
+					border-top: 1px solid #2C3548;
 					margin: auto;
 				}
+
 				&>.add {
 					position: absolute;
+					z-index: 2;
 					right: 0;
 					bottom: 0;
 					width: 79rpx;
@@ -320,6 +380,7 @@
 					margin: 0 auto;
 					background: #fff;
 					box-shadow: -5rpx 0px 10rpx rgba(193, 195, 201, 1);
+
 					&>view {
 						position: absolute;
 						width: 48rpx;
@@ -331,6 +392,7 @@
 						margin: auto;
 						text-align: center;
 						border-radius: 8rpx;
+
 						&:after {
 							content: '';
 							position: absolute;
@@ -344,6 +406,7 @@
 							bottom: 0;
 							margin: auto;
 						}
+
 						&::before {
 							content: '';
 							position: absolute;
