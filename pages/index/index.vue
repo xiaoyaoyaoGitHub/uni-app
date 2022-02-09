@@ -1,7 +1,7 @@
 <template>
 	<view class="index-v">
-		<mescroll-body ref="mescrollRef" @down="downCallback" @up="queryLists" :sticky="true" :up="upOption"
-			:bottombar="false" bottom="100">
+		<mescroll-body ref="mescrollRef" @down="downCallback" @up="loadProjectLataestProgress" :sticky="true"
+			:up="upOption" :bottombar="false" bottom="100">
 			<view class="banner">
 				<u-swiper indicator-pos="bottomRight" mode="dot" :list="bannerList" height="280" :title="true"
 					:title-style="{'font-size':'20px'}"></u-swiper>
@@ -15,7 +15,7 @@
 								储备项目
 							</view>
 							<view class="second-title u-font-40">
-								130
+								{{projectInfo.liveInfo}}
 							</view>
 						</view>
 					</u-col>
@@ -26,7 +26,7 @@
 								在建项目
 							</view>
 							<view class="second-title u-text-right u-font-40">
-								130
+								{{projectInfo.onGoingInfo}}
 							</view>
 						</view>
 					</u-col>
@@ -37,7 +37,7 @@
 								竣工项目
 							</view>
 							<view class="second-title u-text-right u-font-40">
-								130
+								{{projectInfo.storeInfo}}
 							</view>
 						</view>
 					</u-col>
@@ -47,22 +47,24 @@
 				<u-grid :col="3" :border="false">
 					<u-grid-item :custom-style="{padding:'25rpx 0 20rpx'}">
 						<view data-code="VideoPorject" @click="goToProjectLists">
-							<u-image class="image-icon"  :showLoading="true" src="/static/video_project.png" width="52rpx" height="39rpx">
+							<u-image class="image-icon" :showLoading="true" src="/static/video_project.png"
+								width="52rpx" height="39rpx">
 							</u-image>
 							<view class="grid-text">视频项目</view>
 						</view>
 					</u-grid-item>
 					<u-grid-item :custom-style="{padding:'25rpx 0 20rpx'}">
 						<view data-code="favoriteproject" @click="goToProjectLists">
-							<u-image class="image-icon" :showLoading="true" src="/static/collect_project.png" width="48rpx" height="40rpx">
+							<u-image class="image-icon" :showLoading="true" src="/static/collect_project.png"
+								width="48rpx" height="40rpx">
 							</u-image>
 							<view class="grid-text">收藏项目</view>
 						</view>
 					</u-grid-item>
 					<u-grid-item :custom-style="{padding:'25rpx 0 20rpx'}">
 						<view data-code="mapproject" @click="goToMap">
-							<u-image class="image-icon"  :showLoading="true" src="/static/map_project.png" mode="widthFix" width="48rpx"
-								height="40rpx"></u-image>
+							<u-image class="image-icon" :showLoading="true" src="/static/map_project.png"
+								mode="widthFix" width="48rpx" height="40rpx"></u-image>
 							<view class="grid-text">项目地图</view>
 						</view>
 					</u-grid-item>
@@ -74,24 +76,27 @@
 					最近调度
 				</view>
 				<view class="lists">
-					<view @click="toNotificationDetail()" class="project-item" v-for="item in [1,2,3]">
+					<view @click="toNotificationDetail()" class="project-item" v-for="item in latasetProgressLists">
 
 						<view class="project-name">
-							<span>阜蒙县佛寺水库库区清淤工程项目</span>
-							<span class="time">2021-01-01</span>
+							<span>{{item.pj_base_project_name}}</span>
+							<span class="time">{{item.modified_date}}</span>
 						</view>
 						<view class="project-info">
 							<view class="all">
 								<span class="icon"></span>
-								资金累计：<span class="amount">4500万</span>
+								资金累计：<span
+									class="amount">{{ item.accumulate_invest ? item.accumulate_invest.split('.')[0] : '--'}}万</span>
 							</view>
 							<view class="year">
 								<span class="icon"></span>
-								年度累计：<span class="amount">4500万</span>
+								年度累计：<span
+									class="amount">{{item.year_accumulate_invest ? item.year_accumulate_invest.split('.')[0] : '--'}}万</span>
 							</view>
 							<view class="month">
 								<span class="icon"></span>
-								本月累计：<span class="amount">4500万</span>
+								本月累计：<span
+									class="amount">{{item.fund_volume ? item.fund_volume.split('.')[0] : '--'}}万</span>
 							</view>
 						</view>
 					</view>
@@ -112,6 +117,9 @@
 		getConfigDataViaCode
 	} from '@/api/apply/visualDev'
 	import {
+		getQueryDataHomePageDetailList
+	} from "@/api/projectReport.js"
+	import {
 		moduleCodes
 	} from '@/api/common'
 	export default {
@@ -120,6 +128,11 @@
 			return {
 				keyword: '',
 				list: [],
+				projectInfo:{
+					liveInfo:'--',
+					onGoingInfo:'--',
+					storeInfo:'--'
+				},
 				upOption: {
 					use: true,
 					page: {
@@ -183,14 +196,16 @@
 					}
 				],
 				userInfo: {},
-				notificationCount: 0
+				notificationCount: 0,
+				latasetProgressLists: [],
+				// ...mapGetters(['userInfo']),
 			}
 		},
 		onLoad() {
 			this.userInfo = uni.getStorageSync('userInfo') || {}
 			uni.$on('updateList', data => {})
 			this.loadSwiper()
-			this.loadNotification()
+			this.loadDataHomePageDetail()
 		},
 		onUnload() {
 			uni.$off('updateList')
@@ -242,34 +257,62 @@
 					}
 				}).catch(err => {})
 			},
-			loadNotification() {
-				const query = {
-					currentPage: 1,
-					pageSize: 100
-				}
-				getModelListViaCode(moduleCodes.notification, query).then(res => {
-					this.list = []
-					for (let item of res.data.list) {
-						if (item.status === '已发布' && (!item.department || item.department === this.userInfo
-								.departmentName)) {
-							this.list.push(item)
+			loadProjectLataestProgress(page) {
+				getModelListViaCode(moduleCodes.ProjectLatestProgress, {
+					pageSize: page.size,
+					currentPage: page.num
+				}).then(res => {
+					const {
+						code,
+						data: {
+							list = [],
+							pagination
+						}
+					} = res || {}
+					if (code === 200) {
+						this.latasetProgressLists = this.latasetProgressLists.concat(list)
+						this.mescroll.endBySize(pagination.pageSize, pagination.total); //必传参数(当前页的数据个数, 总页数)
+					} else {
+						this.mescroll.endErr();
+
+					}
+
+				}).catch(() => {
+					this.mescroll.endErr();
+
+				})
+			},
+			loadDataHomePageDetail() {
+				const userInfo = this.userInfo;
+				getQueryDataHomePageDetailList({
+					userInfo
+				}).then(res => {
+					const {
+						code,
+						data: {
+							liveInfo = {},
+							onGoingInfo = {},
+							storeInfo = {}
+						}
+					} = res || {}
+					if(code === 200){
+						this.projectInfo = {
+							liveInfo: liveInfo.sum,
+							onGoingInfo: onGoingInfo.sum,
+							storeInfo: storeInfo.sum
 						}
 					}
-					this.notificationCount = this.list.length
-				}).catch(() => {})
+
+				}).catch(() => {
+
+				})
 			},
 			toNotificationDetail(item) {
 				uni.navigateTo({
 					url: '/pages/project/detail/index'
 				})
 			},
-			search() {
-				this.searchTimer && clearTimeout(this.searchTimer)
-				this.searchTimer = setTimeout(() => {
-					this.list = [];
-					this.mescroll.resetUpScroll();
-				}, 300)
-			},
+
 			handleClick(item) {
 				let path = ""
 				// if (item.code === moduleCodes.StorePhaseProject || item.code === moduleCodes.BuildingPhaseProject || item
@@ -285,16 +328,10 @@
 					})
 				}
 			},
-			// 上拉加载请求列表
-			queryLists() {
-				console.log('加载');
-				// setTimeout(() => {
-				this.mescroll.endByPage(10, 20)
-				// }, 3000)
-			},
-			goToMap(){
+
+			goToMap() {
 				uni.navigateTo({
-					url:'/pages/reportTable/projectMap/index'
+					url: '/pages/reportTable/projectMap/index'
 				})
 			},
 			goToProjectLists(e) {
@@ -370,9 +407,11 @@
 			.project-types {
 				padding-top: 20rpx;
 				border-radius: 4rpx;
+
 				.image-icon {
 					margin: 0 auto;
 				}
+
 				.grid-text {
 					font-size: 28rpx;
 					line-height: 40rpx;

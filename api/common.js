@@ -192,11 +192,11 @@ export function getDownloadUrl(type, fileId) {
 }
 
 export const moduleTitle = {
-	newstoreproject:'储备项目',
-	newongoingproject:'在建项目',
-	newliveproject:"竣工项目",
-	videoProject:"视频项目",
-	favoriteproject:"收藏项目",
+	newstoreproject: '储备项目',
+	newongoingproject: '在建项目',
+	newliveproject: "竣工项目",
+	videoProject: "视频项目",
+	favoriteproject: "收藏项目",
 }
 
 export const moduleCodes = {
@@ -208,7 +208,7 @@ export const moduleCodes = {
 	OperationPhaseProject: 'newliveproject',
 	// 注销项目
 	CancelPhaseProject: '',
-	VideoPorject:"videoProject",
+	VideoPorject: "videoProject",
 	//收藏项目
 	favoriteproject: 'favoriteproject',
 	//项目详情 - 储备进度
@@ -245,16 +245,35 @@ export const moduleCodes = {
 	//首页幻灯片
 	AppHomeSwiper: 'AppHomeSwiper',
 	//项目列表
-	AppProjectList: 'AppProjectList'
+	AppProjectList: 'AppProjectList',
+	// 最近调度
+	ProjectLatestProgress: 'ProjectLatestProgress'
 }
 
-export const reviewOptions = [
-  {key: "0", name: '未提交'},
-  {key: "1", name: '等待审核'},
-  {key: "2", name: '审核通过'},
-  {key: "3", name: '审核驳回'},
-  {key: "4", name: '流程撤回'},
-  {key: "5", name: '审核终止'}
+export const reviewOptions = [{
+		key: "0",
+		name: '未提交'
+	},
+	{
+		key: "1",
+		name: '等待审核'
+	},
+	{
+		key: "2",
+		name: '审核通过'
+	},
+	{
+		key: "3",
+		name: '审核驳回'
+	},
+	{
+		key: "4",
+		name: '流程撤回'
+	},
+	{
+		key: "5",
+		name: '审核终止'
+	}
 ]
 
 export function formatNumber(value) {

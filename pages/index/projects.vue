@@ -53,45 +53,24 @@
 			</view>
 
 			<view class="chart">
-				<qiun-data-charts type="column" :echartsApp="true" :chartData="charts" />
+				<view class="content" :class="{scale: chartDone}">
+					<qiun-data-charts @complete="chartComplete" class="chartInfo" type="column" :echartsApp="true"
+						:opts="eopts" :eopts="eopts" :chartData="charts" />
+				</view>
 			</view>
-
-			<!-- <view style="margin-top: 20rpx;">
-				<u-grid :col="3" :border="false">
-					<u-grid-item v-for="(item, index) in actionList" :key="index" @click="toDetail(item)">
-						<u-badge :count="item.count" :offset="[20, 30]"></u-badge>
-						<u-icon :name="item.icon" :size="36"></u-icon>
-						<view class="grid-text">{{item.name}}</view>
-					</u-grid-item>
-				</u-grid>
-			</view> -->
-			<!-- <view style="margin-top: 10rpx;" class="replyList">
-				<u-tag text="我关注的项目" mode="dark" type="primary" shape="circle"/>
-				<template v-if="list.length > 0">
-					<uni-list>
-						<view v-for="(item, index) in list" :key="index">
-							<uni-list-item :title="item.pj_base_project_name" :note="item.pj_base_project_create_date" show-arrow="true" @click="toNotificationDetail(item)" link>
-							</uni-list-item>
-						</view>
-					</uni-list>
-				</template>
-				<template v-else> 
-				  <view class="empty-text">
-					  暂无数据
-				  </view>
-				</template>
-			</view> -->
 		</mescroll-body>
 	</view>
 </template>
 
 <script>
 	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
-	// import QiunDataCharts from "@/uni_modules/"
 	import IndexMixin from './mixin.js'
 	import {
 		mapGetters
 	} from "vuex"
+	import {
+		getQueryDataHomePageDetailList
+	} from "@/api/projectReport.js"
 	import {
 		getModelListViaCode
 	} from '@/api/apply/visualDev'
@@ -109,6 +88,29 @@
 				upOption: {
 					use: false
 				},
+				chartDone: false,
+				eopts: {
+					legend: {
+						position: 'top'
+					},
+					xAxis: {
+						label: {
+							rotate: 40
+						}
+					},
+					seriesTemplate: {
+						name: '',
+						type: 'bar',
+						data: [],
+						barwidth: 20,
+						label: {
+							show: false,
+							color: "#fff",
+							position: 'top',
+						},
+					},
+
+				},
 				actionList: [],
 				userInfo: {},
 				totalPlan: '',
@@ -116,17 +118,17 @@
 				yearPlan: '',
 				dicList: [],
 				charts: {
-					"categories": ["2016", "2017", "2018", "2019", "2020", "2021"],
-					"series": [{
-						"name": "目标值",
-						"data": [35, 36, 31, 33, 13, 34]
-					}, {
-						"name": "完成量",
-						"data": [18, 27, 21, 24, 6, 28]
-					}, {
-						"name": "交易量",
-						"data": [18, 27, 21, 24, 6, 28]
-					}]
+					// "categories": ["2016", "2017", "2018", "2019", "2020", "2021"],
+					// "series": [{
+					// 	"name": "目标值",
+					// 	"data": [35, 36, 31, 33, 13, 34]
+					// }, {
+					// 	"name": "完成量",
+					// 	"data": [18, 27, 21, 24, 6, 28]
+					// }, {
+					// 	"name": "交易量",
+					// 	"data": [18, 27, 21, 24, 6, 28]
+					// }]
 				}
 			}
 		},
@@ -134,12 +136,83 @@
 			this.userInfo = uni.getStorageSync('userInfo') || {}
 			this.dicList = uni.getStorageSync('dictionaryList') || []
 			uni.$on('updateList', data => {})
-			this.loadProjects()
+			// this.loadProjects()
+			this.loadCharts()
 		},
 		onUnload() {
 			uni.$off('updateList')
 		},
 		methods: {
+			chartComplete(e) {
+				// console.log(e)
+				this.chartDone = true
+			},
+			loadCharts() {
+				getQueryDataHomePageDetailList({
+					userInfo: this.userInfo
+				}).then(res => {
+					const {
+						code,
+						data: {
+							regionResultList: originList = []
+						} = {}
+					} = res || {}
+					if (code === 200) {
+						const regionResultList = originList.concat();
+						console.log(originList)
+						const baseLine = regionResultList[0]?.splice(1);
+						const baseData = regionResultList.splice(1)
+						const series = [];
+						const categories = [];
+						const a1 = [],
+							a2 = [],
+							a3 = [],
+							a4 = [],
+							a5 = [];
+						baseData.forEach((item, index) => {
+							categories.push(item[0]);
+							a1.push(item[1])
+							a2.push(item[2])
+							a3.push(item[3])
+							a4.push(item[4])
+							a5.push(item[5])
+						})
+						baseLine.forEach((item, index) => {
+							console.log('a' + index);
+							const baseName = 'a' + (index - 0 + 1)
+							const singleSeries = {
+								name: item,
+								label: {
+									show: false
+								},
+								data: eval(baseName)
+							}
+							series.push(singleSeries)
+						})
+						console.log(series)
+						this.charts = {
+							categories,
+							series,
+							legend: {
+								show: false
+							},
+							yAxis: {
+								gridType: 'dash',
+								gridColor: '#CCCCCC',
+								dashLength: 8,
+								splitNumber: 5,
+								min: 10,
+								max: 180,
+								format: (val) => {
+									return val.toFixed(0) + '元'
+								}
+							},
+						}
+					}
+				}).catch(err => {
+					console.log(err)
+				})
+			},
 			loadProjects() {
 				const query = {
 					currentPage: 1,
@@ -268,6 +341,35 @@
 			background: #fff;
 			height: 525rpx;
 			margin-top: 24rpx;
+			position: relative;
+
+			&>.content {
+				width: 300%;
+				height: 300%;
+				position: relative;
+
+				&:after {
+					content: '';
+					position: absolute;
+					left: 0;
+					top: 0;
+					right: 0;
+					bottom: 0;
+					background: #fff;
+					z-index: 1;
+				}
+
+				&.scale {
+					transform-origin: 0 0;
+					transform: scale(0.33);
+					display: block;
+					&:after {
+						background: transparent
+					}
+				}
+
+				.chartInfo {}
+			}
 		}
 
 		.grid-text {
