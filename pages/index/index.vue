@@ -120,7 +120,8 @@
 		getQueryDataHomePageDetailList
 	} from "@/api/projectReport.js"
 	import {
-		moduleCodes
+		moduleCodes,
+		getDictionaryDataAll
 	} from '@/api/common'
 	export default {
 		mixins: [MescrollMixin, IndexMixin],
@@ -128,10 +129,10 @@
 			return {
 				keyword: '',
 				list: [],
-				projectInfo:{
-					liveInfo:'--',
-					onGoingInfo:'--',
-					storeInfo:'--'
+				projectInfo: {
+					liveInfo: '--',
+					onGoingInfo: '--',
+					storeInfo: '--'
 				},
 				upOption: {
 					use: true,
@@ -205,7 +206,8 @@
 			this.userInfo = uni.getStorageSync('userInfo') || {}
 			uni.$on('updateList', data => {})
 			this.loadSwiper()
-			this.loadDataHomePageDetail()
+			this.loadDataHomePageDetail();
+			// this.getTest()
 		},
 		onUnload() {
 			uni.$off('updateList')
@@ -295,7 +297,7 @@
 							storeInfo = {}
 						}
 					} = res || {}
-					if(code === 200){
+					if (code === 200) {
 						this.projectInfo = {
 							liveInfo: liveInfo.sum,
 							onGoingInfo: onGoingInfo.sum,
@@ -312,7 +314,7 @@
 					url: '/pages/project/detail/index'
 				})
 			},
-
+			
 			handleClick(item) {
 				let path = ""
 				// if (item.code === moduleCodes.StorePhaseProject || item.code === moduleCodes.BuildingPhaseProject || item

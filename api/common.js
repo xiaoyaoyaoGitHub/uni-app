@@ -44,7 +44,7 @@ export function getOrganizeSelector() {
 // 获取部门下拉框列表(公司+部门)
 export function getDepartmentSelector() {
 	return request({
-		url: '/api/permission/Organize/Department/Selector/0',
+		url: '/api/permission/Organize/Department/Selector',
 		options: {
 			load: false
 		}

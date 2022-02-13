@@ -22,7 +22,8 @@
 						data-type="tradeSelect" @click="showSelect">
 						{{tradeSelectCurrent.label}}
 					</u-button>
-					<u-select v-model="tradeSelectShow" :list="tradelists" @confirm="selectConfirm">行业</u-select>
+					<u-select value-name="id" label-name="fullName" v-model="tradeSelectShow" :list="tradelists"
+						@confirm="selectConfirm">行业</u-select>
 				</view>
 				<view class="select">
 					<u-button data-index="2" class="selectBtn" data-type="amountSelect"
@@ -40,33 +41,34 @@
 					</u-popup>
 					<!-- <u-select v-model="amountSelectShow" @confirm="selectConfirm"> 总投资</u-select> -->
 				</view>
-				<!-- <view class="select">
+				<view class="select">
 					<u-button data-index="3" class="selectBtn" :class="{active: selectType === 'departSelect'}"
 						data-type="departSelect" @click="showSelect">
-						部门
+						{{departSelectCurrent.label}}
 					</u-button>
-					<u-select v-model="departSelectShow" :list="list" @confirm="selectConfirm"></u-select>
-				</view> -->
+					<u-select value-name="id" label-name="fullName" v-model="departSelectShow" :list="departlists"
+						@confirm="selectConfirm"></u-select>
+				</view>
 			</view>
 			<view class="lists">
-				<view class="project-item" @click="toNotificationDetail" v-for="item in [1,2,3,4,5]">
+				<view class="project-item" @click="toNotificationDetail" v-for="item in projectLists">
 
 					<view class="project-name u-border-bottom">
-						<span class="name">阜蒙县佛寺水库库区清淤工程项目</span>
-						<span class="status fail u-text-center">审核状态</span>
+						<span class="name">{{item.pj_base_project_name}}</span>
+						<span class="status fail u-text-center">{{item.pj_review_status}}</span>
 					</view>
 					<view class="project-info">
 						<view class="all">
 							<span class="icon"></span>
-							行业：<span class="amount">4500万</span>
+							行业：<span class="amount">{{item.pj_base_business_category}}</span>
 						</view>
 						<view class="year">
 							<span class="icon"></span>
-							总投资：<span class="amount">4500万</span>
+							总投资：<span class="amount">{{item.pj_fund_invest_total.split('.')[0]}}万</span>
 						</view>
 						<view class="month">
 							<span class="icon"></span>
-							部门：<span class="amount">4500万</span>
+							部门：<span class="amount">{{item.pj_base_region}}</span>
 						</view>
 					</view>
 				</view>
@@ -79,8 +81,14 @@
 	import {
 		getImUser,
 		moduleCodes,
-		moduleTitle
+		moduleTitle,
+		getDictionaryDataAll,
+		getDictionaryDataSelector,
+		getDepartmentSelector
 	} from '@/api/common.js'
+	import {
+		getModelList
+	} from "@/api/apply/visualDev.js"
 	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
 	export default {
 		mixins: [MescrollMixin],
@@ -108,85 +116,47 @@
 				},
 				keyword: '',
 				selectType: '',
+				pageType: '',
 				auditSelectCurrent: {
-					value: '',
+					value: '0',
 					label: '审核状态'
 				},
 				tradeSelectCurrent: {
-					value: '',
+					value: 'def93d1b7cda45d1a2f60c6c39052e95',
 					label: '行业'
 				},
+				departSelectCurrent: {
+					value: '',
+					label: '部门'
+				},
 				amount: {
-					min: '',
-					max: ''
+					min: '100',
+					max: '500000000'
 				},
 				auditSelectShow: false,
 				tradeSelectShow: false,
 				amountSelectShow: false,
 				departSelectShow: false,
 				auditLists: [{
-						value: 1,
+						value: '0',
 						label: '未提交'
 					},
 					{
-						value: 1,
+						value: '1',
 						label: '等待审核'
 					},
 					{
-						value: 2,
+						value: '2',
 						label: '审核通过'
 					},
 					{
-						value: 3,
+						value: '3',
 						label: '审核驳回'
 					}
 				],
-				tradelists: [{
-						value: '1',
-						label: '农林牧鱼'
-					},
-					{
-						value: '1',
-						label: '工业'
-					},
-					{
-						value: '1',
-						label: '基础设施'
-					},
-					{
-						value: '1',
-						label: '服务业'
-					},
-					{
-						value: '1',
-						label: '工业'
-					},
-					{
-						value: '1',
-						label: '基础设施'
-					},
-					{
-						value: '1',
-						label: '服务业'
-					},
-					{
-						value: '1',
-						label: '高新技术'
-					},
-					{
-						value: '1',
-						label: '生态环保'
-					},
-					{
-						value: '1',
-						label: '社会事业'
-					},
-					{
-						value: '1',
-						label: '其他行业'
-					}
-				]
-
+				tradelists: [],
+				departlists: [],
+				projectLists: []
 			}
 		},
 		onLoad(param) {
@@ -194,19 +164,12 @@
 			this.dicList = uni.getStorageSync('dictionaryList') || []
 			let title = "项目列表"
 			let phase = param.phase
+			this.pageType = phase
 			uni.setNavigationBarTitle({
 				title: moduleTitle[phase]
 			})
-			// switch (phase) {
-			// 	title: ''
-			// }
-			// if (phase === moduleCodes.StorePhaseProject) {
-			// 	title = "储备项目"
-			// } else if (phase === moduleCodes.BuildingPhaseProject) {
-			// 	title = "在建项目"
-			// } else if (phase === moduleCodes.OperationPhaseProject) {
-			// 	title = "竣工项目"
-			// } else if ()
+			this.getDictionarySelects();
+			this.getDepartmentSelects()
 
 		},
 		computed: {
@@ -216,27 +179,162 @@
 		},
 		methods: {
 			upCallback(page) {
-				console.log('up')
 				let query = {
 					currentPage: page.num,
 					pageSize: page.size,
-					keyword: this.keyword
+					keyword: this.keyword,
+					pj_base_business_category: this.tradeSelectCurrent.value || '',
+					// pj_fund_invest_total: `${this.amount.min},${this.amount.max}`,
+					// pj_fund_invest_total: `[${this.amount.min},${this.amount.max}]`,
+					pj_fund_invest_total: [Number(this.amount.min), Number(this.amount.max)],
+					pj_review_status: this.auditSelectCurrent.value || ''
 				}
-				getImUser(query, {
-					load: page.num == 1
+				if (this.pageType === moduleCodes.StorePhaseProject) { //储备项目
+					this.queryStoreList(query)
+				}
+				if (this.pageType === moduleCodes.BuildingPhaseProject) { // 在建项目
+					this.queryPlayList(query)
+				}
+				if (this.pageType === moduleCodes.OperationPhaseProject) { // 竣工项目
+					this.queryFinishList(query)
+				}
+				if (this.pageType === moduleCodes.VideoPorject) { // 视频项目
+
+				}
+
+			},
+			queryStoreList(data) {
+				console.log(data)
+				const modelId = '2d97a78c3be1440493c983bb9186bacf';
+				const pj_base_project_phase = '05726e181e7147768f67ce1905fe6e49'
+				getModelList(modelId, {
+					currentPage: data.currentPage,
+					pageSize: data.pageSize,
+					sidx: 'pj_base_roject_create_date',
+					sort: "desc",
+					json: JSON.stringify({
+						pj_base_project_phase,
+						pj_base_business_category: data.pj_base_business_category,
+						pj_fund_invest_total: data.pj_fund_invest_total,
+						pj_review_status: data.pj_review_status,
+						pj_base_project_name:'项目'
+
+					})
 				}).then(res => {
-					// this.mescroll.endSuccess(0);
-					// if (page.num == 1) this.list = [];
-					// const list = res.data.list;
-					// this.list = this.list.concat(list);
-					this.mescroll.endSuccess(20, true)
-				}).catch(() => {
-					this.mescroll.endErr();
+					// console.log(res)
+					const {
+						code,
+						data: {
+							list = [],
+							pagination = {}
+						} = {}
+					} = res || {};
+					if (code === 200) {
+
+						this.projectLists = list
+						this.mescroll.endBySize(pagination.pageSize, pagination.total); //必传参数(当前页的数据个数, 总页数)
+					}
 				})
 			},
+			queryPlayList(data) {
+				const modelId = 'b094ad34716143b5a13e291572ab1af3';
+				const customized = [{
+					type: 'IN',
+					field: 'pj_base_project_phase',
+					values: '6bfa51249e2e4d31a8128b50c3b33877,fe3ab31dd0ef495ca2c2afc272fb7715'
+				}]
+				getModelList(modelId, {
+					currentPage: data.currentPage,
+					pageSize: data.pageSize,
+					customized: JSON.stringify(customized),
+					json: JSON.stringify({
+						pj_base_business_category: data.pj_base_business_category,
+						// pj_fund_invest_total: data.pj_fund_invest_total,
+						pj_review_status: data.pj_review_status
+
+					})
+				}).then(res => {
+					// console.log(res)
+					const {
+						code,
+						data: {
+							list = [],
+							pagination = {}
+						} = {}
+					} = res || {};
+					if (code === 200) {
+						this.projectLists = list
+						this.mescroll.endBySize(pagination.pageSize, pagination.total); //必传参数(当前页的数据个数, 总页数)
+					}
+				})
+
+			},
+			queryFinishList(data) {
+				const modelId = '1a0d97c689c84f2599e6fffd29f9efc6';
+				const pj_base_project_phase = 'b160da1373a84d99932f5810204acc1f';
+				getModelList(modelId, {
+					currentPage: data.currentPage,
+					pageSize: data.pageSize,
+					json: JSON.stringify({
+						pj_base_project_phase,
+						pj_base_business_category: data.pj_base_business_category,
+						pj_fund_invest_total: [100, 500],
+						pj_review_status: data.pj_review_status
+
+					})
+				}).then(res => {
+					// console.log(res)
+					const {
+						code,
+						data: {
+							list = [],
+							pagination = {}
+						} = {}
+					} = res || {};
+					if (code === 200) {
+						this.projectLists = list
+						this.mescroll.endBySize(pagination.pageSize, pagination.total); //必传参数(当前页的数据个数, 总页数)
+					}
+				})
+			},
+			queryCollectList() {
+				const modelId = '5371514a5ef7423f81f809e33cb66e74';
+				const concerns = JSON.parse(this.userInfo).data.userName + ','
+			},
 			downCallback() {
-				console.log('down')
-				this.mescroll.endSuccess(0);
+				this.projectLists = [];
+				this.mescroll.resetUpScroll();
+			},
+			// 获取行业
+			getDictionarySelects() {
+				getDictionaryDataSelector('1b252ec1f16542d7b9f608bd1f7f2418').then(res => {
+					const {
+						code,
+						data: {
+							list = []
+						} = {}
+					} = res || {};
+					if (code === 200) {
+						this.tradelists = list
+						// this.queryLists(moduleId, moduleId_type)
+					}
+				})
+			},
+			getDepartmentSelects() {
+				getDepartmentSelector().then(res => {
+					const {
+						code,
+						data: {
+							list = []
+						} = {}
+					} = res || {};
+					if (code === 200) {
+						this.departlists = list
+					}
+				})
+			},
+			queryLists() {
+
 			},
 			toNotificationDetail(item) {
 				uni.navigateTo({
@@ -247,23 +345,17 @@
 				// 节流,避免输入过快多次请求
 				this.searchTimer && clearTimeout(this.searchTimer)
 				this.searchTimer = setTimeout(() => {
-					this.list = [];
+					this.projectLists = [];
 					this.mescroll.resetUpScroll();
 				}, 300)
 			},
-			detail(id) {
-				uni.navigateTo({
-					url: '/pages/message/userDetail/index?userId=' + id,
-				})
-			},
-
 			selectConfirm(e) {
-				// console.log(this.selectType + 'Current')
-				this[this.selectType + 'Current'] = e[0]
+				console.log(e)
+				this[this.selectType + 'Current'] = e[0];
+				this.projectLists = [];
+				this.mescroll.resetUpScroll();
 			},
 			showSelect(e) {
-				console.log('click')
-				console.log(e);
 				const {
 					dataset: {
 						type
@@ -271,7 +363,6 @@
 				} = e.currentTarget || {}
 				this.selectType = type;
 				const typeName = type + 'Show';
-				console.log(typeName)
 				this[typeName] = true
 			},
 		}
@@ -303,6 +394,7 @@
 			.selects {
 				background: #fff;
 				padding: 20rpx 32rpx;
+				overflow-x: auto;
 
 				.select {
 					margin-right: 19rpx;
