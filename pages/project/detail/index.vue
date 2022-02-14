@@ -4,10 +4,10 @@
 		<view class="project-info">
 			<view class="project-name u-flex u-row-between ">
 				<span class="u-flex-nowrap">
-					阜蒙县佛寺水库库区清淤工程项目阜蒙县佛寺水库库区清淤工程项目
+					{{projectInfo.pj_base_project_name}}
 				</span>
 				<span class="status">
-					在建状态
+					{{projectInfo.pj_base_project_phase}}
 				</span>
 			</view>
 			<view class="project-time u-flex u-row-left">
@@ -16,7 +16,7 @@
 						创建时间：
 					</span>
 					<span class="desc">
-						2021-02-27
+						{{projectInfo.pj_base_project_update_date ? projectInfo.pj_base_project_update_date.split(' ')[0] : '--'}}
 					</span>
 				</view>
 				<view>
@@ -24,13 +24,14 @@
 						行业：
 					</span>
 					<span class="desc">
-						制造业
+						{{projectInfo.pj_base_business_category}}
 					</span>
 				</view>
 
 			</view>
 			<view class="map">
-				<map name="" :latitude="latitude" :longitude="longitude"  :markers="covers"></map>
+				<!-- <map v-if="!projectInfo.pj_base_project_position" name=""></map> -->
+				<map :latitude="latitude" :longitude="longitude" :markers="covers"></map>
 			</view>
 			<view class="amount u-flex">
 				<view class="u-text-center u-flex-6">
@@ -38,7 +39,7 @@
 						总投资（万元）
 					</view>
 					<view class="sum">
-						3000.00
+						{{projectInfo.pj_fund_invest_total}}
 					</view>
 				</view>
 				<view class="u-text-center u-flex-6">
@@ -46,7 +47,7 @@
 						今年计划投资（万元）
 					</view>
 					<view class="sum planColor">
-						3000.00
+						{{projectInfo.pj_fund_invest_currentyear}}
 					</view>
 				</view>
 			</view>
@@ -66,43 +67,43 @@
 						</template>
 						<template slot="body">
 							<view class="desc">
-								续建
+								{{projectInfo.pj_base_project_phase}}
 							</view>
 						</template>
 					</uni-list-item>
 					<uni-list-item class="list-item">
 						<template slot="header">
 							<view class="label">
-								在建状态
+								产业
 							</view>
 						</template>
 						<template slot="body">
 							<view class="desc">
-								续建
+								{{projectInfo.pj_base_industry}}
 							</view>
 						</template>
 					</uni-list-item>
 					<uni-list-item class="list-item">
 						<template slot="header">
 							<view class="label">
-								在建状态
+								集群
 							</view>
 						</template>
 						<template slot="body">
 							<view class="desc">
-								续建
+								{{projectInfo.pj_base_project_cluster}}
 							</view>
 						</template>
 					</uni-list-item>
 					<uni-list-item class="list-item">
 						<template slot="header">
 							<view class="label">
-								在建状态
+								部门
 							</view>
 						</template>
 						<template slot="body">
 							<view class="desc">
-								续建
+								{{projectInfo.pj_base_province_department}}
 							</view>
 						</template>
 					</uni-list-item>
@@ -341,6 +342,10 @@
 	import {
 		getImUser
 	} from '@/api/common.js'
+	import {
+		getConfigDataViaCode,
+		getProjectInfo
+	} from "@/api/apply/visualDev.js"
 	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
 	export default {
 		mixins: [MescrollMixin],
@@ -350,15 +355,7 @@
 				title: 'map',
 				latitude: 39.909,
 				longitude: 116.39742,
-				covers: [{
-					latitude: 39.909,
-					longitude: 116.39742,
-					iconPath: '../../../static/location.png'
-				}, {
-					latitude: 39.90,
-					longitude: 116.39,
-					iconPath: '../../../static/location.png'
-				}],
+				covers: [],
 				downOption: {
 					use: true,
 					auto: true
@@ -388,8 +385,19 @@
 				}, {
 					name: '项目问题',
 				}],
-				current: 0
+				current: 0,
+				projectInfo: {}
 			}
+		},
+		onLoad() {
+			// console.log(this.$route)
+			const {
+				id,
+				modelId,
+				pj_base_project_phase
+			} = this.$route.query || {};
+			// this.getConfig(modelId)
+			this.getData(modelId, id)
 		},
 		computed: {
 			baseURL() {
@@ -404,6 +412,42 @@
 			upLoadImage() {
 				uni.navigateTo({
 					url: '/pages/project/upload/index'
+				})
+			},
+			getConfig(modelId) {
+				getConfigDataViaCode(modelId).then(res => {
+					console.log(res)
+				})
+			},
+			getData(modelId, id) {
+				getProjectInfo(modelId, id).then(res => {
+					const {
+						code,
+						data: {
+							data: projectInfo = '{}'
+						}
+					} = res || {}
+					console.log(JSON.parse(projectInfo))
+					if (code === 200) {
+						this.projectInfo = JSON.parse(projectInfo);
+						const {
+							pj_base_project_position = '{}'
+						} = this.projectInfo || {};
+					
+						const pj_base_project_positionToJson = JSON.parse(pj_base_project_position) || {};
+						console.log('pj_base_project_positionToJson',pj_base_project_positionToJson)
+						const { formattedAddress } = pj_base_project_positionToJson || {};
+						this.latitude = pj_base_project_positionToJson.latitude;
+						this.longitude = pj_base_project_positionToJson.longitude;
+						this.covers = [{
+							latitude: this.latitude,
+							longitude: this.longitude,
+							width:20,
+							height: 20,
+							title: formattedAddress,
+							iconPath: '../../../static/mark.jpeg'
+						}]
+					}
 				})
 			},
 			upCallback(page) {

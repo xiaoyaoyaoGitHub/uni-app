@@ -51,11 +51,14 @@
 				</view>
 			</view>
 			<view class="lists">
-				<view class="project-item" @click="toNotificationDetail" v-for="item in projectLists">
+				<view class="project-item" data-id="item.id" @click="() => toNotificationDetail(item.id)"
+					v-for="item in projectLists">
 
 					<view class="project-name u-border-bottom">
 						<span class="name">{{item.pj_base_project_name}}</span>
-						<span class="status fail u-text-center">{{item.pj_review_status}}</span>
+						<span
+							:class="{'unUpdate': item.pj_review_status === '未提交', 'wait': item.pj_review_status === '等待审核','success': item.pj_review_status === '审核通过', 'fail': item.pj_review_status === '审核驳回'}"
+							class="status u-text-center">{{item.pj_review_status}}</span>
 					</view>
 					<view class="project-info">
 						<view class="all">
@@ -130,8 +133,8 @@
 					label: '部门'
 				},
 				amount: {
-					min: '100',
-					max: '500000000'
+					min: 500,
+					max: 500000
 				},
 				auditSelectShow: false,
 				tradeSelectShow: false,
@@ -198,15 +201,18 @@
 				if (this.pageType === moduleCodes.OperationPhaseProject) { // 竣工项目
 					this.queryFinishList(query)
 				}
-				if (this.pageType === moduleCodes.VideoPorject) { // 视频项目
-
+				if (this.pageType === moduleCodes.favoriteproject) { // 视频项目
+					this.queryCollectList(query)
 				}
 
 			},
+			// 储备项目
 			queryStoreList(data) {
 				console.log(data)
 				const modelId = '2d97a78c3be1440493c983bb9186bacf';
-				const pj_base_project_phase = '05726e181e7147768f67ce1905fe6e49'
+				const pj_base_project_phase = '05726e181e7147768f67ce1905fe6e49';
+				this.modelId = modelId;
+				this.pj_base_project_phase = pj_base_project_phase
 				getModelList(modelId, {
 					currentPage: data.currentPage,
 					pageSize: data.pageSize,
@@ -217,7 +223,7 @@
 						pj_base_business_category: data.pj_base_business_category,
 						pj_fund_invest_total: data.pj_fund_invest_total,
 						pj_review_status: data.pj_review_status,
-						pj_base_project_name:'项目'
+						pj_base_project_name: '项目'
 
 					})
 				}).then(res => {
@@ -231,11 +237,12 @@
 					} = res || {};
 					if (code === 200) {
 
-						this.projectLists = list
+						this.projectLists = [...this.projectLists, ...list]
 						this.mescroll.endBySize(pagination.pageSize, pagination.total); //必传参数(当前页的数据个数, 总页数)
 					}
 				})
 			},
+			// 在建项目
 			queryPlayList(data) {
 				const modelId = 'b094ad34716143b5a13e291572ab1af3';
 				const customized = [{
@@ -243,6 +250,8 @@
 					field: 'pj_base_project_phase',
 					values: '6bfa51249e2e4d31a8128b50c3b33877,fe3ab31dd0ef495ca2c2afc272fb7715'
 				}]
+				this.modelId = modelId;
+				this.pj_base_project_phase = '1a0d97c689c84f2599e6fffd29f9efc6'
 				getModelList(modelId, {
 					currentPage: data.currentPage,
 					pageSize: data.pageSize,
@@ -263,15 +272,18 @@
 						} = {}
 					} = res || {};
 					if (code === 200) {
-						this.projectLists = list
+						this.projectLists = [...this.projectLists, ...list]
 						this.mescroll.endBySize(pagination.pageSize, pagination.total); //必传参数(当前页的数据个数, 总页数)
 					}
 				})
 
 			},
+			// 竣工项目
 			queryFinishList(data) {
 				const modelId = '1a0d97c689c84f2599e6fffd29f9efc6';
 				const pj_base_project_phase = 'b160da1373a84d99932f5810204acc1f';
+				this.modelId = modelId;
+				this.pj_base_project_phase = pj_base_project_phase
 				getModelList(modelId, {
 					currentPage: data.currentPage,
 					pageSize: data.pageSize,
@@ -292,14 +304,39 @@
 						} = {}
 					} = res || {};
 					if (code === 200) {
-						this.projectLists = list
+						this.projectLists = [...this.projectLists, ...list]
 						this.mescroll.endBySize(pagination.pageSize, pagination.total); //必传参数(当前页的数据个数, 总页数)
 					}
 				})
 			},
-			queryCollectList() {
+			// 收藏项目
+			queryCollectList(data) {
 				const modelId = '5371514a5ef7423f81f809e33cb66e74';
-				const concerns = JSON.parse(this.userInfo).data.userName + ','
+				const concerns = this.userInfo.userName + ','
+				getModelList(modelId, {
+					currentPage: data.currentPage,
+					pageSize: data.pageSize,
+					json: JSON.stringify({
+						concerns,
+						pj_base_business_category: data.pj_base_business_category,
+						pj_fund_invest_total: [100, 500],
+						pj_review_status: data.pj_review_status
+
+					})
+				}).then(res => {
+					// console.log(res)
+					const {
+						code,
+						data: {
+							list = [],
+							pagination = {}
+						} = {}
+					} = res || {};
+					if (code === 200) {
+						this.projectLists = [...this.projectLists, ...list]
+						this.mescroll.endBySize(pagination.pageSize, pagination.total); //必传参数(当前页的数据个数, 总页数)
+					}
+				})
 			},
 			downCallback() {
 				this.projectLists = [];
@@ -333,12 +370,11 @@
 					}
 				})
 			},
-			queryLists() {
-
-			},
-			toNotificationDetail(item) {
+			toNotificationDetail(id) {
+				const modelId = this.modelId;
+				const pj_base_project_phase = this.pj_base_project_phase
 				uni.navigateTo({
-					url: '/pages/project/detail/index'
+					url: `/pages/project/detail/index?modelId=${modelId}&pj_base_project_phase=${pj_base_project_phase}&id=${id}`
 				})
 			},
 			search() {

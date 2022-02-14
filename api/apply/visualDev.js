@@ -1,59 +1,60 @@
 import request from '@/utils/request'
 // 获取数据详情
 export function getDataChangeViaCode(encode, id) {
-  return request({
-    url: `/api/visualdev/code/OnlineDev/${encode}/${id}/DataChange`,
-    method: 'GET'
-  })
+	return request({
+		url: `/api/visualdev/code/OnlineDev/${encode}/${id}/DataChange`,
+		method: 'GET'
+	})
 }
 
+
 export function getConfigDataViaCode(encode) {
-  return request({
-    url: `/api/visualdev/code/OnlineDev/${encode}/Config`,
-    method: 'get'
-  })
+	return request({
+		url: `/api/visualdev/code/OnlineDev/${encode}/Config`,
+		method: 'get'
+	})
 }
 
 // 获取数据列表
 export function getModelListViaCode(code, data) {
-  return request({
-    url: `/api/visualdev/code/OnlineDev/${code}/List`,
-    method: 'post',
-    data
-  })
+	return request({
+		url: `/api/visualdev/code/OnlineDev/${code}/List`,
+		method: 'post',
+		data
+	})
 }
 
 export function getModelInfoViaCode(code, id) {
-  return request({
-    url: `/api/visualdev/code/OnlineDev/${code}/${id}`,
-    method: 'GET'
-  })
+	return request({
+		url: `/api/visualdev/code/OnlineDev/${code}/${id}`,
+		method: 'GET'
+	})
 }
 
 // 添加数据
 export function createModelViaCode(code, data) {
-  return request({
-    url: `/api/visualdev/code/OnlineDev/${code}`,
-    method: 'POST',
-    data
-  })
+	return request({
+		url: `/api/visualdev/code/OnlineDev/${code}`,
+		method: 'POST',
+		data
+	})
 }
 // 修改数据
 export function updateModelViaCode(code, data) {
-  return request({
-    url: `/api/visualdev/code/OnlineDev/${code}/${data.id}`,
-    method: 'PUT',
-    data
-  })
+	return request({
+		url: `/api/visualdev/code/OnlineDev/${code}/${data.id}`,
+		method: 'PUT',
+		data
+	})
 }
 
 // 修改输入数据
 export function updateInputModelViaCode(code, data) {
-  return request({
-    url: `/api/visualdev/code/OnlineDev/updateOnly/${code}/${data.id}`,
-    method: 'PUT',
-    data
-  })
+	return request({
+		url: `/api/visualdev/code/OnlineDev/updateOnly/${code}/${data.id}`,
+		method: 'PUT',
+		data
+	})
 }
 // 获取列表表单配置JSON
 export function getConfigData(modelId) {
@@ -94,6 +95,14 @@ export function getModelInfo(modelId, id) {
 		method: 'GET'
 	})
 }
+
+// 获取项目详情
+export function getProjectInfo(modelId, id) {
+	return request({
+		url: `/api/visualdev/OnlineDev/${modelId}/${id}/DataChange`,
+		method: 'GET'
+	})
+}
 // 删除数据
 export function deteleModel(modelId, id) {
 	return request({
@@ -103,9 +112,9 @@ export function deteleModel(modelId, id) {
 }
 // 修改输入数据
 export function updateInputModel(modelId, data) {
-  return request({
-    url: `/api/visualdev/OnlineDev/updateOnly/${modelId}/${data.id}`,
-    method: 'PUT',
-    data
-  })
+	return request({
+		url: `/api/visualdev/OnlineDev/updateOnly/${modelId}/${data.id}`,
+		method: 'PUT',
+		data
+	})
 }
