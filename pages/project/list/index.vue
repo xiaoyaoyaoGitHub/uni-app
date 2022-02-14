@@ -195,14 +195,15 @@
 				}
 				if (this.pageType === moduleCodes.StorePhaseProject) { //储备项目
 					this.queryStoreList(query)
-				}else if (this.pageType === moduleCodes.BuildingPhaseProject) { // 在建项目
+				} else if (this.pageType === moduleCodes.BuildingPhaseProject) { // 在建项目
 					this.queryPlayList(query)
-				}else if (this.pageType === moduleCodes.OperationPhaseProject) { // 竣工项目
+				} else if (this.pageType === moduleCodes.OperationPhaseProject) { // 竣工项目
 					this.queryFinishList(query)
-				}else if (this.pageType === moduleCodes.favoriteproject) { // 收藏项目
+				} else if (this.pageType === moduleCodes.favoriteproject) { // 收藏项目
 					this.queryCollectList(query)
-				}else{
-					
+				} else {
+					this.video = true
+					this.queryPlayList(query)
 				}
 
 			},
@@ -343,8 +344,8 @@
 				})
 			},
 			// 视频项目
-			queryVideoList(){
-				
+			queryVideoList() {
+
 			},
 			downCallback() {
 				this.projectLists = [];
@@ -379,6 +380,13 @@
 				})
 			},
 			toNotificationDetail(id) {
+
+				if (this.video) {
+					uni.navigateTo({
+						url: `/pages/project/video/video`
+					})
+					return
+				}
 				const modelId = this.modelId;
 				const pj_base_project_phase = this.pj_base_project_phase
 				uni.navigateTo({

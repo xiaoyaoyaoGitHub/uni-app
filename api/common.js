@@ -214,7 +214,7 @@ export const moduleCodes = {
 	StorePhaseProject: 'newstoreproject',
 	// 在建项目
 	BuildingPhaseProject: 'newongoingproject',
-	// 运营项目
+	// 竣工项目
 	OperationPhaseProject: 'newliveproject',
 	// 注销项目
 	CancelPhaseProject: '',

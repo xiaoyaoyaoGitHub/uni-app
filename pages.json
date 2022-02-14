@@ -134,6 +134,15 @@
 
 				}
 			
+                ,{
+                    "path" : "video/video",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
             ]
 		},
 		{
