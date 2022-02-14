@@ -7,6 +7,34 @@ export function getDataChangeViaCode(encode, id) {
 	})
 }
 
+// 项目图片
+export function projectImageList(data) {
+	return request({
+		url: '/api/extend/Document/project',
+		method: 'get',
+		data
+	})
+
+}
+
+// 图片上传
+export function projectImageUpLoad(data) {
+	return request({
+		url: '/api/extend/Document/Uploader',
+		method: 'post',
+		data
+	})
+
+}
+
+// 地图列表
+export function mapList(data) {
+	return request({
+		url: '/api/extend/dataReport/ProjectMap/mapList',
+		method: 'post',
+		data
+	})
+}
 
 export function getConfigDataViaCode(encode) {
 	return request({

@@ -29,6 +29,9 @@
 </template>
 
 <script>
+	import {
+		projectImageUpLoad
+	} from "@/api/apply/visualDev.js"
 	export default {
 		data() {
 			return {
@@ -43,34 +46,54 @@
 				// 这种情况需要指定range-key为cateName，否则组件不知道该显示对象的哪个属性
 				actions: [{
 						label: '土地征拆',
-						value: '1'
+						value: '土地征拆'
 					},
 					{
 						label: '厂房建设',
-						value: '2'
+						value: '厂房建设'
 					},
 					{
 						label: '竣工筹备',
-						value: '3'
+						value: '竣工筹备'
 
 					},
 				],
 			}
 		},
+		onLoad() {
+			this.projectId = this.$route.query.id
+		},
 		methods: {
 			actionSheetCallback(e) {
-				console.log(e)
 				this.imageType = e[0].label
 			},
-			chooseType(){
+			chooseType() {
 				uni.showToast({
-					icon:"none",
-					title:'请选择图片类型'
+					icon: "none",
+					title: '请选择图片类型'
 				})
 			},
 			// 获取上传状态
 			select(e) {
 				console.log('选择文件：', e)
+				const file = e.tempFiles;
+				const projectId = this.projectId;
+				const documentData = {
+					category: this.imageType,
+					description: this.textareaValue
+				}
+				this.upLoad({
+					file,
+					projectId,
+					parentId: 0,
+					documentData
+				})
+
+			},
+			upLoad(data) {
+				projectImageUpLoad(data).then(res => {
+					console.log(res)
+				})
 			},
 			// 获取上传进度
 			progress(e) {
@@ -124,7 +147,7 @@
 			.file-picker__box {
 				margin-right: 20rpx;
 			}
-			
+
 			.selectCamera {
 				width: 140rpx;
 				height: 140rpx;

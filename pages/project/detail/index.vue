@@ -107,20 +107,24 @@
 							</view>
 						</template>
 					</uni-list-item>
+
 				</uni-list>
 			</view>
 			<!-- 在建进度 -->
 			<view class="content schedule u-border-top" v-if="current === 1">
-				<view class="schedule-total u-border">
+				<view v-if="scheduleList.length === 0" class="u-text-center u-font-24">
+					暂无进度
+				</view>
+				<view v-else class="schedule-total u-border" :key="index" v-for="(item, index) in scheduleList">
 					<view class="title u-flex u-border-bottom">
 						<span>
-							总体进度
+							{{item.name}}
 						</span>
 						<span class="time">
-							调度月份：2021-06
+							调度月份：{{item.schedule_month}}
 						</span>
 						<span class="status">
-							符合预期
+							{{item.is_ok === '是' ? '符合预期':'不符合预期'}}
 						</span>
 					</view>
 					<view class="progress">
@@ -129,10 +133,10 @@
 								建筑进度
 							</view>
 							<u-line-progress inactive-color="#F2F2F2" :show-percent="false" active-color="#104DFF"
-								height="16" :percent="70">
+								height="16" :percent="Number(item.fund_progress) || 0">
 							</u-line-progress>
 							<view class="precent project">
-								70%
+								{{item.fund_progress || 0}}%
 							</view>
 						</view>
 						<view class="u-flex">
@@ -140,10 +144,10 @@
 								资金进度
 							</view>
 							<u-line-progress inactive-color="#F2F2F2" :show-percent="false" active-color="#FF8C2A"
-								height="16" :percent="70">
+								height="16" :percent="Number(item.progress) || 0">
 							</u-line-progress>
 							<view class="precent amount">
-								70%
+								{{item.progress || 0}}%
 							</view>
 						</view>
 					</view>
@@ -152,95 +156,31 @@
 						<view class="u-flex">
 							<span class="label">总投资（万元）</span>
 							<span class="desc">
-								3000.00
+								{{item.total_invest}}
 							</span>
 						</view>
 						<view class="u-flex">
-							<span class="label">总投资（万元）</span>
+							<span class="label">去年完成（万元）</span>
 							<span class="desc">
-								3000.00
+								{{item.last_year_accumulate_invest}}
 							</span>
 						</view>
 						<view class="u-flex">
-							<span class="label">总投资（万元）</span>
+							<span class="label">今年完成（万元）</span>
 							<span class="desc">
-								3000.00
+								{{item.year_accumulate_invest}}
 							</span>
 						</view>
 						<view class="u-flex">
-							<span class="label">总投资（万元）</span>
+							<span class="label">本月完成（万元）</span>
 							<span class="desc">
-								3000.00
+								{{item.accumulate_invest}}
 							</span>
 						</view>
 					</view>
 
 				</view>
-				<view class="schedule-total u-border">
-					<view class="title u-flex u-border-bottom">
-						<span>
-							工程招投标
-						</span>
-						<span class="time">
-							调度月份：2021-06
-						</span>
-						<span class="status">
-							符合预期
-						</span>
-					</view>
-					<view class="progress">
-						<view class="u-flex">
-							<view class="label project">
-								建筑进度
-							</view>
-							<u-line-progress inactive-color="#F2F2F2" :show-percent="false" active-color="#104DFF"
-								height="16" :percent="70">
-							</u-line-progress>
-							<view class="precent project">
-								70%
-							</view>
-						</view>
-						<view class="u-flex">
-							<view class="label amount">
-								资金进度
-							</view>
-							<u-line-progress inactive-color="#F2F2F2" :show-percent="false" active-color="#FF8C2A"
-								height="16" :percent="70">
-							</u-line-progress>
-							<view class="precent amount">
-								70%
-							</view>
-						</view>
-					</view>
 
-					<view class="schedule-list u-border-top">
-						<view class="u-flex">
-							<span class="label">总投资（万元）</span>
-							<span class="desc">
-								3000.00
-							</span>
-						</view>
-						<view class="u-flex">
-							<span class="label">总投资（万元）</span>
-							<span class="desc">
-								3000.00
-							</span>
-						</view>
-						<view class="u-flex">
-							<span class="label">总投资（万元）</span>
-							<span class="desc">
-								3000.00
-							</span>
-						</view>
-						<view class="u-flex">
-							<span class="label">总投资（万元）</span>
-							<span class="desc">
-								3000.00
-							</span>
-						</view>
-					</view>
-
-				</view>
 			</view>
 			<!-- 项目图片 -->
 			<view class="content pictures" v-if="current === 2">
@@ -287,14 +227,14 @@
 			</view>
 			<!-- 项目问题 -->
 			<view class="content problem u-border-top" v-if="current === 3">
-				<view class="problem-content u-border">
+				<view class="problem-content u-border" :key="index" v-for="(item, index) in projectIssues">
 					<view class="problem-title u-border-bottom u-flex">
 						<span>问题分类：</span>
 						<span class="content">
-							手续问题
+							{{item.issue_category}}
 						</span>
 						<span class="status">
-							待解决
+							{{item.is_solved}}
 						</span>
 					</view>
 					<view class="problem-relate u-flex u-row-between">
@@ -303,7 +243,7 @@
 								关注人
 							</span>
 							<span class="content">
-								陈某某
+								{{item.modified_by}}
 							</span>
 						</view>
 						<view class="depart">
@@ -311,7 +251,7 @@
 								涉及机构
 							</span>
 							<span class="content">
-								其他
+								{{item.related}}
 							</span>
 						</view>
 					</view>
@@ -320,7 +260,7 @@
 							问题描述
 						</view>
 						<view class="list-content">
-							结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述
+							{{item.concerns}}
 						</view>
 					</view>
 					<view class="problem-list u-flex u-border-top u-col-top">
@@ -328,7 +268,7 @@
 							结果描述
 						</view>
 						<view class="list-content">
-							结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述结果描述
+							{{item.solved_comment}}
 						</view>
 					</view>
 				</view>
@@ -344,7 +284,9 @@
 	} from '@/api/common.js'
 	import {
 		getConfigDataViaCode,
-		getProjectInfo
+		getProjectInfo,
+		getModelListViaCode,
+		projectImageList
 	} from "@/api/apply/visualDev.js"
 	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
 	export default {
@@ -386,7 +328,23 @@
 					name: '项目问题',
 				}],
 				current: 0,
-				projectInfo: {}
+				projectInfo: {},
+				scheduleList: [],
+				projectIssues:[]
+			}
+		},
+		watch: {
+			current: function(newVal, oldVal) {
+				// console.log(newVal, oldVal)
+				if (newVal === 1) {
+					this.getScheduleList()
+				}
+				if (newVal === 2) {
+					this.getImages()
+				}
+				if (newVal === 3) {
+					this.getProjectIssue()
+				}
 			}
 		},
 		onLoad() {
@@ -397,6 +355,7 @@
 				pj_base_project_phase
 			} = this.$route.query || {};
 			// this.getConfig(modelId)
+			this.projectId = id;
 			this.getData(modelId, id)
 		},
 		computed: {
@@ -411,7 +370,7 @@
 			},
 			upLoadImage() {
 				uni.navigateTo({
-					url: '/pages/project/upload/index'
+					url: `/pages/project/upload/index?id=${this.projectId}`
 				})
 			},
 			getConfig(modelId) {
@@ -433,20 +392,78 @@
 						const {
 							pj_base_project_position = '{}'
 						} = this.projectInfo || {};
-					
+
 						const pj_base_project_positionToJson = JSON.parse(pj_base_project_position) || {};
-						console.log('pj_base_project_positionToJson',pj_base_project_positionToJson)
-						const { formattedAddress } = pj_base_project_positionToJson || {};
+						console.log('pj_base_project_positionToJson', pj_base_project_positionToJson)
+						const {
+							formattedAddress
+						} = pj_base_project_positionToJson || {};
 						this.latitude = pj_base_project_positionToJson.latitude;
 						this.longitude = pj_base_project_positionToJson.longitude;
 						this.covers = [{
 							latitude: this.latitude,
 							longitude: this.longitude,
-							width:20,
+							width: 20,
 							height: 20,
 							title: formattedAddress,
 							iconPath: '../../../static/mark.jpeg'
 						}]
+					}
+				})
+			},
+			// 在建进度
+			getScheduleList() {
+				const code = 'BuildProgress';
+				getModelListViaCode(code, {
+					currentPage: 1,
+					pageSize: 10000,
+					sort: "asc",
+					sidx: "seq",
+					json: JSON.stringify({
+						parent_id: Number(this.projectId)
+					})
+				}).then(res => {
+					// console.log(res)
+					const {
+						code,
+						data: {
+							list = []
+						} = {}
+					} = res || {};
+					if (code === 200) {
+						this.scheduleList = list
+					}
+				})
+			},
+			getImages() {
+				projectImageList({
+					keyword: "",
+					projectId: this.projectId
+				}).then(res => {
+					console.log(res)
+				})
+			},
+			getProjectIssue() {
+				const code = 'ProjectIssues';
+				const data = {
+					"currentPage": 1,
+					"pageSize": 100,
+					"sort": 'desc',
+					"sidx": 'is_solved',
+					"json": JSON.stringify({
+						parent_id: String(this.projectId)
+					})
+
+				}
+				getModelListViaCode(code, data).then(res => {
+					const {
+						code,
+						data: {
+							list = []
+						} = {}
+					} = res || {};
+					if (code === 200) {
+						this.projectIssues = list
 					}
 				})
 			},
