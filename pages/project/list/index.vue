@@ -190,19 +190,19 @@
 					// pj_fund_invest_total: `${this.amount.min},${this.amount.max}`,
 					// pj_fund_invest_total: `[${this.amount.min},${this.amount.max}]`,
 					pj_fund_invest_total: [Number(this.amount.min), Number(this.amount.max)],
-					pj_review_status: this.auditSelectCurrent.value || ''
+					pj_review_status: this.auditSelectCurrent.value || '',
+					pj_base_region: this.departSelectCurrent.value || ''
 				}
 				if (this.pageType === moduleCodes.StorePhaseProject) { //储备项目
 					this.queryStoreList(query)
-				}
-				if (this.pageType === moduleCodes.BuildingPhaseProject) { // 在建项目
+				}else if (this.pageType === moduleCodes.BuildingPhaseProject) { // 在建项目
 					this.queryPlayList(query)
-				}
-				if (this.pageType === moduleCodes.OperationPhaseProject) { // 竣工项目
+				}else if (this.pageType === moduleCodes.OperationPhaseProject) { // 竣工项目
 					this.queryFinishList(query)
-				}
-				if (this.pageType === moduleCodes.favoriteproject) { // 视频项目
+				}else if (this.pageType === moduleCodes.favoriteproject) { // 收藏项目
 					this.queryCollectList(query)
+				}else{
+					
 				}
 
 			},
@@ -223,7 +223,8 @@
 						pj_base_business_category: data.pj_base_business_category,
 						pj_fund_invest_total: data.pj_fund_invest_total,
 						pj_review_status: data.pj_review_status,
-						pj_base_project_name: '项目'
+						pj_base_project_name: '项目',
+						pj_base_region: data.pj_base_region
 
 					})
 				}).then(res => {
@@ -259,7 +260,8 @@
 					json: JSON.stringify({
 						pj_base_business_category: data.pj_base_business_category,
 						// pj_fund_invest_total: data.pj_fund_invest_total,
-						pj_review_status: data.pj_review_status
+						pj_review_status: data.pj_review_status,
+						pj_base_region: data.pj_base_region
 
 					})
 				}).then(res => {
@@ -291,7 +293,8 @@
 						pj_base_project_phase,
 						pj_base_business_category: data.pj_base_business_category,
 						pj_fund_invest_total: [100, 500],
-						pj_review_status: data.pj_review_status
+						pj_review_status: data.pj_review_status,
+						pj_base_region: data.pj_base_region
 
 					})
 				}).then(res => {
@@ -320,7 +323,8 @@
 						concerns,
 						pj_base_business_category: data.pj_base_business_category,
 						pj_fund_invest_total: [100, 500],
-						pj_review_status: data.pj_review_status
+						pj_review_status: data.pj_review_status,
+						pj_base_region: data.pj_base_region
 
 					})
 				}).then(res => {
@@ -337,6 +341,10 @@
 						this.mescroll.endBySize(pagination.pageSize, pagination.total); //必传参数(当前页的数据个数, 总页数)
 					}
 				})
+			},
+			// 视频项目
+			queryVideoList(){
+				
 			},
 			downCallback() {
 				this.projectLists = [];

@@ -7,7 +7,7 @@
 						项目总数量
 					</view>
 					<view class="banner-volume u-font-40">
-						{{totalPlan}}<span class="u-font-28">个</span>
+						{{allData.investTotal}}<span class="u-font-28">个</span>
 					</view>
 				</view>
 				<view class="banner-item project-amount">
@@ -15,7 +15,7 @@
 						在建项目总数量
 					</view>
 					<view class="banner-volume u-font-40">
-						{{totalPlan}}<span class="u-font-28">个</span>
+						{{allData.cumulativeCompletion}}<span class="u-font-28">个</span>
 					</view>
 				</view>
 				<view class="banner-item plan-amount">
@@ -23,7 +23,7 @@
 						计划投资
 					</view>
 					<view class="banner-volume u-font-36">
-						{{totalPlan}}<span class="u-font-28">万元</span>
+						{{allData.cumulativeCompletion}}<span class="u-font-28">万元</span>
 					</view>
 				</view>
 				<view class="banner-item plan-amount">
@@ -98,6 +98,18 @@
 							rotate: 40
 						}
 					},
+					colors: [
+						"#ff9f7f",
+						"#fb7293",
+						"#e7bcf3",
+						"#8378ea",
+						"#37a2da",
+						"#32c5e9",
+						"#9fe6b8",
+						"#ffdb5c",
+						"#9bd317",
+
+					],
 					seriesTemplate: {
 						name: '',
 						type: 'bar',
@@ -117,8 +129,9 @@
 				totalActual: '',
 				yearPlan: '',
 				dicList: [],
+				allData: {},
 				charts: {
-					
+
 				}
 			}
 		},
@@ -144,10 +157,12 @@
 					const {
 						code,
 						data: {
-							regionResultList: originList = []
+							regionResultList: originList = [],
+							allData = {}
 						} = {}
 					} = res || {}
 					if (code === 200) {
+						this.allData = allData;
 						const regionResultList = originList.concat();
 						console.log(originList)
 						const baseLine = regionResultList[0]?.splice(1);
@@ -353,6 +368,7 @@
 					transform-origin: 0 0;
 					transform: scale(0.33);
 					display: block;
+
 					&:after {
 						background: transparent
 					}

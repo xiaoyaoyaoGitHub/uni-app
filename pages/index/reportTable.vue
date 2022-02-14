@@ -1,25 +1,26 @@
 <template>
 	<view class="workFlow-v">
-		<mescroll-body ref="mescrollRef" @down="downCallback" :sticky="true" :up="upOption" :bottombar="false">
+		<mescroll-body ref="mescrollRef" :sticky="true" :up="upOption" :bottombar="false">
 			<view class="select-type">
 				<view class="title">报表类型</view>
 				<view class="types u-flex u-row-left">
-					<span @click="() => {selectType(0)}" data-type=0 :class="{active: reportType === 0}">储备</span>
-					<span @click="() => {selectType(1)}" data-type=1 :class="{active: reportType === 1}">在建</span>
-					<span @click="() => {selectType(2)}" data-type=2 :class="{active: reportType === 2}">竣工</span>
+					<span :key="index" v-for="(item, index) in projectStatus" @click="() => {selectType(item.enCode)}"
+						:class="{active: reportType === item.enCode}">{{item.fullName}}</span>
+					<!-- <span @click="() => {selectType(1)}" data-type=1 :class="{active: reportType === 1}">在建</span>
+					<span @click="() => {selectType(2)}" data-type=2 :class="{active: reportType === 2}">竣工</span> -->
 				</view>
 			</view>
 			<view class="select-type">
 				<view class="title">项目阶段</view>
 				<view class="types u-flex u-row-left">
-					<span @click="() => {selectStage(0)}"
-						:class="{active: reportStageList.includes(0), disabled : reportType === 1 || reportType === 2}">储备</span>
-					<span @click="() => {selectStage(1)}"
+					<span @click="() => {selectStage(item.id)}" :key="index" v-for="(item, index) in buildStatus"
+						:class="{active: reportStageList.includes(item.id)}">{{item.fullName}}</span>
+					<!-- <span @click="() => {selectStage(1)}"
 						:class="{active: reportStageList.includes(1),disabled: reportType === 0 || reportType === 2}">在建</span>
 					<span @click="() => {selectStage(2)}"
 						:class="{active: reportStageList.includes(2), disabled:reportType === 2}">储备转在建</span>
 					<span @click="() => {selectStage(3)}"
-						:class="{active: reportStageList.includes(3),disabled: reportType === 0}">竣工</span>
+						:class="{active: reportStageList.includes(3),disabled: reportType === 0}">竣工</span> -->
 				</view>
 			</view>
 			<view class="select-type">
@@ -34,9 +35,9 @@
 			<view class="select-type">
 				<view class="title">统计方式</view>
 				<view class="types u-flex u-row-left">
-					<span @click="() => {selectMode(0)}" data-type=0 :class="{active: reportMode === 0}">按区域</span>
-					<span @click="() => {selectMode(1)}" data-type=1 :class="{active: reportMode === 1}">按行业</span>
-					<span @click="() => {selectMode(2)}" data-type=2 :class="{active: reportMode === 2}">按子行业</span>
+					<span @click="() => {selectMode(1)}" data-type=1 :class="{active: reportMode === 1}">按区域</span>
+					<span @click="() => {selectMode(2)}" data-type=2 :class="{active: reportMode === 2}">按行业</span>
+					<span @click="() => {selectMode(4)}" data-type=4 :class="{active: reportMode === 4}">按子行业</span>
 					<span @click="() => {selectMode(3)}" data-type=3 :class="{active: reportMode === 3}">按投资规模</span>
 				</view>
 				<view class="types amount-mode" v-if="reportMode === 3">
@@ -130,6 +131,10 @@
 	import {
 		getUsualList
 	} from '@/api/apply/apply.js'
+	import {
+		getDictionaryDataSelector,
+		queryProjectReport
+	} from "@/api/common.js"
 	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
 	import IndexMixin from './mixin.js'
 	export default {
@@ -141,6 +146,8 @@
 				upOption: {
 					use: false
 				},
+				buildStatus: [],
+				projectStatus: [],
 				reportType: '', // 报表类型
 				reportStageList: [], // 项目阶段
 				reportStatusList: [], //审核状态
@@ -157,19 +164,74 @@
 			}
 		},
 		onLoad() {
+			this.userInfo = uni.getStorageSync('userInfo') || {}
 			uni.$on('updateUsualList', data => {
 				this.getUsualList()
-			})
+			});
+			this.queryBuildStatus();
+			this.queryProjectStatus()
 		},
 		onUnload() {
 			uni.$off('updateUsualList')
 		},
 		methods: {
+			// 在建状态
+			queryBuildStatus() {
+				getDictionaryDataSelector('8deb351ca0a04f8894a48a566bec948f').then(res => {
+					// console.log(res)
+					const {
+						code,
+						data: {
+							list = []
+						} = {}
+					} = res || {};
+					if (code === 200) {
+						this.buildStatus = list
+					}
+				})
+			},
+			// 项目阶段
+			queryProjectStatus() {
+				getDictionaryDataSelector('d16af6c485154abea4c168a8a23a9617').then(res => {
+					const {
+						code,
+						data: {
+							list = []
+						} = {}
+					} = res || {};
+					if (code === 200) {
+						this.projectStatus = list
+					}
+				})
+			},
 			// 查询结果
 			queryReport() {
-				uni.navigateTo({
-					url: '/pages/reportTable/buildReport/index'
+				const {
+					reportType = '', // 报表类型
+						reportStageList: buildingProjectStatus = [], // 项目阶段
+						reportStatusList: reviewStatus = [], //审核状态
+						reportMode: way = '', // 统计方式
+						reportModeList,
+						userInfo
+				} = this || {};
+				let fundScaleRange = reportModeList.reduce((all, next) => {
+
+					all = all + '-' + next.value
+					return all
+				}, '')
+				queryProjectReport({
+					buildingProjectStatus,
+					reviewStatus,
+					way,
+					fundScaleRange: fundScaleRange.replace(/^\-/, ''),
+					userInfo
+				}).then(res => {
+					console.log(res)
 				})
+				// console.log(fundScaleRange)
+				// uni.navigateTo({
+				// 	url: '/pages/reportTable/buildReport/index'
+				// })
 			},
 			// 添加投资规模
 			addReportModeList() {

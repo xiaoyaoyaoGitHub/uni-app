@@ -9,7 +9,7 @@
 				</template>
 				<template slot="body">
 					<view class="desc">
-						admin2345
+						{{userInfo.userName}}
 					</view>
 				</template>
 			</uni-list-item>
@@ -21,7 +21,7 @@
 				</template>
 				<template slot="body">
 					<view class="desc">
-						admin2345
+						{{userInfo.organizeName}}
 					</view>
 				</template>
 			</uni-list-item>
@@ -33,7 +33,7 @@
 				</template>
 				<template slot="body">
 					<view class="desc">
-						admin2345
+						{{userInfo.departmentName}}
 					</view>
 				</template>
 			</uni-list-item>
@@ -45,7 +45,7 @@
 				</template>
 				<template slot="body">
 					<view class="desc">
-						admin2345
+						{{userInfo.roleName}}
 					</view>
 				</template>
 			</uni-list-item>
@@ -57,7 +57,7 @@
 				</template>
 				<template slot="body">
 					<view class="desc">
-						admin2345
+						{{userInfo.roleName}}
 					</view>
 				</template>
 			</uni-list-item>
@@ -69,7 +69,7 @@
 				</template>
 				<template slot="body">
 					<view class="desc">
-						admin2345
+						{{userInfo.roleName}}
 					</view>
 				</template>
 			</uni-list-item>
@@ -81,7 +81,7 @@
 				</template>
 				<template slot="body">
 					<view class="desc">
-						admin2345
+						<!-- admin2345 -->
 					</view>
 				</template>
 			</uni-list-item>
@@ -93,7 +93,7 @@
 				</template>
 				<template slot="body">
 					<view class="desc">
-						admin2345
+						<!-- admin2345 -->
 					</view>
 				</template>
 			</uni-list-item>
@@ -105,7 +105,7 @@
 				</template>
 				<template slot="body">
 					<view class="desc">
-						admin2345
+						<!-- admin2345 -->
 					</view>
 				</template>
 			</uni-list-item>

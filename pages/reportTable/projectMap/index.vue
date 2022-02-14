@@ -178,9 +178,6 @@
 			upCallback(page = {}) {
 				console.log('up')
 				let query = {
-					currentPage: page.num || 1,
-					pageSize: page.size || 20,
-					keyword: this.keyword,
 					pj_base_business_category: this.tradeSelectCurrent.value || '',
 					pj_fund_invest_total: [Number(this.amount.min), Number(this.amount.max)],
 					pj_review_status: this.auditSelectCurrent.value || ''

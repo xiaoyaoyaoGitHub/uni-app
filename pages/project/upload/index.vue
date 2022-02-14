@@ -83,7 +83,7 @@
 					description: this.textareaValue
 				}
 				this.upLoad({
-					file,
+					multifile:file,
 					projectId,
 					parentId: 0,
 					documentData

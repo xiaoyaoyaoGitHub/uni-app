@@ -77,6 +77,16 @@ export function getUesrDetail(id) {
 	})
 }
 
+// 查询报表
+export function queryProjectReport(data) {
+	return request({
+		url: '/api/extend/dataReport',
+		method: 'post',
+		data
+	})
+
+}
+
 // 获取所有用户列表
 export function getUserAll() {
 	return request({
