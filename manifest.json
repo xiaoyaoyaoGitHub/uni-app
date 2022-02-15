@@ -148,7 +148,8 @@
                 "androidStyle" : "default"
             }
         },
-        "nativePlugins" : {}
+        "nativePlugins" : {},
+        "nvueLaunchMode" : ""
     },
     /* SDK配置 */
     "quickapp" : {},

@@ -1,7 +1,8 @@
 {
 	"easycom": {
 		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue",
-		"^cudt-(.*)": "@/components/cudt/cudt-$1/index.vue"
+		"^cudt-(.*)": "@/components/cudt/cudt-$1/index.vue",
+		"a-map": "@/components/ITkoala-amap/amap.vue"
 	},
 	"pages": [{
 			"path": "pages/launch/index",
@@ -96,35 +97,36 @@
 					}
 				},
 				{
+					"path": "projectMap/index",
+					"style": {
+						"navigationBarTitleText": "项目地图",
+						"usingComponents": true,
+						"app-plus": {
+							// "subNVues": [{
+							// 	"id": "sunNvue", // 唯一标识  
+							// 	"path": "projectMap/subNvue/subNvue", // 页面路径  
+							// 	// "type": "popup",  //这里不需要*/
+							// 	"style": {
+							// 		"position":"dock",
+							// 		"dock":"bottom",
+							// 		"top": "320rpx",
+							// 		"left": "16prx",
+							// 		"bottom": "16rpx",
+							// 		"right": "16rpx",
+							// 		"background": "#efefef"
+							// 		// "zindex":999
+							// 	}
+							// }]
+						}
+					}
+				},
+				{
 					"path": "liveReport/index",
 					"style": {
 						"navigationBarTitleText": "运营报表"
 					}
-				},
-				{
-					"path": "projectMap/index",
-					"style": {
-						"navigationBarTitleText": "项目地图",
-						"usingComponents":true,
-						"app-plus": {
-							"subNVues": [{
-								"id": "sunNvue", // 唯一标识  
-								"path": "projectMap/subNvue/subNvue", // 页面路径  
-								// "type": "popup",  //这里不需要*/
-								"style": {
-									"position":"dock",
-									"dock":"bottom",
-									"top": "320rpx",
-									"left": "16rpx",
-									"bottom": "16rpx",
-									"right": "16rpx",
-									"background": "#eee",
-									"zindex":999
-								}
-							}]
-						}
-					}
 				}
+
 			]
 		},
 		{

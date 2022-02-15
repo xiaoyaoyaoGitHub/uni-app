@@ -330,7 +330,7 @@
 				current: 0,
 				projectInfo: {},
 				scheduleList: [],
-				projectIssues:[]
+				projectIssues: []
 			}
 		},
 		watch: {
@@ -347,16 +347,21 @@
 				}
 			}
 		},
-		onLoad() {
+		created() {
 			// console.log(this.$route)
+			const {
+				query = {}
+			} = this.$route || {}
 			const {
 				id,
 				modelId,
 				pj_base_project_phase
-			} = this.$route.query || {};
+			} = query || {};
 			// this.getConfig(modelId)
-			this.projectId = id;
-			this.getData(modelId, id)
+			const params = !id ? uni.getStorageSync("detailInfo") : {}
+			console.log(JSON.stringify(params))
+			this.projectId = id || params.id;
+			this.getData(modelId || params.modelId, this.projectId)
 		},
 		computed: {
 			baseURL() {
@@ -379,6 +384,7 @@
 				})
 			},
 			getData(modelId, id) {
+				console.log(modelId, id)
 				getProjectInfo(modelId, id).then(res => {
 					const {
 						code,

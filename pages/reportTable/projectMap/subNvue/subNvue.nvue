@@ -13,32 +13,21 @@
 			return {
 				latitude: 39.909,
 				longitude: 116.39742,
-				auditLists: [{
-						value: '0',
-						label: '未提交'
-					},
-					{
-						value: '1',
-						label: '等待审核'
-					},
-					{
-						value: '2',
-						label: '审核通过'
-					},
-					{
-						value: '3',
-						label: '审核驳回'
-					}
-				],
+				auditSelectShow: false,
+				
 				covers: []
 			}
 		},
+		created() {
+
+		},
 		onLoad() {
 			uni.$on("to-modal", (data) => {
-				console.log('父组件传递给子组件的值', data);
+				// console.log('父组件传递给子组件的值', data);
 			});
-			uni.$om('auditSelectShow', (data) => {
+			uni.$on('showSelect', (data) => {
 				console.log(data)
+				this.auditSelectShow = data
 			})
 		},
 		methods: {
@@ -48,3 +37,13 @@
 		}
 	}
 </script>
+
+<style>
+	.container {
+		position: absolute;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+	}
+</style>

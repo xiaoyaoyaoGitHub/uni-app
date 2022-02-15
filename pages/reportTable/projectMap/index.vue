@@ -15,7 +15,8 @@
 					data-type="auditSelect" @click="showSelect">
 					{{auditSelectCurrent.label}}
 				</u-button>
-
+				<u-select v-model="auditSelectShow" @confirm="selectConfirm" :list="auditLists">审核状态
+				</u-select>
 			</view>
 			<view class="select">
 				<u-button data-index="1" class="selectBtn" :class="{active: selectType === 'tradeSelect'}"
@@ -52,13 +53,14 @@
 		</view>
 		<!-- </cover-view> -->
 		<view class="map">
-			<map class="map-content" name="" :longitude="longitude" :latitude="latitude" :markers="covers"
-				@updated="mapUpdate" :include-points="covers" @markertap="clickMark" @callouttap="clickMark"></map>
+			<!-- <view id="amap"></view> -->
+			<!-- <map class="map-content" name="" :longitude="longitude" :latitude="latitude" :markers="covers"
+				@updated="mapUpdate" :include-points="covers" @markertap="clickMark" @callouttap="clickMark"></map> -->
+			<a-map ref="map" :markerLists="covers"></a-map>
 		</view>
 		<!-- </mescroll-body> -->
 	</view>
 </template>
-
 <script>
 	import {
 		getImUser,
@@ -72,6 +74,8 @@
 		mapList
 	} from "@/api/apply/visualDev.js"
 	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
+	// import ""
+	import Amap from "@/components/ITkoala-amap/amap.vue"
 	export default {
 		mixins: [MescrollMixin],
 		data() {
@@ -118,7 +122,23 @@
 				tradeSelectShow: false,
 				amountSelectShow: false,
 				departSelectShow: false,
-
+				auditLists: [{
+						value: '0',
+						label: '未提交'
+					},
+					{
+						value: '1',
+						label: '等待审核'
+					},
+					{
+						value: '2',
+						label: '审核通过'
+					},
+					{
+						value: '3',
+						label: '审核驳回'
+					}
+				],
 				tradelists: [],
 				departlists: [],
 				covers: [],
@@ -137,52 +157,59 @@
 			})
 			this.getDictionarySelects();
 			this.getDepartmentSelects();
-			this.upCallback()
-
 		},
 		computed: {
 			baseURL() {
 				return this.define.baseURL
 			}
 		},
+		created() {
+			this.upCallback()
+		},
 		mounted() {
-
+			uni.$on('markerId', (index) => {
+				this.clickMark(index)
+			})
 		},
 		methods: {
 			mapUpdate() {
 				console.log('update')
 			},
-			clickMark(e) {
-				const {
-					markerId
-				} = e.detail || {};
-				const currentMark = this.covers[markerId];
-				console.log(currentMark)
+
+
+			clickMark(index) {
+
+				const currentMark = this.covers[index];
 				const {
 					pj_base_project_phase,
 					project_id: id
 				} = currentMark || {};
-				getDictionaryDataSelector(pj_base_project_phase).then(res => {
-					console.log(res)
-					const {
-						code,
-						data: {
-							list = []
-						} = {}
-					} = res || {};
-					if (code === 200) {
+				// getDictionaryDataSelector(pj_base_project_phase).then(res => {
+				// 	console.log(res)
+				// 	const {
+				// 		code,
+				// 		data: {
+				// 			list = []
+				// 		} = {}
+				// 	} = res || {};
+				// 	if (code === 200) {
 
-						// this.tradelists = list
-						// this.queryLists(moduleId, moduleId_type)
-					}
+				// 		// this.tradelists = list
+				// 		// this.queryLists(moduleId, moduleId_type)
+				// 	}
+				// })
+				// return
+				// console.log(`/pages/project/detail/index?modelId=2d97a78c3be1440493c983bb9186bacf&pj_base_project_phase=${pj_base_project_phase}&id=${id}`)
+				uni.setStorageSync("detailInfo", {
+					pj_base_project_phase,
+					id,
+					modelId: "2d97a78c3be1440493c983bb9186bacf"
 				})
-				return
 				uni.navigateTo({
 					url: `/pages/project/detail/index?modelId=2d97a78c3be1440493c983bb9186bacf&pj_base_project_phase=${pj_base_project_phase}&id=${id}`
 				})
 			},
 			upCallback(page = {}) {
-				console.log('up')
 				let query = {
 					pj_base_business_category: this.tradeSelectCurrent.vaålue || '',
 					pj_fund_invest_total: [Number(this.amount.min), Number(this.amount.max)],
@@ -270,16 +297,16 @@
 							return {
 								id: index,
 								project_id: id,
-								latitude,
-								longitude,
+								lat: latitude,
+								lng: longitude,
 								title: pj_base_project_name,
 								// label: {
 								// 	content: pj_base_project_name
 								// },
 								width: 20,
 								height: 20,
-								iconPath: '../../../static/mark.jpeg',
-								ariaLabel: pj_base_project_phase,
+								icon: '../../../static/mark.jpeg',
+								pj_base_project_phase: pj_base_project_phase,
 								callout: {
 									content: pj_base_project_name,
 									display: 'ALWAYS'
@@ -287,11 +314,14 @@
 								}
 							}
 						})
-						console.log(covers)
-						uni.$emit("to-modal", covers);
-						// this.covers = covers;
-						// this.projectLists = [...this.projectLists, ...list]
-						// this.mescroll.endBySize(pagination.pageSize, pagination.total); //必传参数(当前页的数据个数, 总页数)
+						this.covers = covers
+						// 	console.log('请求成功')
+						// 	console.log(this.$refs.map)
+						// this.$nextTick(function() {
+						// 	console.log(this.map)
+						// })
+						// uni.$emit('markerListUpdate', covers)
+						console.log('请求成功')
 					}
 				})
 			},
@@ -326,9 +356,8 @@
 				const typeName = type + 'Show';
 				console.log(typeName)
 				this[typeName] = true
-				this.subNVue = uni.getSubNVueById('sunNvue');
-				subNVue.show();
-				uni.$emit(typeName, true)
+
+				uni.$emit('showSelect', true)
 
 			},
 		}
@@ -429,9 +458,9 @@
 				padding: 0 10px;
 				height: calc(100% - 320rpx);
 				flex: 1;
-				background: #fff;
+				// background: #fff;
 
-				.map-content {
+				#amap {
 					width: 100%;
 					height: 100%;
 				}
