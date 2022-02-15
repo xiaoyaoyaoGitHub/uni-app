@@ -360,7 +360,7 @@
 
 		.index-v {
 			padding: 0 32rpx;
-
+			background-color: #F5F6F7;
 			.banner {
 				padding-top: 20rpx;
 			}

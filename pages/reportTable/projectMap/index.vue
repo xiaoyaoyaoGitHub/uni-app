@@ -8,14 +8,14 @@
 				bg-color="#F7F8FA" placeholder-color="#C1C3C9" search-icon-color="#C1C3C9" shape="square">
 			</u-search>
 		</view>
+		<!-- <cover-view> -->
 		<view class="u-flex selects u-row-left">
 			<view class="select">
 				<u-button data-index="0" class="selectBtn" :class="{active: selectType === 'auditSelect'}"
 					data-type="auditSelect" @click="showSelect">
 					{{auditSelectCurrent.label}}
 				</u-button>
-				<u-select v-model="auditSelectShow" @confirm="selectConfirm" :list="auditLists">审核状态
-				</u-select>
+
 			</view>
 			<view class="select">
 				<u-button data-index="1" class="selectBtn" :class="{active: selectType === 'tradeSelect'}"
@@ -50,9 +50,10 @@
 					@confirm="selectConfirm"></u-select>
 			</view>
 		</view>
+		<!-- </cover-view> -->
 		<view class="map">
 			<map class="map-content" name="" :longitude="longitude" :latitude="latitude" :markers="covers"
-				:include-points="covers" @markertap="clickMark" @callouttap="clickMark"></map>
+				@updated="mapUpdate" :include-points="covers" @markertap="clickMark" @callouttap="clickMark"></map>
 		</view>
 		<!-- </mescroll-body> -->
 	</view>
@@ -117,23 +118,7 @@
 				tradeSelectShow: false,
 				amountSelectShow: false,
 				departSelectShow: false,
-				auditLists: [{
-						value: '0',
-						label: '未提交'
-					},
-					{
-						value: '1',
-						label: '等待审核'
-					},
-					{
-						value: '2',
-						label: '审核通过'
-					},
-					{
-						value: '3',
-						label: '审核驳回'
-					}
-				],
+
 				tradelists: [],
 				departlists: [],
 				covers: [],
@@ -160,17 +145,38 @@
 				return this.define.baseURL
 			}
 		},
+		mounted() {
+
+		},
 		methods: {
+			mapUpdate() {
+				console.log('update')
+			},
 			clickMark(e) {
 				const {
 					markerId
 				} = e.detail || {};
 				const currentMark = this.covers[markerId];
-				// console.log(currentMark)
+				console.log(currentMark)
 				const {
 					pj_base_project_phase,
 					project_id: id
 				} = currentMark || {};
+				getDictionaryDataSelector(pj_base_project_phase).then(res => {
+					console.log(res)
+					const {
+						code,
+						data: {
+							list = []
+						} = {}
+					} = res || {};
+					if (code === 200) {
+
+						// this.tradelists = list
+						// this.queryLists(moduleId, moduleId_type)
+					}
+				})
+				return
 				uni.navigateTo({
 					url: `/pages/project/detail/index?modelId=2d97a78c3be1440493c983bb9186bacf&pj_base_project_phase=${pj_base_project_phase}&id=${id}`
 				})
@@ -178,7 +184,7 @@
 			upCallback(page = {}) {
 				console.log('up')
 				let query = {
-					pj_base_business_category: this.tradeSelectCurrent.value || '',
+					pj_base_business_category: this.tradeSelectCurrent.vaålue || '',
 					pj_fund_invest_total: [Number(this.amount.min), Number(this.amount.max)],
 					pj_review_status: this.auditSelectCurrent.value || ''
 				}
@@ -282,14 +288,15 @@
 							}
 						})
 						console.log(covers)
-						this.covers = covers;
+						uni.$emit("to-modal", covers);
+						// this.covers = covers;
 						// this.projectLists = [...this.projectLists, ...list]
 						// this.mescroll.endBySize(pagination.pageSize, pagination.total); //必传参数(当前页的数据个数, 总页数)
 					}
 				})
 			},
 			search() {
-				// 节流,避免输入过快多次请求
+				// 节流,避免输入过快多次请
 				this.searchTimer && clearTimeout(this.searchTimer)
 				this.searchTimer = setTimeout(() => {
 					this.list = [];
@@ -319,6 +326,10 @@
 				const typeName = type + 'Show';
 				console.log(typeName)
 				this[typeName] = true
+				this.subNVue = uni.getSubNVueById('sunNvue');
+				subNVue.show();
+				uni.$emit(typeName, true)
+
 			},
 		}
 	}

@@ -104,7 +104,25 @@
 				{
 					"path": "projectMap/index",
 					"style": {
-						"navigationBarTitleText": "项目地图"
+						"navigationBarTitleText": "项目地图",
+						"usingComponents":true,
+						"app-plus": {
+							"subNVues": [{
+								"id": "sunNvue", // 唯一标识  
+								"path": "projectMap/subNvue/subNvue", // 页面路径  
+								// "type": "popup",  //这里不需要*/
+								"style": {
+									"position":"dock",
+									"dock":"bottom",
+									"top": "320rpx",
+									"left": "16rpx",
+									"bottom": "16rpx",
+									"right": "16rpx",
+									"background": "#eee",
+									"zindex":999
+								}
+							}]
+						}
 					}
 				}
 			]
@@ -133,17 +151,16 @@
 					}
 
 				}
-			
-                ,{
-                    "path" : "video/video",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-            ]
+
+				, {
+					"path": "video/video",
+					"style": {
+						"navigationBarTitleText": "",
+						"enablePullDownRefresh": false
+					}
+
+				}
+			]
 		},
 		{
 			"root": "pages/workFlow",
@@ -336,9 +353,9 @@
 		"color": "#666666",
 		"selectedColor": "#0060F4",
 		"backgroundColor": "#ffffff",
-		"fontSize": "20rpx",
-		"height": "98rpx",
-		"iconWidth": "44rpx",
+		// "fontSize": "rpx",
+		// "height": "49px",
+		// "iconWidth": "44rpx",
 		"list": [{
 				"pagePath": "pages/index/index",
 				"text": "项目",

@@ -1,0 +1,50 @@
+<template>
+	<div class="container">
+		<u-select v-model="auditSelectShow" @confirm="selectConfirm" :list="auditLists">审核状态
+		</u-select>
+		<!-- <map class="map-content" name="" :longitude="longitude" :latitude="latitude" :markers="covers"
+			@updated="mapUpdate" :include-points="covers" @markertap="clickMark" @callouttap="clickMark"></map> -->
+	</div>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				latitude: 39.909,
+				longitude: 116.39742,
+				auditLists: [{
+						value: '0',
+						label: '未提交'
+					},
+					{
+						value: '1',
+						label: '等待审核'
+					},
+					{
+						value: '2',
+						label: '审核通过'
+					},
+					{
+						value: '3',
+						label: '审核驳回'
+					}
+				],
+				covers: []
+			}
+		},
+		onLoad() {
+			uni.$on("to-modal", (data) => {
+				console.log('父组件传递给子组件的值', data);
+			});
+			uni.$om('auditSelectShow', (data) => {
+				console.log(data)
+			})
+		},
+		methods: {
+			toFather() {
+				uni.$emit("modal-change", '我是传递给父组件的值');
+			}
+		}
+	}
+</script>
