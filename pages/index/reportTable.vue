@@ -43,7 +43,7 @@
 				<view class="types amount-mode" v-if="reportMode === 3">
 					<view class="u-flex u-row-left back-line ">
 						<u-input class="amount" v-for="(item, index) in reportModeList" :key="index" :border="true"
-							v-model="item.value" height="64" @change="change"></u-input>
+							v-model="item.value" height="64" @change="change" placeholder="万元"></u-input>
 						<!-- 	<u-input class="amount" :border="true" placeholder="100" height="64" @change="change"></u-input>
 						<u-input class="amount" :border="true" placeholder="100" height="64" @change="change"></u-input>
 						<u-input class="amount" :border="true" placeholder="100" height="64" @change="change"></u-input>
@@ -213,7 +213,7 @@
 			// 查询结果
 			queryReport() {
 				const {
-						reportType = '', // 报表类型
+					reportType = '', // 报表类型
 						reportStageList: buildingProjectStatus = [], // 项目阶段
 						reportStatusList: reviewStatus = [], //审核状态
 						reportMode: way = '', // 统计方式
@@ -222,28 +222,41 @@
 				} = this || {};
 				let fundScaleRange = reportModeList.reduce((all, next) => {
 
-					all = all + '-' + next.value
+					all = all + '-' + next.value + '万'
 					return all
 				}, '')
 				console.log(JSON.stringify({
 					buildingProjectStatus,
 					reviewStatus,
 					way,
-					modelId:MODULEID[reportType],
+					modelId: MODULEID[reportType],
 					fundScaleRange: fundScaleRange.replace(/^\-/, ''),
 					userInfo
 				}))
 				queryProjectReport({
 					buildingProjectStatus,
 					reviewStatus,
-					way,
-					modelId:MODULEID[reportType],
-					fundScaleRange: fundScaleRange.replace(/^\-/, ''),
+					"category": "build",
+					"way": Number(way),
+					"type": "summation",
+					"modelId": MODULEID[reportType] || MODULEID['store'],
+					"fundScaleRange": fundScaleRange.replace(/^\-/, ''),
 					userInfo
 				}).then(res => {
-					console.log(res)
+					const {
+						code,
+						data: {
+							list = []
+						} = {}
+					} = res || {};
+					if (code === 200) {
+						uni.setStorageSync('reportList', list)
+						uni.navigateTo({
+							url: `/pages/reportTable/buildReport/index?lists=${JSON.stringify(list)}`
+						})
+					}
 				})
-			
+
 			},
 			// 添加投资规模
 			addReportModeList() {
