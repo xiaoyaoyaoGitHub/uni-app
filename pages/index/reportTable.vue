@@ -225,15 +225,8 @@
 					all = all + '-' + next.value + '万'
 					return all
 				}, '')
-				console.log(JSON.stringify({
-					buildingProjectStatus,
-					reviewStatus,
-					way,
-					modelId: MODULEID[reportType],
-					fundScaleRange: fundScaleRange.replace(/^\-/, ''),
-					userInfo
-				}))
-				queryProjectReport({
+		
+				const querys = {
 					buildingProjectStatus,
 					reviewStatus,
 					"category": "build",
@@ -242,7 +235,8 @@
 					"modelId": MODULEID[reportType] || MODULEID['store'],
 					"fundScaleRange": fundScaleRange.replace(/^\-/, ''),
 					userInfo
-				}).then(res => {
+				}
+				queryProjectReport(querys).then(res => {
 					const {
 						code,
 						data: {
@@ -251,6 +245,7 @@
 					} = res || {};
 					if (code === 200) {
 						uni.setStorageSync('reportList', list)
+						uni.setStorageSync('reportList_query', querys)
 						uni.navigateTo({
 							url: `/pages/reportTable/buildReport/index?lists=${JSON.stringify(list)}`
 						})

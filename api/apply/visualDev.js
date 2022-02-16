@@ -22,10 +22,17 @@ export function projectImageUpLoad(data) {
 	return request({
 		url: '/api/extend/Document/Uploader',
 		method: 'post',
+		header: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+		},
+		requestType: 'form',
+		dataType: 'json',
 		data
 	})
 
 }
+
+
 
 // 地图列表
 export function mapList(data) {

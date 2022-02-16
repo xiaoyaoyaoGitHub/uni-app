@@ -14,8 +14,9 @@
 				</view>
 			</template>
 			<template v-else>
-				<uni-file-picker class="upload" @select="select" @progress="progress" mode="grid" limit="6"
-					v-model="imageValue" file-mediatype="image" :image-styles="imageStyles">
+				<uni-file-picker ref="filePicker" class="upload" @select="select" @progress="progress" mode="grid"
+					limit="6" v-model="imageValue" file-mediatype="image" :image-styles="imageStyles"
+					:auto-upload="false">
 					<view>
 						<u-icon name="camera" color="#DCDEE0"></u-icon>
 					</view>
@@ -32,6 +33,7 @@
 	import {
 		projectImageUpLoad
 	} from "@/api/apply/visualDev.js"
+	import define from "@/utils/define.js"
 	export default {
 		data() {
 			return {
@@ -72,6 +74,37 @@
 					icon: "none",
 					title: '请选择图片类型'
 				})
+				// uni.chooseImage({
+				// 	count: 6, //默认9
+				// 	sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+				// 	sourceType: ['album'], //从相册选择
+				// 	success: (res) => {
+				// 		console.log(res.tempFiles);
+				// 		const formData = new FormData();
+				// 		formData.append('projectId', this.projectId);
+				// 		formData.append('category', this.imageType);
+				// 		formData.append('description', this.textareaValue);
+				// 		formData.append('parentId', 0)
+				// 		formData.append('file', res.tempFiles)
+				// 		uni.uploadFile({
+				// 			url: `${define.baseURL}/api/extend/Document/Uploader`,
+				// 			files: res.tempFiles,
+				// 			formData: {
+				// 				projectId: this.projectId,
+				// 				category: this.imageType,
+				// 				description: this.textareaValue,
+				// 				parentId: 0,
+				// 				files: res.tempFiles
+				// 			},
+				// 			success(res) {
+				// 				console.log(res)
+				// 			},
+				// 			fail(err) {
+				// 				console.log(err)
+				// 			}
+				// 		})
+				// 	}
+				// });
 			},
 			// 获取上传状态
 			select(e) {
@@ -82,15 +115,43 @@
 					category: this.imageType,
 					description: this.textareaValue
 				}
-				this.upLoad({
-					file:e,
-					projectId,
-					parentId: 0,
-					documentData
+				console.log(e)
+				uni.uploadFile({
+					url: `${define.baseURL}/api/extend/Document/Uploader`,
+					files: e.tempFiles,
+					formData: {
+						projectId,
+						category: this.imageType,
+						description: this.textareaValue,
+						parentId: 0,
+						files: e.tempFiles
+					},
+					success(res) {
+						console.log(res)
+					},
+					fail(err) {
+						console.log(err)
+					}
 				})
+				// const formData = new FormData();
+				// formData.append('projectId', projectId);
+				// formData.append('category', this.imageType);
+				// formData.append('description', this.textareaValue);
+				// formData.append('parentId', 0)
+				// formData.append('file', e.tempFiles)
 
+				// this.$refs.filePicker.upload()
+				// {
+				// 	projectId,
+				// 	category: this.imageType,
+				// 	description: this.textareaValue,
+				// 	parentId: 0,
+				// 	files: e.tempFiles
+				// }
+				this.upLoad(formData)
 			},
 			upLoad(data) {
+				// console.log(data.getAll)
 				projectImageUpLoad(data).then(res => {
 					console.log(res)
 				})

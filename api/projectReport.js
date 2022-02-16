@@ -10,6 +10,14 @@ export function getQueryDataHomePageDetailList(data) {
 	})
 }
 
+export function exportSummationExcel(data) {
+	return request({
+		url: '/api/extend/dataReport/ExportSummationExcel',
+		method: 'post',
+		data
+	})
+}
+
 export function getQueryConditionData() {
 	return request({
 		url: '/api/extend/dataReport/queryConditionInfo',

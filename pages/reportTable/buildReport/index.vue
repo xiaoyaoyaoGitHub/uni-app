@@ -36,7 +36,8 @@
 	import {
 		getQueryConditionData,
 		getReportList,
-		getDetailReportList
+		getDetailReportList,
+		exportSummationExcel
 	} from '@/api/projectReport'
 
 	import CitySelect from "../../../components/cudt/cudt-city-select/city-select";
@@ -80,11 +81,15 @@
 		methods: {
 			// 注意返回值为一个数组，单列时取数组的第一个元素即可(只有一个元素)
 			down() {
-				uni.showToast({
-					title: '下载失败',
-					icon:"none",
-					duration: 2000
-				});
+				const reportList_query = uni.getStorageSync('reportList_query')
+				exportSummationExcel(reportList_query).then(res => {
+					console.log(res)
+				})
+				// uni.showToast({
+				// 	title: '下载失败',
+				// 	icon:"none",
+				// 	duration: 2000
+				// });
 			},
 
 		}

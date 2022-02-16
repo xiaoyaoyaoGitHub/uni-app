@@ -159,6 +159,9 @@
 </template>
 
 <script>
+	import {
+		logout
+	} from "@/api/common.js"
 	import IndexMixin from './mixin.js'
 	export default {
 		mixins: [IndexMixin],
@@ -183,9 +186,12 @@
 					success: function(res) {
 						if (res.confirm) {
 							// console.log('用户点击确定');
-							uni.navigateTo({
-								url:'/pages/login/index'
+							logout().then(res => {
+								uni.navigateTo({
+									url: '/pages/login/index'
+								})
 							})
+
 						} else if (res.cancel) {
 							console.log('用户点击取消');
 						}
