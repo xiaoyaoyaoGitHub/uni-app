@@ -76,7 +76,7 @@
 					最近调度
 				</view>
 				<view class="lists">
-					<view @click="toNotificationDetail()" class="project-item" v-for="item in latasetProgressLists">
+					<view @click="toNotificationDetail(item)" class="project-item" v-for="item in latasetProgressLists">
 
 						<view class="project-name">
 							<span>{{item.pj_base_project_name}}</span>
@@ -245,18 +245,31 @@
 						banner.title = swipers[i].title
 						let img = JSON.parse(swipers[i].image_url)
 						let imgUrl = this.define.frontURL + img[0].url
-						uni.request({
-							url: imgUrl,
-							responseType: 'arraybuffer',
-							success: res => {
-								if (res.statusCode === 200) {
-									banner.image =
-										`data:image/jpeg;base64,${uni.arrayBufferToBase64(res.data)}`
-									this.bannerList.push(banner)
-								}
-							}
-						})
+						// uni.request({
+						// 	url: imgUrl,
+						// 	responseType: 'arraybuffer',
+						// 	success: res => {
+						// 		if (res.statusCode === 200) {
+						// 			banner.image =
+						// 				`data:image/jpeg;base64,${uni.arrayBufferToBase64(res.data)}`
+						// 			this.bannerList.push(banner)
+						// 		}
+						// 	}
+						// })
 					}
+					this.bannerList =  [{
+						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
+						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
+					},
+					{
+						image: 'https://cdn.uviewui.com/uview/swiper/2.jpg',
+						title: '身无彩凤双飞翼，心有灵犀一点通'
+					},
+					{
+						image: 'https://cdn.uviewui.com/uview/swiper/3.jpg',
+						title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
+					}
+				]
 				}).catch(err => {})
 			},
 			loadProjectLataestProgress(page) {
@@ -310,8 +323,10 @@
 				})
 			},
 			toNotificationDetail(item) {
+				console.log(item)
+				const { parent_id ,id} = item || {};
 				uni.navigateTo({
-					url: '/pages/project/detail/index'
+					url: `/pages/project/detail/index?id=${parent_id}&modelId=2d97a78c3be1440493c983bb9186bacf`
 				})
 			},
 			

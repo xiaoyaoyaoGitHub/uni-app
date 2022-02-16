@@ -37,7 +37,7 @@
 						</u-field>
 						<u-field v-model="amount.max" type="number" label="最大值" placeholder="请输入最大金额">
 						</u-field>
-						<u-button class="u-m-t-20" type="primary" @click="amountSelectShow = false">确定</u-button>
+						<u-button class="u-m-t-20" type="primary" @click="inputConfirm">确定</u-button>
 					</view>
 				</u-popup>
 				<!-- <u-select v-model="amountSelectShow" @confirm="selectConfirm"> 总投资</u-select> -->
@@ -176,7 +176,10 @@
 				console.log('update')
 			},
 
-
+			inputConfirm(){
+				this.amountSelectShow = false;
+				this.upCallback()
+			},
 			clickMark(index) {
 
 				const currentMark = this.covers[index];
@@ -184,20 +187,20 @@
 					pj_base_project_phase,
 					project_id: id
 				} = currentMark || {};
-				// getDictionaryDataSelector(pj_base_project_phase).then(res => {
-				// 	console.log(res)
-				// 	const {
-				// 		code,
-				// 		data: {
-				// 			list = []
-				// 		} = {}
-				// 	} = res || {};
-				// 	if (code === 200) {
+				getDictionaryDataSelector("d16af6c485154abea4c168a8a23a9617").then(res => {
+					console.log(res)
+					const {
+						code,
+						data: {
+							list = []
+						} = {}
+					} = res || {};
+					if (code === 200) {
 
-				// 		// this.tradelists = list
-				// 		// this.queryLists(moduleId, moduleId_type)
-				// 	}
-				// })
+						// this.tradelists = list
+						// this.queryLists(moduleId, moduleId_type)
+					}
+				})
 				// return
 				// console.log(`/pages/project/detail/index?modelId=2d97a78c3be1440493c983bb9186bacf&pj_base_project_phase=${pj_base_project_phase}&id=${id}`)
 				uni.setStorageSync("detailInfo", {
@@ -211,9 +214,10 @@
 			},
 			upCallback(page = {}) {
 				let query = {
-					pj_base_business_category: this.tradeSelectCurrent.vaålue || '',
+					pj_base_business_category: this.tradeSelectCurrent.value || '',
 					pj_fund_invest_total: [Number(this.amount.min), Number(this.amount.max)],
-					pj_review_status: this.auditSelectCurrent.value || ''
+					pj_review_status: this.auditSelectCurrent.value || '',
+					pj_base_region: this.departSelectCurrent.value || ''
 				}
 				this.queryStoreList(query)
 			},
@@ -237,7 +241,6 @@
 					} = res || {};
 					if (code === 200) {
 						this.tradelists = list
-						// this.queryLists(moduleId, moduleId_type)
 					}
 				})
 			},
@@ -250,7 +253,9 @@
 						} = {}
 					} = res || {};
 					if (code === 200) {
-						this.departlists = list
+						
+						this.departlists = list[0]?.children?.[0]?.children;
+						
 					}
 				})
 			},
@@ -260,7 +265,8 @@
 					pageSize: 10000,
 					sidx: 'pj_base_roject_create_date',
 					sort: "desc",
-					userInfo: this.userInfo
+					userInfo: this.userInfo,
+					...data
 				}).then(res => {
 					// console.log(res)
 					const {

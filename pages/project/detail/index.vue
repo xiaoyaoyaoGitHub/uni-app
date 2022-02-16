@@ -183,13 +183,13 @@
 
 			</view>
 			<!-- 项目图片 -->
-			<view class="content pictures" v-if="current === 2">
+			<view class="content pictures u-border-top" v-if="current === 2">
 				<view class="update-pic" @click="upLoadImage">
 					<u-icon color="#DCDEE0" label-color="#DCDEE0" name="camera" label="上传" size="39" label-pos="bottom">
 					</u-icon>
 
 				</view>
-				<view class="types" v-for="(item) in [1,3,4]">
+				<view class="types" v-if="imgLists.length !== 0" v-for="(item) in imgLists">
 					<view class="time">
 						2021-11-11
 					</view>
@@ -199,14 +199,17 @@
 								图片分类：
 							</span>
 							<span class="desc">
-								土地征收
+								{{item.category}}
 							</span>
 						</view>
 						<view class="images-desc">
-							描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述描述
+							{{item.description}}
 						</view>
 						<view class="images u-flex">
 							<view class="image">
+								<image :src="item.previewPath"></image>
+							</view>
+							<!-- <view class="image">
 
 							</view>
 							<view class="image">
@@ -217,12 +220,12 @@
 							</view>
 							<view class="image">
 
-							</view>
-							<view class="image">
-
-							</view>
+							</view> -->
 						</view>
 					</view>
+				</view>
+				<view  v-if="imgLists.length === 0" class="u-text-center u-font-24 u-p-t-20">
+					暂无图片
 				</view>
 			</view>
 			<!-- 项目问题 -->
@@ -330,7 +333,8 @@
 				current: 0,
 				projectInfo: {},
 				scheduleList: [],
-				projectIssues: []
+				projectIssues: [],
+				imgLists: []
 			}
 		},
 		watch: {
@@ -361,7 +365,7 @@
 			const params = !id ? uni.getStorageSync("detailInfo") : {}
 			console.log(JSON.stringify(params))
 			this.projectId = id || params.id;
-			this.getData(modelId || params.modelId, this.projectId)
+			this.getData(modelId || params.modelId || '', this.projectId)
 		},
 		computed: {
 			baseURL() {
@@ -442,11 +446,18 @@
 				})
 			},
 			getImages() {
+				console.log('请求图片')
 				projectImageList({
 					keyword: "",
 					projectId: this.projectId
 				}).then(res => {
-					console.log(res)
+					const {
+						code,
+						data: {
+							list = []
+						} = {}
+					} = res || {};
+					this.imgLists = list;
 				})
 			},
 			getProjectIssue() {

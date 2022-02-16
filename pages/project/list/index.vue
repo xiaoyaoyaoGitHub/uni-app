@@ -36,7 +36,7 @@
 							</u-field>
 							<u-field v-model="amount.max" type="number" label="最大值" placeholder="请输入最大金额">
 							</u-field>
-							<u-button class="u-m-t-20" type="primary" @click="amountSelectShow = false">确定</u-button>
+							<u-button class="u-m-t-20" type="primary" @click="inputConfirm">确定</u-button>
 						</view>
 					</u-popup>
 					<!-- <u-select v-model="amountSelectShow" @confirm="selectConfirm"> 总投资</u-select> -->
@@ -125,7 +125,7 @@
 					label: '审核状态'
 				},
 				tradeSelectCurrent: {
-					value: 'def93d1b7cda45d1a2f60c6c39052e95',
+					value: '',
 					label: '行业'
 				},
 				departSelectCurrent: {
@@ -133,8 +133,8 @@
 					label: '部门'
 				},
 				amount: {
-					min: 500,
-					max: 500000
+					min: '',
+					max: ''
 				},
 				auditSelectShow: false,
 				tradeSelectShow: false,
@@ -189,7 +189,7 @@
 					pj_base_business_category: this.tradeSelectCurrent.value || '',
 					// pj_fund_invest_total: `${this.amount.min},${this.amount.max}`,
 					// pj_fund_invest_total: `[${this.amount.min},${this.amount.max}]`,
-					pj_fund_invest_total: [Number(this.amount.min), Number(this.amount.max)],
+					pj_fund_invest_total: [Number(this.amount.min ? this.amount.min: 500 ), Number(this.amount.max ? this.amount.max  : 5000000)],
 					pj_review_status: this.auditSelectCurrent.value || '',
 					pj_base_region: this.departSelectCurrent.value || ''
 				}
@@ -206,6 +206,11 @@
 					this.queryPlayList(query)
 				}
 
+			},
+			inputConfirm() {
+				this.amountSelectShow = false;
+				this.projectLists = [];
+				this.mescroll.resetUpScroll();
 			},
 			// 储备项目
 			queryStoreList(data) {
@@ -225,7 +230,8 @@
 						pj_fund_invest_total: data.pj_fund_invest_total,
 						pj_review_status: data.pj_review_status,
 						pj_base_project_name: '项目',
-						pj_base_region: data.pj_base_region
+						pj_base_region: data.pj_base_region,
+						keyword:data.keyword
 
 					})
 				}).then(res => {
@@ -260,9 +266,10 @@
 					customized: JSON.stringify(customized),
 					json: JSON.stringify({
 						pj_base_business_category: data.pj_base_business_category,
-						// pj_fund_invest_total: data.pj_fund_invest_total,
+						pj_fund_invest_total: data.pj_fund_invest_total,
 						pj_review_status: data.pj_review_status,
-						pj_base_region: data.pj_base_region
+						pj_base_region: data.pj_base_region,
+						keyword:data.keyword
 
 					})
 				}).then(res => {
@@ -293,9 +300,10 @@
 					json: JSON.stringify({
 						pj_base_project_phase,
 						pj_base_business_category: data.pj_base_business_category,
-						pj_fund_invest_total: [100, 500],
+						pj_fund_invest_total: data.pj_fund_invest_total,
 						pj_review_status: data.pj_review_status,
-						pj_base_region: data.pj_base_region
+						pj_base_region: data.pj_base_region,
+						keyword:data.keyword
 
 					})
 				}).then(res => {
@@ -323,9 +331,10 @@
 					json: JSON.stringify({
 						concerns,
 						pj_base_business_category: data.pj_base_business_category,
-						pj_fund_invest_total: [100, 500],
+						pj_fund_invest_total: data.pj_fund_invest_total,
 						pj_review_status: data.pj_review_status,
-						pj_base_region: data.pj_base_region
+						pj_base_region: data.pj_base_region,
+						keyword:data.keyword
 
 					})
 				}).then(res => {
@@ -375,7 +384,7 @@
 						} = {}
 					} = res || {};
 					if (code === 200) {
-						this.departlists = list
+						this.departlists = list[0]?.children?. [0]?.children;
 					}
 				})
 			},
@@ -445,11 +454,15 @@
 
 			.selects {
 				background: #fff;
-				padding: 20rpx 32rpx;
+				padding: 20rpx 20rpx;
 				overflow-x: auto;
 
 				.select {
 					margin-right: 19rpx;
+
+					&:last-child {
+						margin-right: 0;
+					}
 
 					.selectBtn {
 						background: #F7F6F6;

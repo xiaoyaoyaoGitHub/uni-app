@@ -41,7 +41,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="copyright">@2021 智慧云改出品</view>
+		<view class="copyright">@2021 智慧发改出品</view>
 	</view>
 </template>
 

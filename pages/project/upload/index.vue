@@ -76,14 +76,14 @@
 			// 获取上传状态
 			select(e) {
 				console.log('选择文件：', e)
-				const file = e.tempFiles;
+				// const file = e.tempFiles;
 				const projectId = this.projectId;
 				const documentData = {
 					category: this.imageType,
 					description: this.textareaValue
 				}
 				this.upLoad({
-					multifile:file,
+					file:e,
 					projectId,
 					parentId: 0,
 					documentData

@@ -137,6 +137,12 @@
 	} from "@/api/common.js"
 	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
 	import IndexMixin from './mixin.js'
+	const MODULEID = {
+		"store": "2d97a78c3be1440493c983bb9186bacf",
+		"ongoing": "b094ad34716143b5a13e291572ab1af3",
+		"close": "1a0d97c689c84f2599e6fffd29f9efc6",
+		"storetoongoing": "2d97a78c3be1440493c983bb9186bacf"
+	}
 	export default {
 		mixins: [MescrollMixin, IndexMixin],
 		data() {
@@ -207,7 +213,7 @@
 			// 查询结果
 			queryReport() {
 				const {
-					reportType = '', // 报表类型
+						reportType = '', // 报表类型
 						reportStageList: buildingProjectStatus = [], // 项目阶段
 						reportStatusList: reviewStatus = [], //审核状态
 						reportMode: way = '', // 统计方式
@@ -219,19 +225,25 @@
 					all = all + '-' + next.value
 					return all
 				}, '')
+				console.log(JSON.stringify({
+					buildingProjectStatus,
+					reviewStatus,
+					way,
+					modelId:MODULEID[reportType],
+					fundScaleRange: fundScaleRange.replace(/^\-/, ''),
+					userInfo
+				}))
 				queryProjectReport({
 					buildingProjectStatus,
 					reviewStatus,
 					way,
+					modelId:MODULEID[reportType],
 					fundScaleRange: fundScaleRange.replace(/^\-/, ''),
 					userInfo
 				}).then(res => {
 					console.log(res)
 				})
-				// console.log(fundScaleRange)
-				// uni.navigateTo({
-				// 	url: '/pages/reportTable/buildReport/index'
-				// })
+			
 			},
 			// 添加投资规模
 			addReportModeList() {
