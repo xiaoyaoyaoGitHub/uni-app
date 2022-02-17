@@ -1,6 +1,6 @@
 <template>
 	<view class="">
-
+		<!-- <web-view src="/hybrid/html/upload.html"></web-view> -->
 		<view class="selector u-flex" @click="show = true">
 			<view class="label">图片分类</view>
 			<u-input placeholder="请选择" height="96" v-model="imageType" disabled type="text" @click="show = true" />
@@ -16,16 +16,19 @@
 			<template v-else>
 				<uni-file-picker ref="filePicker" class="upload" @select="select" @progress="progress" mode="grid"
 					limit="6" v-model="imageValue" file-mediatype="image" :image-styles="imageStyles"
-					:auto-upload="false">
+					return-type="array" :del-icon="false" :auto-upload="false">
 					<view>
 						<u-icon name="camera" color="#DCDEE0"></u-icon>
 					</view>
 				</uni-file-picker>
 			</template>
 		</view>
-		<u-input class="textarea" :custom-style="{background:'#F7F8FA'}" maxlength="100" v-model="textareaValue"
+		<u-input class="textarea u-p-10" :custom-style="{background:'#F7F8FA'}" maxlength="100" v-model="textareaValue"
 			type="textarea" height="168" />
 		</u-picker>
+		<view class="u-p-t-20 u-p-r-20 u-p-l-20">
+			<u-button :disabled="imageType === ''" type="primary" @click="uploadAllInfo">上传</u-button>
+		</view>
 	</view>
 </template>
 
@@ -45,6 +48,7 @@
 				show: false,
 				imageValue: [],
 				textareaValue: '',
+				fileLists: [],
 				// 这种情况需要指定range-key为cateName，否则组件不知道该显示对象的哪个属性
 				actions: [{
 						label: '土地征拆',
@@ -77,7 +81,7 @@
 				// uni.chooseImage({
 				// 	count: 6, //默认9
 				// 	sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-				// 	sourceType: ['album'], //从相册选择
+				// 	sourceType: ['album'], //从相册选
 				// 	success: (res) => {
 				// 		console.log(res.tempFiles);
 				// 		const formData = new FormData();
@@ -86,90 +90,87 @@
 				// 		formData.append('description', this.textareaValue);
 				// 		formData.append('parentId', 0)
 				// 		formData.append('file', res.tempFiles)
-				// 		uni.uploadFile({
-				// 			url: `${define.baseURL}/api/extend/Document/Uploader`,
-				// 			files: res.tempFiles,
-				// 			formData: {
-				// 				projectId: this.projectId,
-				// 				category: this.imageType,
-				// 				description: this.textareaValue,
-				// 				parentId: 0,
-				// 				files: res.tempFiles
-				// 			},
-				// 			success(res) {
-				// 				console.log(res)
-				// 			},
-				// 			fail(err) {
-				// 				console.log(err)
-				// 			}
-				// 		})
+
+
 				// 	}
 				// });
 			},
+			upload_one(file) {
+				return new Promise((resolve, reject) => {
+					uni.uploadFile({
+						url: `${define.baseURL}/api/extend/Document/Uploader`,
+						file: file,
+						name: 'file',
+						header: {
+							"Authorization": uni.getStorageSync('token') || ''
+						},
+						formData: {
+							projectId: this.projectId,
+							category: this.imageType,
+							description: this.textareaValue,
+							parentId: 0,
+						},
+						success(res) {
+							const {
+								statusCode,
+								data
+							} = res || {};
+							if (statusCode === 200) {
+								const result = JSON.parse(data);
+								const {
+									code
+								} = result || {};
+								resolve(result)
+								if (code === 200) {
+									resolve(result)
+								} else {
+									resolve(null)
+								}
+							}
+						},
+						fail(err) {
+							reject(err)
+						}
+					})
+				})
+
+			},
+			upload(path_arr) {
+				let num = path_arr.length;
+				return new Promise(async (resolve, reject) => {
+					let img_urls = []
+					for (let i = 0; i < num; i++) {
+						let img_url = await this.upload_one(path_arr[i]);
+
+						img_urls.push(img_url)
+					};
+					resolve(img_urls)
+				})
+
+
+			},
 			// 获取上传状态
 			select(e) {
-				console.log('选择文件：', e)
-				// const file = e.tempFiles;
-				const projectId = this.projectId;
-				const documentData = {
-					category: this.imageType,
-					description: this.textareaValue
-				}
-				console.log(e)
-				uni.uploadFile({
-					url: `${define.baseURL}/api/extend/Document/Uploader`,
-					files: e.tempFiles,
-					formData: {
-						projectId,
-						category: this.imageType,
-						description: this.textareaValue,
-						parentId: 0,
-						files: e.tempFiles
-					},
-					success(res) {
-						console.log(res)
-					},
-					fail(err) {
-						console.log(err)
+				const {
+					tempFiles
+				} = e || {};
+				this.fileLists = this.fileLists.concat(tempFiles)
+			},
+			async uploadAllInfo() {
+				uni.showLoading({
+					title: '上传中'
+				})
+				const lists = await this.upload(this.fileLists);
+				uni.hideLoading()
+				lists.map((item, index) => {
+					if (!item) {
+						uni.showToast({
+							icon:'none',
+							title:`第${index}张上传失败`
+						})
 					}
 				})
-				// const formData = new FormData();
-				// formData.append('projectId', projectId);
-				// formData.append('category', this.imageType);
-				// formData.append('description', this.textareaValue);
-				// formData.append('parentId', 0)
-				// formData.append('file', e.tempFiles)
-
-				// this.$refs.filePicker.upload()
-				// {
-				// 	projectId,
-				// 	category: this.imageType,
-				// 	description: this.textareaValue,
-				// 	parentId: 0,
-				// 	files: e.tempFiles
-				// }
-				this.upLoad(formData)
 			},
-			upLoad(data) {
-				// console.log(data.getAll)
-				projectImageUpLoad(data).then(res => {
-					console.log(res)
-				})
-			},
-			// 获取上传进度
-			progress(e) {
-				console.log('上传进度：', e)
-			},
-
-			// 上传成功
-			success(e) {
-				console.log('上传成功')
-			},
-
-			// 上传失败
-			fail(e) {
-				console.log('上传失败：', e)
-			}
 		}
 	}
 </script>
