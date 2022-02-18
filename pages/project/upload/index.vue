@@ -78,22 +78,6 @@
 					icon: "none",
 					title: '请选择图片类型'
 				})
-				// uni.chooseImage({
-				// 	count: 6, //默认9
-				// 	sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-				// 	sourceType: ['album'], //从相册选
-				// 	success: (res) => {
-				// 		console.log(res.tempFiles);
-				// 		const formData = new FormData();
-				// 		formData.append('projectId', this.projectId);
-				// 		formData.append('category', this.imageType);
-				// 		formData.append('description', this.textareaValue);
-				// 		formData.append('parentId', 0)
-				// 		formData.append('file', res.tempFiles)
-
-
-				// 	}
-				// });
 			},
 			upload_one(file) {
 				return new Promise((resolve, reject) => {
@@ -155,6 +139,42 @@
 					tempFiles
 				} = e || {};
 				this.fileLists = this.fileLists.concat(tempFiles)
+				// uni.uploadFile({
+				// 	url: `${define.baseURL}/api/extend/Document/Uploader`,
+				// 	file: this.fileLists,
+				// 	header: {
+				// 		"Authorization": uni.getStorageSync('token') || ''
+				// 	},
+				// 	formData: {
+				// 		projectId: this.projectId,
+				// 		category: this.imageType,
+				// 		description: this.textareaValue,
+				// 		parentId: 0,
+				// 	},
+				// 	success(res) {
+				// 		const {
+				// 			statusCode,
+				// 			data
+				// 		} = res || {};
+				// 		if (statusCode === 200) {
+				// 			const result = JSON.parse(data);
+				// 			const {
+				// 				code
+				// 			} = result || {};
+				// 			resolve(result)
+				// 			if (code === 200) {
+				// 				resolve(result)
+				// 			} else {
+				// 				resolve(null)
+				// 			}
+				// 		}
+				// 	},
+				// 	fail(err) {
+				// 		reject(err)
+				// 	}
+				// })
+
+
 			},
 			async uploadAllInfo() {
 				uni.showLoading({
@@ -165,8 +185,8 @@
 				lists.map((item, index) => {
 					if (!item) {
 						uni.showToast({
-							icon:'none',
-							title:`第${index}张上传失败`
+							icon: 'none',
+							title: `第${index}张上传失败`
 						})
 					}
 				})
