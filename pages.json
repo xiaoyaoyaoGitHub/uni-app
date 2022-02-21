@@ -5,14 +5,15 @@
 		"a-map": "@/components/ITkoala-amap/amap.vue"
 	},
 	"pages": [{
-			"path": "pages/launch/index",
+			"path": "pages/login/index",
 			"style": {
+				"navigationStyle": "custom",
 				"app-plus": {
 					"titleNView": false,
 					"bounce": "none"
 				}
 			}
-		},
+		} ,
 		// #ifdef APP-PLUS
 		{
 			"path": "pages/launch/policy",
@@ -41,16 +42,7 @@
 				"navigationBarTitleText": "项目"
 			}
 		},
-		{
-			"path": "pages/login/index",
-			"style": {
-				"navigationStyle": "custom",
-				"app-plus": {
-					"titleNView": false,
-					"bounce": "none"
-				}
-			}
-		},
+
 		{
 			"path": "pages/index/projects",
 			"style": {
