@@ -390,13 +390,13 @@
 			getData(modelId, id) {
 				console.log(modelId, id)
 				getProjectInfo(modelId, id).then(res => {
+					console.log(res)
 					const {
 						code,
 						data: {
 							data: projectInfo = '{}'
 						}
 					} = res || {}
-					console.log(JSON.parse(projectInfo))
 					if (code === 200) {
 						this.projectInfo = JSON.parse(projectInfo);
 						const {
@@ -413,12 +413,14 @@
 						this.covers = [{
 							latitude: this.latitude,
 							longitude: this.longitude,
-							width: 20,
-							height: 20,
+							width: 10,
+							height: 10,
 							title: formattedAddress,
 							iconPath: '../../../static/mark.jpeg'
 						}]
 					}
+				}).catch(err => {
+					console.log(err)
 				})
 			},
 			// 在建进度

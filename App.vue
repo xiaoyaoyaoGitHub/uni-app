@@ -8,7 +8,7 @@
 			// #ifdef H5
 			const token = uni.getStorageSync("token");
 			if (!token) return
-			chat.initSocket()
+			// chat.initSocket()
 			// #endif
 			//#ifdef APP-PLUS  
 			// let appName = this.define.version;

@@ -189,7 +189,8 @@
 					pj_base_business_category: this.tradeSelectCurrent.value || '',
 					// pj_fund_invest_total: `${this.amount.min},${this.amount.max}`,
 					// pj_fund_invest_total: `[${this.amount.min},${this.amount.max}]`,
-					pj_fund_invest_total: [Number(this.amount.min ? this.amount.min: 500 ), Number(this.amount.max ? this.amount.max  : 5000000)],
+					pj_fund_invest_total: [Number(this.amount.min ? this.amount.min : 500), Number(this.amount.max ?
+						this.amount.max : 5000000)],
 					pj_review_status: this.auditSelectCurrent.value || '',
 					pj_base_region: this.departSelectCurrent.value || ''
 				}
@@ -231,7 +232,7 @@
 						pj_review_status: data.pj_review_status,
 						pj_base_project_name: '项目',
 						pj_base_region: data.pj_base_region,
-						keyword:data.keyword
+						keyword: data.keyword
 
 					})
 				}).then(res => {
@@ -269,7 +270,7 @@
 						pj_fund_invest_total: data.pj_fund_invest_total,
 						pj_review_status: data.pj_review_status,
 						pj_base_region: data.pj_base_region,
-						keyword:data.keyword
+						keyword: data.keyword
 
 					})
 				}).then(res => {
@@ -303,7 +304,7 @@
 						pj_fund_invest_total: data.pj_fund_invest_total,
 						pj_review_status: data.pj_review_status,
 						pj_base_region: data.pj_base_region,
-						keyword:data.keyword
+						keyword: data.keyword
 
 					})
 				}).then(res => {
@@ -334,7 +335,7 @@
 						pj_fund_invest_total: data.pj_fund_invest_total,
 						pj_review_status: data.pj_review_status,
 						pj_base_region: data.pj_base_region,
-						keyword:data.keyword
+						keyword: data.keyword
 
 					})
 				}).then(res => {
@@ -396,8 +397,14 @@
 					})
 					return
 				}
+
 				const modelId = this.modelId;
 				const pj_base_project_phase = this.pj_base_project_phase
+				uni.setStorageSync("detailInfo", {
+					// pj_base_project_phase,
+					id,
+					modelId: "2d97a78c3be1440493c983bb9186bacf"
+				})
 				uni.navigateTo({
 					url: `/pages/project/detail/index?modelId=${modelId}&pj_base_project_phase=${pj_base_project_phase}&id=${id}`
 				})

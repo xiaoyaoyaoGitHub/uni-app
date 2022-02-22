@@ -115,8 +115,8 @@
 					label: '部门'
 				},
 				amount: {
-					min: 500,
-					max: 5000000
+					min: '',
+					max: ''
 				},
 				auditSelectShow: false,
 				tradeSelectShow: false,
@@ -176,7 +176,7 @@
 				console.log('update')
 			},
 
-			inputConfirm(){
+			inputConfirm() {
 				this.amountSelectShow = false;
 				this.upCallback()
 			},
@@ -215,7 +215,7 @@
 			upCallback(page = {}) {
 				let query = {
 					pj_base_business_category: this.tradeSelectCurrent.value || '',
-					pj_fund_invest_total: [Number(this.amount.min), Number(this.amount.max)],
+					pj_fund_invest_total: [Number(this.amount.min) ? Number(this.amount.min) : 500, Number(this.amount.max) ? Number(this.amount.max) : 500000],
 					pj_review_status: this.auditSelectCurrent.value || '',
 					pj_base_region: this.departSelectCurrent.value || ''
 				}
@@ -253,9 +253,9 @@
 						} = {}
 					} = res || {};
 					if (code === 200) {
-						
-						this.departlists = list[0]?.children?.[0]?.children;
-						
+
+						this.departlists = list[0]?.children?. [0]?.children;
+
 					}
 				})
 			},

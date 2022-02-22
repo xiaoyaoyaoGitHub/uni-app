@@ -4,8 +4,8 @@
 			<view class="select-type">
 				<view class="title">报表类型</view>
 				<view class="types u-flex u-row-left">
-					<span :key="index" v-for="(item, index) in projectStatus" @click="() => {selectType(item.enCode)}"
-						:class="{active: reportType === item.enCode}">{{item.fullName}}</span>
+					<span :key="index" v-for="(item, index) in projectStatus" @click="() => {selectType(item.id)}"
+						:class="{active: reportType.includes(item.id)}">{{item.fullName}}</span>
 					<!-- <span @click="() => {selectType(1)}" data-type=1 :class="{active: reportType === 1}">在建</span>
 					<span @click="() => {selectType(2)}" data-type=2 :class="{active: reportType === 2}">竣工</span> -->
 				</view>
@@ -213,7 +213,7 @@
 			// 查询结果
 			queryReport() {
 				const {
-					reportType = '', // 报表类型
+					reportType = [], // 报表类型
 						reportStageList: buildingProjectStatus = [], // 项目阶段
 						reportStatusList: reviewStatus = [], //审核状态
 						reportMode: way = '', // 统计方式
@@ -225,18 +225,22 @@
 					all = all + '-' + next.value + '万'
 					return all
 				}, '')
-		
+
 				const querys = {
 					buildingProjectStatus,
 					reviewStatus,
 					"category": "build",
 					"way": Number(way),
 					"type": "summation",
-					"modelId": MODULEID[reportType] || MODULEID['store'],
+					"phase": reportType,
+					"modelId": 'b094ad34716143b5a13e291572ab1af3',
 					"fundScaleRange": fundScaleRange.replace(/^\-/, ''),
 					userInfo
 				}
 				queryProjectReport(querys).then(res => {
+					uni.showLoading({
+						title:'查询中'
+					})
 					const {
 						code,
 						data: {
@@ -244,6 +248,7 @@
 						} = {}
 					} = res || {};
 					if (code === 200) {
+						uni.hideLoading()
 						uni.setStorageSync('reportList', list)
 						uni.setStorageSync('reportList_query', querys)
 						uni.navigateTo({
@@ -285,10 +290,16 @@
 			// 选择报表类型
 			selectType(type) {
 				// console.log(e)
-				const currentType = this.reportType;
-				if (currentType !== type) {
-					this.reportType = type;
-					this.reportStageList = []
+				// const currentType = this.reportType;
+				// if (currentType !== type) {
+				// 	this.reportType = type;
+				// 	this.reportStageList = []
+				// }
+				const currentType = [...this.reportType]
+				if (currentType.includes(type)) {
+					this.reportType = currentType.filter(item => item !== type)
+				} else {
+					this.reportType = [type, ...currentType]
 				}
 
 			},

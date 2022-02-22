@@ -76,7 +76,8 @@
 					最近调度
 				</view>
 				<view class="lists">
-					<view @click="toNotificationDetail(item)" class="project-item" v-for="item in latasetProgressLists">
+					<view @click="toNotificationDetail" :data-item="item" class="project-item"
+						v-for="item in latasetProgressLists">
 
 						<view class="project-name">
 							<span>{{item.pj_base_project_name}}</span>
@@ -257,19 +258,19 @@
 						// 	}
 						// })
 					}
-					this.bannerList =  [{
-						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
-						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
-					},
-					{
-						image: 'https://cdn.uviewui.com/uview/swiper/2.jpg',
-						title: '身无彩凤双飞翼，心有灵犀一点通'
-					},
-					{
-						image: 'https://cdn.uviewui.com/uview/swiper/3.jpg',
-						title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
-					}
-				]
+					this.bannerList = [{
+							image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
+							title: '昨夜星辰昨夜风，画楼西畔桂堂东'
+						},
+						{
+							image: 'https://cdn.uviewui.com/uview/swiper/2.jpg',
+							title: '身无彩凤双飞翼，心有灵犀一点通'
+						},
+						{
+							image: 'https://cdn.uviewui.com/uview/swiper/3.jpg',
+							title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
+						}
+					]
 				}).catch(err => {})
 			},
 			loadProjectLataestProgress(page) {
@@ -322,14 +323,29 @@
 
 				})
 			},
-			toNotificationDetail(item) {
-				console.log(item)
-				const { parent_id ,id} = item || {};
+			toNotificationDetail(e) {
+				console.log(e)
+				const {
+					currentTarget: {
+						dataset: {
+							item = {}
+						} = {}
+					} = {}
+				} = e || {};
+				const {
+					parent_id,
+					id
+				} = item || {};
+				uni.setStorageSync("detailInfo", {
+					// pj_base_project_phase,
+					id: parent_id,
+					modelId: "2d97a78c3be1440493c983bb9186bacf"
+				})
 				uni.navigateTo({
 					url: `/pages/project/detail/index?id=${parent_id}&modelId=2d97a78c3be1440493c983bb9186bacf`
 				})
 			},
-			
+
 			handleClick(item) {
 				let path = ""
 				// if (item.code === moduleCodes.StorePhaseProject || item.code === moduleCodes.BuildingPhaseProject || item
@@ -376,6 +392,7 @@
 		.index-v {
 			padding: 0 32rpx;
 			background-color: #F5F6F7;
+
 			.banner {
 				padding-top: 20rpx;
 			}

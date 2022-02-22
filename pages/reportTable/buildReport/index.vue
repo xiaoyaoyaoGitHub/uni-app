@@ -81,7 +81,8 @@
 		methods: {
 			// 注意返回值为一个数组，单列时取数组的第一个元素即可(只有一个元素)
 			down() {
-				const reportList_query = uni.getStorageSync('reportList_query')
+				const reportList_query = uni.getStorageSync('reportList_query');
+				console.log(JSON.stringify(reportList_query))
 				exportSummationExcel(reportList_query).then(res => {
 					console.log(res)
 				})

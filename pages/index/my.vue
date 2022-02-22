@@ -187,7 +187,7 @@
 						if (res.confirm) {
 							// console.log('用户点击确定');
 							logout().then(res => {
-								uni.navigateTo({
+								uni.redirectTo({
 									url: '/pages/login/index'
 								})
 							})
