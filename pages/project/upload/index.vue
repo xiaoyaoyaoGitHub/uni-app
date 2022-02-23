@@ -66,8 +66,8 @@
 				],
 			}
 		},
-		onLoad() {
-			this.projectId = this.$route.query.id
+		onLoad(params) {
+			this.projectId = params.id
 		},
 		methods: {
 			actionSheetCallback(e) {
@@ -120,17 +120,50 @@
 
 			},
 			upload(path_arr) {
-				let num = path_arr.length;
-				return new Promise(async (resolve, reject) => {
-					let img_urls = []
-					for (let i = 0; i < num; i++) {
-						let img_url = await this.upload_one(path_arr[i]);
+				// let num = path_arr.length;
+				// return new Promise(async (resolve, reject) => {
+				// 	let img_urls = []
+				// 	for (let i = 0; i < num; i++) {
+				// 		let img_url = await this.upload_one(path_arr[i]);
 
-						img_urls.push(img_url)
-					};
-					resolve(img_urls)
+				// 		img_urls.push(img_url)
+				// 	};
+				// 	resolve(img_urls)
+				// })
+				uni.uploadFile({
+					url: `${define.baseURL}/api/extend/Document/Uploader`,
+					files: this.fileLists,
+					header: {
+						"Authorization": uni.getStorageSync('token') || ''
+					},
+					formData: {
+						projectId: this.projectId,
+						category: this.imageType,
+						description: this.textareaValue,
+						parentId: 0,
+					},
+					success(res) {
+						const {
+							statusCode,
+							data
+						} = res || {};
+						if (statusCode === 200) {
+							const result = JSON.parse(data);
+							const {
+								code
+							} = result || {};
+							resolve(result)
+							if (code === 200) {
+								resolve(result)
+							} else {
+								resolve(null)
+							}
+						}
+					},
+					fail(err) {
+						reject(err)
+					}
 				})
-
 
 			},
 			// 获取上传状态
@@ -139,40 +172,7 @@
 					tempFiles
 				} = e || {};
 				this.fileLists = this.fileLists.concat(tempFiles)
-				// uni.uploadFile({
-				// 	url: `${define.baseURL}/api/extend/Document/Uploader`,
-				// 	file: this.fileLists,
-				// 	header: {
-				// 		"Authorization": uni.getStorageSync('token') || ''
-				// 	},
-				// 	formData: {
-				// 		projectId: this.projectId,
-				// 		category: this.imageType,
-				// 		description: this.textareaValue,
-				// 		parentId: 0,
-				// 	},
-				// 	success(res) {
-				// 		const {
-				// 			statusCode,
-				// 			data
-				// 		} = res || {};
-				// 		if (statusCode === 200) {
-				// 			const result = JSON.parse(data);
-				// 			const {
-				// 				code
-				// 			} = result || {};
-				// 			resolve(result)
-				// 			if (code === 200) {
-				// 				resolve(result)
-				// 			} else {
-				// 				resolve(null)
-				// 			}
-				// 		}
-				// 	},
-				// 	fail(err) {
-				// 		reject(err)
-				// 	}
-				// })
+
 
 
 			},

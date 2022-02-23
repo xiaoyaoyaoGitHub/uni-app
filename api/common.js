@@ -42,9 +42,10 @@ export function getOrganizeSelector() {
 	})
 }
 // 获取部门下拉框列表(公司+部门)
-export function getDepartmentSelector() {
+export function getDepartmentSelector(data) {
 	return request({
 		url: '/api/permission/Organize/Department/Selector',
+		data,
 		options: {
 			load: false
 		}

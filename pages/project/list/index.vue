@@ -4,7 +4,7 @@
 			:down="downOption" :up="upOption" :bottombar="false">
 			<view class="search-box search-box_sticky u-flex u-border-bottom">
 				<u-search class="search-input" placeholder="请输入项目名称搜索" v-model="keyword" height="72" :show-action="true"
-					:action-style="{color:'#071127',lineHeight:48 + 'rpx', fontSize:32 + 'rpx'}" @change="search"
+					:action-style="{color:'#071127',lineHeight:48 + 'rpx', fontSize:32 + 'rpx'}" @custom="search"
 					bg-color="#F7F8FA" placeholder-color="#C1C3C9" search-icon-color="#C1C3C9" shape="square">
 				</u-search>
 			</view>
@@ -28,13 +28,13 @@
 				<view class="select">
 					<u-button data-index="2" class="selectBtn" data-type="amountSelect"
 						:class="{active: selectType === 'amountSelect'}" @click="showSelect">
-						{{!amount.min && !amount.max ? '总金额' : amount.min + '-' + amount.max}}
+						{{!amount.min && !amount.max ? '总投资（万元）' : amount.min + '-' + amount.max}}
 					</u-button>
 					<u-popup v-model="amountSelectShow" mode="bottom">
 						<view class="amount-scope">
-							<u-field v-model="amount.min" type="number" label="最小值" placeholder="请输入最小金额">
+							<u-field v-model="amount.min" type="number" label="最小值" placeholder="请输入最小金额(万元)">
 							</u-field>
-							<u-field v-model="amount.max" type="number" label="最大值" placeholder="请输入最大金额">
+							<u-field v-model="amount.max" type="number" label="最大值" placeholder="请输入最大金额(万元)">
 							</u-field>
 							<u-button class="u-m-t-20" type="primary" @click="inputConfirm">确定</u-button>
 						</view>
@@ -121,7 +121,7 @@
 				selectType: '',
 				pageType: '',
 				auditSelectCurrent: {
-					value: '0',
+					value: '',
 					label: '审核状态'
 				},
 				tradeSelectCurrent: {

@@ -224,7 +224,7 @@
 						</view>
 					</view>
 				</view>
-				<view  v-if="imgLists.length === 0" class="u-text-center u-font-24 u-p-t-20">
+				<view v-if="imgLists.length === 0" class="u-text-center u-font-24 u-p-t-20">
 					暂无图片
 				</view>
 			</view>
@@ -351,21 +351,14 @@
 				}
 			}
 		},
-		created() {
-			// console.log(this.$route)
-			const {
-				query = {}
-			} = this.$route || {}
+		onLoad(params) {
 			const {
 				id,
 				modelId,
 				pj_base_project_phase
-			} = query || {};
-			// this.getConfig(modelId)
-			const params = !id ? uni.getStorageSync("detailInfo") : {}
-			console.log(JSON.stringify(params))
-			this.projectId = id || params.id;
-			this.getData(modelId || params.modelId || '', this.projectId)
+			} = params || {};
+			this.projectId = id;
+			this.getData(modelId, id)
 		},
 		computed: {
 			baseURL() {
@@ -413,10 +406,10 @@
 						this.covers = [{
 							latitude: this.latitude,
 							longitude: this.longitude,
-							width: 10,
-							height: 10,
+							width: 5,
+							height: 5,
 							title: formattedAddress,
-							iconPath: '../../../static/mark.jpeg'
+							iconPath: '../../../static/mark-little.jpg'
 						}]
 					}
 				}).catch(err => {

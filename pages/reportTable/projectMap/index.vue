@@ -4,7 +4,7 @@
 			:down="downOption" :up="upOption" :bottombar="false"> -->
 		<view class="search-box search-box_sticky u-flex u-border-bottom">
 			<u-search class="search-input" placeholder="请输入项目名称搜索" v-model="keyword" height="72" :show-action="true"
-				:action-style="{color:'#071127',lineHeight:48 + 'rpx', fontSize:32 + 'rpx'}" @change="search"
+				:action-style="{color:'#071127',lineHeight:48 + 'rpx', fontSize:32 + 'rpx'}" @custom="search"
 				bg-color="#F7F8FA" placeholder-color="#C1C3C9" search-icon-color="#C1C3C9" shape="square">
 			</u-search>
 		</view>
@@ -29,13 +29,13 @@
 			<view class="select">
 				<u-button data-index="2" class="selectBtn" data-type="amountSelect"
 					:class="{active: selectType === 'amountSelect'}" @click="showSelect">
-					{{!amount.min && !amount.max ? '总金额' : amount.min + '-' + amount.max}}
+					{{!amount.min && !amount.max ? '总投资（万元）' : amount.min + '-' + amount.max}}
 				</u-button>
 				<u-popup v-model="amountSelectShow" mode="bottom">
 					<view class="amount-scope">
-						<u-field v-model="amount.min" type="number" label="最小值" placeholder="请输入最小金额">
+						<u-field v-model="amount.min" type="number" label="最小值" placeholder="请输入最小金额(万元)">
 						</u-field>
-						<u-field v-model="amount.max" type="number" label="最大值" placeholder="请输入最大金额">
+						<u-field v-model="amount.max" type="number" label="最大值" placeholder="请输入最大金额(万元)">
 						</u-field>
 						<u-button class="u-m-t-20" type="primary" @click="inputConfirm">确定</u-button>
 					</view>
@@ -203,11 +203,11 @@
 				})
 				// return
 				// console.log(`/pages/project/detail/index?modelId=2d97a78c3be1440493c983bb9186bacf&pj_base_project_phase=${pj_base_project_phase}&id=${id}`)
-				uni.setStorageSync("detailInfo", {
-					pj_base_project_phase,
-					id,
-					modelId: "2d97a78c3be1440493c983bb9186bacf"
-				})
+				// uni.setStorageSync("detailInfo", {
+				// 	pj_base_project_phase,
+				// 	id,
+				// 	modelId: "2d97a78c3be1440493c983bb9186bacf"
+				// })
 				uni.navigateTo({
 					url: `/pages/project/detail/index?modelId=2d97a78c3be1440493c983bb9186bacf&pj_base_project_phase=${pj_base_project_phase}&id=${id}`
 				})
@@ -260,6 +260,9 @@
 				})
 			},
 			queryStoreList(data) {
+				uni.showLoading({
+					title:'请求中...'
+				})
 				mapList({
 					currentPage: 1,
 					pageSize: 10000,
@@ -269,6 +272,7 @@
 					...data
 				}).then(res => {
 					// console.log(res)
+					uni.hideLoading()
 					const {
 						code,
 						data: {
@@ -311,7 +315,7 @@
 								// },
 								width: 20,
 								height: 20,
-								icon: '../../../static/mark.jpeg',
+								icon: './mark.jpeg',
 								pj_base_project_phase: pj_base_project_phase,
 								callout: {
 									content: pj_base_project_name,
@@ -335,8 +339,7 @@
 				// 节流,避免输入过快多次请
 				this.searchTimer && clearTimeout(this.searchTimer)
 				this.searchTimer = setTimeout(() => {
-					this.list = [];
-					this.mescroll.resetUpScroll();
+					this.upCallback()
 				}, 300)
 			},
 			detail(id) {

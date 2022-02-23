@@ -39,7 +39,7 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "项目"
+				"navigationBarTitleText": "首页"
 			}
 		},
 
@@ -352,7 +352,7 @@
 		// "iconWidth": "44rpx",
 		"list": [{
 				"pagePath": "pages/index/index",
-				"text": "项目",
+				"text": "首页",
 				"iconPath": "static/image/tabbar/project.webp",
 				"selectedIconPath": "static/image/tabbar/select_project.png"
 			},

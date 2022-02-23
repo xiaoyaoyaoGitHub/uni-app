@@ -25,9 +25,9 @@
 				</uni-tr>
 			</uni-table>
 		</view>
-		<view class="u-p-t-20 u-p-l-20 u-p-r-20 u-p-b-20">
+		<!-- <view class="u-p-t-20 u-p-l-20 u-p-r-20 u-p-b-20">
 			<u-button type="primary" @click="down">下载报表</u-button>
-		</view>
+		</view> -->
 	</view>
 </template>
 

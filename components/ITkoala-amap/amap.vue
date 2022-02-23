@@ -30,7 +30,7 @@
 			//地图点击回调事件
 			onViewClick(params) {
 				this.dataIndex = params.dataIndex
-				uni.$emit('markerId',params.dataIndex)
+				uni.$emit('markerId', params.dataIndex)
 			}
 		}
 	}
@@ -90,9 +90,12 @@
 							position: new AMap.LngLat(item.lng, item.lat),
 							offset: new AMap.Pixel(-13, -30),
 							icon: new AMap.Icon({
-								image: item.icon,
+								// image: item.icon,
 								size: new AMap.Size(item.width, item.height), //图标大小
-								imageSize: new AMap.Size(item.width, item.height)
+								imageSize: new AMap.Size(item.width, item.height),
+								image: 'https://bpic.588ku.com/element_origin_min_pic/19/04/10/cc6d9f4adf238c4687e6674b24816796.jpg', // Icon的图像
+								// imageOffset: new AMap.Pixel(0, -60), // 图像相对展示区域的偏移量，适于雪碧图等
+								// imageSize: new AMap.Size(40, 50) // 根据所设置的大小拉伸或压缩图片
 							}),
 							label: item.title,
 							snippet: item.title,
