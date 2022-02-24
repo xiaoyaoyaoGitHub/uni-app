@@ -10,34 +10,55 @@
 				<u-row justify="space-between" gutter="0">
 					<u-col span="4">
 						<view @click.prevent="goToProjectLists" data-code="StorePhaseProject"
-							class="project-lists-item unStart_project u-flex u-col-bottom u-row-center u-flex-col u-p-r-20">
-							<view class="first-title u-font-28 u-text-right">
+							class="project-lists-item unStart_project u-flex u-col-top u-row-center u-flex-col u-p-l-20">
+							<view class="first-title u-font-26">
 								储备项目
 							</view>
-							<view class="second-title u-font-40">
-								{{projectInfo.liveInfo}}
+							<view class="second-title u-font-36">
+								{{projectInfo.storeInfo.investTotal ? toThousands(projectInfo.storeInfo.investTotal) : '--'}}
 							</view>
+							<view class="first-title u-font-26">
+								项目数量
+							</view>
+							<view class="second-title u-font-36">
+								{{projectInfo.storeInfo.count || '--'}}
+							</view>
+
 						</view>
 					</u-col>
 					<u-col span="4">
 						<view @click="goToProjectLists" data-code="BuildingPhaseProject"
-							class="project-lists-item doing_project u-flex u-col-bottom u-row-center u-flex-col u-p-r-20">
-							<view class="first-title u-text-right u-font-28 ">
+							class="project-lists-item doing_project u-flex u-col-top u-row-center u-flex-col u-p-l-20">
+							<view class="first-title u-text-right u-font-26 ">
 								在建项目
 							</view>
-							<view class="second-title u-text-right u-font-40">
-								{{projectInfo.onGoingInfo}}
+							<view class="second-title u-text-right u-font-36">
+								{{projectInfo.onGoingInfo.investTotal ? toThousands(projectInfo.onGoingInfo.investTotal) : '--'}}
+							</view>
+
+							<view class="first-title u-text-right u-font-26 ">
+								项目数量
+							</view>
+							<view class="second-title u-text-right u-font-36">
+								{{projectInfo.onGoingInfo.count || '--'}}
 							</view>
 						</view>
 					</u-col>
 					<u-col span="4">
 						<view @click="goToProjectLists" data-code="OperationPhaseProject"
-							class="project-lists-item finish_project u-flex u-col-bottom u-row-center u-flex-col u-p-r-20">
+							class="project-lists-item finish_project u-flex u-col-top u-row-center u-flex-col u-p-l-20">
 							<view class="first-title u-text-right u-font-28">
 								竣工项目
 							</view>
+							<view class="second-title u-font-40">
+								{{projectInfo.liveInfo.investTotal ? toThousands(projectInfo.liveInfo.investTotal) : '--'}}
+							</view>
+
+							<view class="first-title u-text-right u-font-26 ">
+								项目数量
+							</view>
 							<view class="second-title u-text-right u-font-40">
-								{{projectInfo.storeInfo}}
+								{{projectInfo.liveInfo.count || '--'}}
 							</view>
 						</view>
 					</u-col>
@@ -210,6 +231,7 @@
 			this.loadDataHomePageDetail();
 			// this.getTest()
 		},
+
 		onUnload() {
 			uni.$off('updateList')
 		},
@@ -233,6 +255,11 @@
 			};
 		},
 		methods: {
+			toThousands(num) {
+				return num.toString().replace(/\d+/, function(n) {
+					return n.replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+				});
+			},
 			loadSwiper() {
 				const query = {
 					currentPage: 1,
@@ -274,9 +301,21 @@
 				}).catch(err => {})
 			},
 			loadProjectLataestProgress(page) {
+				const customized = [{
+					type: 'IN',
+					field: 'seq',
+					values: '0'
+				}]
+				const modified_by = Number(this.userInfo.userId) && {
+					type: 'IN',
+					field: 'modified_by',
+					values: this.userInfo.userId
+				}
 				getModelListViaCode(moduleCodes.ProjectLatestProgress, {
 					pageSize: page.size,
-					currentPage: page.num
+					currentPage: page.num,
+					customized: modified_by ? JSON.stringify([modified_by, ...customized]) : JSON.stringify(
+						customized)
 				}).then(res => {
 					const {
 						code,
@@ -313,9 +352,9 @@
 					} = res || {}
 					if (code === 200) {
 						this.projectInfo = {
-							liveInfo: liveInfo.sum,
-							onGoingInfo: onGoingInfo.sum,
-							storeInfo: storeInfo.sum
+							liveInfo: liveInfo,
+							onGoingInfo: onGoingInfo,
+							storeInfo: storeInfo,
 						}
 					}
 
@@ -399,12 +438,13 @@
 
 			.project-lists {
 				padding-top: 20rpx;
-				height: 144rpx;
+				// height: 144rpx;
 
 				.project-lists-item {
 					width: 215rpx;
-					height: 124rpx;
+					// height: 124rpx;
 					color: #023659;
+					padding: 20rpx 0;
 
 					.second-title {
 						font-weight: 700;

@@ -82,7 +82,7 @@
 			upload_one(file) {
 				return new Promise((resolve, reject) => {
 					uni.uploadFile({
-						url: `${define.baseURL}/api/extend/Document/Uploader`,
+						url: `${define.baseURL}/api/extend/Document/uploader/app`,
 						file: file,
 						name: 'file',
 						header: {
@@ -101,15 +101,11 @@
 							} = res || {};
 							if (statusCode === 200) {
 								const result = JSON.parse(data);
+								console.log(res)
 								const {
 									code
 								} = result || {};
-								resolve(result)
-								if (code === 200) {
-									resolve(result)
-								} else {
-									resolve(null)
-								}
+								if (code === 200) {} else {}
 							}
 						},
 						fail(err) {
@@ -120,18 +116,8 @@
 
 			},
 			upload(path_arr) {
-				// let num = path_arr.length;
-				// return new Promise(async (resolve, reject) => {
-				// 	let img_urls = []
-				// 	for (let i = 0; i < num; i++) {
-				// 		let img_url = await this.upload_one(path_arr[i]);
-
-				// 		img_urls.push(img_url)
-				// 	};
-				// 	resolve(img_urls)
-				// })
 				uni.uploadFile({
-					url: `${define.baseURL}/api/extend/Document/Uploader`,
+					url: `${define.baseURL}/api/extend/Document/uploader/app`,
 					files: this.fileLists,
 					header: {
 						"Authorization": uni.getStorageSync('token') || ''
@@ -143,6 +129,7 @@
 						parentId: 0,
 					},
 					success(res) {
+						uni.hideLoading()
 						const {
 							statusCode,
 							data
@@ -152,16 +139,38 @@
 							const {
 								code
 							} = result || {};
-							resolve(result)
+							console.log(result)
 							if (code === 200) {
-								resolve(result)
+								uni.showToast({
+									icon: 'success',
+									title: '上传成功',
+									duration: 3000,
+									mask: true,
+									complete() {
+										setTimeout(() => {
+											uni.navigateBack({
+												delta: 1,
+												animationType: 'pop-out',
+												animationDuration: 200
+											})
+											uni.$emit('upLoadImageSuccess')
+										}, 3000)
+									}
+								})
 							} else {
-								resolve(null)
+								uni.showToast({
+									icon: 'fail',
+									title: '上传失败'
+								})
 							}
 						}
 					},
 					fail(err) {
-						reject(err)
+						uni.hideLoading()
+						uni.showToast({
+							icon: 'fail',
+							title: '上传失败'
+						})
 					}
 				})
 
@@ -172,24 +181,21 @@
 					tempFiles
 				} = e || {};
 				this.fileLists = this.fileLists.concat(tempFiles)
-
-
-
 			},
 			async uploadAllInfo() {
 				uni.showLoading({
 					title: '上传中'
 				})
-				const lists = await this.upload(this.fileLists);
-				uni.hideLoading()
-				lists.map((item, index) => {
-					if (!item) {
-						uni.showToast({
-							icon: 'none',
-							title: `第${index}张上传失败`
-						})
-					}
-				})
+				this.upload(this.fileLists);
+				// uni.hideLoading()
+				// lists.map((item, index) => {
+				// 	if (!item) {
+				// 		uni.showToast({
+				// 			icon: 'none',
+				// 			title: `第${index}张上传失败`
+				// 		})
+				// 	}
+				// })
 			},
 		}
 	}

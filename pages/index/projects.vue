@@ -20,39 +20,40 @@
 				</view>
 				<view class="banner-item plan-amount">
 					<view class="u-font-28">
-						计划投资
+						项目总投资
 					</view>
 					<view class="banner-volume u-font-36">
-						{{allData.cumulativeCompletion}}<span class="u-font-28">万元</span>
+						{{allData.investTotal}}<span class="u-font-28">万元</span>
 					</view>
 				</view>
 				<view class="banner-item plan-amount">
 					<view class="u-font-28">
-						累计投资
+						在建项目总投资
 					</view>
 					<view class="banner-volume u-font-36">
-						{{totalActual}}<span class="u-font-28">万元</span>
+						{{onGoingInfo.investTotal}}<span class="u-font-28">万元</span>
 					</view>
 				</view>
 				<view class="banner-item year-plan">
 					<view class="u-font-28">
-						本年度计划
+						本年度计划投资
 					</view>
 					<view class="banner-volume u-font-36">
-						{{yearPlan}}<span class="u-font-28">万元</span>
+						{{allData.sumTotal}}<span class="u-font-28">万元</span>
 					</view>
 				</view>
 				<view class="banner-item year-plan">
 					<view class="u-font-28">
-						本年度计划
+						本年度累计投资
 					</view>
 					<view class="banner-volume u-font-36">
-						{{yearPlan}}<span class="u-font-28">万元</span>
+						{{allData.investCurrentYear}}<span class="u-font-28">万元</span>
 					</view>
 				</view>
 			</view>
 
 			<view class="chart">
+				<!-- :class="{scale: chartDone}" -->
 				<view class="content" :class="{scale: chartDone}">
 					<qiun-data-charts @complete="chartComplete" class="chartInfo" type="column" :echartsApp="true"
 						:opts="eopts" :eopts="eopts" :chartData="charts" />
@@ -96,8 +97,12 @@
 					xAxis: {
 						label: {
 							rotate: 40
-						}
+						},
+						scrollShow: true
 					},
+					dataLabel: false,
+					// enableScroll:true,
+
 					colors: [
 						"#ff9f7f",
 						"#fb7293",
@@ -120,6 +125,7 @@
 							color: "#fff",
 							position: 'top',
 						},
+						textOffset: 30
 					},
 
 				},
@@ -130,6 +136,7 @@
 				yearPlan: '',
 				dicList: [],
 				allData: {},
+				onGoingInfo:{},
 				charts: {
 
 				}
@@ -158,11 +165,13 @@
 						code,
 						data: {
 							regionResultList: originList = [],
-							allData = {}
+							allData = {},
+							onGoingInfo = {}
 						} = {}
 					} = res || {}
 					if (code === 200) {
 						this.allData = allData;
+						this.onGoingInfo = onGoingInfo
 						const regionResultList = originList.concat();
 						console.log(originList)
 						const baseLine = regionResultList[0]?.splice(1);
@@ -194,6 +203,10 @@
 							}
 							series.push(singleSeries)
 						})
+						this.allData.sumTotal = a2.reduce((all, next) => {
+							console.log(all)
+							return all + next
+						},0)
 						console.log(series)
 						this.charts = {
 							categories,
@@ -350,31 +363,32 @@
 				height: 525rpx;
 				margin-top: 24rpx;
 				position: relative;
+				overflow: auto;
 
 				&>.content {
-					width: 300%;
-					height: 300%;
-					position: relative;
+					width: 250%;
+					// height: 100%;
+					// position: relative;
 
-					&:after {
-						content: '';
-						position: absolute;
-						left: 0;
-						top: 0;
-						right: 0;
-						bottom: 0;
-						background: #fff;
-						z-index: 1;
-					}
+					// &:after {
+					// 	content: '';
+					// 	position: absolute;
+					// 	left: 0;
+					// 	top: 0;
+					// 	right: 0;
+					// 	bottom: 0;
+					// 	background: #fff;
+					// 	z-index: 1;
+					// }
 
 					&.scale {
-						transform-origin: 0 0;
-						transform: scale(0.33);
-						display: block;
+						// transform-origin: 0 0;
+						// transformX: scale(0.8);
+						// display: block;
 
-						&:after {
-							background: transparent
-						}
+						// &:after {
+						// 	background: transparent
+						// }
 					}
 
 					.chartInfo {}

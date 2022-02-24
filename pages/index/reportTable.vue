@@ -154,10 +154,10 @@
 				},
 				buildStatus: [],
 				projectStatus: [],
-				reportType: '', // 报表类型
+				reportType: [], // 报表类型
 				reportStageList: [], // 项目阶段
-				reportStatusList: [], //审核状态
-				reportMode: '', // 统计方式
+				reportStatusList: [0], //审核状态
+				reportMode: 1, // 统计方式
 				reportModeList: [{
 					value: 10
 				}, {
@@ -181,7 +181,7 @@
 			uni.$off('updateUsualList')
 		},
 		methods: {
-			// 在建状态
+			// 项目阶段
 			queryBuildStatus() {
 				getDictionaryDataSelector('8deb351ca0a04f8894a48a566bec948f').then(res => {
 					// console.log(res)
@@ -192,7 +192,8 @@
 						} = {}
 					} = res || {};
 					if (code === 200) {
-						this.buildStatus = list
+						this.buildStatus = list;
+						this.reportStageList = [list[0].id]
 					}
 				})
 			},
@@ -207,11 +208,15 @@
 					} = res || {};
 					if (code === 200) {
 						this.projectStatus = list
+						this.reportType = [list[0].id]
 					}
 				})
 			},
 			// 查询结果
 			queryReport() {
+				uni.showLoading({
+					title: '查询中'
+				})
 				const {
 					reportType = [], // 报表类型
 						reportStageList: buildingProjectStatus = [], // 项目阶段
@@ -238,9 +243,7 @@
 					userInfo
 				}
 				queryProjectReport(querys).then(res => {
-					uni.showLoading({
-						title:'查询中'
-					})
+
 					const {
 						code,
 						data: {

@@ -20,7 +20,7 @@ export function projectImageList(data) {
 // 图片上传
 export function projectImageUpLoad(data) {
 	return request({
-		url: '/api/extend/Document/Uploader',
+		url: '/api/extend/Document/uploader/app',
 		method: 'post',
 		header: {
 			'Content-Type': 'application/x-www-form-urlencoded',

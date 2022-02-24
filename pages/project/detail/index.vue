@@ -107,7 +107,66 @@
 							</view>
 						</template>
 					</uni-list-item>
-
+					<uni-list-item class="list-item">
+						<template slot="header">
+							<view class="label">
+								项目分类
+							</view>
+						</template>
+						<template slot="body">
+							<view class="desc">
+								{{projectInfo.pj_base_project_category}}
+							</view>
+						</template>
+					</uni-list-item>
+					<uni-list-item class="list-item">
+						<template slot="header">
+							<view class="label">
+								总投资（万元）
+							</view>
+						</template>
+						<template slot="body">
+							<view class="desc">
+								{{projectInfo.pj_fund_invest_total}}
+							</view>
+						</template>
+					</uni-list-item>
+					<uni-list-item class="list-item">
+						<template slot="header">
+							<view class="label">
+								自筹（万元）
+							</view>
+						</template>
+						<template slot="body">
+							<view class="desc">
+								{{projectInfo.pj_fund_selfraise}}
+							</view>
+						</template>
+					</uni-list-item>
+					<uni-list-item class="list-item">
+						<template slot="header">
+							<view class="label">
+								规划内容及规模
+							</view>
+						</template>
+						<!-- 	<template slot="footer">
+							<view class="desc">
+								{{projectInfo.pj_base_content_size}}
+							</view>
+						</template> -->
+					</uni-list-item>
+					<uni-list-item class="list-item" style="position: static;">
+						<!-- <template slot="header">
+							<view class="label">
+								规划内容及规模
+							</view>
+						</template> -->
+						<template slot="footer">
+							<view class="desc">
+								{{projectInfo.pj_base_content_size}}
+							</view>
+						</template>
+					</uni-list-item>
 				</uni-list>
 			</view>
 			<!-- 在建进度 -->
@@ -191,7 +250,7 @@
 				</view>
 				<view class="types" v-if="imgLists.length !== 0" v-for="(item) in imgLists">
 					<view class="time">
-						2021-11-11
+						{{item.creatorTime}}
 					</view>
 					<view class="pictures-content">
 						<view class="title">
@@ -207,20 +266,10 @@
 						</view>
 						<view class="images u-flex">
 							<view class="image">
-								<image :src="item.previewPath"></image>
+								<img :src="item.previewPath" />
+								<!-- <u-image width="100%" height="100%" :src="item.previewPath"></u-image> -->
 							</view>
-							<!-- <view class="image">
 
-							</view>
-							<view class="image">
-
-							</view>
-							<view class="image">
-
-							</view>
-							<view class="image">
-
-							</view> -->
 						</view>
 					</view>
 				</view>
@@ -291,6 +340,7 @@
 		getModelListViaCode,
 		projectImageList
 	} from "@/api/apply/visualDev.js"
+	import define from "@/utils/define.js"
 	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
 	export default {
 		mixins: [MescrollMixin],
@@ -305,6 +355,7 @@
 					use: true,
 					auto: true
 				},
+				imgHost: define.baseURL,
 				upOption: {
 					page: {
 						num: 0,
@@ -359,6 +410,9 @@
 			} = params || {};
 			this.projectId = id;
 			this.getData(modelId, id)
+			uni.$on('upLoadImageSuccess', () => {
+				this.getImages()
+			})
 		},
 		computed: {
 			baseURL() {
@@ -392,6 +446,7 @@
 					} = res || {}
 					if (code === 200) {
 						this.projectInfo = JSON.parse(projectInfo);
+						console.log(this.projectInfo)
 						const {
 							pj_base_project_position = '{}'
 						} = this.projectInfo || {};
@@ -440,11 +495,16 @@
 					}
 				})
 			},
+			changTimes(times) {
+				const time = new Date(times);
+				return `${time.getYear()}-${time.getMonth() + 1}-${time.getDate()}`
+			},
 			getImages() {
 				console.log('请求图片')
 				projectImageList({
 					keyword: "",
-					projectId: this.projectId
+					projectId: this.projectId,
+					parentId: 0
 				}).then(res => {
 					const {
 						code,
@@ -452,7 +512,27 @@
 							list = []
 						} = {}
 					} = res || {};
-					this.imgLists = list;
+					list.forEach((item) => {
+						
+						return new Promise((resolve, reject) => {
+							uni.downloadFile({
+								url: `${define.baseURL}${item.previewPath}`,
+								header: {
+									"Access-Control-Expose-Headers": "content-disposition"
+								},
+								success:(data) =>{
+									console.log(data)
+									item.previewPath = data.tempFilePath;
+									item.creatorTime = this.changTimes(item.creatorTime)
+									resolve(data)
+								},
+								fail(err) {
+									reject(err)
+								}
+							})
+						})
+					});
+					this.imgLists = list
 				})
 			},
 			getProjectIssue() {
@@ -679,8 +759,13 @@
 							.image {
 								flex: 0 0 160rpx;
 								height: 160rpx;
-								background: #333;
+								// background: #333;
 								margin-right: 14rpx;
+
+								img {
+									width: 100%;
+									height: 100%;
+								}
 							}
 						}
 					}

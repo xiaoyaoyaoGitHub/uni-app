@@ -1,16 +1,20 @@
 <template>
 	<view class="flowLaunch-v">
 		<view class="uni-container">
-			<uni-table ref="table" border stripe type="selection" emptyText="暂无更多数据"
+			<uni-table ref="table" border stripe emptyText="暂无更多数据"
 				@selection-change="selectionChange">
 				<uni-tr>
-					<uni-th width="150" align="center">部门</uni-th>
+					<uni-th width="150" align="center"></uni-th>
 					<uni-th width="150" align="center">个数</uni-th>
 					<uni-th align="center">总投资</uni-th>
 					<uni-th width="150" align="center">国投</uni-th>
 					<uni-th width="150" align="center">省投</uni-th>
 					<uni-th width="150" align="center">市投</uni-th>
 					<uni-th width="150" align="center">自筹</uni-th>
+					<uni-th width="150" align="center">预计年税收</uni-th>
+					<uni-th width="150" align="center">预计利润</uni-th>
+					<uni-th width="150" align="center">预计年产值</uni-th>
+					<uni-th width="150" align="center">预计增加就业人数</uni-th>
 				</uni-tr>
 				<uni-tr v-for="(item, index) in reportList" :key="index">
 					<uni-td>{{ item.name }}</uni-td>
@@ -22,6 +26,10 @@
 					<uni-td align="center">{{ item.investProvince }}</uni-td>
 					<uni-td align="center">{{ item.investCity }}</uni-td>
 					<uni-td align="center">{{ item.selfRaise }}</uni-td>
+					<uni-td align="center">{{ item.profitPlanAnnualTax }}</uni-td>
+					<uni-td align="center">{{ item.profitPlanGross }}</uni-td>
+					<uni-td align="center">{{ item.profitPlanAnnualDgp }}</uni-td>
+					<uni-td align="center">{{ item.profitPlanEmployeeIncrease }}</uni-td>
 				</uni-tr>
 			</uni-table>
 		</view>

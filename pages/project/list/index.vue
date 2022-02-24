@@ -12,7 +12,7 @@
 				<view class="select">
 					<u-button data-index="0" class="selectBtn" :class="{active: selectType === 'auditSelect'}"
 						data-type="auditSelect" @click="showSelect">
-						{{auditSelectCurrent.label}}
+						{{auditSelectCurrent.value ? auditSelectCurrent.label : '审核状态'}}
 					</u-button>
 					<u-select v-model="auditSelectShow" @confirm="selectConfirm" :list="auditLists">审核状态
 					</u-select>
@@ -20,7 +20,7 @@
 				<view class="select">
 					<u-button data-index="1" class="selectBtn" :class="{active: selectType === 'tradeSelect'}"
 						data-type="tradeSelect" @click="showSelect">
-						{{tradeSelectCurrent.label}}
+						{{tradeSelectCurrent.value ? tradeSelectCurrent.label : '行业'}}
 					</u-button>
 					<u-select value-name="id" label-name="fullName" v-model="tradeSelectShow" :list="tradelists"
 						@confirm="selectConfirm">行业</u-select>
@@ -44,7 +44,7 @@
 				<view class="select">
 					<u-button data-index="3" class="selectBtn" :class="{active: selectType === 'departSelect'}"
 						data-type="departSelect" @click="showSelect">
-						{{departSelectCurrent.label}}
+						{{departSelectCurrent.value ? departSelectCurrent.label : '部门'}}
 					</u-button>
 					<u-select value-name="id" label-name="fullName" v-model="departSelectShow" :list="departlists"
 						@confirm="selectConfirm"></u-select>
@@ -141,6 +141,9 @@
 				amountSelectShow: false,
 				departSelectShow: false,
 				auditLists: [{
+						value: '',
+						label: '全部'
+					}, {
 						value: '0',
 						label: '未提交'
 					},
@@ -182,18 +185,36 @@
 		},
 		methods: {
 			upCallback(page) {
+				// let query = {
+				// 	currentPage: page.num,
+				// 	pageSize: page.size,
+				// 	keyword: this.keyword,
+				// 	pj_base_business_category: this.tradeSelectCurrent.value || '',
+				// 	pj_review_status: this.auditSelectCurrent.value || '',
+				// 	pj_base_region: this.departSelectCurrent.value || ''
+				// }
+
 				let query = {
 					currentPage: page.num,
 					pageSize: page.size,
-					keyword: this.keyword,
-					pj_base_business_category: this.tradeSelectCurrent.value || '',
-					// pj_fund_invest_total: `${this.amount.min},${this.amount.max}`,
-					// pj_fund_invest_total: `[${this.amount.min},${this.amount.max}]`,
 					pj_fund_invest_total: [Number(this.amount.min ? this.amount.min : 500), Number(this.amount.max ?
 						this.amount.max : 5000000)],
-					pj_review_status: this.auditSelectCurrent.value || '',
-					pj_base_region: this.departSelectCurrent.value || ''
+				};
+				if (this.keyword) {
+					query.keyword = this.keyword
 				}
+				if (this.tradeSelectCurrent.value) {
+					query.pj_base_business_category = this.tradeSelectCurrent.value
+				}
+
+				if (this.auditSelectCurrent.value) {
+					query.pj_review_status = this.auditSelectCurrent.value
+				}
+
+				if (this.departSelectCurrent.value) {
+					query.pj_base_region = this.departSelectCurrent.value
+				}
+
 				if (this.pageType === moduleCodes.StorePhaseProject) { //储备项目
 					this.queryStoreList(query)
 				} else if (this.pageType === moduleCodes.BuildingPhaseProject) { // 在建项目
@@ -220,11 +241,24 @@
 				const pj_base_project_phase = '05726e181e7147768f67ce1905fe6e49';
 				this.modelId = modelId;
 				this.pj_base_project_phase = pj_base_project_phase
+
+				const pj_base_dispatcher = Number(this.userInfo.userId) && {
+					type: 'IN',
+					field: "pj_base_dispatcher",
+					values: this.userInfo.userId
+				};
+				const customized = [{
+					type: 'IN',
+					field: 'pj_base_project_phase',
+					values: '05726e181e7147768f67ce1905fe6e49'
+				}]
 				getModelList(modelId, {
 					currentPage: data.currentPage,
 					pageSize: data.pageSize,
 					sidx: 'pj_base_roject_create_date',
 					sort: "desc",
+					customized: JSON.stringify(pj_base_dispatcher ? [pj_base_dispatcher, ...customized] :
+						customized),
 					json: JSON.stringify({
 						pj_base_project_phase,
 						pj_base_business_category: data.pj_base_business_category,
@@ -232,7 +266,8 @@
 						pj_review_status: data.pj_review_status,
 						pj_base_project_name: '项目',
 						pj_base_region: data.pj_base_region,
-						keyword: data.keyword
+						keyword: data.keyword,
+						type: "IN",
 
 					})
 				}).then(res => {
@@ -254,25 +289,37 @@
 			// 在建项目
 			queryPlayList(data) {
 				const modelId = 'b094ad34716143b5a13e291572ab1af3';
+				const pj_base_dispatcher = Number(this.userInfo.userId) ? {
+					type: 'IN',
+					field: "pj_base_dispatcher",
+					values: this.userInfo.userId
+				} : {
+					type: 'IN',
+					field: "pj_review_status",
+					values: data.pj_review_status
+				}
 				const customized = [{
 					type: 'IN',
 					field: 'pj_base_project_phase',
 					values: '6bfa51249e2e4d31a8128b50c3b33877,fe3ab31dd0ef495ca2c2afc272fb7715'
-				}]
+				}, pj_base_dispatcher]
 				this.modelId = modelId;
 				this.pj_base_project_phase = '1a0d97c689c84f2599e6fffd29f9efc6'
+				const JSONInfo = {
+					pj_base_business_category: data.pj_base_business_category,
+					// pj_fund_invest_total: data.pj_fund_invest_total,
+					pj_review_status: data.pj_review_status,
+					pj_base_region: data.pj_base_region,
+					keyword: data.keyword,
+				}
 				getModelList(modelId, {
 					currentPage: data.currentPage,
 					pageSize: data.pageSize,
+					sort: "desc",
+					sidx: "pj_base_project_create_date",
 					customized: JSON.stringify(customized),
-					json: JSON.stringify({
-						pj_base_business_category: data.pj_base_business_category,
-						pj_fund_invest_total: data.pj_fund_invest_total,
-						pj_review_status: data.pj_review_status,
-						pj_base_region: data.pj_base_region,
-						keyword: data.keyword
+					json: JSON.stringify(JSONInfo) === '{}' ? '' : JSON.stringify(JSONInfo)
 
-					})
 				}).then(res => {
 					// console.log(res)
 					const {
@@ -294,10 +341,22 @@
 				const modelId = '1a0d97c689c84f2599e6fffd29f9efc6';
 				const pj_base_project_phase = 'b160da1373a84d99932f5810204acc1f';
 				this.modelId = modelId;
-				this.pj_base_project_phase = pj_base_project_phase
+				this.pj_base_project_phase = pj_base_project_phase;
+				const pj_base_dispatcher = Number(this.userInfo.userId) && {
+					type: 'IN',
+					field: "pj_base_dispatcher",
+					values: this.userInfo.userId
+				};
+				const customized = [{
+					type: 'IN',
+					field: 'pj_base_project_phase',
+					values: 'c412b1ee888d4b179a055acea74b36ac,b160da1373a84d99932f5810204acc1f,ce9426c80d47487b91ed9b92d20e6ef8'
+				}]
 				getModelList(modelId, {
 					currentPage: data.currentPage,
 					pageSize: data.pageSize,
+					customized: JSON.stringify(pj_base_dispatcher ? [pj_base_dispatcher, ...customized] :
+						customized),
 					json: JSON.stringify({
 						pj_base_project_phase,
 						pj_base_business_category: data.pj_base_business_category,
@@ -325,10 +384,22 @@
 			// 收藏项目
 			queryCollectList(data) {
 				const modelId = '5371514a5ef7423f81f809e33cb66e74';
-				const concerns = this.userInfo.userName + ','
+				const concerns = this.userInfo.userName + ',';
+				const pj_base_dispatcher = Number(this.userInfo.userId) && {
+					type: 'IN',
+					field: "pj_base_dispatcher",
+					values: this.userInfo.userId
+				};
+				const customized = [{
+					type: 'NOT',
+					field: 'pj_review_status',
+					values: '0'
+				}]
 				getModelList(modelId, {
 					currentPage: data.currentPage,
 					pageSize: data.pageSize,
+					customized: JSON.stringify(pj_base_dispatcher ? [pj_base_dispatcher, ...customized] :
+						customized),
 					json: JSON.stringify({
 						concerns,
 						pj_base_business_category: data.pj_base_business_category,
@@ -364,6 +435,10 @@
 			// 获取行业
 			getDictionarySelects() {
 				getDictionaryDataSelector('1b252ec1f16542d7b9f608bd1f7f2418').then(res => {
+					const base_list = [{
+						fullName: '全部',
+						id: ''
+					}]
 					const {
 						code,
 						data: {
@@ -371,13 +446,17 @@
 						} = {}
 					} = res || {};
 					if (code === 200) {
-						this.tradelists = list
+						this.tradelists = [...base_list, ...list]
 						// this.queryLists(moduleId, moduleId_type)
 					}
 				})
 			},
 			getDepartmentSelects() {
 				getDepartmentSelector().then(res => {
+					const baseList = [{
+						fullName: '全部',
+						id: ''
+					}]
 					const {
 						code,
 						data: {
@@ -385,7 +464,7 @@
 						} = {}
 					} = res || {};
 					if (code === 200) {
-						this.departlists = list[0]?.children?. [0]?.children;
+						this.departlists = [...baseList, ...list[0]?.children?. [0]?.children];
 					}
 				})
 			},
