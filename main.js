@@ -3,6 +3,10 @@ import App from './App'
 import store from './store'
 import share from '@/utils/share.js'
 import uView from '@/uview-ui'
+// import {
+// 	install as http
+// } from '@/uni_modules/gt-axios-request/js_sdk/install.js'
+// Vue.use(http)
 Vue.use(uView)
 Vue.mixin(share)
 import * as filters from '@/filters'

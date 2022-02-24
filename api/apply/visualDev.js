@@ -12,6 +12,9 @@ export function projectImageList(data) {
 	return request({
 		url: '/api/extend/Document/project',
 		method: 'get',
+		options: {
+			load: false
+		},
 		data
 	})
 

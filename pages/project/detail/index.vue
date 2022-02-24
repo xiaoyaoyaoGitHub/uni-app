@@ -266,7 +266,7 @@
 						</view>
 						<view class="images u-flex">
 							<view class="image">
-								<img :src="item.previewPath" />
+								<image @load="imgLoad" @error="imageError" :src="item.imgUrl" mode="scaleToFill" />
 								<!-- <u-image width="100%" height="100%" :src="item.previewPath"></u-image> -->
 							</view>
 
@@ -420,6 +420,12 @@
 			}
 		},
 		methods: {
+			imgLoad(e) {
+				console.log(e)
+			},
+			imageError(e) {
+				console.log(e)
+			},
 			change(index) {
 				// console.log(index)
 				this.current = index
@@ -492,6 +498,7 @@
 					} = res || {};
 					if (code === 200) {
 						this.scheduleList = list
+
 					}
 				})
 			},
@@ -499,40 +506,57 @@
 				const time = new Date(times);
 				return `${time.getYear()}-${time.getMonth() + 1}-${time.getDate()}`
 			},
+			loadImages(previewPath) {
+				return new Promise((resolve, reject) => {
+					uni.downloadFile({
+						url: `${define.baseURL}${previewPath}`,
+						header: {
+							"Access-Control-Expose-Headers": "content-disposition"
+						},
+						success: (data) => {
+							resolve(data.tempFilePath)
+						},
+						fail(err) {
+							reject(err)
+						}
+					})
+				})
+			},
+			async loadImagesAll(list) {
+				const copylist = [...list]
+				for(let item of copylist){
+					item.imgUrl = await this.loadImages(item.previewPath);
+					
+				}
+				console.log(copylist)
+				this.imgLists = copylist
+			},
 			getImages() {
+				this.imgLists = []
 				console.log('请求图片')
+				uni.showLoading({
+					title: '请求中'
+				})
 				projectImageList({
 					keyword: "",
 					projectId: this.projectId,
 					parentId: 0
-				}).then(res => {
+				}).then((res) => {
 					const {
 						code,
 						data: {
 							list = []
 						} = {}
 					} = res || {};
-					list.forEach((item) => {
-						
-						return new Promise((resolve, reject) => {
-							uni.downloadFile({
-								url: `${define.baseURL}${item.previewPath}`,
-								header: {
-									"Access-Control-Expose-Headers": "content-disposition"
-								},
-								success:(data) =>{
-									console.log(data)
-									item.previewPath = data.tempFilePath;
-									item.creatorTime = this.changTimes(item.creatorTime)
-									resolve(data)
-								},
-								fail(err) {
-									reject(err)
-								}
-							})
-						})
-					});
+					for (let item of list) {
+						// const tempFilePath = await this.loadImages(item.previewPath)
+						// item.imgUrl = escape(tempFilePath);
+						item.creatorTime = this.changTimes(item.creatorTime)
+					}
+					uni.hideLoading()
+					console.log(list)
 					this.imgLists = list
+					this.loadImagesAll(list)
 				})
 			},
 			getProjectIssue() {
@@ -762,7 +786,7 @@
 								// background: #333;
 								margin-right: 14rpx;
 
-								img {
+								image {
 									width: 100%;
 									height: 100%;
 								}

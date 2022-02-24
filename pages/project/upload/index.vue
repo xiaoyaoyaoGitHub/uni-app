@@ -1,6 +1,5 @@
 <template>
-	<view class="">
-		<!-- <web-view src="/hybrid/html/upload.html"></web-view> -->
+	<view class="container">
 		<view class="selector u-flex" @click="show = true">
 			<view class="label">图片分类</view>
 			<u-input placeholder="请选择" height="96" v-model="imageType" disabled type="text" @click="show = true" />
@@ -14,9 +13,9 @@
 				</view>
 			</template>
 			<template v-else>
-				<uni-file-picker ref="filePicker" class="upload" @select="select" @progress="progress" mode="grid"
-					limit="6" v-model="imageValue" file-mediatype="image" :image-styles="imageStyles"
-					return-type="array" :del-icon="false" :auto-upload="false">
+				<uni-file-picker ref="filePicker" class="upload" @select="select" @fail="fail" mode="grid" limit="6"
+					v-model="imageValue" file-mediatype="image" :image-styles="imageStyles" return-type="array"
+					:del-icon="false" :auto-upload="false">
 					<view>
 						<u-icon name="camera" color="#DCDEE0"></u-icon>
 					</view>
@@ -27,9 +26,10 @@
 			type="textarea" height="168" />
 		</u-picker>
 		<view class="u-p-t-20 u-p-r-20 u-p-l-20">
-			<u-button :disabled="imageType === ''" type="primary" @click="uploadAllInfo">上传</u-button>
+			<span @click="uploadAllInfo">上传</span>
 		</view>
 	</view>
+
 </template>
 
 <script>
@@ -79,15 +79,57 @@
 					title: '请选择图片类型'
 				})
 			},
-			upload_one(file) {
-				return new Promise((resolve, reject) => {
+			upload(path_arr) {
+
+
+			},
+			// 获取上传状态
+			select(e) {
+				const {
+					tempFiles,
+					tempFilePaths
+				} = e || {};
+				console.log(e)
+				this.fileLists = this.fileLists.concat(tempFiles);
+				console.log(this.fileLists)
+			},
+			fail(e) {
+				console.log('上传失败', e)
+			},
+			reuqest() {
+				const files = [];
+				this.fileLists.map(item => {
+					files.push(item.file)
+				})
+				projectImageUpLoad({
+					projectId: this.projectId,
+					category: this.imageType,
+					description: this.textareaValue,
+					parentId: 0,
+					files
+				}).then(res => {
+					console.log(res)
+				}).catch(err => {
+					console.log(err)
+				})
+			},
+			uploadAllInfo() {
+				uni.showLoading({
+					title:'上传中'
+				})
+				this.fileLists.map(item => {
+					item.uri = item.url
+				})
+				try {
 					uni.uploadFile({
 						url: `${define.baseURL}/api/extend/Document/uploader/app`,
-						file: file,
-						name: 'file',
+						files:this.fileLists,
 						header: {
-							"Authorization": uni.getStorageSync('token') || ''
+							"Authorization": uni.getStorageSync('token') || '',
+							'Content-Type': 'multipart/form-data',
 						},
+						fileType: 'image',
+						name: 'file',
 						formData: {
 							projectId: this.projectId,
 							category: this.imageType,
@@ -95,107 +137,54 @@
 							parentId: 0,
 						},
 						success(res) {
+							uni.hideLoading()
 							const {
 								statusCode,
 								data
 							} = res || {};
 							if (statusCode === 200) {
 								const result = JSON.parse(data);
-								console.log(res)
 								const {
 									code
 								} = result || {};
-								if (code === 200) {} else {}
+								console.log(result)
+								if (code === 200) {
+									uni.showToast({
+										icon: 'success',
+										title: '上传成功',
+										duration: 3000,
+										mask: true,
+										complete() {
+											setTimeout(() => {
+												uni.navigateBack({
+													delta: 1,
+													animationType: 'pop-out',
+													animationDuration: 200
+												})
+												uni.$emit('upLoadImageSuccess')
+											}, 3000)
+										}
+									})
+								} else {
+									uni.showToast({
+										icon: 'fail',
+										title: '上传失败'
+									})
+								}
 							}
 						},
 						fail(err) {
-							reject(err)
+							console.log(err)
+							uni.hideLoading()
+							uni.showToast({
+								icon: 'fail',
+								title: '上传失败'
+							})
 						}
 					})
-				})
-
-			},
-			upload(path_arr) {
-				uni.uploadFile({
-					url: `${define.baseURL}/api/extend/Document/uploader/app`,
-					files: this.fileLists,
-					header: {
-						"Authorization": uni.getStorageSync('token') || ''
-					},
-					formData: {
-						projectId: this.projectId,
-						category: this.imageType,
-						description: this.textareaValue,
-						parentId: 0,
-					},
-					success(res) {
-						uni.hideLoading()
-						const {
-							statusCode,
-							data
-						} = res || {};
-						if (statusCode === 200) {
-							const result = JSON.parse(data);
-							const {
-								code
-							} = result || {};
-							console.log(result)
-							if (code === 200) {
-								uni.showToast({
-									icon: 'success',
-									title: '上传成功',
-									duration: 3000,
-									mask: true,
-									complete() {
-										setTimeout(() => {
-											uni.navigateBack({
-												delta: 1,
-												animationType: 'pop-out',
-												animationDuration: 200
-											})
-											uni.$emit('upLoadImageSuccess')
-										}, 3000)
-									}
-								})
-							} else {
-								uni.showToast({
-									icon: 'fail',
-									title: '上传失败'
-								})
-							}
-						}
-					},
-					fail(err) {
-						uni.hideLoading()
-						uni.showToast({
-							icon: 'fail',
-							title: '上传失败'
-						})
-					}
-				})
-
-			},
-			// 获取上传状态
-			select(e) {
-				const {
-					tempFiles
-				} = e || {};
-				this.fileLists = this.fileLists.concat(tempFiles)
-			},
-			async uploadAllInfo() {
-				uni.showLoading({
-					title: '上传中'
-				})
-				this.upload(this.fileLists);
-				// uni.hideLoading()
-				// lists.map((item, index) => {
-				// 	if (!item) {
-				// 		uni.showToast({
-				// 			icon: 'none',
-				// 			title: `第${index}张上传失败`
-				// 		})
-				// 	}
-				// })
+				} catch (err) {
+					console.log(err)
+				}
 			},
 		}
 	}
@@ -204,7 +193,10 @@
 <style lang="scss">
 	page {
 		background: #fff;
-		padding: 0 24rpx;
+
+		.container {
+			padding: 0 24rpx;
+		}
 
 		.selector {
 
