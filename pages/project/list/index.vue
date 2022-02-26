@@ -296,7 +296,7 @@
 				} : {
 					type: 'IN',
 					field: "pj_review_status",
-					values: data.pj_review_status
+					values: data.pj_review_status || '2'
 				}
 				const customized = [{
 					type: 'IN',

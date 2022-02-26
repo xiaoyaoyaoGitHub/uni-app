@@ -100,7 +100,7 @@
 						},
 						scrollShow: true
 					},
-					dataLabel: false,
+					// dataLabel: false,
 					// enableScroll:true,
 
 					colors: [
@@ -208,6 +208,7 @@
 							return all + next
 						},0)
 						console.log(series)
+						
 						this.charts = {
 							categories,
 							series,
@@ -364,10 +365,10 @@
 				margin-top: 24rpx;
 				position: relative;
 				overflow: auto;
-
+				overflow-y: hidden;
 				&>.content {
-					width: 250%;
-					// height: 100%;
+					width: 200%;
+					height: 100%;
 					// position: relative;
 
 					// &:after {
