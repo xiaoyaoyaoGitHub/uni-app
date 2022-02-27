@@ -98,9 +98,15 @@
 					padding:[0, 0, 0, 30],
 					// rotate: true,
 					// dataLabel:false,
+					yAxis:{
+						axisLabel: {
+							rotate: 70,
+							// inside: true,
+						},
+					},
 					xAxis: {
-						label: {
-							// rotate: 25
+						axisLabel: {
+							rotate:20,
 						},
 						rotateLabel: false,
 						scrollShow: true,
