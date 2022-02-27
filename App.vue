@@ -28,23 +28,23 @@
 								if (system === 'Android') {
 									let url = devLanguage ? javaApk : dotNetApk;
 									plus.runtime.openURL(url)
-									// uni.downloadFile({
-									// 	//下载地址
-									// 	url: url,
-									// 	success: data => {
-									// 		console.log(data)
-									// 		if (data.statusCode === 200) {
-									// 			plus.runtime.install(data
-									// 				.tempFilePath, {
-									// 					force: false
-									// 				},
-									// 				function() {
-									// 					plus.runtime
-									// 						.restart();
-									// 				});
-									// 		}
-									// 	}
-									// })
+									uni.downloadFile({
+										//下载地址
+										url: url,
+										success: data => {
+											console.log(data)
+											if (data.statusCode === 200) {
+												plus.runtime.install(data
+													.tempFilePath, {
+														force: false
+													},
+													function() {
+														plus.runtime
+															.restart();
+													});
+											}
+										}
+									})
 								} else {
 									let appleId = devLanguage ? 1490797314 : 1563667378;
 									plus.runtime.launchApplication({

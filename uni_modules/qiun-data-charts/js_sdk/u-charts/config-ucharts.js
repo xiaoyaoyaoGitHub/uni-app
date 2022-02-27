@@ -75,6 +75,9 @@ const cfu = {
 		"xAxisDemo1": function(val) {
 			return val + '年'
 		},
+		"xAxisDemo3": function(val) {
+			return '&nbsp;nbsp;nbsp;nbsp;nbsp;nbsp;nbsp;' + val + '年'
+		},
 		"xAxisDemo2": function(val) {
 			return formatDateTime(val, 'h:m')
 		},
@@ -97,7 +100,7 @@ const cfu = {
 	//这里演示了自定义您的图表类型的option，可以随意命名，之后在组件上 type="demotype" 后，组件会调用这个花括号里的option，如果组件上还存在opts参数，会将demotype与opts中option合并后渲染图表。
 	"demotype": {
 		//我这里把曲线图当做了自定义图表类型，您可以根据需要随意指定类型或配置
-		"type": "line",
+		"type": "column",
 		"color": color,
 		"padding": [15, 10, 0, 15],
 		"xAxis": {
@@ -107,7 +110,9 @@ const cfu = {
 			"gridType": "dash",
 			"dashLength": 2,
 		},
-		"legend": {},
+		"legend": {
+			"position": "top"
+		},
 		"extra": {
 			"line": {
 				"type": "curve",
@@ -339,7 +344,7 @@ const cfu = {
 			}]
 		},
 		"legend": {
-			"positon":"top"
+			"positon": "top"
 		},
 		"extra": {
 			"column": {

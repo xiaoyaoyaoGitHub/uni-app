@@ -1,13 +1,13 @@
 <template>
 	<view class="projects-v">
-		<mescroll-body ref="mescrollRef" @down="downCallback" :sticky="true" :up="upOption" :bottombar="false">
+		<mescroll-body ref="mescrollRef" @down="downCallback" :sticky="true" :up="upOption" :down="upOption" :bottombar="false">
 			<view class="banner">
 				<view class="banner-item project-amount">
 					<view class="u-font-28">
 						项目总数量
 					</view>
 					<view class="banner-volume u-font-40">
-						{{allData.investTotal}}<span class="u-font-28">个</span>
+						{{allData.sum}}<span class="u-font-28">个</span>
 					</view>
 				</view>
 				<view class="banner-item project-amount">
@@ -15,7 +15,7 @@
 						在建项目总数量
 					</view>
 					<view class="banner-volume u-font-40">
-						{{allData.cumulativeCompletion}}<span class="u-font-28">个</span>
+						{{onGoingInfo.sum}}<span class="u-font-28">个</span>
 					</view>
 				</view>
 				<view class="banner-item plan-amount">
@@ -56,7 +56,7 @@
 				<!-- :class="{scale: chartDone}" -->
 				<view class="content" :class="{scale: chartDone}">
 					<qiun-data-charts @complete="chartComplete" class="chartInfo" type="column" :echartsApp="true"
-						:opts="eopts" :eopts="eopts" :chartData="charts" />
+						:eopts="eopts"  :chartData="charts" />
 				</view>
 			</view>
 		</mescroll-body>
@@ -92,18 +92,23 @@
 				chartDone: false,
 				eopts: {
 					legend: {
-						position: 'top'
+						"show": true,
+						"top":"0",
 					},
+					padding:[0, 0, 0, 30],
+					// rotate: true,
+					// dataLabel:false,
 					xAxis: {
 						label: {
-							rotate: 40
+							// rotate: 25
 						},
-						scrollShow: true
+						rotateLabel: false,
+						scrollShow: true,
+						fontSize:10,
+						formatter:'xAxisDemo1',
 					},
-					// dataLabel: false,
-					// enableScroll:true,
 
-					colors: [
+					color: [
 						"#ff9f7f",
 						"#fb7293",
 						"#e7bcf3",
@@ -136,7 +141,7 @@
 				yearPlan: '',
 				dicList: [],
 				allData: {},
-				onGoingInfo:{},
+				onGoingInfo: {},
 				charts: {
 
 				}
@@ -153,6 +158,9 @@
 			uni.$off('updateList')
 		},
 		methods: {
+			downCallback(){
+				this.loadCharts()
+			},
 			chartComplete(e) {
 				// console.log(e)
 				this.chartDone = true
@@ -206,9 +214,9 @@
 						this.allData.sumTotal = a2.reduce((all, next) => {
 							console.log(all)
 							return all + next
-						},0)
+						}, 0)
 						console.log(series)
-						
+
 						this.charts = {
 							categories,
 							series,
@@ -361,11 +369,12 @@
 
 			.chart {
 				background: #fff;
-				height: 525rpx;
+				height: 625rpx;
 				margin-top: 24rpx;
 				position: relative;
 				overflow: auto;
 				overflow-y: hidden;
+
 				&>.content {
 					width: 200%;
 					height: 100%;

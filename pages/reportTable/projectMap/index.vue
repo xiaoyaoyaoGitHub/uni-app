@@ -13,7 +13,7 @@
 			<view class="select">
 				<u-button data-index="0" class="selectBtn" :class="{active: selectType === 'auditSelect'}"
 					data-type="auditSelect" @click="showSelect">
-					{{auditSelectCurrent.label}}
+					{{auditSelectCurrent.value === '' ? '审核状态':auditSelectCurrent.label}}
 				</u-button>
 				<u-select v-model="auditSelectShow" @confirm="selectConfirm" :list="auditLists">审核状态
 				</u-select>
@@ -21,7 +21,7 @@
 			<view class="select">
 				<u-button data-index="1" class="selectBtn" :class="{active: selectType === 'tradeSelect'}"
 					data-type="tradeSelect" @click="showSelect">
-					{{tradeSelectCurrent.label}}
+					{{tradeSelectCurrent.value === '' ? '行业':tradeSelectCurrent.label}}
 				</u-button>
 				<u-select value-name="id" label-name="fullName" v-model="tradeSelectShow" :list="tradelists"
 					@confirm="selectConfirm">行业</u-select>
@@ -45,7 +45,7 @@
 			<view class="select">
 				<u-button data-index="3" class="selectBtn" :class="{active: selectType === 'departSelect'}"
 					data-type="departSelect" @click="showSelect">
-					{{departSelectCurrent.label}}
+					{{departSelectCurrent.value === '' ? '部门':departSelectCurrent.label}}
 				</u-button>
 				<u-select value-name="id" label-name="fullName" v-model="departSelectShow" :list="departlists"
 					@confirm="selectConfirm"></u-select>
@@ -103,11 +103,11 @@
 				keyword: '',
 				selectType: '',
 				auditSelectCurrent: {
-					value: '0',
+					value: '',
 					label: '审核状态'
 				},
 				tradeSelectCurrent: {
-					value: 'def93d1b7cda45d1a2f60c6c39052e95',
+					value: '',
 					label: '行业'
 				},
 				departSelectCurrent: {
@@ -123,6 +123,9 @@
 				amountSelectShow: false,
 				departSelectShow: false,
 				auditLists: [{
+						value: '',
+						label: '全部'
+					}, {
 						value: '0',
 						label: '未提交'
 					},
@@ -187,37 +190,32 @@
 					pj_base_project_phase,
 					project_id: id
 				} = currentMark || {};
-				getDictionaryDataSelector("d16af6c485154abea4c168a8a23a9617").then(res => {
-					console.log(res)
-					const {
-						code,
-						data: {
-							list = []
-						} = {}
-					} = res || {};
-					if (code === 200) {
-
-						// this.tradelists = list
-						// this.queryLists(moduleId, moduleId_type)
-					}
-				})
-				// return
-				// console.log(`/pages/project/detail/index?modelId=2d97a78c3be1440493c983bb9186bacf&pj_base_project_phase=${pj_base_project_phase}&id=${id}`)
-				// uni.setStorageSync("detailInfo", {
-				// 	pj_base_project_phase,
-				// 	id,
-				// 	modelId: "2d97a78c3be1440493c983bb9186bacf"
-				// })
 				uni.navigateTo({
 					url: `/pages/project/detail/index?modelId=2d97a78c3be1440493c983bb9186bacf&pj_base_project_phase=${pj_base_project_phase}&id=${id}`
 				})
 			},
 			upCallback(page = {}) {
+				this.covers = []
+				const jsons = {};
+				if (this.keyword) {
+					jsons.pj_base_project_name = this.keyword
+				}
+				if (this.tradeSelectCurrent.value) {
+					jsons.pj_base_business_category = this.tradeSelectCurrent.value
+				}
+				if (this.departSelectCurrent.value) {
+					jsons.pj_base_region = this.departSelectCurrent.value
+				}
+				if (this.auditSelectCurrent.value) {
+					jsons.pj_review_status = this.auditSelectCurrent.value
+				}
+
 				let query = {
-					pj_base_business_category: this.tradeSelectCurrent.value || '',
-					pj_fund_invest_total: [Number(this.amount.min) ? Number(this.amount.min) : 500, Number(this.amount.max) ? Number(this.amount.max) : 500000],
+					pj_fund_invest_total: [Number(this.amount.min) ? Number(this.amount.min) : 500, Number(this.amount
+						.max) ? Number(this.amount.max) : 500000],
 					pj_review_status: this.auditSelectCurrent.value || '',
-					pj_base_region: this.departSelectCurrent.value || ''
+					pj_base_region: this.departSelectCurrent.value || '',
+					json: JSON.stringify(jsons) === '{}' ? '' : JSON.stringify(jsons)
 				}
 				this.queryStoreList(query)
 			},
@@ -240,7 +238,10 @@
 						} = {}
 					} = res || {};
 					if (code === 200) {
-						this.tradelists = list
+						this.tradelists = [{
+							fullName: '全部',
+							id: ''
+						}, ...list]
 					}
 				})
 			},
@@ -253,15 +254,18 @@
 						} = {}
 					} = res || {};
 					if (code === 200) {
-
-						this.departlists = list[0]?.children?. [0]?.children;
+						const result = list[0]?.children?. [0]?.children;
+						this.departlists = [{
+							fullName: '全部',
+							id: ''
+						}, ...result];
 
 					}
 				})
 			},
 			queryStoreList(data) {
 				uni.showLoading({
-					title:'请求中...'
+					title: '请求中...'
 				})
 				mapList({
 					currentPage: 1,

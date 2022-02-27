@@ -20,10 +20,8 @@
 		},
 		watch: {
 			markerLists(newVal) {
-				this.$nextTick(function() {
-					console.log('更新')
-					this.list = newVal
-				})
+				this.list = newVal;
+				this.amap.updateEcharts()
 			}
 		},
 		methods: {
@@ -83,6 +81,7 @@
 				let prevMarker = null
 				let prevIcon = null
 				console.log(this.list)
+				this.map.clearMap()
 				this.list.forEach((item, index) => {
 					if (!!item.icon) {
 						//添加点标记

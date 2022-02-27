@@ -264,7 +264,7 @@
 						pj_base_business_category: data.pj_base_business_category,
 						pj_fund_invest_total: data.pj_fund_invest_total,
 						pj_review_status: data.pj_review_status,
-						pj_base_project_name: '项目',
+						pj_base_project_name: data.keyword,
 						pj_base_region: data.pj_base_region,
 						keyword: data.keyword,
 						type: "IN",
@@ -310,6 +310,7 @@
 					// pj_fund_invest_total: data.pj_fund_invest_total,
 					pj_review_status: data.pj_review_status,
 					pj_base_region: data.pj_base_region,
+					pj_base_project_name: data.keyword,
 					keyword: data.keyword,
 				}
 				getModelList(modelId, {
@@ -363,6 +364,7 @@
 						pj_fund_invest_total: data.pj_fund_invest_total,
 						pj_review_status: data.pj_review_status,
 						pj_base_region: data.pj_base_region,
+						pj_base_project_name: data.keyword,
 						keyword: data.keyword
 
 					})
@@ -406,7 +408,8 @@
 						pj_fund_invest_total: data.pj_fund_invest_total,
 						pj_review_status: data.pj_review_status,
 						pj_base_region: data.pj_base_region,
-						keyword: data.keyword
+						keyword: data.keyword,
+						pj_base_project_name: data.keyword,
 
 					})
 				}).then(res => {

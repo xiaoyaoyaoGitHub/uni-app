@@ -462,8 +462,8 @@
 						const {
 							formattedAddress
 						} = pj_base_project_positionToJson || {};
-						this.latitude = pj_base_project_positionToJson.latitude;
-						this.longitude = pj_base_project_positionToJson.longitude;
+						this.latitude = pj_base_project_positionToJson.latitude || '121.648962';
+						this.longitude = pj_base_project_positionToJson.longitude || '42.011796';
 						this.covers = [{
 							latitude: this.latitude,
 							longitude: this.longitude,
