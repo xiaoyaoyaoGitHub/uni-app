@@ -35,11 +35,11 @@
 					})
 				}
 			} else {
-				// // #ifdef APP-PLUS
-				// uni.redirectTo({
-				// 	url: '/pages/launch/policy'
-				// })
-				// // #endif
+				// #ifdef APP-PLUS
+				uni.redirectTo({
+					url: '/pages/launch/policy'
+				})
+				// #endif
 				// #ifndef APP-PLUS
 				if (token) {
 					uni.switchTab({

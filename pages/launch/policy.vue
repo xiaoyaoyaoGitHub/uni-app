@@ -43,7 +43,7 @@
 			},
 			agree() {
 				uni.redirectTo({
-					url: '/pages/launch/guide'
+					url: '/pages/login/index'
 				})
 			},
 		}

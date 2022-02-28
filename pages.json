@@ -5,6 +5,15 @@
 		"a-map": "@/components/ITkoala-amap/amap.vue"
 	},
 	"pages": [{
+			"path": "pages/launch/index",
+			"style": {
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleNView": false,
+					"bounce": "none"
+				}
+			}
+		}, {
 			"path": "pages/login/index",
 			"style": {
 				"navigationStyle": "custom",
@@ -13,7 +22,7 @@
 					"bounce": "none"
 				}
 			}
-		} ,
+		},
 		// #ifdef APP-PLUS
 		{
 			"path": "pages/launch/policy",
