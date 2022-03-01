@@ -162,6 +162,13 @@
 						"enablePullDownRefresh": false
 					}
 
+				}, {
+					"path": "notice/notice",
+					"style": {
+						"navigationBarTitleText": "公告",
+						"enablePullDownRefresh": false
+					}
+
 				}
 			]
 		},

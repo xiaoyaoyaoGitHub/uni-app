@@ -3,7 +3,7 @@
 		<mescroll-body ref="mescrollRef" @down="downCallback" @up="loadProjectLataestProgress" :sticky="true"
 			:up="upOption" :bottombar="false" bottom="100">
 			<view class="banner">
-				<u-swiper indicator-pos="bottomRight" mode="dot" :list="bannerList" height="280" :title="true"
+				<u-swiper indicator-pos="bottomRight" mode="dot" @click="getNotice" :list="bannerList" height="280" :title="true"
 					:title-style="{'font-size':'20px'}"></u-swiper>
 			</view>
 			<view class="project-lists">
@@ -260,6 +260,14 @@
 					return n.replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
 				});
 			},
+			getNotice(index){
+				console.log(index)
+				if(Number(index) == 0 ){
+					uni.navigateTo({
+						url:'/pages/project/notice/notice'
+					})
+				}
+			},
 			loadSwiper() {
 				const query = {
 					currentPage: 1,
@@ -287,7 +295,7 @@
 					}
 					this.bannerList = [{
 							image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
-							title: '昨夜星辰昨夜风，画楼西畔桂堂东'
+							title: '系统公告'
 						},
 						{
 							image: 'https://cdn.uviewui.com/uview/swiper/2.jpg',

@@ -20,6 +20,21 @@ export function projectImageList(data) {
 
 }
 
+// 公告
+export function projectNotice(data) {
+	return request({
+		url: '/api/message/Notice',
+		method: 'get',
+		options: {
+			load: false
+		},
+		data
+	})
+
+}
+
+
+
 // 图片上传
 export function projectImageUpLoad(data) {
 	return request({
