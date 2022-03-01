@@ -33,7 +33,14 @@ export function projectNotice(data) {
 
 }
 
+// 公告
+export function projectNoticeDetail(id) {
+	return request({
+		url: `/api/message/${id}`,
+		method: 'get',
+	})
 
+}
 
 // 图片上传
 export function projectImageUpLoad(data) {

@@ -1,86 +1,36 @@
 <template>
 	<view class="contacts-v">
-		<mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" @up="upCallback" :sticky="true"
-			:down="downOption" :up="upOption" :bottombar="false">
-			<view class="search-box search-box_sticky u-flex u-border-bottom">
-				<u-search class="search-input" placeholder="请输入公告名称搜索" v-model="keyword" height="72" :show-action="true"
-					:action-style="{color:'#071127',lineHeight:48 + 'rpx', fontSize:32 + 'rpx'}" @custom="search"
-					bg-color="#F7F8FA" placeholder-color="#C1C3C9" search-icon-color="#C1C3C9" shape="square">
-				</u-search>
-			</view>
+		<view class="title u-font-40 u-text-center u-p-t-35 u-p-l-20 u-p-r-20">
+			{{detailInfo.title}}
+		</view>
+		<view class="u-font-26 u-text-center u-p-15">
+			{{format(detailInfo.lastModifyTime)}} {{detailInfo.creatorUser}}
+		</view>
+		<view decode class="u-font-30 u-text-left u-m-t-15 u-p-l-30 u-p-r-30">
+			{{detailInfo.bodyText.replace(/<\/?p>/g,'')}}
+		</view>
 
-			<view class="lists">
-				<view class="project-item" data-id="item.id" v-for="item in projectLists" @click="goToDetail(item.id)">
-
-					<view class="project-name u-border-bottom">
-						<span class="name">{{item.title}}</span>
-						<!-- <span
-							:class="{'unUpdate': item.pj_review_status === '未提交', 'wait': item.pj_review_status === '等待审核','success': item.pj_review_status === '审核通过', 'fail': item.pj_review_status === '审核驳回'}"
-							class="status u-text-center">{{item.pj_review_status}}</span> -->
-					</view>
-					<view class="project-info">
-						<view class="all">
-							<span class="icon"></span>
-							发布人员：<span class="amount">{{item.creatorUser}}</span>
-						</view>
-						<view class="month">
-							<span class="icon"></span>
-							发布时间：<span class="amount">{{format(item.lastModifyTime)}}</span>
-						</view>
-					</view>
-				</view>
-			</view>
-		</mescroll-body>
 	</view>
 </template>
 
 <script>
 	import {
-		projectNotice
+		projectNoticeDetail
 	} from "@/api/apply/visualDev.js"
 	import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
 	export default {
 		mixins: [MescrollMixin],
 		data() {
 			return {
-				downOption: {
-					use: true,
-					auto: true
-				},
-				upOption: {
-					use: true,
-					page: {
-						num: 0,
-						size: 20,
-						time: null
-					},
-					empty: {
-						use: true,
-						icon: "static/nodata.png",
-						tip: "暂无数据",
-						fixed: true,
-						top: "200rpx",
-					},
-					textNoMore: '没有更多数据',
-				},
-				keyword: '',
-				selectType: '',
-
-
-				projectLists: []
+				detailInfo: {}
 			}
 		},
 		onLoad(param) {
 			this.userInfo = uni.getStorageSync('userInfo') || {}
-			// let title = "项目列表"
-			// let phase = param.phase
-			// this.pageType = phase
-			// uni.setNavigationBarTitle({
-			// 	title: moduleTitle[phase]
-			// })
-			// this.getDictionarySelects();
-			// this.getDepartmentSelects()
-
+			const {
+				id
+			} = param || {};
+			this.queryStoreList(id)
 		},
 		computed: {
 			baseURL() {
@@ -88,13 +38,33 @@
 			}
 		},
 		methods: {
-			upCallback(page) {
-				let query = {
-					currentPage: page.num,
-					pageSize: page.size,
-					keyword: this.keyword
+			format(time, format = 'yyyy-MM-dd') {
+				var t = new Date(time);
+				var tf = function(i) {
+					return (i < 10 ? '0' : '') + i
 				};
-				this.queryStoreList(query)
+				return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function(a) {
+					switch (a) {
+						case 'yyyy':
+							return tf(t.getFullYear());
+							break;
+						case 'MM':
+							return tf(t.getMonth() + 1);
+							break;
+						case 'mm':
+							return tf(t.getMinutes());
+							break;
+						case 'dd':
+							return tf(t.getDate());
+							break;
+						case 'HH':
+							return tf(t.getHours());
+							break;
+						case 'ss':
+							return tf(t.getSeconds());
+							break;
+					}
+				})
 			},
 			format(time, format = 'yyyy-MM-dd') {
 				var t = new Date(time);
@@ -124,56 +94,26 @@
 					}
 				})
 			},
-			goToDetail(id){
-				uni.navigateTo({
-					url:`/pages/project/notice/detail?id=${id}`
-				})
-			},
-			inputConfirm() {
-				this.amountSelectShow = false;
-				this.projectLists = [];
-				this.mescroll.resetUpScroll();
-			},
 			// 储备项目
-			queryStoreList(data) {
-				console.log(data)
-				projectNotice(data).then(res => {
+			queryStoreList(id) {
+				projectNoticeDetail(id).then(res => {
 					const {
 						code,
-						data: {
-							list = [],
-							pagination = {}
-						} = {}
+						data = {}
 					} = res || {};
 					if (code === 200) {
 
-						this.projectLists = [...this.projectLists, ...list]
-						this.mescroll.endBySize(pagination.pageSize, pagination.total); //必传参数(当前页的数据个数, 总页数)
+						this.detailInfo = data;
 					}
 				})
 			},
-
-			downCallback() {
-				this.projectLists = [];
-				this.mescroll.resetUpScroll();
-			},
-
-			search() {
-				// 节流,避免输入过快多次请求
-				this.searchTimer && clearTimeout(this.searchTimer)
-				this.searchTimer = setTimeout(() => {
-					this.projectLists = [];
-					this.mescroll.resetUpScroll();
-				}, 300)
-			},
-
 		}
 	}
 </script>
 
 <style lang="scss">
 	page {
-		background: #F5F6F7;
+		background: #fff;
 
 		.contacts-v {
 			.search-box {
