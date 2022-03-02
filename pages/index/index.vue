@@ -3,8 +3,12 @@
 		<mescroll-body ref="mescrollRef" @down="downCallback" @up="loadProjectLataestProgress" :sticky="true"
 			:up="upOption" :bottombar="false" bottom="100">
 			<view class="banner">
-				<u-swiper indicator-pos="bottomRight" mode="dot" @click="getNotice" :list="bannerList" height="280" :title="true"
+				<u-swiper indicator-pos="bottomRight" mode="dot" :list="bannerList" height="280" :title="true"
 					:title-style="{'font-size':'20px'}"></u-swiper>
+			</view>
+			<view class="u-p-t-20">
+				<uni-notice-bar @click="getNotice" showIcon="true" single="true" text="系统公告">
+				</uni-notice-bar>
 			</view>
 			<view class="project-lists">
 				<u-row justify="space-between" gutter="0">
@@ -260,13 +264,10 @@
 					return n.replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
 				});
 			},
-			getNotice(index){
-				console.log(index)
-				if(Number(index) == 0 ){
-					uni.navigateTo({
-						url:'/pages/project/notice/notice'
-					})
-				}
+			getNotice(index) {
+				uni.navigateTo({
+					url: '/pages/project/notice/notice'
+				})
 			},
 			loadSwiper() {
 				const query = {
@@ -295,7 +296,7 @@
 					}
 					this.bannerList = [{
 							image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
-							title: '系统公告'
+							title: ''
 						},
 						{
 							image: 'https://cdn.uviewui.com/uview/swiper/2.jpg',
@@ -444,8 +445,12 @@
 				padding-top: 20rpx;
 			}
 
+			// .notice {
+			// 	background: #;
+			// }
+
 			.project-lists {
-				padding-top: 20rpx;
+				// padding-top: 20rpx;
 				// height: 144rpx;
 
 				.project-lists-item {
